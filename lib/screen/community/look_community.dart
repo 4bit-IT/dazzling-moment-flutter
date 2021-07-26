@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 
-class LookLocation extends StatefulWidget {
+class LookCommunity extends StatefulWidget {
 
   @override
-  _LookLocationState createState() => _LookLocationState();
+  _LookCommunityState createState() => _LookCommunityState();
 }
 
-class _LookLocationState extends State<LookLocation> {
-  @override
-
-
+class _LookCommunityState extends State<LookCommunity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
