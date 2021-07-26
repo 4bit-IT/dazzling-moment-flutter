@@ -1,3 +1,4 @@
+import 'package:damo/screen/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'location/look_location.dart';
 import 'community/look_community.dart';
@@ -8,61 +9,23 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMainState extends State<HomeMain> {
+  DamoAppBar tabBar = DamoAppBar();
   final dropdownList = ['거리순', '추천순', '인기순'];
   var selectedDropdown = '거리순';
   var selectedBottomNavigationBarIndex = 0;
-  List? bottomNavigationBarPages;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    bottomNavigationBarPages = [
-      HomeMain(),
-      LookLocation(),
-      LookCommunity(),
-    ];
-  }
+  List bottomNavigationBarPages = [
+    HomeMain(),
+    LookLocation(),
+    LookCommunity(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: Colors.white,
-          title: Image.asset('lib/images/logo.png'),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {},
-              color: Colors.red,
-              iconSize: 30.0,
-            ),
-            SizedBox(width: 10.0),
-            IconButton(
-              icon: Icon(Icons.person),
-              onPressed: () {},
-              color: Colors.red,
-              iconSize: 30.0,
-            ),
-            SizedBox(width: 10.0),
-          ],
-          bottom: TabBar(
-            labelStyle: TextStyle(fontSize: 20.0),
-            unselectedLabelStyle: TextStyle(fontSize: 15.0),
-            labelColor: Colors.red,
-            unselectedLabelColor: Colors.black,
-            indicatorColor: Colors.white,
-            isScrollable: false,
-            tabs: [
-              Tab(text: '핸드메이드 케이크'),
-              Tab(text: '꽃'),
-            ],
-          ),
-        ),
+        appBar: tabBar.tabBar(),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -117,7 +80,7 @@ class _HomeMainState extends State<HomeMain> {
                     SingleChildScrollView(
                       child: Column(
                         children: [
-                          for(int i=0;i<10;i++) productList()!,
+                          for (int i = 0; i < 10; i++) productList()!,
                         ],
                       ),
                     ),
@@ -133,14 +96,15 @@ class _HomeMainState extends State<HomeMain> {
   }
 
   void onTapped(int index) {
-    if(selectedBottomNavigationBarIndex!=index)
-    setState(() {
-      selectedBottomNavigationBarIndex = index;
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => bottomNavigationBarPages![index]),
-      );
-    });
+    if (selectedBottomNavigationBarIndex != index)
+      setState(() {
+        selectedBottomNavigationBarIndex = index;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => bottomNavigationBarPages[index]),
+        );
+      });
   }
 
   Widget? productList() {
@@ -156,6 +120,7 @@ class _HomeMainState extends State<HomeMain> {
       ],
     );
   }
+
   Widget? getSizedBox() {
     return SizedBox(
       height: 20.0,
