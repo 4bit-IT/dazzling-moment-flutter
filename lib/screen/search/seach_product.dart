@@ -17,45 +17,39 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        automaticallyImplyLeading: false,
+        backgroundColor: Colors.pink.shade200,
+        automaticallyImplyLeading: true, //뒤로 가기 제공
+
         title: TextFormField(
           keyboardType: TextInputType.text,
           controller: searchTextEditingController,
           decoration: InputDecoration(
             hintText: '검색하기',
-            hintStyle: GoogleFonts.lato(
-              color: Colors.grey,
-            ),
+            hintStyle: GoogleFonts.lato(color: Colors.black38),
             enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.grey,
-              ),
+              borderSide: BorderSide(color: Colors.pink.shade200),
             ),
             focusedBorder: UnderlineInputBorder(
               borderSide: BorderSide(
-                color: Colors.white,
+                color: Colors.pink.shade200,
               ),
             ),
             filled: true,
             prefixIcon: Icon(
               Icons.search,
-              color: Colors.black45,
+              color: Colors.black38,
             ),
             suffixIcon: IconButton(
               icon: Icon(
                 Icons.clear,
-                color: Colors.black45,
+                color: Colors.white,
               ),
               onPressed: () {
                 searchTextEditingController.clear();
               },
             ),
           ),
-          style: TextStyle(
-              fontSize: 18,
-              color: Colors.black
-          ),
+          style: TextStyle(fontSize: 19, color: Colors.black87),
           onFieldSubmitted: controlSearching,
         ),
       ),
