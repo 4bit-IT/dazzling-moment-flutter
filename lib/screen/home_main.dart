@@ -2,6 +2,7 @@ import 'package:damo/screen/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'location/look_location.dart';
 import 'community/look_community.dart';
+import 'search/seach_product.dart';
 
 class HomeMain extends StatefulWidget {
   @override
@@ -20,12 +21,17 @@ class _HomeMainState extends State<HomeMain> {
     LookCommunity(),
   ];
 
+  List appBarPages = [
+    SearchPage(),
+
+  ];
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: tabBar.tabBar(),
+        appBar: tabBar.tabBar(context),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(

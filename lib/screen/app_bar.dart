@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
+import 'search/seach_product.dart';
 class DamoAppBar {
-  dynamic tabBar() {
+
+  dynamic tabBar(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
       elevation: 0.0,
@@ -10,7 +11,9 @@ class DamoAppBar {
       actions: [
         IconButton(
           icon: Icon(Icons.search),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
+          },
           color: Colors.red,
           iconSize: 30.0,
         ),
