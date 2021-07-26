@@ -18,7 +18,9 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
         title: TextFormField(
+          keyboardType: TextInputType.text,
           controller: searchTextEditingController,
           decoration: InputDecoration(
             hintText: '검색하기',
@@ -37,14 +39,13 @@ class _SearchPageState extends State<SearchPage> {
             ),
             filled: true,
             prefixIcon: Icon(
-              Icons.person_pin,
-              color: Colors.white,
-              size: 30,
+              Icons.search,
+              color: Colors.black45,
             ),
             suffixIcon: IconButton(
               icon: Icon(
                 Icons.clear,
-                color: Colors.white,
+                color: Colors.black45,
               ),
               onPressed: () {
                 searchTextEditingController.clear();
@@ -53,7 +54,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
           style: TextStyle(
               fontSize: 18,
-              color: Colors.white
+              color: Colors.black
           ),
           onFieldSubmitted: controlSearching,
         ),
