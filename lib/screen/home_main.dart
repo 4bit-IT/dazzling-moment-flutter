@@ -1,5 +1,6 @@
 import 'package:damo/screen/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'bottom_navigaton.dart';
 import 'location/look_location.dart';
 import 'community/look_community.dart';
 import 'search/seach_product.dart';
@@ -23,7 +24,6 @@ class _HomeMainState extends State<HomeMain> {
 
   List appBarPages = [
     SearchPage(),
-
   ];
 
   @override
@@ -32,25 +32,7 @@ class _HomeMainState extends State<HomeMain> {
       length: 2,
       child: Scaffold(
         appBar: tabBar.tabBar(context),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart),
-              label: '상품 보기',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.location_on_outlined),
-              label: '지도로 보기',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.message_outlined),
-              label: '커뮤니티',
-            ),
-          ],
-          selectedItemColor: Colors.amber[800],
-          currentIndex: selectedBottomNavigationBarIndex,
-          onTap: onTapped,
-        ),
+        bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 0),
         body: TabBarView(
           children: [
             Container(
