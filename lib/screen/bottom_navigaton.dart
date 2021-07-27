@@ -22,10 +22,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
   var selectedBottomNavigationBarIndex = 0;
 
   void onTapped(int selectedBottomNavigationBarIndex) {
-    if (selectedBottomNavigationBarIndex != widget.bottomNavigationIndex!)
+    if (selectedBottomNavigationBarIndex != widget.bottomNavigationIndex!) {
       setState(() {
         widget.bottomNavigationIndex = selectedBottomNavigationBarIndex;
-
         Navigator.pop(context);
         Navigator.push(
           context,
@@ -35,6 +34,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           ),
         );
       });
+    }
   }
 
   @override
