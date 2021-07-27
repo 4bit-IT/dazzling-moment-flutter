@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'search/seach_product.dart';
-class DamoAppBar {
 
+class DamoAppBar {
   dynamic tabBar(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
@@ -12,7 +13,8 @@ class DamoAppBar {
         IconButton(
           icon: Icon(Icons.search),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => SearchPage()));
           },
           color: Colors.red,
           iconSize: 30.0,
@@ -27,21 +29,25 @@ class DamoAppBar {
         SizedBox(width: 10.0),
       ],
       bottom: TabBar(
-        labelStyle: TextStyle(fontSize: 20.0),
+        labelStyle: GoogleFonts.lato(color: Colors.black38, fontSize: 15.0),
         unselectedLabelStyle: TextStyle(fontSize: 15.0),
         labelColor: Colors.red,
         unselectedLabelColor: Colors.black,
         indicatorColor: Colors.white,
         isScrollable: false,
         tabs: [
-          Tab(text: '핸드메이드 케이크'),
-          Tab(text: '꽃'),
+          Tab(
+            text: '핸드메이드 케이크',
+            icon: Icon(Icons.cake_outlined),
+          ),
+          Tab(text: '꽃', icon: Icon(Icons.yard_outlined)),
         ],
       ),
     );
   }
 
-  dynamic appBar() {
+  //hintStyle: GoogleFonts.lato(color: Colors.black38),
+  dynamic appBar(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
       elevation: 0.0,
@@ -50,7 +56,10 @@ class DamoAppBar {
       actions: [
         IconButton(
           icon: Icon(Icons.search),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => SearchPage()));
+          },
           color: Colors.red,
           iconSize: 30.0,
         ),

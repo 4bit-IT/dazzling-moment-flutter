@@ -53,7 +53,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
           label: '커뮤니티',
         ),
       ],
-      selectedItemColor: Colors.amber[800],
+      selectedItemColor: Colors.red,
       currentIndex: widget.bottomNavigationIndex!,
       onTap: onTapped,
     );

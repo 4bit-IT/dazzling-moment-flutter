@@ -15,7 +15,7 @@ class _LookLocationState extends State<LookLocation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar.appBar(),
+      appBar: appBar.appBar(context),
       bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 1),
     );
   }
