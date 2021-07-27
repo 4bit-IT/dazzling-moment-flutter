@@ -3,6 +3,7 @@ import 'package:damo/screen/home_main.dart';
 import 'package:damo/screen/location/look_location.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class BottomNavigation extends StatefulWidget {
   BottomNavigation({this.bottomNavigationIndex});
   int? bottomNavigationIndex;
