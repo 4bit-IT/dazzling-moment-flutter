@@ -46,7 +46,6 @@ class DamoAppBar {
     );
   }
 
-  //hintStyle: GoogleFonts.lato(color: Colors.black38),
   dynamic appBar(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,

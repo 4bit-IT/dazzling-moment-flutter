@@ -13,6 +13,7 @@ class _SignInState extends State<SignIn> {
     try {
       String authCode = await AuthCodeClient.instance.request();
       print("성공");
+      Navigator.pop(context);
       Navigator.push(
         context,
         MaterialPageRoute(
