@@ -1,4 +1,4 @@
-import 'package:damo/screen/home_main.dart';
+import 'package:damo/screen/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/all.dart';
@@ -17,7 +17,7 @@ class _SignInState extends State<SignIn> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeMain(),
+          builder: (context) => Loading(),
         ),
       );
     } on KakaoAuthException catch (e) {

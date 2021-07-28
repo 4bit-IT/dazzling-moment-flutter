@@ -1,5 +1,6 @@
 import 'package:damo/screen/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'bottom_navigaton.dart';
 import 'location/look_location.dart';
 import 'community/look_community.dart';
@@ -26,58 +27,81 @@ class _HomeMainState extends State<HomeMain> {
     SearchPage(),
   ];
 
+
+  DateTime? backbuttonpressedTime;
+  Future<bool> onWillPop() async {
+    DateTime currentTime = DateTime.now();
+
+    //Statement 1 Or statement2
+    bool backButton = backbuttonpressedTime == null ||
+        currentTime.difference(backbuttonpressedTime!) > Duration(seconds: 3);
+
+    if (backButton) {
+      backbuttonpressedTime = currentTime;
+      Fluttertoast.showToast(
+          msg: "'뒤로' 버튼을 한번 더 누르시면 종료됩니다.",
+          backgroundColor: Colors.black,
+          textColor: Colors.white);
+      return false;
+    }
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: tabBar.tabBar(context),
-        bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 0),
-        body: TabBarView(
-          children: [
-            Container(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        DropdownButton(
-                          value: selectedDropdown,
-                          items: dropdownList.map(
-                            (value) {
-                              return DropdownMenuItem(
-                                value: value,
-                                child: Container(
-                                  child: Text(value),
-                                ),
-                              );
-                            },
-                          ).toList(),
-                          onChanged: (value) {
-                            setState(() {
-                              selectedDropdown = value.toString();
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          width: 50,
-                        ),
-                      ],
-                    ),
-                    SingleChildScrollView(
-                      child: Column(
+    return WillPopScope(
+      onWillPop: onWillPop,
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: tabBar.tabBar(context),
+          bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 0),
+          body: TabBarView(
+            children: [
+              Container(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          for (int i = 0; i < 10; i++) productList()!,
+                          DropdownButton(
+                            value: selectedDropdown,
+                            items: dropdownList.map(
+                              (value) {
+                                return DropdownMenuItem(
+                                  value: value,
+                                  child: Container(
+                                    child: Text(value),
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                selectedDropdown = value.toString();
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            width: 50,
+                          ),
                         ],
                       ),
-                    ),
-                  ],
+                      SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            for (int i = 0; i < 10; i++) productList()!,
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Text('꽃임'),
-          ],
+              Text('꽃임'),
+            ],
+          ),
         ),
       ),
     );
