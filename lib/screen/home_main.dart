@@ -1,10 +1,11 @@
 import 'package:damo/screen/app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/services.dart';
 import 'bottom_navigaton.dart';
 import 'location/look_location.dart';
 import 'community/look_community.dart';
 import 'search/seach_product.dart';
+import 'package:damo/back_button_clicked.dart';
 
 class HomeMain extends StatefulWidget {
   @override
@@ -27,30 +28,10 @@ class _HomeMainState extends State<HomeMain> {
     SearchPage(),
   ];
 
-
-  DateTime? backbuttonpressedTime;
-  Future<bool> onWillPop() async {
-    DateTime currentTime = DateTime.now();
-
-    //Statement 1 Or statement2
-    bool backButton = backbuttonpressedTime == null ||
-        currentTime.difference(backbuttonpressedTime!) > Duration(seconds: 3);
-
-    if (backButton) {
-      backbuttonpressedTime = currentTime;
-      Fluttertoast.showToast(
-          msg: "'뒤로' 버튼을 한번 더 누르시면 종료됩니다.",
-          backgroundColor: Colors.black,
-          textColor: Colors.white);
-      return false;
-    }
-    return true;
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: onWillPop,
+      onWillPop: BackButtonClicked().onWillPop,
       child: DefaultTabController(
         length: 2,
         child: Scaffold(
