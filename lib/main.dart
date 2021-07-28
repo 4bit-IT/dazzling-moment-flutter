@@ -14,6 +14,9 @@ class Damo extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SignIn(),
+      theme: ThemeData(
+        focusColor: Colors.grey,
+      ),
     );
   }
 }
