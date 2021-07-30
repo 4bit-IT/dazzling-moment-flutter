@@ -14,10 +14,8 @@ class _LoadingState extends State<Loading> {
   void initState() {
     Timer(
       Duration(seconds: 1),
-      () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomeMain()),
-      ),
+      () => Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => HomeMain())),
     );
     super.initState();
   }
@@ -29,10 +27,10 @@ class _LoadingState extends State<Loading> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: AssetImage('lib/images/logo.png'), fit: BoxFit.contain),
+            image: AssetImage('assets/images/logo.png'), fit: BoxFit.contain),
       ),
       child: Stack(
-        children: <Widget>[
+        children: [
           Positioned(
             top: 0.0,
             left: 0.0,

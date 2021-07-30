@@ -5,10 +5,14 @@ import 'search/seach_product.dart';
 class DamoAppBar {
   dynamic tabBar(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false,
+      iconTheme: IconThemeData(
+        color: Colors.red,
+      ),
+      // automaticallyImplyLeading: false,
+      centerTitle: true,
       elevation: 0.0,
       backgroundColor: Colors.white,
-      title: Image.asset('lib/images/logo.png'),
+      title: Image.asset('assets/images/logo.png'),
       actions: [
         IconButton(
           icon: Icon(Icons.search),
@@ -19,14 +23,19 @@ class DamoAppBar {
           color: Colors.red,
           iconSize: 30.0,
         ),
-        SizedBox(width: 10.0),
         IconButton(
-          icon: Icon(Icons.person),
+          icon: Icon(Icons.notifications_outlined),
           onPressed: () {},
           color: Colors.red,
           iconSize: 30.0,
         ),
         SizedBox(width: 10.0),
+        // IconButton(
+        //   icon: Icon(Icons.menu),
+        //   onPressed: () {},
+        //   color: Colors.red,
+        //   iconSize: 30.0,
+        // ),
       ],
       bottom: TabBar(
         labelStyle: GoogleFonts.lato(color: Colors.black38, fontSize: 15.0),
@@ -40,7 +49,10 @@ class DamoAppBar {
             text: '핸드메이드 케이크',
             icon: Icon(Icons.cake_outlined),
           ),
-          Tab(text: '꽃', icon: Icon(Icons.yard_outlined)),
+          Tab(
+            text: '꽃',
+            icon: Icon(Icons.yard_outlined),
+          ),
         ],
       ),
     );
@@ -48,10 +60,13 @@ class DamoAppBar {
 
   dynamic appBar(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false,
+      centerTitle: true,
+      iconTheme: IconThemeData(
+        color: Colors.red,
+      ),
       elevation: 0.0,
       backgroundColor: Colors.white,
-      title: Image.asset('lib/images/logo.png'),
+      title: Image.asset('assets/images/logo.png'),
       actions: [
         IconButton(
           icon: Icon(Icons.search),
@@ -62,9 +77,8 @@ class DamoAppBar {
           color: Colors.red,
           iconSize: 30.0,
         ),
-        SizedBox(width: 10.0),
         IconButton(
-          icon: Icon(Icons.person),
+          icon: Icon(Icons.notifications_outlined),
           onPressed: () {},
           color: Colors.red,
           iconSize: 30.0,

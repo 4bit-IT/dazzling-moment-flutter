@@ -1,10 +1,7 @@
 import 'package:damo/screen/app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import '../drawer.dart';
 import 'bottom_navigaton.dart';
-import 'location/look_location.dart';
-import 'community/look_community.dart';
-import 'search/seach_product.dart';
 import 'package:damo/back_button_clicked.dart';
 
 class HomeMain extends StatefulWidget {
@@ -16,17 +13,6 @@ class _HomeMainState extends State<HomeMain> {
   DamoAppBar tabBar = DamoAppBar();
   final dropdownList = ['거리순', '추천순', '인기순'];
   var selectedDropdown = '거리순';
-  var selectedBottomNavigationBarIndex = 0;
-
-  List bottomNavigationBarPages = [
-    HomeMain(),
-    LookLocation(),
-    LookCommunity(),
-  ];
-
-  List appBarPages = [
-    SearchPage(),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +21,7 @@ class _HomeMainState extends State<HomeMain> {
       child: DefaultTabController(
         length: 2,
         child: Scaffold(
+          drawer: DrawerButton(),
           appBar: tabBar.tabBar(context),
           bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 0),
           body: TabBarView(
@@ -88,28 +75,16 @@ class _HomeMainState extends State<HomeMain> {
     );
   }
 
-  void onTapped(int index) {
-    if (selectedBottomNavigationBarIndex != index)
-      setState(() {
-        selectedBottomNavigationBarIndex = index;
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => bottomNavigationBarPages[index]),
-        );
-      });
-  }
-
   Widget? productList() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Image.asset('lib/images/logo.png'),
+        Image.asset('assets/images/logo.png'),
         SizedBox(
           width: 20,
         ),
-        Image.asset('lib/images/logo.png'),
+        Image.asset('assets/images/logo.png'),
       ],
     );
   }

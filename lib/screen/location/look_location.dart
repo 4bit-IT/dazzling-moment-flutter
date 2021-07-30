@@ -1,6 +1,7 @@
 import 'package:damo/screen/app_bar.dart';
 import 'package:flutter/material.dart';
 
+import '../../drawer.dart';
 import '../bottom_navigaton.dart';
 
 class LookLocation extends StatefulWidget {
@@ -15,6 +16,7 @@ class _LookLocationState extends State<LookLocation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerButton(),
       appBar: appBar.appBar(context),
       bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 1),
     );

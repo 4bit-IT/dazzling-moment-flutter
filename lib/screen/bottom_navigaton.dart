@@ -1,6 +1,7 @@
 import 'package:damo/screen/community/look_community.dart';
 import 'package:damo/screen/home_main.dart';
 import 'package:damo/screen/location/look_location.dart';
+import 'package:damo/screen/myPage/my_page.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -17,6 +18,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     HomeMain(),
     LookLocation(),
     LookCommunity(),
+    MyPage(),
   ];
 
   var selectedBottomNavigationBarIndex = 0;
@@ -25,14 +27,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
     if (selectedBottomNavigationBarIndex != widget.bottomNavigationIndex!) {
       setState(() {
         widget.bottomNavigationIndex = selectedBottomNavigationBarIndex;
-        Navigator.pop(context);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                bottomNavigationBarPages[selectedBottomNavigationBarIndex],
-          ),
-        );
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  bottomNavigationBarPages[selectedBottomNavigationBarIndex],
+            ));
       });
     }
   }
@@ -40,9 +40,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_cart),
+          icon: Icon(Icons.storefront),
           label: '상품 보기',
         ),
         BottomNavigationBarItem(
@@ -52,6 +53,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
         BottomNavigationBarItem(
           icon: Icon(Icons.message_outlined),
           label: '커뮤니티',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.perm_identity),
+          label: '내 정보',
         ),
       ],
       selectedItemColor: Colors.red,
