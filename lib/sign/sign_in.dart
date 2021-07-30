@@ -1,4 +1,4 @@
-import 'package:damo/screen/home_main.dart';
+import 'package:damo/screen/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -20,12 +20,10 @@ class _SignInState extends State<SignIn> {
     try {
       String authCode = await AuthCodeClient.instance.request();
       print("성공");
-      Navigator.pop(context);
-      Navigator.push(
+      print(authCode);
+      Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (context) => HomeMain(),
-        ),
+        MaterialPageRoute(builder: (context) => Loading()),
       );
     } on KakaoAuthException catch (e) {
       print("동의 취소");
@@ -53,7 +51,7 @@ class _SignInState extends State<SignIn> {
                   SizedBox(
                     height: 50,
                   ),
-                  Image.asset('lib/images/logo.png'),
+                  Image.asset('assets/images/logo.png'),
                   SizedBox(
                     height: 20,
                   ),
@@ -123,7 +121,7 @@ class _SignInState extends State<SignIn> {
                         loginButtonClicked();
                       },
                       child: Image.asset(
-                        'lib/images/kakao_login_medium_wide.png',
+                        'assets/images/kakao_login_medium_wide.png',
                       ),
                     ),
                   ),
@@ -133,11 +131,11 @@ class _SignInState extends State<SignIn> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: 150,
+                          width: 105,
                           child: TextButton(
                             onPressed: () {},
                             child: Text(
-                              '아이디•비밀번호 찾기',
+                              '계정찾기',
                               style: GoogleFonts.archivo(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black38,

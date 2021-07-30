@@ -2,12 +2,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class BackButtonClicked{
+class BackButtonClicked {
   DateTime? backbuttonpressedTime;
   Future<bool> onWillPop() async {
     DateTime currentTime = DateTime.now();
-
-    //Statement 1 Or statement2
     bool backButton = backbuttonpressedTime == null ||
         currentTime.difference(backbuttonpressedTime!) > Duration(seconds: 3);
 
