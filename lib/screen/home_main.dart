@@ -76,22 +76,21 @@ class _HomeMainState extends State<HomeMain> {
   }
 
   Widget? productList() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return Column(
       children: [
-        Image.asset('assets/images/logo.png'),
-        SizedBox(
-          width: 20,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset('assets/images/logo.png'),
+            SizedBox(
+              width: 20,
+            ),
+            Image.asset('assets/images/logo.png'),
+          ],
         ),
-        Image.asset('assets/images/logo.png'),
+        SizedBox(height: 10.0,),
       ],
-    );
-  }
-
-  Widget? getSizedBox() {
-    return SizedBox(
-      height: 20.0,
     );
   }
 }

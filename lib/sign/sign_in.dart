@@ -64,10 +64,14 @@ class _SignInState extends State<SignIn> {
                         icon: Icon(
                           Icons.email_outlined,
                           size: 20.0,
+                          color: Colors.greenAccent,
                         ),
                         hintText: '아이디',
                         contentPadding:
                             EdgeInsets.fromLTRB(5.0, 10.0, 20.0, 10.0),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.redAccent),
+                        ),
                       ),
                     ),
                   ),
@@ -80,10 +84,14 @@ class _SignInState extends State<SignIn> {
                         icon: Icon(
                           Icons.vpn_key_outlined,
                           size: 20.0,
+                          color: Colors.greenAccent,
                         ),
                         hintText: '비밀번호',
                         contentPadding:
                             EdgeInsets.fromLTRB(5.0, 10.0, 20.0, 10.0),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.greenAccent),
+                        ),
                       ),
                     ),
                   ),
