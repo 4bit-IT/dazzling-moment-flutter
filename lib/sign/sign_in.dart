@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kakao_flutter_sdk/all.dart';
+import 'package:transition/transition.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -45,7 +46,7 @@ class _SignInState extends State<SignIn> {
           child: SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.only(
-                  left: 40.0, top: 0.0, right: 40.0, bottom: 0.0),
+                  left: 40.0, top: 80.0, right: 40.0, bottom: 0.0),
               child: Column(
                 children: [
                   SizedBox(
@@ -56,20 +57,37 @@ class _SignInState extends State<SignIn> {
                     height: 20,
                   ),
                   Container(
-                    child: TextField(
-                      controller: idController,
-                      decoration: InputDecoration(labelText: '아이디'),
+                    child: TextFormField(
                       keyboardType: TextInputType.emailAddress,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        icon: Icon(
+                          Icons.email_outlined,
+                          size: 20.0,
+                        ),
+                        hintText: '아이디',
+                        contentPadding:
+                            EdgeInsets.fromLTRB(5.0, 10.0, 20.0, 10.0),
+                      ),
                     ),
                   ),
+                  SizedBox(height: 12.0),
                   Container(
-                    child: TextField(
+                    child: TextFormField(
+                      autofocus: false,
                       obscureText: true,
-                      controller: pwController,
-                      decoration: InputDecoration(labelText: '비밀번호'),
-                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                        icon: Icon(
+                          Icons.vpn_key_outlined,
+                          size: 20.0,
+                        ),
+                        hintText: '비밀번호',
+                        contentPadding:
+                            EdgeInsets.fromLTRB(5.0, 10.0, 20.0, 10.0),
+                      ),
                     ),
                   ),
+                  SizedBox(height: 12.0),
                   Row(
                     children: [
                       Checkbox(
@@ -87,8 +105,10 @@ class _SignInState extends State<SignIn> {
                       ),
                       Text(
                         '자동 로그인',
-                        style: GoogleFonts.lato(
-                          fontSize: 15.0,
+                        style: TextStyle(
+                          fontFamily: 'NotoSans',
+                          color: Colors.black87,
+                          fontSize: 14.0,
                         ),
                       ),
                     ],
@@ -106,11 +126,22 @@ class _SignInState extends State<SignIn> {
                           color: Colors.pink.shade100,
                           borderRadius: BorderRadius.circular(5.0),
                         ),
-                        child: Text(
-                          '로그인',
-                          style: GoogleFonts.lato(
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromRGBO(45, 41, 38, 39)),
+                        child: Row(
+                          //  mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(width: 10.0),
+                            Icon(
+                              Icons.email_outlined,
+                              color: Colors.grey[850],
+                            ),
+                            SizedBox(width: 100.0),
+                            Text(
+                              '로그인',
+                              style: GoogleFonts.lato(
+                                  fontWeight: FontWeight.w900,
+                                  color: Color.fromRGBO(45, 41, 38, 39)),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -136,10 +167,11 @@ class _SignInState extends State<SignIn> {
                             onPressed: () {},
                             child: Text(
                               '계정찾기',
-                              style: GoogleFonts.archivo(
-                                fontWeight: FontWeight.bold,
+                              style: TextStyle(
+                                fontFamily: 'NotoSans',
                                 color: Colors.black38,
                                 fontSize: 14,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -150,10 +182,11 @@ class _SignInState extends State<SignIn> {
                             onPressed: () {},
                             child: Text(
                               '회원가입',
-                              style: GoogleFonts.archivo(
-                                fontWeight: FontWeight.bold,
+                              style: TextStyle(
+                                fontFamily: 'NotoSans',
                                 color: Colors.black38,
                                 fontSize: 14,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -161,15 +194,22 @@ class _SignInState extends State<SignIn> {
                         SizedBox(
                           width: 100,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  Transition(
+                                      child: Loading(),
+                                      transitionEffect: TransitionEffect.FADE));
+                            },
                             child: Container(
                               decoration: BoxDecoration(),
                               child: Text(
                                 '둘러보기',
-                                style: GoogleFonts.archivo(
-                                  fontWeight: FontWeight.bold,
+                                style: TextStyle(
+                                  fontFamily: 'NotoSans',
                                   color: Colors.black38,
                                   fontSize: 14,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),

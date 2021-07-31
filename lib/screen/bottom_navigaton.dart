@@ -3,6 +3,7 @@ import 'package:damo/screen/home_main.dart';
 import 'package:damo/screen/location/look_location.dart';
 import 'package:damo/screen/myPage/my_page.dart';
 import 'package:flutter/material.dart';
+import 'package:transition/transition.dart';
 
 // ignore: must_be_immutable
 class BottomNavigation extends StatefulWidget {
@@ -29,10 +30,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
         widget.bottomNavigationIndex = selectedBottomNavigationBarIndex;
         Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  bottomNavigationBarPages[selectedBottomNavigationBarIndex],
-            ));
+            Transition(
+                child:
+                    bottomNavigationBarPages[selectedBottomNavigationBarIndex],
+                transitionEffect: TransitionEffect.FADE));
       });
     }
   }

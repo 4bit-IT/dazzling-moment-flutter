@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:damo/screen/home_main.dart';
 
 import 'package:flutter/material.dart';
+import 'package:transition/transition.dart';
 
 class Loading extends StatefulWidget {
   @override
@@ -13,9 +14,11 @@ class _LoadingState extends State<Loading> {
   @override
   void initState() {
     Timer(
-      Duration(seconds: 1),
+      Duration(seconds: 2),
       () => Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomeMain())),
+          context,
+          Transition(
+              child: HomeMain(), transitionEffect: TransitionEffect.FADE)),
     );
     super.initState();
   }
