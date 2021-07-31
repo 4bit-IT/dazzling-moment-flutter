@@ -24,7 +24,7 @@ class _SearchPageState extends State<SearchPage> {
           keyboardType: TextInputType.text,
           controller: searchTextEditingController,
           decoration: InputDecoration(
-            hintText: '검색하기',
+            hintText: '검색어를 입력하세요.',
             hintStyle: GoogleFonts.lato(color: Colors.black38),
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.pink.shade200),

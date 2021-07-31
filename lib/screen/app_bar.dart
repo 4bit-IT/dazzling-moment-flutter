@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:transition/transition.dart';
 import 'search/seach_product.dart';
 
 class DamoAppBar {
@@ -18,7 +19,10 @@ class DamoAppBar {
           icon: Icon(Icons.search),
           onPressed: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => SearchPage()));
+                context,
+                Transition(
+                    child: SearchPage(),
+                    transitionEffect: TransitionEffect.BOTTOM_TO_TOP));
           },
           color: Colors.red,
           iconSize: 30.0,
@@ -72,7 +76,10 @@ class DamoAppBar {
           icon: Icon(Icons.search),
           onPressed: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => SearchPage()));
+                context,
+                Transition(
+                    child: SearchPage(),
+                    transitionEffect: TransitionEffect.BOTTOM_TO_TOP));
           },
           color: Colors.red,
           iconSize: 30.0,
