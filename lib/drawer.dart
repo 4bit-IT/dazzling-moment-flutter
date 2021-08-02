@@ -75,9 +75,6 @@ class _DrawerButtonState extends State<DrawerButton> {
             ),
             accountName: Text('윤중건'),
             accountEmail: Text('zhaqh056@naver.com'),
-            onDetailsPressed: () {
-              print('clicked');
-            },
             decoration: BoxDecoration(
               color: Colors.red[200],
               borderRadius: BorderRadius.only(
@@ -104,7 +101,7 @@ class _DrawerButtonState extends State<DrawerButton> {
             ),
             title: Text('이벤트'),
             onTap: () {
-              print('Setting is clicked');
+              print('Event is clicked');
             },
             // trailing: Icon(Icons.add),
           ),
@@ -121,7 +118,7 @@ class _DrawerButtonState extends State<DrawerButton> {
             ),
             title: Text('버전정보'),
             onTap: () {
-              print('Q&A is clicked');
+              print('Version is clicked');
             },
             // trailing: Icon(Icons.add),
           ),
@@ -132,7 +129,7 @@ class _DrawerButtonState extends State<DrawerButton> {
             ),
             title: Text('이용약관'),
             onTap: () {
-              print('Q&A is clicked');
+              print('Terms of service is clicked');
             },
             // trailing: Icon(Icons.add),
           ),
@@ -149,7 +146,7 @@ class _DrawerButtonState extends State<DrawerButton> {
             ),
             title: Text('환경설정'),
             onTap: () {
-              print('Q&A is clicked');
+              print('Settings is clicked');
             },
             // trailing: Icon(Icons.add),
           ),

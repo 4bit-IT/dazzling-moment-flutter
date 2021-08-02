@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class BackButtonClicked {
-  DateTime? backbuttonpressedTime;
+  DateTime? backButtonPressedTime;
   Future<bool> onWillPop() async {
     DateTime currentTime = DateTime.now();
-    bool backButton = backbuttonpressedTime == null ||
-        currentTime.difference(backbuttonpressedTime!) > Duration(seconds: 3);
+    bool backButton = backButtonPressedTime == null ||
+        currentTime.difference(backButtonPressedTime!) > Duration(seconds: 3);
 
     if (backButton) {
-      backbuttonpressedTime = currentTime;
+      backButtonPressedTime = currentTime;
       Fluttertoast.showToast(
           msg: "'뒤로' 버튼을 한번 더 누르시면 종료됩니다.",
           backgroundColor: Colors.black,
