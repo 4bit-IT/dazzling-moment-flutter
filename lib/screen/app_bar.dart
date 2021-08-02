@@ -50,12 +50,30 @@ class DamoAppBar {
         isScrollable: false,
         tabs: [
           Tab(
-            text: '핸드메이드 케이크',
-            icon: Icon(Icons.cake_outlined),
-          ),
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('핸드메이드 케이크'),
+              SizedBox(
+                width: 5,
+              ),
+              Icon(Icons.cake_outlined),
+            ],
+          )
+
+              //icon: Icon(Icons.cake_outlined,),
+              ),
           Tab(
-            text: '꽃',
-            icon: Icon(Icons.yard_outlined),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('꽃'),
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(Icons.yard_outlined)
+              ],
+            ),
           ),
         ],
       ),
