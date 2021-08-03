@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import '../app_bar.dart';
 import '../bottom_navigaton.dart';
 import 'package:damo/back_button_clicked.dart';
-import 'package:cupertino_icons/cupertino_icons.dart';
 
 class MyPage extends StatefulWidget {
   MyPage({this.bottomNavigationIndex});
@@ -42,7 +41,6 @@ class _MyPageState extends State<MyPage> {
                       child: Row(
                         children: [
                           IconButton(
-
                             onPressed: () {},
                             icon: Image.asset('assets/images/logo.png'),
                             iconSize: 100,
@@ -86,7 +84,7 @@ class _MyPageState extends State<MyPage> {
                           onPressed: () {},
                           child: Text(
                             '개인정보 변경',
-                            style: GoogleFonts.lato(
+                            style: TextStyle(
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black),
@@ -196,155 +194,175 @@ class _MyPageState extends State<MyPage> {
                 color: Colors.black12,
                 thickness: 8,
               ),
-              Container(
-                padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-                child: Column(
-                  children: [
-                    Container(
-                      height: 60,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.mic_none,
-                              color: Colors.black,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              '공지사항',
-                              style: GoogleFonts.lato(
+              SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 60,
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.mic_none,
                                 color: Colors.black,
-                                fontSize: 16,
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                '공지사항',
+                                style: GoogleFonts.lato(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      height: 60,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.event,
-                              color: Colors.black,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              '이벤트',
-                              style: GoogleFonts.lato(
+                      Divider(
+                        height: 1.0,
+                      ),
+                      Container(
+                        height: 60,
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.event,
                                 color: Colors.black,
-                                fontSize: 16,
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                '이벤트',
+                                style: GoogleFonts.lato(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      height: 60,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.text_alignleft,
-                              color: Colors.black,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              '내가 쓴 글',
-                              style: GoogleFonts.lato(
+                      Divider(
+                        height: 1.0,
+                      ),
+                      Container(
+                        height: 60,
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              Icon(
+                                CupertinoIcons.text_alignleft,
                                 color: Colors.black,
-                                fontSize: 16,
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                '내가 쓴 글',
+                                style: GoogleFonts.lato(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      height: 60,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.chat_bubble_text,
-                              color: Colors.black,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              '내가 쓴 댓글',
-                              style: GoogleFonts.lato(
+                      Divider(
+                        height: 1.0,
+                      ),
+                      Container(
+                        height: 60,
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              Icon(
+                                CupertinoIcons.chat_bubble_text,
                                 color: Colors.black,
-                                fontSize: 16,
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                '내가 쓴 댓글',
+                                style: GoogleFonts.lato(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      height: 60,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.doc_plaintext,
-                              color: Colors.black,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              '이용약관',
-                              style: GoogleFonts.lato(
+                      Divider(
+                        height: 1.0,
+                      ),
+                      Container(
+                        height: 60,
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              Icon(
+                                CupertinoIcons.doc_plaintext,
                                 color: Colors.black,
-                                fontSize: 16,
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                '이용약관',
+                                style: GoogleFonts.lato(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      height: 60,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.exclamationmark_circle,
-                              color: Colors.black,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              '버전정보',
-                              style: GoogleFonts.lato(
+                      Divider(
+                        height: 1.0,
+                      ),
+                      Container(
+                        height: 60,
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Row(
+                            children: [
+                              Icon(
+                                CupertinoIcons.exclamationmark_circle,
                                 color: Colors.black,
-                                fontSize: 16,
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                '버전정보',
+                                style: GoogleFonts.lato(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      Divider(
+                        height: 1.0,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
