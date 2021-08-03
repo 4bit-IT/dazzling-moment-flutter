@@ -3,6 +3,7 @@ import 'package:damo/screen/home_main.dart';
 import 'package:damo/screen/location/look_location.dart';
 import 'package:damo/screen/myPage/my_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:transition/transition.dart';
 
 // ignore: must_be_immutable
@@ -15,7 +16,9 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  List bottomNavigationBarPages = [
+  ScrollController _scrollController = ScrollController();
+
+  static List bottomNavigationBarPages = [
     HomeMain(),
     LookLocation(),
     LookCommunity(),
@@ -25,7 +28,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
   var selectedBottomNavigationBarIndex = 0;
 
   void onTapped(int selectedBottomNavigationBarIndex) {
-    if (selectedBottomNavigationBarIndex != widget.bottomNavigationIndex!) {
+    if (selectedBottomNavigationBarIndex == widget.bottomNavigationIndex!) {
+      //누르면 맨 위로 가야함.
+    } else if (selectedBottomNavigationBarIndex !=
+        widget.bottomNavigationIndex!) {
       setState(() {
         widget.bottomNavigationIndex = selectedBottomNavigationBarIndex;
         Navigator.pushReplacement(

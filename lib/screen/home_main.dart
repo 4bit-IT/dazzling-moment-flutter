@@ -45,93 +45,133 @@ class _HomeMainState extends State<HomeMain> {
         fit: BoxFit.fill,
       ),
     ];
-    return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 15.0,
-            mainAxisExtent: 340.0,
-            crossAxisSpacing: 10.0,
-            childAspectRatio: 1.0),
-        padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-        itemCount: imageList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            child: Column(
-              children: [
-                Container(
-                  child: imageList[index],
-                  height: 180.0,
-                  width: 200.0,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        SizedBox(
+          width: 10.0,
+        ),
+        DropdownButton(
+          value: selectedDropdown,
+          items: dropdownList.map(
+            (value) {
+              return DropdownMenuItem(
+                value: value,
+                child: Container(
+                  child: Text(value),
                 ),
-                SizedBox(height: 5.0),
-                Text(
-                  "곰돌곰돌",
-                  style: TextStyle(
-                      fontFamily: 'NotoSans',
-                      color: Colors.black87,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 5.0),
-                Text(
-                  '서면에서 입소문난 수제 케이크 안좆모안좆모안좆모안좆모안좆모안좆모안좆모',
-                  style: TextStyle(color: Colors.black54),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "내 위치에서",
-                      style: TextStyle(
-                          fontFamily: 'NotoSans', color: Colors.black87),
+              );
+            },
+          ).toList(),
+          onChanged: (value) {
+            setState(() {
+              selectedDropdown = value.toString();
+            });
+          },
+        ),
+        Expanded(
+          child: GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 15.0,
+                  mainAxisExtent: 360.0,
+                  crossAxisSpacing: 6.0,
+                  childAspectRatio: 1.0),
+              padding: const EdgeInsets.fromLTRB(5.5, 0.0, 5.5, 0.0),
+              itemCount: imageList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return InkWell(
+                  onTap: () {}, //클릭시 이동
+                  child: Card(
+                    elevation: 3.5, //음영
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12), //둥글기
                     ),
-                    Row(
+                    //테두리를 입체감으로 줌.
+                    shadowColor: Colors.black87,
+                    // decoration: BoxDecoration(
+                    //     border: Border.all(color: Colors.grey, width: 0.5)),
+                    child: Column(
                       children: [
-                        Text(
-                          "128 m",
-                          style: TextStyle(color: Colors.red),
+                        Container(
+                          child: imageList[index],
+                          height: 180.0,
+                          width: 200.0,
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.star,
-                          color: Colors.orangeAccent,
-                        ),
+                        SizedBox(height: 5.0),
                         Text(
-                          "5.0",
+                          "곰돌곰돌",
                           style: TextStyle(
+                              fontFamily: 'NotoSans',
                               color: Colors.black87,
+                              fontSize: 16.0,
                               fontWeight: FontWeight.bold),
                         ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.favorite_border_outlined,
-                          ),
+                        SizedBox(height: 5.0),
+                        Text(
+                          ' 서면에서 입소문난 수제 케이크 안좆모안좆모안좆모안좆모안좆모안좆모안좆모', //최대 3줄까지 지정.
+                          style: TextStyle(color: Colors.black54),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              " 내 위치에서",
+                              style: TextStyle(
+                                  fontFamily: 'NotoSans',
+                                  color: Colors.black87),
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  "128 m ",
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.orangeAccent,
+                                ),
+                                Text(
+                                  "5.0",
+                                  style: TextStyle(
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    Icons.favorite_border_outlined,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text('99+구매 '),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        Text('99+구매'),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          );
-        });
+                  ),
+                );
+              }),
+        ),
+      ],
+    );
   }
 
   @override
@@ -147,38 +187,6 @@ class _HomeMainState extends State<HomeMain> {
           body: TabBarView(
             children: [
               viewProduct(),
-              // Container(
-              //   child: Column(
-              //     children: [
-              //       Row(
-              //         mainAxisAlignment: MainAxisAlignment.end,
-              //         children: [
-              //           DropdownButton(
-              //             value: selectedDropdown,
-              //             items: dropdownList.map(
-              //               (value) {
-              //                 return DropdownMenuItem(
-              //                   value: value,
-              //                   child: Container(
-              //                     child: Text(value),
-              //                   ),
-              //                 );
-              //               },
-              //             ).toList(),
-              //             onChanged: (value) {
-              //               setState(() {
-              //                 selectedDropdown = value.toString();
-              //               });
-              //             },
-              //           ),
-              //           SizedBox(
-              //             width: 50,
-              //           ),
-              //         ],
-              //       ),
-              //     ],
-              //   ),
-              // ),
               Text('꽃임'),
             ],
           ),
