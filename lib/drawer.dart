@@ -13,15 +13,10 @@ class _DrawerButtonState extends State<DrawerButton> {
         context: context,
         builder: (context) => AlertDialog(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30.0)), //테두리 둥글기
+                  borderRadius: BorderRadius.circular(12.0)), //테두리 둥글기
               title: Text(
-                "정말로 로그아웃 하시겠습니까?",
-                style: TextStyle(
-                    fontFamily: 'NotoSans',
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w400),
+                "로그아웃 하시겠습니까?",
               ),
-
               actions: [
                 TextButton(
                   child: Text(
