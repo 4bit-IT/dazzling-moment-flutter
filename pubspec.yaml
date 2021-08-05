@@ -27,7 +27,7 @@ dependencies:
   cupertino_icons: ^1.0.3
   google_fonts: ^2.1.0
   transition :                # 화면전환 애니메이션
-  fluttertoast: ^8.0.7  
+  fluttertoast: ^8.0.8
  # kakaomap_webview: ^0.2.1+1  # 카카오 맵
   google_maps_flutter: ^2.0.6 # 구글 맵
 
