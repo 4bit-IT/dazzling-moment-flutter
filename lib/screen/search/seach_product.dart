@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../app_bar.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -7,50 +9,28 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  TextEditingController searchTextEditingController = TextEditingController();
-
-  controlSearching(str) {
-    print(str);
-  }
-
+  DamoAppBar appBar = DamoAppBar();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pink.shade200,
+        backgroundColor: Colors.red[200],
+        iconTheme: IconThemeData(
+          color: Colors.black54,
+        ),
         automaticallyImplyLeading: true, //뒤로 가기 제공
 
-        title: TextFormField(
-          keyboardType: TextInputType.text,
-          controller: searchTextEditingController,
-          decoration: InputDecoration(
-            hintText: '검색어를 입력하세요.',
-            hintStyle: GoogleFonts.lato(color: Colors.black38),
-            enabledBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Colors.pink.shade200),
-            ),
-            focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.pink.shade200,
-              ),
-            ),
-            filled: true,
-            prefixIcon: Icon(
-              Icons.search,
-              color: Colors.black38,
-            ),
-            suffixIcon: IconButton(
-              icon: Icon(
-                Icons.clear,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                searchTextEditingController.clear();
-              },
-            ),
-          ),
-          style: TextStyle(fontSize: 19, color: Colors.black87),
-          onFieldSubmitted: controlSearching,
+        title: CupertinoSearchTextField(
+          padding: const EdgeInsetsDirectional.fromSTEB(8.0, 10.0, 0.0, 10.0),
+          placeholder: '검색어를 입력하세요.',
+          placeholderStyle: TextStyle(color: Colors.black87),
+          onChanged: (String value) {
+            print('The text has changed to: $value');
+          },
+          onSubmitted: (String value) {
+            print('Submitted text: $value');
+          },
+          // backgroundColor: Colors.redAccent[50],
         ),
       ),
     );

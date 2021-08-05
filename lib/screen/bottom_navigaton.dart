@@ -3,7 +3,6 @@ import 'package:damo/screen/home_main.dart';
 import 'package:damo/screen/location/look_location.dart';
 import 'package:damo/screen/myPage/my_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:transition/transition.dart';
 
 // ignore: must_be_immutable
@@ -16,8 +15,6 @@ class BottomNavigation extends StatefulWidget {
 }
 
 class _BottomNavigationState extends State<BottomNavigation> {
-  ScrollController _scrollController = ScrollController();
-
   static List bottomNavigationBarPages = [
     HomeMain(),
     LookLocation(),

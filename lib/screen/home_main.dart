@@ -78,7 +78,7 @@ class _HomeMainState extends State<HomeMain> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 15.0,
-                    mainAxisExtent: 360.0,
+                    mainAxisExtent: 330.0,
                     crossAxisSpacing: 6.0,
                     childAspectRatio: 1.0),
                 padding: const EdgeInsets.fromLTRB(5.5, 0.0, 5.5, 0.0),
@@ -97,9 +97,9 @@ class _HomeMainState extends State<HomeMain> {
                       });
                     }, //클릭시 이동
                     child: Card(
-                      elevation: 3.5, //음영
+                      // elevation: 3.5, //음영
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12), //둥글기
+                        borderRadius: BorderRadius.circular(0), //둥글기
                       ),
                       //테두리를 입체감으로 줌.
                       shadowColor: Colors.black87,
@@ -123,32 +123,32 @@ class _HomeMainState extends State<HomeMain> {
                           ),
                           SizedBox(height: 5.0),
                           Text(
-                            ' 서면에서 입소문난 수제 케이크 안좆모안좆모안좆모안좆모안좆모안좆모안좆모',
+                            ' 서면에서 입소문난 수제 케이크 서면에서 입소문난 수제 케이크 서면에서 입소문난 수제 케이크 ',
                             //최대 3줄까지 지정.
                             style: TextStyle(color: Colors.black54),
                           ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                " 내 위치에서",
-                                style: TextStyle(
-                                    fontFamily: 'NotoSans',
-                                    color: Colors.black87),
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "128 m ",
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                          // SizedBox(
+                          //   height: 10,
+                          // ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     Text(
+                          //       " 내 위치에서",
+                          //       style: TextStyle(
+                          //           fontFamily: 'NotoSans',
+                          //           color: Colors.black87),
+                          //     ),
+                          //     Row(
+                          //       children: [
+                          //         Text(
+                          //           "128 m ",
+                          //           style: TextStyle(color: Colors.red),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ],
+                          // ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -164,19 +164,19 @@ class _HomeMainState extends State<HomeMain> {
                                         color: Colors.black87,
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.favorite_border_outlined,
-                                    ),
-                                  ),
                                 ],
                               ),
-                              Row(
-                                children: [
-                                  Text('99+구매 '),
-                                ],
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.favorite_border_outlined,
+                                ),
                               ),
+                              // Row(
+                              //   children: [
+                              //     Text('99+구매 '),
+                              //   ],
+                              // ),
                             ],
                           ),
                         ],

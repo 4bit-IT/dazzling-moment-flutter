@@ -80,15 +80,15 @@ class _ProductInfoState extends State<ProductInfo> {
         actions: [
           CupertinoButton(
             minSize: 0,
-            padding: EdgeInsets.all(0),
+            // padding: EdgeInsets.all(0),
             child: Column(
               children: [
-                Text(
-                  '장바구니',
-                  style: GoogleFonts.lato(
-                    color: Colors.black,
-                  ),
-                ),
+                // Text(
+                //   '장바구니',
+                //   style: GoogleFonts.lato(
+                //     color: Colors.black,
+                //   ),
+                // ),
                 Icon(
                   CupertinoIcons.cart,
                   color: Colors.black,
@@ -194,7 +194,8 @@ class _ProductInfoState extends State<ProductInfo> {
                   onPressed: () {
                     setState(() {
                       print(wishButton);
-                      if (wishButton.toString() == 'Icon(IconData(U+0E25B), color: Color(0xffff5252))') {
+                      if (wishButton.toString() ==
+                          'Icon(IconData(U+0E25B), color: Color(0xffff5252))') {
                         wishButton = Icon(
                           Icons.favorite_border,
                           color: Colors.redAccent[200],
@@ -228,9 +229,7 @@ class _ProductInfoState extends State<ProductInfo> {
                         color: Colors.redAccent[200],
                       ),
                     ),
-                    onPressed: () {
-
-                    },
+                    onPressed: () {},
                   ),
                 ),
               ],

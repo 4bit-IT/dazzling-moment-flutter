@@ -101,10 +101,10 @@ class _MyPageState extends State<MyPage> {
                         TextButton(
                           onPressed: () {},
                           child: Container(
-                            padding: EdgeInsets.all(20),
+                            padding: EdgeInsets.all(15),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.orange[100],
+                              color: Colors.red[100],
                             ),
                             child: Column(
                               children: [
@@ -119,7 +119,7 @@ class _MyPageState extends State<MyPage> {
                                   height: 5,
                                 ),
                                 Icon(
-                                  Icons.favorite,
+                                  Icons.favorite_outline,
                                   color: Colors.black,
                                 ),
                               ],
@@ -129,10 +129,10 @@ class _MyPageState extends State<MyPage> {
                         TextButton(
                           onPressed: () {},
                           child: Container(
-                            padding: EdgeInsets.all(20),
+                            padding: EdgeInsets.all(15),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.orange[100],
+                              color: Colors.red[100],
                             ),
                             child: Column(
                               children: [
@@ -157,10 +157,10 @@ class _MyPageState extends State<MyPage> {
                         TextButton(
                           onPressed: () {},
                           child: Container(
-                            padding: EdgeInsets.all(20),
+                            padding: EdgeInsets.all(15),
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.orange[100],
+                              color: Colors.red[100],
                             ),
                             child: Column(
                               children: [
