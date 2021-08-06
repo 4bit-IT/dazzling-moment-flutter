@@ -23,6 +23,7 @@ class _MyPageState extends State<MyPage> {
     return WillPopScope(
       onWillPop: BackButtonClicked().onWillPop,
       child: Scaffold(
+        backgroundColor: Colors.white,
         drawer: DrawerButton(),
         appBar: appBar.appBar(context),
         bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 3),
@@ -33,9 +34,6 @@ class _MyPageState extends State<MyPage> {
                 padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
                 child: Column(
                   children: [
-                    Divider(
-                      color: Colors.black38,
-                    ),
                     Container(
                       padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Row(
@@ -98,7 +96,9 @@ class _MyPageState extends State<MyPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        TextButton(
+                        CupertinoButton(
+                          minSize: 0,
+                          padding: EdgeInsets.zero,
                           onPressed: () {},
                           child: Container(
                             padding: EdgeInsets.all(15),
@@ -126,7 +126,9 @@ class _MyPageState extends State<MyPage> {
                             ),
                           ),
                         ),
-                        TextButton(
+                        CupertinoButton(
+                          minSize: 0,
+                          padding: EdgeInsets.zero,
                           onPressed: () {},
                           child: Container(
                             padding: EdgeInsets.all(15),
@@ -154,7 +156,9 @@ class _MyPageState extends State<MyPage> {
                             ),
                           ),
                         ),
-                        TextButton(
+                        CupertinoButton(
+                          minSize: 0,
+                          padding: EdgeInsets.zero,
                           onPressed: () {},
                           child: Container(
                             padding: EdgeInsets.all(15),
@@ -201,7 +205,9 @@ class _MyPageState extends State<MyPage> {
                     children: [
                       Container(
                         height: 60,
-                        child: TextButton(
+                        child: CupertinoButton(
+                          minSize: 0,
+                          padding: EdgeInsets.zero,
                           onPressed: () {},
                           child: Row(
                             children: [
@@ -228,7 +234,9 @@ class _MyPageState extends State<MyPage> {
                       ),
                       Container(
                         height: 60,
-                        child: TextButton(
+                        child: CupertinoButton(
+                          minSize: 0,
+                          padding: EdgeInsets.zero,
                           onPressed: () {},
                           child: Row(
                             children: [
@@ -255,7 +263,9 @@ class _MyPageState extends State<MyPage> {
                       ),
                       Container(
                         height: 60,
-                        child: TextButton(
+                        child: CupertinoButton(
+                          minSize: 0,
+                          padding: EdgeInsets.zero,
                           onPressed: () {},
                           child: Row(
                             children: [
@@ -282,7 +292,9 @@ class _MyPageState extends State<MyPage> {
                       ),
                       Container(
                         height: 60,
-                        child: TextButton(
+                        child: CupertinoButton(
+                          minSize: 0,
+                          padding: EdgeInsets.zero,
                           onPressed: () {},
                           child: Row(
                             children: [
@@ -309,7 +321,9 @@ class _MyPageState extends State<MyPage> {
                       ),
                       Container(
                         height: 60,
-                        child: TextButton(
+                        child: CupertinoButton(
+                          minSize: 0,
+                          padding: EdgeInsets.zero,
                           onPressed: () {},
                           child: Row(
                             children: [
@@ -336,7 +350,9 @@ class _MyPageState extends State<MyPage> {
                       ),
                       Container(
                         height: 60,
-                        child: TextButton(
+                        child: CupertinoButton(
+                          minSize: 0,
+                          padding: EdgeInsets.zero,
                           onPressed: () {},
                           child: Row(
                             children: [

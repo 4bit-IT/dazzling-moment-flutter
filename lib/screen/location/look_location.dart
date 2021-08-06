@@ -28,18 +28,22 @@ class LookLocationState extends State<LookLocation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       drawer: DrawerButton(),
       appBar: appBar.appBar(context),
       bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 1),
-      body: GoogleMap(
-        mapType: MapType.normal,
-        initialCameraPosition: _myLocation,
-        myLocationEnabled: true,
-        myLocationButtonEnabled: true,
-        zoomControlsEnabled: false,
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
-        },
+      body: Container(
+        padding: EdgeInsets.all(20),
+        child: GoogleMap(
+          mapType: MapType.normal,
+          initialCameraPosition: _myLocation,
+          myLocationEnabled: true,
+          myLocationButtonEnabled: true,
+          zoomControlsEnabled: false,
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
+        ),
       ),
       // floatingActionButton: FloatingActionButton.extended(
       //   onPressed: _goToTheLake,

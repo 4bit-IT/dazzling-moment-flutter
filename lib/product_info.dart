@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ProductInfo extends StatefulWidget {
   @override
@@ -15,53 +16,13 @@ class _ProductInfoState extends State<ProductInfo> {
   Widget wishButton = Icon(
     Icons.favorite_border,
     color: Colors.redAccent[200],
+    size: 50,
   );
-  Widget wishButton2 = Icon(Icons.favorite_border);
-  int bottomNavigationBarIndex = 0;
+  final taste = ['초코', '바닐라', '딸기', '치약'];
+  var currentSelectedValue;
 
-  onBottomNavigationBarTapped(int index) {
-    setState(() {
-      bottomNavigationBarIndex = index;
-      if (index == 1) {
-        showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (context) {
-              print(MediaQuery.of(context).viewInsets.bottom);
-              return SingleChildScrollView(
-                  child: Container(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: Column(
-                  children: [
-                    Icon(Icons.vertical_align_bottom),
-                    Text('필수 옵션 선택 *'),
-                    Text('필수 옵션 선택 *'),
-                    Text('필수 옵션 선택 *'),
-                    Text('필수 옵션 선택 *'),
-                    Text('필수 옵션 선택 *'),
-                    Text('필수 옵션 선택 *'),
-                    BottomNavigationBar(
-                      backgroundColor: Colors.transparent,
-                      elevation: 0.0,
-                      type: BottomNavigationBarType.fixed,
-                      items: const <BottomNavigationBarItem>[
-                        BottomNavigationBarItem(
-                          icon: Icon(Icons.shopping_bag_outlined),
-                          label: '상품구매',
-                        ),
-                        BottomNavigationBarItem(
-                            icon: Icon(CupertinoIcons.cart), label: '장바구니'),
-                      ],
-                      selectedItemColor: Colors.redAccent[200],
-                      currentIndex: bottomNavigationBarIndex,
-                    ),
-                  ],
-                ),
-              ));
-            });
-      } else {}
-    });
+  void onChange(String value) {
+    currentSelectedValue = value;
   }
 
   @override
@@ -150,7 +111,7 @@ class _ProductInfoState extends State<ProductInfo> {
                               CupertinoButton(
                                 padding: EdgeInsets.all(0),
                                 child: Text(
-                                  '리뷰 ${reviewCount}',
+                                  '리뷰 $reviewCount',
                                   style: GoogleFonts.lato(
                                     color: Colors.black,
                                     fontSize: 16,
@@ -161,15 +122,13 @@ class _ProductInfoState extends State<ProductInfo> {
                               CupertinoButton(
                                 padding: EdgeInsets.all(0),
                                 child: Text(
-                                  'Q&A ${questionCount}',
+                                  'Q&A $questionCount',
                                   style: GoogleFonts.lato(
                                     color: Colors.black,
                                     fontSize: 16,
                                   ),
                                 ),
-                                onPressed: () {
-                                  print(MediaQuery.of(context).size.height);
-                                },
+                                onPressed: () {},
                               ),
                             ],
                           ),
@@ -190,25 +149,28 @@ class _ProductInfoState extends State<ProductInfo> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                IconButton(
+                CupertinoButton(
+                  minSize: 0,
+                  padding: EdgeInsets.zero,
                   onPressed: () {
                     setState(() {
-                      print(wishButton);
                       if (wishButton.toString() ==
-                          'Icon(IconData(U+0E25B), color: Color(0xffff5252))') {
-                        wishButton = Icon(
-                          Icons.favorite_border,
-                          color: Colors.redAccent[200],
-                        );
-                      } else {
+                          'Icon(IconData(U+0E25C), size: 50.0, color: Color(0xffff5252))') {
                         wishButton = Icon(
                           Icons.favorite,
                           color: Colors.redAccent[200],
+                          size: 50,
+                        );
+                      } else {
+                        wishButton = Icon(
+                          Icons.favorite_border,
+                          color: Colors.redAccent[200],
+                          size: 50,
                         );
                       }
                     });
                   },
-                  icon: wishButton,
+                  child: wishButton,
                 ),
                 Container(
                   width: 300,
@@ -229,7 +191,151 @@ class _ProductInfoState extends State<ProductInfo> {
                         color: Colors.redAccent[200],
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return StatefulBuilder(
+                            builder:
+                                (BuildContext context, StateSetter setState) {
+                              return Column(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              2,
+                                      padding: EdgeInsets.all(15),
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                CupertinoButton(
+                                                  minSize: 0,
+                                                  padding: EdgeInsets.zero,
+                                                  child: Icon(
+                                                      Icons.keyboard_arrow_down,
+                                                      size: 40,
+                                                      color: Colors.black38),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                            Text(
+                                              '필수 옵션 선택',
+                                              style: GoogleFonts.lato(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                            Container(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  10, 0, 10, 0),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  width: 1,
+                                                  color: Colors.black38,
+                                                ),
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(5.0),
+                                                ),
+                                              ),
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              child:
+                                                  DropdownButtonHideUnderline(
+                                                child: DropdownButton(
+                                                  hint: Text("케이크 맛"),
+                                                  value: currentSelectedValue,
+                                                  items: taste.map((value) {
+                                                    return DropdownMenuItem<
+                                                        String>(
+                                                      value: value,
+                                                      child: Text(value),
+                                                    );
+                                                  }).toList(),
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      currentSelectedValue =
+                                                          value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      CupertinoButton(
+                                        padding:
+                                            EdgeInsets.fromLTRB(30, 10, 30, 10),
+                                        color: Colors.redAccent[100],
+                                        child: Text(
+                                          '장바구니 담기',
+                                          style: GoogleFonts.lato(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            Fluttertoast.showToast(
+                                              msg: '장바구니에 담았어요 !',
+                                              toastLength: Toast.LENGTH_SHORT,
+                                            );
+                                            Navigator.pop(context);
+                                          });
+                                        },
+                                      ),
+                                      CupertinoButton(
+                                        padding:
+                                            EdgeInsets.fromLTRB(30, 10, 30, 10),
+                                        color: Colors.redAccent[100],
+                                        child: Text(
+                                          '바로 구매하기',
+                                          style: GoogleFonts.lato(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        onPressed: () {},
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
               ],

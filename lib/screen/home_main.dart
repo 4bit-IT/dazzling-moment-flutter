@@ -1,4 +1,5 @@
 import 'package:damo/screen/app_bar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transition/transition.dart';
 import '../drawer.dart';
@@ -166,10 +167,13 @@ class _HomeMainState extends State<HomeMain> {
                                   ),
                                 ],
                               ),
-                              IconButton(
+                              CupertinoButton(
+                                minSize: 0,
+                                padding: EdgeInsets.all(10),
                                 onPressed: () {},
-                                icon: Icon(
+                                child: Icon(
                                   Icons.favorite_border_outlined,
+                                  color: Colors.red,
                                 ),
                               ),
                               // Row(

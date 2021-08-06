@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:transition/transition.dart';
@@ -15,8 +16,12 @@ class DamoAppBar {
       backgroundColor: Colors.white,
       title: Image.asset('assets/images/logo.png'),
       actions: [
-        IconButton(
-          icon: Icon(Icons.search),
+        CupertinoButton(
+          padding: EdgeInsets.zero,
+          child: Icon(Icons.search,
+            size: 35,
+            color: Colors.redAccent,
+          ),
           onPressed: () {
             Navigator.push(
                 context,
@@ -24,14 +29,14 @@ class DamoAppBar {
                     child: SearchPage(),
                     transitionEffect: TransitionEffect.BOTTOM_TO_TOP));
           },
-          color: Colors.red,
-          iconSize: 30.0,
         ),
-        IconButton(
-          icon: Icon(Icons.notifications_outlined),
+        CupertinoButton(
+          padding: EdgeInsets.zero,
+          child: Icon(Icons.notifications_none,
+            size: 35,
+            color: Colors.redAccent,
+          ),
           onPressed: () {},
-          color: Colors.red,
-          iconSize: 30.0,
         ),
         SizedBox(width: 10.0),
         // IconButton(
