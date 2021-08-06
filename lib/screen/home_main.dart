@@ -1,11 +1,11 @@
-import 'package:damo/screen/app_bar.dart';
+import 'package:damo/screen/bar/app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transition/transition.dart';
-import '../drawer.dart';
-import 'bottom_navigaton.dart';
-import 'package:damo/back_button_clicked.dart';
-import 'package:damo/product_info.dart';
+import 'bar/drawer.dart';
+import 'bar/bottom_navigaton.dart';
+import 'package:damo/screen/bar/back_button_clicked.dart';
+import 'package:damo/screen/product/product_info.dart';
 
 class HomeMain extends StatefulWidget {
   @override

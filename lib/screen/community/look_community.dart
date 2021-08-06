@@ -1,8 +1,8 @@
-import 'package:damo/screen/app_bar.dart';
+import 'package:damo/screen/bar/app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:damo/back_button_clicked.dart';
-import '../../drawer.dart';
-import '../bottom_navigaton.dart';
+import 'package:damo/screen/bar/back_button_clicked.dart';
+import '../bar/drawer.dart';
+import '../bar/bottom_navigaton.dart';
 
 class LookCommunity extends StatefulWidget {
   @override

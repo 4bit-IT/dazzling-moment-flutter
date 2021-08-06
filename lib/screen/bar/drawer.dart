@@ -1,4 +1,4 @@
-import 'package:damo/sign/sign_in.dart';
+import 'package:damo/sign/sign.dart';
 import 'package:flutter/material.dart';
 
 class DrawerButton extends StatefulWidget {
@@ -29,7 +29,7 @@ class _DrawerButtonState extends State<DrawerButton> {
                       context,
                       PageRouteBuilder(pageBuilder: (BuildContext context,
                           Animation animation, Animation secondaryAnimation) {
-                        return SignIn();
+                        return Sign();
                       }, transitionsBuilder: (BuildContext context,
                           Animation<double> animation,
                           Animation<double> secondaryAnimation,

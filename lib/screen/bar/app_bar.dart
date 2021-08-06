@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:transition/transition.dart';
-import 'search/seach_product.dart';
+import '../search/seach_product.dart';
 
 class DamoAppBar {
   dynamic tabBar(BuildContext context) {
@@ -18,8 +18,9 @@ class DamoAppBar {
       actions: [
         CupertinoButton(
           padding: EdgeInsets.zero,
-          child: Icon(Icons.search,
-            size: 35,
+          child: Icon(
+            Icons.search,
+            size: 30.0,
             color: Colors.redAccent,
           ),
           onPressed: () {
@@ -32,8 +33,9 @@ class DamoAppBar {
         ),
         CupertinoButton(
           padding: EdgeInsets.zero,
-          child: Icon(Icons.notifications_none,
-            size: 35,
+          child: Icon(
+            Icons.notifications_none,
+            size: 30.0,
             color: Colors.redAccent,
           ),
           onPressed: () {},
@@ -95,8 +97,13 @@ class DamoAppBar {
       backgroundColor: Colors.white,
       title: Image.asset('assets/images/logo.png'),
       actions: [
-        IconButton(
-          icon: Icon(Icons.search),
+        CupertinoButton(
+          padding: EdgeInsets.zero,
+          child: Icon(
+            Icons.search,
+            size: 30.0,
+            color: Colors.redAccent,
+          ),
           onPressed: () {
             Navigator.push(
                 context,
@@ -104,14 +111,39 @@ class DamoAppBar {
                     child: SearchPage(),
                     transitionEffect: TransitionEffect.BOTTOM_TO_TOP));
           },
-          color: Colors.red,
-          iconSize: 30.0,
         ),
-        IconButton(
-          icon: Icon(Icons.notifications_outlined),
+        CupertinoButton(
+          padding: EdgeInsets.zero,
+          child: Icon(
+            Icons.notifications_none,
+            size: 30.0,
+            color: Colors.redAccent,
+          ),
           onPressed: () {},
-          color: Colors.red,
-          iconSize: 30.0,
+        ),
+        SizedBox(width: 10.0),
+      ],
+    );
+  }
+
+  dynamic noSearchBar(BuildContext context) {
+    return AppBar(
+      centerTitle: true,
+      iconTheme: IconThemeData(
+        color: Colors.red,
+      ),
+      elevation: 0.0,
+      backgroundColor: Colors.white,
+      title: Image.asset('assets/images/logo.png'),
+      actions: [
+        CupertinoButton(
+          padding: EdgeInsets.zero,
+          child: Icon(
+            Icons.notifications_none,
+            size: 30.0,
+            color: Colors.redAccent,
+          ),
+          onPressed: () {},
         ),
         SizedBox(width: 10.0),
       ],
