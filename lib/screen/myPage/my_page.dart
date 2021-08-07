@@ -1,10 +1,10 @@
-import 'package:damo/drawer.dart';
+import 'package:damo/screen/bar/drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../app_bar.dart';
-import '../bottom_navigaton.dart';
-import 'package:damo/back_button_clicked.dart';
+import '../bar/app_bar.dart';
+import '../bar/bottom_navigaton.dart';
+import 'package:damo/screen/bar/back_button_clicked.dart';
 
 class MyPage extends StatefulWidget {
   MyPage({this.bottomNavigationIndex});

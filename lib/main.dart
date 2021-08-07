@@ -1,4 +1,4 @@
-import 'package:damo/sign/sign_in.dart';
+import 'package:damo/sign/sign.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 
@@ -12,7 +12,7 @@ class Damo extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignIn(),
+      home: Sign(),
       theme: ThemeData(
         focusColor: Colors.grey,
       ),

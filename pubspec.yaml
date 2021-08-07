@@ -23,13 +23,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  kakao_flutter_sdk: ^0.7.0   # 카카오 로그인
+  kakao_flutter_sdk: ^0.7.0    # 카카오 로그인
   cupertino_icons: ^1.0.3
   google_fonts: ^2.1.0
-  transition :                # 화면전환 애니메이션
+  transition :                 # 화면전환 애니메이션
   fluttertoast: ^8.0.8
  # kakaomap_webview: ^0.2.1+1  # 카카오 맵
-  google_maps_flutter: ^2.0.6 # 구글 맵
+  google_maps_flutter: ^2.0.6  # 구글 맵
+  flutter_login: ^2.2.1        # 로그인 애니메이션 
+  font_awesome_flutter: ^9.1.0 # 폰트 아이콘
 
 
 dev_dependencies:

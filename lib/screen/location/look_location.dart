@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../../drawer.dart';
-import '../app_bar.dart';
-import '../bottom_navigaton.dart';
+import '../bar/drawer.dart';
+import '../bar/app_bar.dart';
+import '../bar/bottom_navigaton.dart';
 
 class LookLocation extends StatefulWidget {
   @override
@@ -30,7 +30,7 @@ class LookLocationState extends State<LookLocation> {
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: DrawerButton(),
-      appBar: appBar.appBar(context),
+      appBar: appBar.noSearchBar(context),
       bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 1),
       body: Container(
         padding: EdgeInsets.all(20),

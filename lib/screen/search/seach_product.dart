@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../app_bar.dart';
+import '../bar/app_bar.dart';
 
 class SearchPage extends StatefulWidget {
   @override

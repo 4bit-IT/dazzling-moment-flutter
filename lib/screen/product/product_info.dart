@@ -14,7 +14,7 @@ class _ProductInfoState extends State<ProductInfo> {
   String questionCount = '30';
   String productName = '곰돌곰돌';
   Widget wishButton = Icon(
-    Icons.favorite_border,
+    Icons.favorite_outline,
     color: Colors.redAccent[200],
     size: 50,
   );
@@ -41,18 +41,11 @@ class _ProductInfoState extends State<ProductInfo> {
         actions: [
           CupertinoButton(
             minSize: 0,
-            // padding: EdgeInsets.all(0),
             child: Column(
               children: [
-                // Text(
-                //   '장바구니',
-                //   style: GoogleFonts.lato(
-                //     color: Colors.black,
-                //   ),
-                // ),
                 Icon(
                   CupertinoIcons.cart,
-                  color: Colors.black,
+                  color: Colors.white,
                 ),
               ],
             ),
