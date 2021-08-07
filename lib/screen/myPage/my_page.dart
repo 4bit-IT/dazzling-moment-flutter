@@ -17,6 +17,7 @@ class MyPage extends StatefulWidget {
 
 class _MyPageState extends State<MyPage> {
   DamoAppBar appBar = DamoAppBar();
+  ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +27,9 @@ class _MyPageState extends State<MyPage> {
         backgroundColor: Colors.white,
         drawer: DrawerButton(),
         appBar: appBar.appBar(context),
-        bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 3),
+        bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 3, scrollController: scrollController,),
         body: SingleChildScrollView(
+          controller: scrollController,
           child: Column(
             children: [
               Container(

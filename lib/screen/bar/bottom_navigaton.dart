@@ -3,12 +3,14 @@ import 'package:damo/screen/home_main.dart';
 import 'package:damo/screen/location/look_location.dart';
 import 'package:damo/screen/myPage/my_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:transition/transition.dart';
 
 // ignore: must_be_immutable
 class BottomNavigation extends StatefulWidget {
-  BottomNavigation({this.bottomNavigationIndex});
+  BottomNavigation({this.bottomNavigationIndex, this.scrollController});
   int? bottomNavigationIndex;
+  ScrollController? scrollController;
 
   @override
   _BottomNavigationState createState() => _BottomNavigationState();
@@ -26,7 +28,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   void onTapped(int selectedBottomNavigationBarIndex) {
     if (selectedBottomNavigationBarIndex == widget.bottomNavigationIndex!) {
-      //누르면 맨 위로 가야함.
+      SchedulerBinding.instance?.addPostFrameCallback((_) {
+        widget.scrollController!.animateTo(
+            widget.scrollController!.position.minScrollExtent,
+            duration: const Duration(milliseconds: 400),
+            curve: Curves.fastOutSlowIn);
+      });
     } else if (selectedBottomNavigationBarIndex !=
         widget.bottomNavigationIndex!) {
       setState(() {

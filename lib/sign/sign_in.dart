@@ -37,56 +37,61 @@ class _SignInState extends State<SignIn> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        elevation: 0,
-        brightness: Brightness.light,
-        backgroundColor: Colors.red[200],
-      ),
-      body: FlutterLogin(
-        title: 'DAMO',
-        // logo: 'assets/images/logo.png',
-        messages: LoginMessages(
-          userHint: '아이디',
-          passwordHint: '비밀번호',
-          confirmPasswordHint: '비밀번호 확인',
-          forgotPasswordButton: '비밀번호를 잊으셨습니까?',
-          loginButton: '로그인',
-          signupButton: '회원가입',
-          recoverPasswordButton: '비밀번호 찾기',
-          recoverPasswordIntro: '비밀번호 찾기',
-          recoverPasswordDescription: '초기화된 비밀번호를 이메일로 보내드립니다.',
-          goBackButton: '뒤로가기',
-          confirmPasswordError: '비밀번호가 일치하지 않습니다.',
-          recoverPasswordSuccess: '이메일로 초기화된 비밀번호를 전송했습니다.',
-          flushbarTitleSuccess: '성공',
-          flushbarTitleError: '실패',
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          elevation: 0,
+          brightness: Brightness.light,
+          backgroundColor: Colors.red[200],
         ),
-        theme: LoginTheme(
-          bodyStyle: TextStyle(),
-          // buttonTheme: LoginButtonTheme(
-          //   backgroundColor: Colors.red,
-          // ),
-          footerTextStyle: TextStyle(color: Colors.red),
-          primaryColor: Colors.red[200],
-          switchAuthTextColor: Colors.red,
-          textFieldStyle: TextStyle(
-            color: Colors.black87,
+        body: FlutterLogin(
+          title: 'DAMO',
+          // logo: 'assets/images/logo.png',
+          messages: LoginMessages(
+            userHint: '아이디',
+            passwordHint: '비밀번호',
+            confirmPasswordHint: '비밀번호 확인',
+            forgotPasswordButton: '비밀번호를 잊으셨습니까?',
+            loginButton: '로그인',
+            signupButton: '회원가입',
+            recoverPasswordButton: '비밀번호 찾기',
+            recoverPasswordIntro: '비밀번호 찾기',
+            recoverPasswordDescription: '초기화된 비밀번호를 이메일로 보내드립니다.',
+            goBackButton: '뒤로가기',
+            confirmPasswordError: '비밀번호가 일치하지 않습니다.',
+            recoverPasswordSuccess: '이메일로 초기화된 비밀번호를 전송했습니다.',
+            flushbarTitleSuccess: '성공',
+            flushbarTitleError: '실패',
           ),
+          theme: LoginTheme(
+            bodyStyle: TextStyle(),
+            // buttonTheme: LoginButtonTheme(
+            //   backgroundColor: Colors.red,
+            // ),
+            footerTextStyle: TextStyle(color: Colors.red),
+            primaryColor: Colors.red[200],
+            switchAuthTextColor: Colors.red,
+            textFieldStyle: TextStyle(
+              color: Colors.black87,
+            ),
+          ),
+          hideSignUpButton: true,
+          // showDebugButtons: true,
+          onSubmitAnimationCompleted: () {
+            Navigator.pop(context);
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomeMain()),
+            );
+          },
+          onLogin: _signIn,
+          onSignup: _signIn,
+          onRecoverPassword: _recoverPassword,
         ),
-        hideSignUpButton: true,
-        // showDebugButtons: true,
-        onSubmitAnimationCompleted: () {
-          Navigator.pop(context);
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => HomeMain()),
-          );
-        },
-        onLogin: _signIn,
-        onSignup: _signIn,
-        onRecoverPassword: _recoverPassword,
       ),
     );
   }
