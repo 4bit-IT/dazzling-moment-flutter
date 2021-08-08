@@ -16,6 +16,7 @@ class _HomeMainState extends State<HomeMain> {
   DamoAppBar tabBar = DamoAppBar();
   final dropdownList = ['거리순', '추천순', '인기순'];
   var selectedDropdown = '거리순';
+  ScrollController scrollController = ScrollController();
 
   Widget viewProduct() {
     List<Image> imageList = [
@@ -76,6 +77,7 @@ class _HomeMainState extends State<HomeMain> {
           ),
           Expanded(
             child: GridView.builder(
+              controller: scrollController,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 15.0,
@@ -203,7 +205,7 @@ class _HomeMainState extends State<HomeMain> {
         child: Scaffold(
           drawer: DrawerButton(),
           appBar: tabBar.tabBar(context),
-          bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 0),
+          bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 0, scrollController: scrollController,),
           body: TabBarView(
             children: [
               viewProduct(),

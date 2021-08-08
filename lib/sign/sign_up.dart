@@ -1,4 +1,5 @@
 import 'package:damo/sign/sign_in.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transition/transition.dart';
 
@@ -142,7 +143,7 @@ class _SignUpState extends State<SignUp> {
                       children: [
                         Text("이미 가입된 계정이 있나요? "),
                         SizedBox(
-                          child: TextButton(
+                          child: CupertinoButton(
                             onPressed: () {
                               signIn();
                             },
