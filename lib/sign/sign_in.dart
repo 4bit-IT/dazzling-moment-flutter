@@ -49,8 +49,7 @@ class _SignInState extends State<SignIn> {
           backgroundColor: Colors.red[200],
         ),
         body: FlutterLogin(
-          title: 'DAMO',
-          // logo: 'assets/images/logo.png',
+          logo: 'assets/images/logo.png',
           messages: LoginMessages(
             userHint: '아이디',
             passwordHint: '비밀번호',

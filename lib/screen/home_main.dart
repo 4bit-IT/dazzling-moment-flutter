@@ -14,8 +14,10 @@ class HomeMain extends StatefulWidget {
 
 class _HomeMainState extends State<HomeMain> {
   DamoAppBar tabBar = DamoAppBar();
-  final dropdownList = ['거리순', '추천순', '인기순'];
-  var selectedDropdown = '거리순';
+
+  List<String> dropdownList = ['거리순', '추천순', '인기순'];
+  String selectedDropdown = '거리순';
+
   ScrollController scrollController = ScrollController();
 
   Widget viewProduct() {
@@ -54,30 +56,35 @@ class _HomeMainState extends State<HomeMain> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          SizedBox(
-            width: 10.0,
-          ),
-          DropdownButton(
-            value: selectedDropdown,
-            items: dropdownList.map(
-              (value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: Container(
-                    child: Text(value),
-                  ),
+          Container(
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+            child: DropdownButton(
+              value: selectedDropdown,
+              items: dropdownList.map((String item) {
+                return DropdownMenuItem<String>(
+                  child: Text('$item '),
+                  value: item,
                 );
+              }).toList(),
+              onChanged: (dynamic value) {
+                setState(() {
+                  selectedDropdown = value;
+                  dropdownList.remove(value);
+                  dropdownList.insert(0, value);
+                });
               },
-            ).toList(),
-            onChanged: (value) {
-              setState(() {
-                selectedDropdown = value.toString();
-              });
-            },
+              elevation: 8,
+              style: TextStyle(color: Colors.black, fontSize: 16),
+              icon: Icon(
+                Icons.arrow_drop_down_circle,
+                size: 20.0,
+              ),
+              iconEnabledColor: Colors.red[200],
+            ),
           ),
           Expanded(
             child: GridView.builder(
-              controller: scrollController,
+                controller: scrollController,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 15.0,
@@ -205,7 +212,10 @@ class _HomeMainState extends State<HomeMain> {
         child: Scaffold(
           drawer: DrawerButton(),
           appBar: tabBar.tabBar(context),
-          bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 0, scrollController: scrollController,),
+          bottomNavigationBar: BottomNavigation(
+            bottomNavigationIndex: 0,
+            scrollController: scrollController,
+          ),
           body: TabBarView(
             children: [
               viewProduct(),
