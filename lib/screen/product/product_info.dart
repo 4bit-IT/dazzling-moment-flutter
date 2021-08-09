@@ -15,7 +15,7 @@ class _ProductInfoState extends State<ProductInfo> {
   String productName = '곰돌곰돌';
   Widget wishButton = Icon(
     Icons.favorite_outline,
-    color: Colors.redAccent[200],
+    color: Colors.red[200],
     size: 50,
   );
   final taste = ['초코', '바닐라', '딸기', '치약'];
@@ -31,12 +31,12 @@ class _ProductInfoState extends State<ProductInfo> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.redAccent[100],
+        backgroundColor: Colors.red[200],
         elevation: 0.0,
         automaticallyImplyLeading: true,
         title: Text(
           '$productName',
-          style: GoogleFonts.lato(color: Colors.black),
+          style: GoogleFonts.lato(color: Colors.white),
         ),
         actions: [
           CupertinoButton(
@@ -60,80 +60,86 @@ class _ProductInfoState extends State<ProductInfo> {
         children: [
           Expanded(
             child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 30, 15, 0),
-                child: Column(
-                  children: [
-                    Container(
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            'assets/images/pro.JPG',
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(height: 20.0),
+                  Image.asset(
+                    'assets/images/pro.JPG',
+                  ),
+                  Center(
+                    child: Text(
+                      '서면에서 입소문난 수제 케이크 집',
+                      style: GoogleFonts.lato(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 10.0),
+                  Divider(
+                    thickness: 5.0,
+                    color: Colors.grey[200],
+                  ),
+                  DefaultTabController(
+                    length: 3,
+                    initialIndex: 0,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Container(
+                          child: TabBar(
+                            labelColor: Colors.green,
+                            unselectedLabelColor: Colors.black,
+                            tabs: [
+                              Tab(text: '상품설명'),
+                              Tab(text: '리뷰 ($reviewCount)'),
+                              Tab(text: 'Q&A ($questionCount)'),
+                            ],
                           ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Text(
-                            '서면에서 입소문난 수제 케이크 집',
-                            style: GoogleFonts.lato(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.black,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Divider(
-                            color: Colors.black38,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              CupertinoButton(
-                                padding: EdgeInsets.all(0),
-                                child: Text(
-                                  '상품 설명',
-                                  style: GoogleFonts.lato(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                  ),
+                        ),
+                        Container(
+                          height: 400, //height of TabBarView
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  top: BorderSide(
+                                      color: Colors.grey, width: 0.5))),
+                          child: TabBarView(
+                            children: <Widget>[
+                              Container(
+                                child: Center(
+                                  child: Text('설명',
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold)),
                                 ),
-                                onPressed: () {},
                               ),
-                              CupertinoButton(
-                                padding: EdgeInsets.all(0),
-                                child: Text(
-                                  '리뷰 $reviewCount',
-                                  style: GoogleFonts.lato(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                  ),
+                              Container(
+                                child: Center(
+                                  child: Text('리뷰',
+                                      style: TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold)),
                                 ),
-                                onPressed: () {},
                               ),
-                              CupertinoButton(
-                                padding: EdgeInsets.all(0),
-                                child: Text(
-                                  'Q&A $questionCount',
-                                  style: GoogleFonts.lato(
-                                    color: Colors.black,
-                                    fontSize: 16,
+                              Container(
+                                child: Center(
+                                  child: Text(
+                                    'Q&A',
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
-                                onPressed: () {},
                               ),
                             ],
                           ),
-                          Divider(
-                            color: Colors.black38,
-                          ),
-                          for (int i = 0; i < 20; i++) Text('설명설명'),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -148,16 +154,16 @@ class _ProductInfoState extends State<ProductInfo> {
                   onPressed: () {
                     setState(() {
                       if (wishButton.toString() ==
-                          'Icon(IconData(U+0E25C), size: 50.0, color: Color(0xffff5252))') {
+                          'Icon(IconData(U+0E25C), size: 50.0, color: Color(0xffef9a9a))') {
                         wishButton = Icon(
                           Icons.favorite,
-                          color: Colors.redAccent[200],
+                          color: Colors.red[200],
                           size: 50,
                         );
                       } else {
                         wishButton = Icon(
                           Icons.favorite_border,
-                          color: Colors.redAccent[200],
+                          color: Colors.red[200],
                           size: 50,
                         );
                       }
@@ -173,15 +179,20 @@ class _ProductInfoState extends State<ProductInfo> {
                         15.0,
                       ),
                     ),
-                    border: Border.all(color: Colors.black38),
                   ),
-                  child: CupertinoButton(
+                  child: MaterialButton(
+                    minWidth: double.infinity,
+                    height: 60,
+                    color: Colors.red[200],
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                     child: Text(
-                      '구매하기',
-                      style: GoogleFonts.lato(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.redAccent[200],
+                      "구매하기",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                        color: Colors.white,
                       ),
                     ),
                     onPressed: () {
@@ -264,6 +275,8 @@ class _ProductInfoState extends State<ProductInfo> {
                                                     setState(() {
                                                       currentSelectedValue =
                                                           value;
+                                                      taste.remove(value);
+                                                      taste.insert(0, '$value');
                                                     });
                                                   },
                                                 ),
@@ -284,7 +297,7 @@ class _ProductInfoState extends State<ProductInfo> {
                                       CupertinoButton(
                                         padding:
                                             EdgeInsets.fromLTRB(30, 10, 30, 10),
-                                        color: Colors.redAccent[100],
+                                        color: Colors.red[200],
                                         child: Text(
                                           '장바구니 담기',
                                           style: GoogleFonts.lato(
@@ -306,7 +319,7 @@ class _ProductInfoState extends State<ProductInfo> {
                                       CupertinoButton(
                                         padding:
                                             EdgeInsets.fromLTRB(30, 10, 30, 10),
-                                        color: Colors.redAccent[100],
+                                        color: Colors.red[200],
                                         child: Text(
                                           '바로 구매하기',
                                           style: GoogleFonts.lato(
