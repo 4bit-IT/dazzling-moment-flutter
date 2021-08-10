@@ -2,6 +2,7 @@ import 'package:damo/sign/sign_in.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transition/transition.dart';
+import 'package:damo/screen/bar/scroll_behavior.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -61,106 +62,109 @@ class _SignUpState extends State<SignUp> {
         backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Image.asset('assets/images/logo.png'),
-                        // Text(
-                        //   "회원가입",
-                        //   style: TextStyle(
-                        //     fontSize: 30,
-                        //     fontWeight: FontWeight.bold,
-                        //   ),
-                        // ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "다모(Damo, Dazzling moment)",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey[700],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 40),
-                      child: Column(
+        child: ScrollConfiguration(
+          behavior: NoGlowScrollBehavior(),
+          child: SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          makeInput(label: "아이디"),
-                          makeInput(label: "비밀번호", obsureText: true),
-                          makeInput(label: "비밀번호 확인", obsureText: true)
+                          Image.asset('assets/images/logo.png'),
+                          // Text(
+                          //   "회원가입",
+                          //   style: TextStyle(
+                          //     fontSize: 30,
+                          //     fontWeight: FontWeight.bold,
+                          //   ),
+                          // ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "다모(Damo, Dazzling moment)",
+                            style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.grey[700],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          )
                         ],
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 40),
-                      child: Container(
-                        // padding: EdgeInsets.only(top: 0, left: 0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          // border: Border(
-                          //     bottom: BorderSide(color: Colors.black),
-                          //     top: BorderSide(color: Colors.black),
-                          //     right: BorderSide(color: Colors.black),
-                          //     left: BorderSide(color: Colors.black))),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 40),
+                        child: Column(
+                          children: [
+                            makeInput(label: "아이디"),
+                            makeInput(label: "비밀번호", obsureText: true),
+                            makeInput(label: "비밀번호 확인", obsureText: true)
+                          ],
                         ),
-                        child: MaterialButton(
-                          minWidth: double.infinity,
-                          height: 60,
-                          onPressed: () {},
-                          color: Colors.red[100],
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40)),
-                          child: Text(
-                            "회원가입",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 40),
+                        child: Container(
+                          // padding: EdgeInsets.only(top: 0, left: 0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            // border: Border(
+                            //     bottom: BorderSide(color: Colors.black),
+                            //     top: BorderSide(color: Colors.black),
+                            //     right: BorderSide(color: Colors.black),
+                            //     left: BorderSide(color: Colors.black))),
+                          ),
+                          child: MaterialButton(
+                            minWidth: double.infinity,
+                            height: 60,
+                            onPressed: () {},
+                            color: Colors.red[100],
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40)),
+                            child: Text(
+                              "회원가입",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("이미 가입된 계정이 있나요? "),
-                        SizedBox(
-                          child: CupertinoButton(
-                            onPressed: () {
-                              signIn();
-                            },
-                            child: Text(
-                              "로그인",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18,
-                                  color: Colors.black87),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("이미 가입된 계정이 있나요? "),
+                          SizedBox(
+                            child: CupertinoButton(
+                              onPressed: () {
+                                signIn();
+                              },
+                              child: Text(
+                                "로그인",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                    color: Colors.black87),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ],
+                        ],
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:damo/screen/bar/scroll_behavior.dart';
 import 'package:damo/screen/home_main.dart';
 import 'package:damo/sign/sign_in.dart';
 import 'package:damo/sign/sign_up.dart';
@@ -53,108 +54,111 @@ class _SignState extends State<Sign> {
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Container(
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
-          child: SingleChildScrollView(
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
-                  children: [
-                    Text(
-                      "Dazzling Moment",
-                      textAlign: TextAlign.center,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "MZ세대를 위한 이벤트 관련 오픈마켓 및 정보공유 서비스",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.grey[700], fontSize: 15),
-                    )
-                  ],
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height / 3,
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/logo.png'))),
-                ),
-                Column(
-                  children: [
-                    MaterialButton(
-                      minWidth: double.infinity,
-                      height: 60,
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => SignIn()));
-                      },
-                      color: Colors.red[200],
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Text(
-                        "로그인",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          color: Colors.white,
+        child: ScrollConfiguration(
+          behavior: NoGlowScrollBehavior(),
+          child: Container(
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height,
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
+            child: SingleChildScrollView(
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        "Dazzling Moment",
+                        textAlign: TextAlign.center,
+                        style:
+                            TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "MZ세대를 위한 이벤트 관련 오픈마켓 및 정보공유 서비스",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.grey[700], fontSize: 15),
+                      )
+                    ],
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height / 3,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/logo.png'))),
+                  ),
+                  Column(
+                    children: [
+                      MaterialButton(
+                        minWidth: double.infinity,
+                        height: 60,
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => SignIn()));
+                        },
+                        color: Colors.red[200],
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Text(
+                          "로그인",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    MaterialButton(
-                      minWidth: double.infinity,
-                      height: 60,
-                      onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => SignUp()));
-                      },
-                      color: Colors.red[200],
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Text(
-                        "회원가입",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          color: Colors.white,
+                      SizedBox(
+                        height: 20,
+                      ),
+                      MaterialButton(
+                        minWidth: double.infinity,
+                        height: 60,
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => SignUp()));
+                        },
+                        color: Colors.red[200],
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Text(
+                          "회원가입",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    MaterialButton(
-                      minWidth: double.infinity,
-                      height: 60,
-                      onPressed: () {
-                        kakaoLogin();
-                      },
-                      color: Colors.yellow,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      child: Text(
-                        "카카오톡으로 로그인",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
+                      SizedBox(
+                        height: 20,
+                      ),
+                      MaterialButton(
+                        minWidth: double.infinity,
+                        height: 60,
+                        onPressed: () {
+                          kakaoLogin();
+                        },
+                        color: Colors.yellow,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Text(
+                          "카카오톡으로 로그인",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

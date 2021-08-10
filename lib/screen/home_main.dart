@@ -1,4 +1,5 @@
 import 'package:damo/screen/bar/app_bar.dart';
+import 'package:damo/screen/bar/scroll_behavior.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transition/transition.dart';
@@ -53,152 +54,155 @@ class _HomeMainState extends State<HomeMain> {
     ];
     return Container(
       color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Container(
-            padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
-            child: DropdownButton(
-              value: selectedDropdown,
-              items: dropdownList.map((String item) {
-                return DropdownMenuItem<String>(
-                  child: Text('$item '),
-                  value: item,
-                );
-              }).toList(),
-              onChanged: (dynamic value) {
-                setState(() {
-                  selectedDropdown = value;
-                  dropdownList.remove(value);
-                  dropdownList.insert(0, value);
-                });
-              },
-              elevation: 8,
-              style: TextStyle(color: Colors.black, fontSize: 16),
-              icon: Icon(
-                Icons.arrow_drop_down_circle,
-                size: 20.0,
-              ),
-              iconEnabledColor: Colors.red[200],
-            ),
-          ),
-          Expanded(
-            child: GridView.builder(
-                controller: scrollController,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 15.0,
-                    mainAxisExtent: 330.0,
-                    crossAxisSpacing: 6.0,
-                    childAspectRatio: 1.0),
-                padding: const EdgeInsets.fromLTRB(5.5, 0.0, 5.5, 0.0),
-                itemCount: imageList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return InkWell(
-                    onTap: () {
-                      setState(() {
-                        Navigator.push(
-                          context,
-                          Transition(
-                            child: ProductInfo(),
-                            transitionEffect: TransitionEffect.FADE,
-                          ),
-                        );
-                      });
-                    }, //클릭시 이동
-                    child: Card(
-                      // elevation: 3.5, //음영
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0), //둥글기
-                      ),
-                      //테두리를 입체감으로 줌.
-                      shadowColor: Colors.black87,
-                      // decoration: BoxDecoration(
-                      //     border: Border.all(color: Colors.grey, width: 0.5)),
-                      child: Column(
-                        children: [
-                          Container(
-                            child: imageList[index],
-                            height: 180.0,
-                            width: 200.0,
-                          ),
-                          SizedBox(height: 5.0),
-                          Text(
-                            "곰돌곰돌",
-                            style: TextStyle(
-                                fontFamily: 'NotoSans',
-                                color: Colors.black87,
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(height: 5.0),
-                          Text(
-                            ' 서면에서 입소문난 수제 케이크 서면에서 입소문난 수제 케이크 서면에서 입소문난 수제 케이크 ',
-                            //최대 3줄까지 지정.
-                            style: TextStyle(color: Colors.black54),
-                          ),
-                          // SizedBox(
-                          //   height: 10,
-                          // ),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //   children: [
-                          //     Text(
-                          //       " 내 위치에서",
-                          //       style: TextStyle(
-                          //           fontFamily: 'NotoSans',
-                          //           color: Colors.black87),
-                          //     ),
-                          //     Row(
-                          //       children: [
-                          //         Text(
-                          //           "128 m ",
-                          //           style: TextStyle(color: Colors.red),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ],
-                          // ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.star,
-                                    color: Colors.orangeAccent,
-                                  ),
-                                  Text(
-                                    "5.0",
-                                    style: TextStyle(
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                              CupertinoButton(
-                                minSize: 0,
-                                padding: EdgeInsets.all(10),
-                                onPressed: () {},
-                                child: Icon(
-                                  Icons.favorite_border_outlined,
-                                  color: Colors.red,
-                                ),
-                              ),
-                              // Row(
-                              //   children: [
-                              //     Text('99+구매 '),
-                              //   ],
-                              // ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
+      child: ScrollConfiguration(
+        behavior: NoGlowScrollBehavior(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Container(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 10.0, 0.0),
+              child: DropdownButton(
+                value: selectedDropdown,
+                items: dropdownList.map((String item) {
+                  return DropdownMenuItem<String>(
+                    child: Text('$item '),
+                    value: item,
                   );
-                }),
-          ),
-        ],
+                }).toList(),
+                onChanged: (dynamic value) {
+                  setState(() {
+                    selectedDropdown = value;
+                    dropdownList.remove(value);
+                    dropdownList.insert(0, value);
+                  });
+                },
+                elevation: 8,
+                style: TextStyle(color: Colors.black, fontSize: 16),
+                icon: Icon(
+                  Icons.arrow_drop_down_circle,
+                  size: 20.0,
+                ),
+                iconEnabledColor: Colors.red[200],
+              ),
+            ),
+            Expanded(
+              child: GridView.builder(
+                  controller: scrollController,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 15.0,
+                      mainAxisExtent: 330.0,
+                      crossAxisSpacing: 6.0,
+                      childAspectRatio: 1.0),
+                  padding: const EdgeInsets.fromLTRB(5.5, 0.0, 5.5, 0.0),
+                  itemCount: imageList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          Navigator.push(
+                            context,
+                            Transition(
+                              child: ProductInfo(),
+                              transitionEffect: TransitionEffect.FADE,
+                            ),
+                          );
+                        });
+                      }, //클릭시 이동
+                      child: Card(
+                        // elevation: 3.5, //음영
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0), //둥글기
+                        ),
+                        //테두리를 입체감으로 줌.
+                        shadowColor: Colors.black87,
+                        // decoration: BoxDecoration(
+                        //     border: Border.all(color: Colors.grey, width: 0.5)),
+                        child: Column(
+                          children: [
+                            Container(
+                              child: imageList[index],
+                              height: 180.0,
+                              width: 200.0,
+                            ),
+                            SizedBox(height: 5.0),
+                            Text(
+                              "곰돌곰돌",
+                              style: TextStyle(
+                                  fontFamily: 'NotoSans',
+                                  color: Colors.black87,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            SizedBox(height: 5.0),
+                            Text(
+                              ' 서면에서 입소문난 수제 케이크 서면에서 입소문난 수제 케이크 서면에서 입소문난 수제 케이크 ',
+                              //최대 3줄까지 지정.
+                              style: TextStyle(color: Colors.black54),
+                            ),
+                            // SizedBox(
+                            //   height: 10,
+                            // ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //   children: [
+                            //     Text(
+                            //       " 내 위치에서",
+                            //       style: TextStyle(
+                            //           fontFamily: 'NotoSans',
+                            //           color: Colors.black87),
+                            //     ),
+                            //     Row(
+                            //       children: [
+                            //         Text(
+                            //           "128 m ",
+                            //           style: TextStyle(color: Colors.red),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //   ],
+                            // ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.star,
+                                      color: Colors.orangeAccent,
+                                    ),
+                                    Text(
+                                      "5.0",
+                                      style: TextStyle(
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                CupertinoButton(
+                                  minSize: 0,
+                                  padding: EdgeInsets.all(10),
+                                  onPressed: () {},
+                                  child: Icon(
+                                    Icons.favorite_border_outlined,
+                                    color: Colors.red,
+                                  ),
+                                ),
+                                // Row(
+                                //   children: [
+                                //     Text('99+구매 '),
+                                //   ],
+                                // ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+          ],
+        ),
       ),
     );
   }
