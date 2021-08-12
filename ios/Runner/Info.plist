@@ -17,8 +17,8 @@
 
       <!-- 카카오스토리링크 -->
       <string>storylink</string>
+	  
   </array>
-
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>

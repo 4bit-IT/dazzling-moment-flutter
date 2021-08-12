@@ -7,6 +7,7 @@ import 'bar/drawer.dart';
 import 'bar/bottom_navigaton.dart';
 import 'package:damo/screen/bar/back_button_clicked.dart';
 import 'package:damo/screen/product/product_info.dart';
+import 'package:like_button/like_button.dart';
 
 class HomeMain extends StatefulWidget {
   @override
@@ -20,6 +21,17 @@ class _HomeMainState extends State<HomeMain> {
   String selectedDropdown = '거리순';
 
   ScrollController scrollController = ScrollController();
+
+  Future<bool> onLikeButtonTapped(bool isLiked) async {
+    /// send your request here
+    // final bool success= await sendRequest();
+
+    /// if failed, you can do nothing
+    // return success? !isLiked:isLiked;
+    print('clicked favorite');
+
+    return !isLiked;
+  }
 
   Widget viewProduct() {
     List<Image> imageList = [
@@ -183,9 +195,11 @@ class _HomeMainState extends State<HomeMain> {
                                   minSize: 0,
                                   padding: EdgeInsets.all(10),
                                   onPressed: () {},
-                                  child: Icon(
-                                    Icons.favorite_border_outlined,
-                                    color: Colors.red,
+                                  child: LikeButton(
+                                    onTap: onLikeButtonTapped,
+                                    size: 25.0,
+                                    animationDuration:
+                                        const Duration(milliseconds: 500),
                                   ),
                                 ),
                                 // Row(

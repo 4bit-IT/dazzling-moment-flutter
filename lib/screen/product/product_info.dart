@@ -82,7 +82,7 @@ class _ProductInfoState extends State<ProductInfo> {
                     ),
                     SizedBox(height: 10.0),
                     Divider(
-                      thickness: 5.0,
+                      thickness: 3.0,
                       color: Colors.grey[200],
                     ),
                     DefaultTabController(
@@ -93,7 +93,9 @@ class _ProductInfoState extends State<ProductInfo> {
                         children: [
                           Container(
                             child: TabBar(
-                              labelColor: Colors.green,
+                              indicatorColor: Colors.red[100],
+                              automaticIndicatorColorAdjustment: false,
+                              labelColor: Colors.red,
                               unselectedLabelColor: Colors.black,
                               tabs: [
                                 Tab(text: '상품설명'),
@@ -145,6 +147,9 @@ class _ProductInfoState extends State<ProductInfo> {
                   ],
                 ),
               ),
+            ),
+            Divider(
+              thickness: 0.5,
             ),
             Container(
               height: 80,
@@ -228,7 +233,8 @@ class _ProductInfoState extends State<ProductInfo> {
                                                     minSize: 0,
                                                     padding: EdgeInsets.zero,
                                                     child: Icon(
-                                                        Icons.keyboard_arrow_down,
+                                                        Icons
+                                                            .keyboard_arrow_down,
                                                         size: 40,
                                                         color: Colors.black38),
                                                     onPressed: () {
@@ -255,7 +261,8 @@ class _ProductInfoState extends State<ProductInfo> {
                                                     width: 1,
                                                     color: Colors.black38,
                                                   ),
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius:
+                                                      BorderRadius.all(
                                                     Radius.circular(5.0),
                                                   ),
                                                 ),
@@ -279,7 +286,8 @@ class _ProductInfoState extends State<ProductInfo> {
                                                         currentSelectedValue =
                                                             value;
                                                         taste.remove(value);
-                                                        taste.insert(0, '$value');
+                                                        taste.insert(
+                                                            0, '$value');
                                                       });
                                                     },
                                                   ),
@@ -298,8 +306,8 @@ class _ProductInfoState extends State<ProductInfo> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         CupertinoButton(
-                                          padding:
-                                              EdgeInsets.fromLTRB(30, 10, 30, 10),
+                                          padding: EdgeInsets.fromLTRB(
+                                              30, 10, 30, 10),
                                           color: Colors.red[200],
                                           child: Text(
                                             '장바구니 담기',
@@ -320,8 +328,8 @@ class _ProductInfoState extends State<ProductInfo> {
                                           },
                                         ),
                                         CupertinoButton(
-                                          padding:
-                                              EdgeInsets.fromLTRB(30, 10, 30, 10),
+                                          padding: EdgeInsets.fromLTRB(
+                                              30, 10, 30, 10),
                                           color: Colors.red[200],
                                           child: Text(
                                             '바로 구매하기',

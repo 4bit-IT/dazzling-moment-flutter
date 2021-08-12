@@ -70,8 +70,8 @@ class _SignState extends State<Sign> {
                       Text(
                         "Dazzling Moment",
                         textAlign: TextAlign.center,
-                        style:
-                            TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 25),
                       ),
                       SizedBox(
                         height: 20,
@@ -95,8 +95,10 @@ class _SignState extends State<Sign> {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => SignIn()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignIn()));
                         },
                         color: Colors.red[200],
                         elevation: 0,
@@ -118,8 +120,10 @@ class _SignState extends State<Sign> {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => SignUp()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignUp()));
                         },
                         color: Colors.red[200],
                         elevation: 0,
