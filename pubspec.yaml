@@ -32,10 +32,7 @@ dependencies:
   google_maps_flutter: ^2.0.6  # 구글 맵
   flutter_login: ^2.2.1        # 로그인 애니메이션 
   font_awesome_flutter: ^9.1.0 # 폰트 아이콘
-  html_editor_enhanced: ^2.2.0
-
-dependency_overrides :
-  flutter_colorpicker : ^0.4.0
+  like_button: ^2.0.2          # 좋아요(하트) 버튼
 
 
 dev_dependencies:

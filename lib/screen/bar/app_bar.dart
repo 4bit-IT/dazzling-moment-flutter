@@ -14,7 +14,9 @@ class DamoAppBar {
       centerTitle: true,
       elevation: 0.0,
       backgroundColor: Colors.white,
-      title: Image.asset('assets/images/logo.png', height: 40.0),
+      title: Image.asset(
+        'assets/images/DAMO_logo-02.png',
+      ),
       actions: [
         CupertinoButton(
           padding: EdgeInsets.zero,
@@ -95,7 +97,9 @@ class DamoAppBar {
       ),
       elevation: 0.0,
       backgroundColor: Colors.white,
-      title: Image.asset('assets/images/logo.png', height: 40.0),
+      title: Image.asset(
+        'assets/images/DAMO_logo-02.png',
+      ),
       actions: [
         CupertinoButton(
           padding: EdgeInsets.zero,
@@ -134,7 +138,7 @@ class DamoAppBar {
       ),
       elevation: 0.0,
       backgroundColor: Colors.white,
-      title: Image.asset('assets/images/logo.png', height: 40.0),
+      title: Image.asset('assets/images/DAMO_logo-02.png'),
       actions: [
         CupertinoButton(
           padding: EdgeInsets.zero,
