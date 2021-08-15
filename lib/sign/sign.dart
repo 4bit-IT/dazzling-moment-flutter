@@ -68,15 +68,6 @@ class _SignState extends State<Sign> {
                   Column(
                     children: [
                       Text(
-                        "Dazzling Moment",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 25),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
                         "MZ세대를 위한 이벤트 관련 오픈마켓 및 정보공유 서비스",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.grey[700], fontSize: 15),
@@ -87,7 +78,8 @@ class _SignState extends State<Sign> {
                     height: MediaQuery.of(context).size.height / 3,
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage('assets/images/logo.png'))),
+                            image:
+                                AssetImage('assets/images/DAMO_logo-03.png'))),
                   ),
                   Column(
                     children: [

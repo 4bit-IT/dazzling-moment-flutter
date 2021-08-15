@@ -76,26 +76,13 @@ class _SignUpState extends State<SignUp> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Image.asset('assets/images/logo.png'),
-                          // Text(
-                          //   "회원가입",
-                          //   style: TextStyle(
-                          //     fontSize: 30,
-                          //     fontWeight: FontWeight.bold,
-                          //   ),
-                          // ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text(
-                            "다모(Damo, Dazzling moment)",
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey[700],
-                            ),
+                          SizedBox(height: 20.0),
+                          Image.asset(
+                            'assets/images/DAMO_logo-02.png',
+                            width: 300.0,
                           ),
                           SizedBox(
-                            height: 30,
+                            height: 50,
                           )
                         ],
                       ),
@@ -125,14 +112,15 @@ class _SignUpState extends State<SignUp> {
                             minWidth: double.infinity,
                             height: 60,
                             onPressed: () {},
-                            color: Colors.red[100],
+                            color: Colors.red[200],
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(40)),
+                                borderRadius: BorderRadius.circular(20)),
                             child: Text(
                               "회원가입",
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 16,
+                                color: Colors.white,
                               ),
                             ),
                           ),

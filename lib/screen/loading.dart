@@ -1,56 +1,32 @@
-import 'dart:async';
+// import 'dart:async';
 
-import 'package:damo/screen/home_main.dart';
+// import 'package:damo/screen/home_main.dart';
+// import 'package:damo/sign/sign.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
-import 'package:flutter/material.dart';
-import 'package:transition/transition.dart';
+// import 'package:flutter/material.dart';
+// import 'package:transition/transition.dart';
 
-class Loading extends StatefulWidget {
-  @override
-  _LoadingState createState() => _LoadingState();
-}
+// class Loading extends StatefulWidget {
+//   @override
+//   _LoadingState createState() => _LoadingState();
+// }
 
-class _LoadingState extends State<Loading> {
-  @override
-  void initState() {
-    Timer(
-      Duration(seconds: 2),
-      () => Navigator.pushReplacement(
-          context,
-          Transition(
-              child: HomeMain(), transitionEffect: TransitionEffect.FADE)),
-    );
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage('assets/images/logo.png'), fit: BoxFit.contain),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            top: 0.0,
-            left: 0.0,
-            child: Container(
-              width: width,
-              height: height,
-              child: Scaffold(
-                backgroundColor: Colors.transparent,
-                body: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Center(),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+// class _LoadingState extends State<Loading> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: StreamBuilder(
+//           stream: FirebaseAuth.instance.authStateChanges(),
+//           builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+//             if (!snapshot.hasData) {
+//               print('로그인 정보가 없습니다.');
+//               return Sign();
+//             } else {
+//               print('로그인 정보가 있습니다. 메인화면으로 이동합니다.');
+//               return HomeMain();
+//             }
+//           }),
+//     );
+//   }
+// }
