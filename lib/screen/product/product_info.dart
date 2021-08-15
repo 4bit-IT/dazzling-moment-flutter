@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:card_swiper/card_swiper.dart';
 
 class ProductInfo extends StatefulWidget {
   @override
@@ -21,6 +22,8 @@ class _ProductInfoState extends State<ProductInfo> {
   );
   final taste = ['초코', '바닐라', '딸기', '치약'];
   var currentSelectedValue;
+
+  List a = [Image.asset('assets/images/logo.png'),Image.asset('assets/images/logo.png'),Image.asset('assets/images/logo.png'),Image.asset('assets/images/logo.png'),Image.asset('assets/images/logo.png'),];
 
   void onChange(String value) {
     currentSelectedValue = value;
@@ -67,8 +70,42 @@ class _ProductInfoState extends State<ProductInfo> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     SizedBox(height: 20.0),
-                    Image.asset(
-                      'assets/images/pro.JPG',
+                    Container(
+                      height: MediaQuery.of(context).size.height/2,
+                      color: Colors.red[200],
+                      child: Swiper(
+                        itemHeight: MediaQuery.of(context).size.height,
+                        itemWidth: MediaQuery.of(context).size.width,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Wrap(
+                            runSpacing: 6.0,
+                            children: [0,1,2,3,4,5,6,7,8,9].map((i){
+                              return SizedBox(
+                                width: MediaQuery.of(context).size.width/5,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      child: Container(
+                                        child: Image.network("https://fuss10.elemecdn.com/c/db/d20d49e5029281b9b73db1c5ec6f9jpeg.jpeg%3FimageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90"),
+                                      ),
+                                      height: MediaQuery.of(context).size.width * 0.12,
+                                      width: MediaQuery.of(context).size.width * 0.12,
+                                    ),
+                                    Padding(padding: EdgeInsets.only(top:6.0),child: Text("$i"),)
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          );
+                        },
+                        indicatorLayout: PageIndicatorLayout.COLOR,
+                        autoplay: false,
+                        itemCount: 10,
+                        layout: SwiperLayout.TINDER,
+                        pagination: SwiperPagination(builder: SwiperPagination.dots),
+                        //control: SwiperControl(),
+                      ),
                     ),
                     Center(
                       child: Text(

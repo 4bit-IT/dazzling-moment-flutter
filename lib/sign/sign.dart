@@ -1,5 +1,7 @@
 import 'package:damo/screen/bar/scroll_behavior.dart';
 import 'package:damo/screen/home_main.dart';
+import 'package:damo/screen/seller/seller_login.dart';
+import 'package:damo/screen/seller/seller_main.dart';
 import 'package:damo/sign/sign_in.dart';
 import 'package:damo/sign/sign_up.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,10 +41,15 @@ class _SignState extends State<Sign> {
         actions: [
           CupertinoButton(
             onPressed: () {
-              //submitStoreClicked();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SellerLogin(),
+                ),
+              );
             },
             child: Text(
-              '업체 입점신청',
+              '업체 로그인',
               style: TextStyle(
                 fontFamily: 'NotoSans',
                 color: Colors.black87,
