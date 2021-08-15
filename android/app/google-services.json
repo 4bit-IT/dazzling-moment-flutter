@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "1075408420901",
+    "project_id": "apt-subset-321915",
+    "storage_bucket": "apt-subset-321915.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075408420901:android:f41a919721ae2f39e03fcc",
+        "android_client_info": {
+          "package_name": "com.fourbit.damo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075408420901-l77h3qnfid5odtlcrrmbijivjmt8addr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fourbit.damo",
+            "certificate_hash": "a07da24213c931aee9a2459b102168cb895a93d6"
+          }
+        },
+        {
+          "client_id": "1075408420901-cq2f5nadgmna7kjo3s5vbm46v2so46e1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5qd5Qpi3rrs0OTTKRjNdDd9oBvWK3zYU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075408420901-cq2f5nadgmna7kjo3s5vbm46v2so46e1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1075408420901-p2d0fa1vjd2cjb28k6f59uu0tpegsbhv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fourbit.damo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

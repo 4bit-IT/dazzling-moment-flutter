@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:label="damo"
+        android:label="다모"
         android:icon="@mipmap/ic_launcher">
           <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyCNlS2Ozxncj8E6tQ656cgdqKwebmTgTPY"/>
