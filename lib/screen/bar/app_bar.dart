@@ -16,7 +16,7 @@ class DamoAppBar {
       backgroundColor: Colors.white,
       title: Image.asset(
         'assets/images/DAMO_logo-02.png',
-        width: 130.0,
+        width: 115.0,
       ),
       actions: [
         CupertinoButton(
@@ -44,12 +44,6 @@ class DamoAppBar {
           onPressed: () {},
         ),
         SizedBox(width: 10.0),
-        // IconButton(
-        //   icon: Icon(Icons.menu),
-        //   onPressed: () {},
-        //   color: Colors.red,
-        //   iconSize: 30.0,
-        // ),
       ],
       bottom: TabBar(
         labelStyle: GoogleFonts.lato(color: Colors.black38, fontSize: 15.0),
@@ -60,19 +54,17 @@ class DamoAppBar {
         isScrollable: false,
         tabs: [
           Tab(
-              child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('핸드메이드 케이크'),
-              SizedBox(
-                width: 5,
-              ),
-              Icon(Icons.cake_outlined),
-            ],
-          )
-
-              //icon: Icon(Icons.cake_outlined,),
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('핸드메이드 케이크'),
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(Icons.cake_outlined),
+              ],
+            ),
+          ),
           Tab(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -100,7 +92,7 @@ class DamoAppBar {
       backgroundColor: Colors.white,
       title: Image.asset(
         'assets/images/DAMO_logo-02.png',
-        width: 130.0,
+        width: 115.0,
       ),
       actions: [
         CupertinoButton(
@@ -142,7 +134,7 @@ class DamoAppBar {
       backgroundColor: Colors.white,
       title: Image.asset(
         'assets/images/DAMO_logo-02.png',
-        width: 130.0,
+        width: 115.0,
       ),
       actions: [
         CupertinoButton(
