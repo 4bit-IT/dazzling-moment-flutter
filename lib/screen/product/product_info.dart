@@ -23,7 +23,13 @@ class _ProductInfoState extends State<ProductInfo> {
   final taste = ['초코', '바닐라', '딸기', '치약'];
   var currentSelectedValue;
 
-  List a = [Image.asset('assets/images/logo.png'),Image.asset('assets/images/logo.png'),Image.asset('assets/images/logo.png'),Image.asset('assets/images/logo.png'),Image.asset('assets/images/logo.png'),];
+  List a = [
+    Image.asset('assets/images/logo.png'),
+    Image.asset('assets/images/logo.png'),
+    Image.asset('assets/images/logo.png'),
+    Image.asset('assets/images/logo.png'),
+    Image.asset('assets/images/logo.png'),
+  ];
 
   void onChange(String value) {
     currentSelectedValue = value;
@@ -71,41 +77,57 @@ class _ProductInfoState extends State<ProductInfo> {
                   children: [
                     SizedBox(height: 20.0),
                     Container(
-                      height: MediaQuery.of(context).size.height/2,
-                      color: Colors.red[200],
+                      height: MediaQuery.of(context).size.height / 2,
                       child: Swiper(
                         itemHeight: MediaQuery.of(context).size.height,
                         itemWidth: MediaQuery.of(context).size.width,
                         itemBuilder: (BuildContext context, int index) {
-                          return Wrap(
-                            runSpacing: 6.0,
-                            children: [0,1,2,3,4,5,6,7,8,9].map((i){
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width/5,
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    SizedBox(
-                                      child: Container(
-                                        child: Image.network("https://fuss10.elemecdn.com/c/db/d20d49e5029281b9b73db1c5ec6f9jpeg.jpeg%3FimageMogr/format/webp/thumbnail/!90x90r/gravity/Center/crop/90x90"),
-                                      ),
-                                      height: MediaQuery.of(context).size.width * 0.12,
-                                      width: MediaQuery.of(context).size.width * 0.12,
+                          return Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+                            child: Stack(
+                              children: [
+                                // ConstrainedBox(
+                                //   constraints: BoxConstraints.expand(),
+                                //   child: Image.asset(
+                                //     "assets/images/white.jpg", //배경사진
+                                //     fit: BoxFit.fill,
+                                //   ),
+                                // ),
+                                Swiper.children(
+                                  autoplay: true,
+                                  pagination: SwiperPagination(
+                                      margin: EdgeInsets.fromLTRB(
+                                          0.0, 0.0, 0.0, 30.0),
+                                      builder: DotSwiperPaginationBuilder(
+                                          color: Colors.grey,
+                                          activeColor: Colors.red[200],
+                                          size: 15.0,
+                                          activeSize: 22.0)),
+                                  children: [
+                                    Image.asset(
+                                      "assets/images/logo.png",
+                                      fit: BoxFit.contain,
                                     ),
-                                    Padding(padding: EdgeInsets.only(top:6.0),child: Text("$i"),)
+                                    Image.asset(
+                                      "assets/images/DAMO_logo-01.png",
+                                      fit: BoxFit.contain,
+                                    ),
+                                    Image.asset(
+                                        "assets/images/DAMO_logo-02.png",
+                                        fit: BoxFit.contain)
                                   ],
-                                ),
-                              );
-                            }).toList(),
+                                )
+                              ],
+                            ),
                           );
                         },
-                        indicatorLayout: PageIndicatorLayout.COLOR,
-                        autoplay: false,
+                        // indicatorLayout: PageIndicatorLayout.COLOR,
                         itemCount: 10,
-                        layout: SwiperLayout.TINDER,
-                        pagination: SwiperPagination(builder: SwiperPagination.dots),
-                        //control: SwiperControl(),
                       ),
+                    ),
+                    SizedBox(
+                      height: 20.0,
                     ),
                     Center(
                       child: Text(

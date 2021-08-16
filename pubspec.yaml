@@ -34,17 +34,18 @@ dependencies:
   flutter_login: ^2.2.1        # 로그인 애니메이션 
   font_awesome_flutter: ^9.1.0 # 폰트 아이콘
   like_button: ^2.0.2          # 좋아요(하트) 버튼
-  # firebase_core: ^1.4.0        # 파이어 베이스 사용
-  # firebase_auth: ^3.0.1        # 파이어 베이스 로그인
+  # firebase_core: ^1.4.0      # 파이어 베이스 사용
+  # firebase_auth: ^3.0.1      # 파이어 베이스 로그인
   # flutter_web_auth: ^0.3.0     
   animated_splash_screen: ^1.1.0 # 로딩화면 구성
-  html_editor_enhanced: ^2.2.0
-  image_picker: ^0.8.3+2
+  flutter_staggered_animations: ^1.0.0 # 업체이미지 애니메이션
+  # html_editor_enhanced: ^2.2.0
+  # image_picker: ^0.8.3+2
   card_swiper: ^1.0.4
 
 
-dependency_overrides:
-  flutter_colorpicker: ^0.4.0
+# dependency_overrides:
+#   flutter_colorpicker: ^0.4.0
 
 
 dev_dependencies:
