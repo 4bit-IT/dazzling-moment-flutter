@@ -35,14 +35,14 @@ class _HomeMainState extends State<HomeMain> {
         msg: '찜목록에서 제거했어요!',
         toastLength: Toast.LENGTH_SHORT,
         backgroundColor: Colors.red[200],
-        fontSize: 15.0,
+        fontSize: 100.0,
       );
     } else {
       Fluttertoast.showToast(
         msg: '찜목록에 담았어요!',
         toastLength: Toast.LENGTH_SHORT,
         backgroundColor: Colors.red[200],
-        fontSize: 15.0,
+        fontSize: 100.0,
       );
     }
     return !isLiked;

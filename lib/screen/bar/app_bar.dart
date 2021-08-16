@@ -150,4 +150,19 @@ class DamoAppBar {
       ],
     );
   }
+
+  dynamic sellerAppBar(BuildContext context) {
+    return AppBar(
+      centerTitle: true,
+      iconTheme: IconThemeData(
+        color: Colors.red,
+      ),
+      elevation: 0.0,
+      backgroundColor: Colors.white,
+      title: Image.asset(
+        'assets/images/DAMO_logo-02.png',
+        width: 130.0,
+      ),
+    );
+  }
 }

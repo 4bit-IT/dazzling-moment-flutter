@@ -41,12 +41,12 @@ class _SignState extends State<Sign> {
         actions: [
           CupertinoButton(
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => SellerLogin(),
-              //   ),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SellerLogin(),
+                ),
+              );
             },
             child: Text(
               '업체 로그인',
