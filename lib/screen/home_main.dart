@@ -51,6 +51,14 @@ class _HomeMainState extends State<HomeMain> {
   Widget viewProduct() {
     List<Image> imageList = [
       Image.asset(
+        'assets/images/DAMO_logo-01.png',
+        fit: BoxFit.fill,
+      ),
+      Image.asset(
+        'assets/images/DAMO_logo-03.png',
+        fit: BoxFit.fill,
+      ),
+      Image.asset(
         'assets/images/pro.JPG',
         fit: BoxFit.fill,
       ),
@@ -59,23 +67,15 @@ class _HomeMainState extends State<HomeMain> {
         fit: BoxFit.fill,
       ),
       Image.asset(
-        'assets/images/logo.png',
-        fit: BoxFit.fill,
-      ),
-      Image.asset(
-        'assets/images/kakao_login_medium_wide.png',
-        fit: BoxFit.fill,
-      ),
-      Image.asset(
         'assets/images/pro.JPG',
         fit: BoxFit.fill,
       ),
       Image.asset(
-        'assets/images/pro.JPG',
+        'assets/images/DAMO_logo-01.png',
         fit: BoxFit.fill,
       ),
       Image.asset(
-        'assets/images/pro.JPG',
+        'assets/images/DAMO_logo-02.png',
         fit: BoxFit.fill,
       ),
     ];

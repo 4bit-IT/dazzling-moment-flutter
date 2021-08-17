@@ -68,7 +68,7 @@ class _DrawerButtonState extends State<DrawerButton> {
           children: [
             UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage('assets/images/logo.png'),
+                backgroundImage: AssetImage('assets/images/DAMO_logo-01.png'),
                 backgroundColor: Colors.redAccent,
               ),
               accountName: Text('윤중건'),

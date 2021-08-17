@@ -21,7 +21,9 @@ class _SellerProductMainState extends State<SellerProductMain> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    sellerMainImage = Image.asset('assets/images/logo.png');
+    sellerMainImage = Image.asset(
+      'assets/images/DAMO_logo-01.png',
+    );
     sellerName = '김다모';
     sellerDescription = '설명설명';
     receivedData.add(sellerMainImage);
