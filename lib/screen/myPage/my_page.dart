@@ -45,7 +45,7 @@ class _MyPageState extends State<MyPage> {
                           children: [
                             IconButton(
                               onPressed: () {},
-                              icon: Image.asset('assets/images/logo.png'),
+                              icon: Image.asset('assets/images/DAMO_logo-01.png'),
                               iconSize: 100,
                             ),
                             SizedBox(
