@@ -12,7 +12,7 @@ class _SellerLoginState extends State<SellerLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DamoAppBar().appBar(context),
+      appBar: DamoAppBar().sellerAppBar(context),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
