@@ -93,6 +93,9 @@ class _SignInState extends State<SignIn> {
             onLogin: _signIn,
             onSignup: _signIn,
             onRecoverPassword: _recoverPassword,
+            loginProviders: [
+              //소셜 로그인
+            ],
           ),
         ),
       ),

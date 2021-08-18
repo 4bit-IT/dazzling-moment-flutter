@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:damo/screen/bar/app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -123,26 +124,17 @@ class _SellerProductModifyState extends State<SellerProductModify> {
         children: <Widget>[
           CircleAvatar(
               radius: 80,
-              backgroundColor: Colors.black,
-              child: CircleAvatar(
-                child: file == null
-                    ? Image.asset('assets/images/logo.png')
-                    : ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                          79.0,
-                        ),
-                        child: Image.file(
-                          File(file!.path),
-                          fit: BoxFit.fill,
-                          width: double.infinity,
-                        ),
-                      ),
-                radius: 79,
-                backgroundColor: Colors.white,
-              )),
+              backgroundColor: Colors.white,
+              child: file == null
+                  ? Image.asset('assets/images/DAMO_logo-01.png')
+                  : Image.file(
+                    File(file!.path),
+                    fit: BoxFit.fill,
+                    width: double.infinity,
+                  )),
           Positioned(
-              bottom: 20,
-              right: 20,
+              bottom: 5,
+              right: 5,
               child: InkWell(
                 onTap: () {
                   takeImage(context);
@@ -158,6 +150,49 @@ class _SellerProductModifyState extends State<SellerProductModify> {
     );
   }
 
+  Future<bool> onBackClicked() async{
+    bool returnContext = true;
+    await showDialog(context: context,
+        //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0)),
+            //Dialog Main Title
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  "이전 화면으로 돌아가시겠습니까 ?",
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              CupertinoButton(
+                child: Text("확인"),
+                onPressed: () {
+                  //데이터 저장 후 넘기기
+                  Navigator.pop(context);
+                  returnContext = true;
+                },
+              ),
+              CupertinoButton(
+                child: Text("취소"),
+                onPressed: () {
+                  Navigator.pop(context);
+                  returnContext = false;
+                },
+              ),
+            ],
+          );
+        });
+    if(returnContext) return true;
+    else return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -168,114 +203,118 @@ class _SellerProductModifyState extends State<SellerProductModify> {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: Scaffold(
-          appBar: AppBar(title: Text('업체 페이지')),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-            child: ListView(
-              children: <Widget>[
-                imageProfile(),
-                SizedBox(height: 20),
-                TextFormField(
-                  controller: sellerNameController,
-                  maxLength: 20,
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(20),
-                  ],
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.red,
+        child: WillPopScope(
+          onWillPop: onBackClicked,
+          child: Scaffold(
+            appBar: DamoAppBar().sellerAppBar(context),
+            backgroundColor: Colors.white,
+            body: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: ListView(
+                children: <Widget>[
+                  imageProfile(),
+                  SizedBox(height: 20),
+                  TextFormField(
+                    controller: sellerNameController,
+                    maxLength: 20,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(20),
+                    ],
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                        ),
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.redAccent,
-                        width: 2,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.redAccent,
+                          width: 2,
+                        ),
                       ),
+                      prefixIcon: Icon(
+                        Icons.person,
+                        color: Colors.blueAccent,
+                      ),
+                      labelText: '업체명(10자 이내)',
                     ),
-                    prefixIcon: Icon(
-                      Icons.person,
-                      color: Colors.blueAccent,
-                    ),
-                    labelText: '업체명(20자 이내)',
                   ),
-                ),
-                SizedBox(height: 20),
-                TextFormField(
-                  controller: sellerMainController,
-                  maxLength: 50,
-                  inputFormatters: [
-                    LengthLimitingTextInputFormatter(50),
-                  ],
-                  maxLines: 4,
-                  maxLengthEnforcement:
-                      MaxLengthEnforcement.truncateAfterCompositionEnds,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.red,
+                  SizedBox(height: 20),
+                  TextFormField(
+                    controller: sellerMainController,
+                    maxLength: 50,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(50),
+                    ],
+                    maxLines: 4,
+                    maxLengthEnforcement:
+                        MaxLengthEnforcement.truncateAfterCompositionEnds,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.red,
+                        ),
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.redAccent,
-                        width: 2,
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.redAccent,
+                          width: 2,
+                        ),
                       ),
+                      prefixIcon: Icon(
+                        CupertinoIcons.doc_plaintext,
+                        color: Colors.blueAccent,
+                      ),
+                      labelText: '업체 설명(50자 이내)',
                     ),
-                    prefixIcon: Icon(
-                      CupertinoIcons.doc_plaintext,
-                      color: Colors.blueAccent,
+                  ),
+                  CupertinoButton(
+                    child: Text(
+                      '상품 사진 수정하기',
+                      style: TextStyle(color: Colors.black),
                     ),
-                    labelText: '업체 설명(50자 이내)',
+                    onPressed: () {
+                      takeMultiImage(context);
+                    },
                   ),
-                ),
-                CupertinoButton(
-                  child: Text(
-                    '상품 사진 수정하기',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  onPressed: () {
-                    takeMultiImage(context);
-                  },
-                ),
-                Container(
-                  padding: EdgeInsets.all(30),
-                  height: MediaQuery.of(context).size.height / 2,
-                  width: MediaQuery.of(context).size.width,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    children: [
-                      for (int i = 0; i < resultImages.length; i++)
-                        Image.file(
-                          File(
-                            resultImages[i].path,
+                  Container(
+                    padding: EdgeInsets.all(30),
+                    height: MediaQuery.of(context).size.height / 2,
+                    width: MediaQuery.of(context).size.width,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      children: [
+                        for (int i = 0; i < resultImages.length; i++)
+                          Image.file(
+                            File(
+                              resultImages[i].path,
+                            ),
+                            width: MediaQuery.of(context).size.width / 2,
+                            height: MediaQuery.of(context).size.height / 2,
                           ),
-                          width: MediaQuery.of(context).size.width / 2,
-                          height: MediaQuery.of(context).size.height / 2,
-                        ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      TextButton(
-                        style: TextButton.styleFrom(
-                            backgroundColor: Theme.of(context).accentColor),
-                        onPressed: () {},
-                        child: Text(
-                          'Submit',
-                          style: TextStyle(color: Colors.white),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        TextButton(
+                          style: TextButton.styleFrom(
+                              backgroundColor: Theme.of(context).accentColor),
+                          onPressed: () {},
+                          child: Text(
+                            '수정 완료',
+                            style: TextStyle(color: Colors.white),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
