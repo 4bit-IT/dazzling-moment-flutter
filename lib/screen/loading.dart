@@ -4,7 +4,7 @@
 // import 'package:damo/sign/sign.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
-// import 'package:flutter/material.dart';
+// import package:flutter/material.dart';
 // import 'package:transition/transition.dart';
 
 // class Loading extends StatefulWidget {

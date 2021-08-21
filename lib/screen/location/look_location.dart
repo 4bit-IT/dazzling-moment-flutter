@@ -1,9 +1,10 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:kakaomap_webview/kakaomap_webview.dart';
 import '../bar/drawer.dart';
 import '../bar/app_bar.dart';
 import '../bar/bottom_navigaton.dart';
+
+const String kakaoMapKey = '412e1951c48c2b1c68eddfd8b3608426';
 
 class LookLocation extends StatefulWidget {
   @override
@@ -12,18 +13,6 @@ class LookLocation extends StatefulWidget {
 
 class LookLocationState extends State<LookLocation> {
   DamoAppBar appBar = DamoAppBar();
-  Completer<GoogleMapController> _controller = Completer();
-
-  static final CameraPosition _myLocation = CameraPosition(
-    target: LatLng(35.10835, 128.95972),
-    zoom: 18.5,
-  );
-
-  // static final CameraPosition _kLake = CameraPosition(
-  //     bearing: 192.8334901395799,
-  //     target: LatLng(37.43296265331129, -122.08832357078792),
-  //     tilt: 59.440717697143555,
-  //     zoom: 19.151926040649414);
 
   @override
   Widget build(BuildContext context) {
@@ -32,29 +21,19 @@ class LookLocationState extends State<LookLocation> {
       drawer: DrawerButton(),
       appBar: appBar.noSearchBar(context),
       bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 1),
-      body: Container(
-        padding: EdgeInsets.all(20),
-        child: GoogleMap(
-          mapType: MapType.normal,
-          initialCameraPosition: _myLocation,
-          myLocationEnabled: true,
-          myLocationButtonEnabled: true,
-          zoomControlsEnabled: false,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-        ),
-      ),
-      // floatingActionButton: FloatingActionButton.extended(
-      //   onPressed: _goToTheLake,
-      //   label: Text('To the lake!'),
-      //   icon: Icon(Icons.directions_boat),
-      // ),
+      body: KakaoMapView(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          kakaoMapKey: kakaoMapKey,
+          lat: 35.107651,
+          lng: 128.961425,
+          showMapTypeControl: false,
+          showZoomControl: false,
+          // markerImageURL:
+          //     'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
+          onTapMarker: (message) {
+            //event callback when the marker is tapped
+          }),
     );
   }
-
-  // Future<void> _goToTheLake() async {
-  //   final GoogleMapController controller = await _controller.future;
-  //   controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
-  // }
 }

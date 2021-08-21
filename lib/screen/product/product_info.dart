@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:like_button/like_button.dart';
 
 class ProductInfo extends StatefulWidget {
   @override
@@ -12,6 +13,31 @@ class ProductInfo extends StatefulWidget {
 }
 
 class _ProductInfoState extends State<ProductInfo> {
+  Future<bool> onLikeButtonTapped(bool isLiked) async {
+    /// send your request here
+    // final bool success= await sendRequest();
+
+    /// if failed, you can do nothing
+    // return success? !isLiked:isLiked;
+    if (isLiked) {
+      Fluttertoast.showToast(
+        msg: '찜목록에서 제거했어요!',
+        toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: Colors.red[200],
+        gravity: ToastGravity.BOTTOM,
+        fontSize: 15.0,
+      );
+    } else {
+      Fluttertoast.showToast(
+        msg: '찜목록에 담았어요!',
+        toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: Colors.red[200],
+        fontSize: 15.0,
+      );
+    }
+    return !isLiked;
+  }
+
   String reviewCount = '30';
   String questionCount = '30';
   String productName = '곰돌곰돌';
@@ -209,34 +235,20 @@ class _ProductInfoState extends State<ProductInfo> {
             ),
             Divider(
               thickness: 0.5,
+              height: 0.0,
             ),
             Container(
-              height: 80,
+              height: 100,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   CupertinoButton(
-                    minSize: 0,
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      setState(() {
-                        if (wishButton.toString() ==
-                            'Icon(IconData(U+0E25C), size: 50.0, color: Color(0xffef9a9a))') {
-                          wishButton = Icon(
-                            Icons.favorite,
-                            color: Colors.red[200],
-                            size: 50,
-                          );
-                        } else {
-                          wishButton = Icon(
-                            Icons.favorite_border,
-                            color: Colors.red[200],
-                            size: 50,
-                          );
-                        }
-                      });
-                    },
-                    child: wishButton,
+                    onPressed: () {},
+                    child: LikeButton(
+                      onTap: onLikeButtonTapped,
+                      size: 55.0,
+                      animationDuration: const Duration(milliseconds: 500),
+                    ),
                   ),
                   Container(
                     width: 300,

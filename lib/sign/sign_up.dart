@@ -1,8 +1,11 @@
 import 'package:damo/sign/sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transition/transition.dart';
 import 'package:damo/screen/bar/scroll_behavior.dart';
+
+final _auth = FirebaseAuth.instance;
 
 class SignUp extends StatefulWidget {
   @override
@@ -99,14 +102,8 @@ class _SignUpState extends State<SignUp> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 40),
                         child: Container(
-                          // padding: EdgeInsets.only(top: 0, left: 0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            // border: Border(
-                            //     bottom: BorderSide(color: Colors.black),
-                            //     top: BorderSide(color: Colors.black),
-                            //     right: BorderSide(color: Colors.black),
-                            //     left: BorderSide(color: Colors.black))),
                           ),
                           child: MaterialButton(
                             minWidth: double.infinity,
