@@ -28,7 +28,10 @@ class _MyPageState extends State<MyPage> {
         backgroundColor: Colors.white,
         drawer: DrawerButton(),
         appBar: appBar.appBar(context),
-        bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 3, scrollController: scrollController,),
+        bottomNavigationBar: BottomNavigation(
+          bottomNavigationIndex: 3,
+          scrollController: scrollController,
+        ),
         body: ScrollConfiguration(
           behavior: NoGlowScrollBehavior(),
           child: SingleChildScrollView(
@@ -45,7 +48,8 @@ class _MyPageState extends State<MyPage> {
                           children: [
                             IconButton(
                               onPressed: () {},
-                              icon: Image.asset('assets/images/DAMO_logo-01.png'),
+                              icon:
+                                  Image.asset('assets/images/DAMO_logo-01.png'),
                               iconSize: 100,
                             ),
                             SizedBox(
@@ -217,7 +221,7 @@ class _MyPageState extends State<MyPage> {
                             child: Row(
                               children: [
                                 Icon(
-                                  Icons.mic_none,
+                                  Icons.library_books_outlined,
                                   color: Colors.black,
                                 ),
                                 SizedBox(

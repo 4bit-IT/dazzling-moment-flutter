@@ -1,6 +1,7 @@
 import 'package:damo/main.dart';
 import 'package:damo/screen/bar/scroll_behavior.dart';
 import 'package:damo/sign/sign.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DrawerButton extends StatefulWidget {
@@ -111,7 +112,7 @@ class _DrawerButtonState extends State<DrawerButton> {
             ),
             ListTile(
               leading: Icon(
-                Icons.system_update,
+                CupertinoIcons.exclamationmark_circle,
                 color: Colors.grey[850],
               ),
               title: Text('버전정보'),
@@ -122,7 +123,7 @@ class _DrawerButtonState extends State<DrawerButton> {
             ),
             ListTile(
               leading: Icon(
-                Icons.info,
+                CupertinoIcons.doc_plaintext,
                 color: Colors.grey[850],
               ),
               title: Text('이용약관'),
