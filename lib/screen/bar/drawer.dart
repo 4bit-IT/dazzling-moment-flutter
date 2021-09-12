@@ -1,6 +1,5 @@
 import 'package:damo/main.dart';
 import 'package:damo/screen/bar/scroll_behavior.dart';
-import 'package:damo/sign/sign.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

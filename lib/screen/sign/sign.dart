@@ -1,7 +1,7 @@
 import 'package:damo/screen/bar/scroll_behavior.dart';
 import 'package:damo/screen/home_main.dart';
-import 'package:damo/sign/sign_in.dart';
-import 'package:damo/sign/sign_up.dart';
+import 'package:damo/screen/sign/sign_in.dart';
+import 'package:damo/screen/sign/sign_up.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/all.dart';

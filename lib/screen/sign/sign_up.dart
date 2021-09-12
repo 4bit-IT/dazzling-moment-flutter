@@ -1,11 +1,8 @@
-import 'package:damo/sign/sign_in.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:damo/screen/sign/sign_in.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:transition/transition.dart';
 import 'package:damo/screen/bar/scroll_behavior.dart';
-
-final _auth = FirebaseAuth.instance;
 
 class SignUp extends StatefulWidget {
   @override
