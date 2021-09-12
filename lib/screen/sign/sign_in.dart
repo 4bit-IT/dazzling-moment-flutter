@@ -1,5 +1,5 @@
 import 'package:damo/screen/bar/scroll_behavior.dart';
-import 'package:damo/screen/home_main.dart';
+import 'package:damo/screen/main/home_main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
 
