@@ -1,6 +1,6 @@
 import 'package:damo/screen/Internet_check.dart';
 import 'package:damo/screen/loading.dart';
-import 'package:damo/sign/sign.dart';
+import 'package:damo/screen/sign/sign.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';

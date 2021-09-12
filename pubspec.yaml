@@ -32,11 +32,11 @@ dependencies:
   kakaomap_webview: ^0.2.1+1   # 카카오 맵
   flutter_login: ^2.2.1        # 로그인 애니메이션 
   font_awesome_flutter: ^9.1.0 # 폰트 아이콘
-  like_button: ^2.0.2          # 좋아요(하트) 버튼
-  firebase_core: ^1.4.0      # 파이어 베이스 사용
-  firebase_auth: ^3.0.1      # 파이어 베이스 로그인   
+  like_button: ^2.0.2          # 좋아요(하트) 버튼 
   animated_splash_screen: ^1.1.0 # 로딩화면 구성
   flutter_staggered_animations: ^1.0.0 # 업체이미지 애니메이션
+  flutter_star: ^1.0.2
+  draggable_home: ^1.0.2
   # image_picker: ^0.8.3+2
   card_swiper: ^1.0.4
 
