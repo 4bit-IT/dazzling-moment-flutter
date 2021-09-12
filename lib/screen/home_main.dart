@@ -8,7 +8,7 @@ import 'package:transition/transition.dart';
 import 'bar/drawer.dart';
 import 'bar/bottom_navigaton.dart';
 import 'package:damo/screen/bar/back_button_clicked.dart';
-import 'package:damo/screen/product/product_info.dart';
+import 'package:damo/screen/product/product.dart';
 import 'package:like_button/like_button.dart';
 
 class HomeMain extends StatefulWidget {
@@ -17,6 +17,7 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMainState extends State<HomeMain> {
+  final controller = ScrollController();
   DamoAppBar tabBar = DamoAppBar();
 
   List<String> dropdownList = ['거리순', '추천순', '인기순'];
@@ -25,11 +26,6 @@ class _HomeMainState extends State<HomeMain> {
   ScrollController scrollController = ScrollController();
 
   Future<bool> onLikeButtonTapped(bool isLiked) async {
-    /// send your request here
-    // final bool success= await sendRequest();
-
-    /// if failed, you can do nothing
-    // return success? !isLiked:isLiked;
     if (isLiked) {
       Fluttertoast.showToast(
         msg: '찜목록에서 제거했어요!',
@@ -135,7 +131,7 @@ class _HomeMainState extends State<HomeMain> {
                               Navigator.push(
                                 context,
                                 Transition(
-                                  child: ProductInfo(),
+                                  child: Product(),
                                   transitionEffect: TransitionEffect.FADE,
                                 ),
                               );

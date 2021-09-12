@@ -37,6 +37,8 @@ dependencies:
   firebase_auth: ^3.0.1      # 파이어 베이스 로그인   
   animated_splash_screen: ^1.1.0 # 로딩화면 구성
   flutter_staggered_animations: ^1.0.0 # 업체이미지 애니메이션
+  flutter_star: ^1.0.2
+  draggable_home: ^1.0.2
   # image_picker: ^0.8.3+2
   card_swiper: ^1.0.4
 
