@@ -1,5 +1,5 @@
 import 'package:damo/screen/community/look_community.dart';
-import 'package:damo/screen/home_main.dart';
+import 'package:damo/screen/main/home_main.dart';
 import 'package:damo/screen/location/look_location.dart';
 import 'package:damo/screen/myPage/my_page.dart';
 import 'package:flutter/material.dart';
