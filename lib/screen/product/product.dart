@@ -65,14 +65,11 @@ class _ProductState extends State<Product> {
   @override
   Widget build(BuildContext context) {
     return DraggableHome(
+      backgroundColor: Colors.grey[100],
       centerTitle: true,
-      curvedBodyRadius: 25.0,
+      curvedBodyRadius: 20.0,
       headerExpandedHeight: 0.7,
-      leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios)),
+      stretchTriggerOffset: 80,
       title: Text('서면에서 입소문난 수제케이크'),
       headerWidget: headerWidget(context),
       body: [
@@ -91,46 +88,38 @@ class _ProductState extends State<Product> {
   }
 
   Container body(BuildContext context) => Container(
-        child: Column(
-          children: [
-            DefaultTabController(
-              length: 3,
-              initialIndex: 0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Container(
-                    child: TabBar(
-                      indicatorColor: Colors.red[100],
-                      automaticIndicatorColorAdjustment: false,
-                      labelColor: Colors.red,
-                      unselectedLabelColor: Colors.black,
-                      tabs: [
-                        Tab(text: '상품설명'),
-                        Tab(text: '리뷰 ($reviewCount)'),
-                        Tab(text: 'Q&A ($questionCount)'),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: MediaQuery.of(context)
-                        .size
-                        .height, //height of TabBarView
-                    decoration: BoxDecoration(
-                        border: Border(
-                            top: BorderSide(color: Colors.grey, width: 0.5))),
-                    child: TabBarView(
-                      children: [
-                        ProductInfo(), //상품설명
-                        ProductReview(), //리뷰
-                        ProductQnA(), //QnA
-                      ],
-                    ),
-                  ),
+        child: DefaultTabController(
+          length: 3,
+          initialIndex: 0,
+          child: Column(
+            children: [
+              TabBar(
+                indicatorColor: Colors.red[100],
+                automaticIndicatorColorAdjustment: false,
+                labelColor: Colors.red,
+                unselectedLabelColor: Colors.black,
+                tabs: [
+                  Tab(text: '상품설명'),
+                  Tab(text: '리뷰 ($reviewCount)'),
+                  Tab(text: 'Q&A ($questionCount)'),
                 ],
               ),
-            ),
-          ],
+              Container(
+                height:
+                    MediaQuery.of(context).size.height, //height of TabBarView
+                decoration: BoxDecoration(
+                    border: Border(
+                        top: BorderSide(color: Colors.grey, width: 0.5))),
+                child: TabBarView(
+                  children: [
+                    ProductInfo(), //상품설명
+                    ProductReview(), //리뷰
+                    ProductQnA(), //QnA
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       );
 
@@ -206,7 +195,6 @@ class _ProductState extends State<Product> {
                   ),
                 ),
               ),
-              SizedBox(height: 10.0),
               Divider(
                 thickness: 3.0,
                 color: Colors.grey[200],
@@ -275,7 +263,6 @@ class _ProductState extends State<Product> {
                   itemCount: 10,
                 ),
               ),
-              SizedBox(height: 10.0),
               Divider(
                 thickness: 3.0,
                 color: Colors.grey[200],

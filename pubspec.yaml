@@ -23,8 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  kakao_flutter_sdk: ^0.7.0    # 카카오 로그인
-  cupertino_icons: ^1.0.3
+  kakao_flutter_sdk: ^0.8.1    # 카카오 로그인
+  cupertino_icons: ^1.0.3      
   google_fonts: ^2.1.0         # 구글 폰트
   transition: ^2.0.2           # 화면전환 애니메이션
   page_transition: ^2.0.0      # 화면전환 애니메이션 (로딩화면 사용)
@@ -35,8 +35,9 @@ dependencies:
   like_button: ^2.0.2          # 좋아요(하트) 버튼 
   animated_splash_screen: ^1.1.0 # 로딩화면 구성
   flutter_staggered_animations: ^1.0.0 # 업체이미지 애니메이션
-  flutter_star: ^1.0.2
-  draggable_home: ^1.0.2
+  draggable_home: ^1.0.2       # product_info sliver
+
+
   # image_picker: ^0.8.3+2
   card_swiper: ^1.0.4
 
