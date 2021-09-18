@@ -16,8 +16,11 @@ class _SignState extends State<Sign> {
   void kakaoLogin() async {
     try {
       String authCode = await AuthCodeClient.instance.request();
+      AccessTokenResponse token =
+          await AuthApi.instance.issueAccessToken(authCode);
+      TokenManager.instance.setToken(token);
       print("성공");
-      print(authCode);
+      print(token.accessToken);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomeMain()),

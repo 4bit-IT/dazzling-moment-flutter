@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_star/star.dart';
 
 class ProductReview extends StatelessWidget {
   List<int> reviewStar = [1, 2, 3, 4];
@@ -63,16 +62,6 @@ class ProductReview extends StatelessWidget {
                         ],
                       ),
                     ],
-                  ),
-                  StarWidget(
-                    star: Star(
-                      progress: 0.5,
-                      // num: 5,
-                      fat: 0.5,
-                      size: 25.0,
-                      fillColor: Colors.yellow,
-                      emptyColor: Colors.grey,
-                    ),
                   ),
                 ],
               ),
