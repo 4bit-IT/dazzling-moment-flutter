@@ -1,4 +1,6 @@
 import 'package:damo/screen/bar/app_bar.dart';
+import 'package:damo/screen/seller/seller_chat_management.dart';
+import 'package:damo/screen/seller/seller_faq_management.dart';
 import 'package:damo/screen/seller/seller_order_management.dart';
 import 'package:damo/screen/seller/seller_preview.dart';
 import 'package:damo/screen/seller/seller_product_main.dart';
@@ -109,7 +111,14 @@ class _SellerMainState extends State<SellerMain> {
                         color: Colors.black,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SellerChatManagement(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -162,6 +171,31 @@ class _SellerMainState extends State<SellerMain> {
                     },
                   ),
                 ],
+              ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.query_stats,
+                    color: Colors.redAccent[200],
+                  ),
+                  CupertinoButton(
+                    child: Text(
+                      'FAQ 관리하기',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SellerFAQManagement(),
+                        ),
+                      );
+                    },
+                  ),
+                ]
               ),
             ],
           ),

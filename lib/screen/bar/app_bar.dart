@@ -1,3 +1,4 @@
+import 'package:damo/screen/notification/notification_main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -41,7 +42,14 @@ class DamoAppBar {
             size: 30.0,
             color: Colors.redAccent,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NotificationMain(),
+              ),
+            );
+          },
         ),
         SizedBox(width: 10.0),
       ],
