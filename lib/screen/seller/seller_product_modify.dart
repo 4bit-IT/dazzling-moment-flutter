@@ -215,6 +215,7 @@ class _SellerProductModifyState extends State<SellerProductModify> {
                 imageProfile(),
                 SizedBox(height: 20),
                 TextFormField(
+                  enableSuggestions: false,
                   controller: sellerNameController,
                   maxLength: 20,
                   inputFormatters: [
@@ -277,7 +278,7 @@ class _SellerProductModifyState extends State<SellerProductModify> {
                     takeMultiImage(context);
                   },
                 ),
-                Container(
+                /*Container(
                   padding: EdgeInsets.all(30),
                   height: MediaQuery.of(context).size.height / 2,
                   width: MediaQuery.of(context).size.width,
@@ -295,7 +296,7 @@ class _SellerProductModifyState extends State<SellerProductModify> {
                       //   ),
                     ],
                   ),
-                ),
+                ),*/
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(

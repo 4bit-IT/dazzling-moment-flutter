@@ -36,6 +36,7 @@ dependencies:
   animated_splash_screen: ^1.1.0 # 로딩화면 구성
   flutter_staggered_animations: ^1.0.0 # 업체이미지 애니메이션
   draggable_home: ^1.0.2       # product_info sliver
+  #emoji_picker_flutter: ^1.0.7      # 이모지
 
 
   # image_picker: ^0.8.3+2
