@@ -1,4 +1,3 @@
-import 'package:damo/screen/bar/scroll_behavior.dart';
 import 'package:damo/screen/product/product_info.dart';
 import 'package:damo/screen/product/product_qa.dart';
 import 'package:damo/screen/product/product_review.dart';
@@ -6,12 +5,9 @@ import 'package:draggable_home/draggable_home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:like_button/like_button.dart';
 
 class Product extends StatefulWidget {
   @override
@@ -19,35 +15,10 @@ class Product extends StatefulWidget {
 }
 
 class _ProductState extends State<Product> {
-  Future<bool> onLikeButtonTapped(bool isLiked) async {
-    if (isLiked) {
-      Fluttertoast.showToast(
-        msg: '찜목록에서 제거했어요!',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.red[200],
-        gravity: ToastGravity.BOTTOM,
-        fontSize: 15.0,
-      );
-    } else {
-      Fluttertoast.showToast(
-        msg: '찜목록에 담았어요!',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.red[200],
-        fontSize: 15.0,
-      );
-    }
-    return !isLiked;
-  }
-
   String reviewCount = '30';
   String questionCount = '30';
   String productName = '곰돌곰돌';
-  Widget wishButton = Icon(
-    Icons.favorite_outline,
-    color: Colors.red[200],
-    size: 50,
-  );
-  final taste = ['초코', '바닐라', '딸기', '치약'];
+
   var currentSelectedValue;
 
   List a = [
@@ -77,13 +48,13 @@ class _ProductState extends State<Product> {
       ],
       fullyStretchable: true,
       expandedBody: expandedWidget(context),
-      floatingActionButton: IconButton(
-          iconSize: 40.0,
-          color: Colors.red[200],
-          onPressed: () {
-            //맨위로 이동하는 버튼 함수
-          },
-          icon: Icon(Icons.arrow_circle_up)),
+      // floatingActionButton: IconButton(
+      //     iconSize: 40.0,
+      //     color: Colors.red[200],
+      //     onPressed: () {
+      //       //맨위로 이동하는 버튼 함수
+      //     },
+      //     icon: Icon(Icons.arrow_circle_up)),
     );
   }
 

@@ -1,7 +1,6 @@
 import 'package:damo/screen/bar/app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SellerOrderManagement extends StatefulWidget {

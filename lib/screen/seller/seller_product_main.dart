@@ -2,6 +2,8 @@ import 'package:damo/screen/bar/app_bar.dart';
 import 'package:damo/screen/seller/seller_product_modify.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SellerProductMain extends StatefulWidget {
@@ -53,8 +55,6 @@ class _SellerProductMainState extends State<SellerProductMain> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,10 +79,7 @@ class _SellerProductMainState extends State<SellerProductMain> {
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1,
-                    color: Colors.black38
-                  ),
+                  border: Border.all(width: 1, color: Colors.black38),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -99,10 +96,7 @@ class _SellerProductMainState extends State<SellerProductMain> {
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  border: Border.all(
-                      width: 1,
-                      color: Colors.black38
-                  ),
+                  border: Border.all(width: 1, color: Colors.black38),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -120,10 +114,7 @@ class _SellerProductMainState extends State<SellerProductMain> {
                 padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  border: Border.all(
-                      width: 1,
-                      color: Colors.black38
-                  ),
+                  border: Border.all(width: 1, color: Colors.black38),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
@@ -141,7 +132,9 @@ class _SellerProductMainState extends State<SellerProductMain> {
                         ],
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Container(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height / 2,
@@ -176,12 +169,7 @@ class _SellerProductMainState extends State<SellerProductMain> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SellerProductModify(),
-                          ),
-                        );
+                        Get.to(() => SellerProductModify());
                       },
                     ),
                   ),

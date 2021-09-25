@@ -3,8 +3,9 @@ import 'package:damo/screen/bar/scroll_behavior.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:transition/transition.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_navigation/src/snackbar/snack.dart';
 import '../bar/drawer.dart';
 import '../bar/bottom_navigaton.dart';
 import 'package:damo/screen/bar/back_button_clicked.dart';
@@ -18,7 +19,7 @@ class HomeMain extends StatefulWidget {
 
 class _HomeMainState extends State<HomeMain> {
   final controller = ScrollController();
-  DamoAppBar tabBar = DamoAppBar();
+  DamoAppBar appBar = DamoAppBar();
 
   List<String> dropdownList = ['거리순', '추천순', '인기순'];
   String selectedDropdown = '거리순';
@@ -27,18 +28,20 @@ class _HomeMainState extends State<HomeMain> {
 
   Future<bool> onLikeButtonTapped(bool isLiked) async {
     if (isLiked) {
-      Fluttertoast.showToast(
-        msg: '찜목록에서 제거했어요!',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.red[200],
-        fontSize: 15.0,
+      Get.snackbar(
+        '알림',
+        '찜목록에서 제거했어요!',
+        snackPosition: SnackPosition.TOP,
+        duration: Duration(seconds: 1),
+        icon: Icon(Icons.favorite),
       );
     } else {
-      Fluttertoast.showToast(
-        msg: '찜목록에 담았어요!',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.red[200],
-        fontSize: 15.0,
+      Get.snackbar(
+        '알림',
+        '찜목록에 담았어요!',
+        snackPosition: SnackPosition.TOP,
+        duration: Duration(seconds: 1),
+        icon: Icon(Icons.favorite, color: Colors.red),
       );
     }
     return !isLiked;
@@ -127,15 +130,7 @@ class _HomeMainState extends State<HomeMain> {
                         duration: Duration(milliseconds: 500),
                         child: InkWell(
                           onTap: () {
-                            setState(() {
-                              Navigator.push(
-                                context,
-                                Transition(
-                                  child: Product(),
-                                  transitionEffect: TransitionEffect.FADE,
-                                ),
-                              );
-                            });
+                            Get.to(() => Product());
                           }, //클릭시 이동
                           child: SlideAnimation(
                             verticalOffset: 50.0,
@@ -219,30 +214,12 @@ class _HomeMainState extends State<HomeMain> {
         length: 2,
         child: Scaffold(
           drawer: DrawerButton(),
-          appBar: tabBar.tabBar(context),
+          appBar: appBar.appBar(context),
           bottomNavigationBar: BottomNavigation(
             bottomNavigationIndex: 0,
             scrollController: scrollController,
           ),
-          body: TabBarView(
-            children: [
-              viewProduct(),
-              Container(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(30.0, 100.0, 30.0, 0.0),
-                  child: Column(
-                    children: [
-                      Image.asset('assets/images/apology.png'),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      Text('서비스 준비중입니다. 빠른 시일내에 제공하겠습니다.'),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+          body: viewProduct(),
         ),
       ),
     );

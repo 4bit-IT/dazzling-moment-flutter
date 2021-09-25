@@ -1,8 +1,9 @@
-import 'dart:io';
 import 'package:damo/screen/bar/app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 // import 'package:image_picker/image_picker.dart';
 
 class SellerProductModify extends StatefulWidget {
@@ -123,16 +124,17 @@ class _SellerProductModifyState extends State<SellerProductModify> {
       child: Stack(
         children: <Widget>[
           CircleAvatar(
-              radius: 80,
-              backgroundColor: Colors.white,
-              child: Image.asset('assets/images/DAMO_logo-01.png'),),
-              // child: file == null
-              //     ? Image.asset('assets/images/DAMO_logo-01.png')
-              //     : Image.file(
-              //         File(file!.path),
-              //         fit: BoxFit.fill,
-              //         width: double.infinity,
-              //       )),
+            radius: 80,
+            backgroundColor: Colors.white,
+            child: Image.asset('assets/images/DAMO_logo-01.png'),
+          ),
+          // child: file == null
+          //     ? Image.asset('assets/images/DAMO_logo-01.png')
+          //     : Image.file(
+          //         File(file!.path),
+          //         fit: BoxFit.fill,
+          //         width: double.infinity,
+          //       )),
           Positioned(
               bottom: 5,
               right: 5,
@@ -177,14 +179,14 @@ class _SellerProductModifyState extends State<SellerProductModify> {
                 child: Text("확인"),
                 onPressed: () {
                   //데이터 저장 후 넘기기
-                  Navigator.pop(context);
+                  Get.back();
                   returnContext = true;
                 },
               ),
               CupertinoButton(
                 child: Text("취소"),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Get.back();
                   returnContext = false;
                 },
               ),

@@ -1,7 +1,7 @@
 import 'package:damo/screen/community/look_community.dart';
 import 'package:damo/screen/main/home_main.dart';
 import 'package:damo/screen/location/look_location.dart';
-import 'package:damo/screen/myPage/my_page.dart';
+import 'package:damo/screen/mypage/my_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:transition/transition.dart';
@@ -31,13 +31,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
       SchedulerBinding.instance?.addPostFrameCallback((_) {
         widget.scrollController!.animateTo(
             widget.scrollController!.position.minScrollExtent,
-            duration: const Duration(milliseconds: 400),
-            curve: Curves.fastOutSlowIn);
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.fastLinearToSlowEaseIn);
       });
     } else if (selectedBottomNavigationBarIndex !=
         widget.bottomNavigationIndex!) {
       setState(() {
         widget.bottomNavigationIndex = selectedBottomNavigationBarIndex;
+        Widget selectPage =
+            bottomNavigationBarPages[selectedBottomNavigationBarIndex];
         Navigator.pushReplacement(
             context,
             Transition(

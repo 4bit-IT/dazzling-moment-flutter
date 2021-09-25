@@ -1,6 +1,8 @@
 import 'package:damo/screen/notification/notification_main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:transition/transition.dart';
 import '../search/seach_product.dart';
@@ -11,7 +13,6 @@ class DamoAppBar {
       iconTheme: IconThemeData(
         color: Colors.red,
       ),
-      // automaticallyImplyLeading: false,
       centerTitle: true,
       elevation: 0.0,
       backgroundColor: Colors.white,
@@ -28,11 +29,7 @@ class DamoAppBar {
             color: Colors.redAccent,
           ),
           onPressed: () {
-            Navigator.push(
-                context,
-                Transition(
-                    child: SearchPage(),
-                    transitionEffect: TransitionEffect.BOTTOM_TO_TOP));
+            Get.to(SearchPage());
           },
         ),
         CupertinoButton(
@@ -43,12 +40,7 @@ class DamoAppBar {
             color: Colors.redAccent,
           ),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NotificationMain(),
-              ),
-            );
+            Get.to(NotificationMain());
           },
         ),
         SizedBox(width: 10.0),
