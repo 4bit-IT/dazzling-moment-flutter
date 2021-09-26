@@ -1,13 +1,13 @@
 import 'package:damo/screen/bar/app_bar.dart';
 import 'package:damo/screen/seller/seller_chat_management.dart';
-import 'package:damo/screen/seller/seller_faq_management.dart';
 import 'package:damo/screen/seller/seller_order_management.dart';
 import 'package:damo/screen/seller/seller_preview.dart';
 import 'package:damo/screen/seller/seller_product_main.dart';
-import 'package:damo/screen/seller/seller_product_modify.dart';
 import 'package:damo/screen/seller/seller_review_management.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 
 class SellerMain extends StatefulWidget {
   @override
@@ -44,12 +44,7 @@ class _SellerMainState extends State<SellerMain> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SellerProductMain(),
-                        ),
-                      );
+                      Get.to(() => SellerProductMain());
                     },
                   ),
                 ],
@@ -69,12 +64,7 @@ class _SellerMainState extends State<SellerMain> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SellerOrderManagement(),
-                        ),
-                      );
+                      Get.to(() => SellerOrderManagement());
                     },
                   ),
                 ],
@@ -112,12 +102,7 @@ class _SellerMainState extends State<SellerMain> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SellerChatManagement(),
-                        ),
-                      );
+                      Get.to(() => SellerChatManagement());
                     },
                   ),
                 ],
@@ -137,12 +122,7 @@ class _SellerMainState extends State<SellerMain> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SellerReviewManagement(),
-                        ),
-                      );
+                      Get.to(() => SellerReviewManagement());
                     },
                   ),
                 ],
@@ -162,41 +142,29 @@ class _SellerMainState extends State<SellerMain> {
                       ),
                     ),
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SellerPreview(),
-                        ),
-                      );
+                      Get.to(() => SellerPreview());
                     },
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.query_stats,
-                    color: Colors.redAccent[200],
-                  ),
-                  CupertinoButton(
-                    child: Text(
-                      'FAQ 관리하기',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                      ),
+              Row(children: [
+                Icon(
+                  Icons.query_stats,
+                  color: Colors.redAccent[200],
+                ),
+                CupertinoButton(
+                  child: Text(
+                    'FAQ 관리하기',
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SellerFAQManagement(),
-                        ),
-                      );
-                    },
                   ),
-                ]
-              ),
+                  onPressed: () {
+                    Get.to(() => SellerPreview());
+                  },
+                ),
+              ]),
             ],
           ),
         ),

@@ -1,8 +1,10 @@
+import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:damo/screen/notification/notification_main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:transition/transition.dart';
 import '../search/seach_product.dart';
 
 class DamoAppBar {
@@ -11,7 +13,6 @@ class DamoAppBar {
       iconTheme: IconThemeData(
         color: Colors.red,
       ),
-      // automaticallyImplyLeading: false,
       centerTitle: true,
       elevation: 0.0,
       backgroundColor: Colors.white,
@@ -24,31 +25,18 @@ class DamoAppBar {
           padding: EdgeInsets.zero,
           child: Icon(
             Icons.search,
-            size: 30.0,
             color: Colors.redAccent,
           ),
-          onPressed: () {
-            Navigator.push(
-                context,
-                Transition(
-                    child: SearchPage(),
-                    transitionEffect: TransitionEffect.BOTTOM_TO_TOP));
-          },
+          onPressed: () {},
         ),
         CupertinoButton(
           padding: EdgeInsets.zero,
           child: Icon(
             Icons.notifications_none,
-            size: 30.0,
             color: Colors.redAccent,
           ),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => NotificationMain(),
-              ),
-            );
+            Get.to(NotificationMain());
           },
         ),
         SizedBox(width: 10.0),
@@ -103,36 +91,93 @@ class DamoAppBar {
         width: 115.0,
       ),
       actions: [
-        CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: Icon(
+        IconButton(
+          visualDensity: VisualDensity(horizontal: -4.0, vertical: -4.0),
+          icon: Icon(
             Icons.search,
-            size: 30.0,
             color: Colors.redAccent,
           ),
           onPressed: () {
-            Navigator.push(
-                context,
-                Transition(
-                    child: SearchPage(),
-                    transitionEffect: TransitionEffect.BOTTOM_TO_TOP));
+            Get.to(SearchPage());
           },
         ),
-        CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: Icon(
+        IconButton(
+          visualDensity: VisualDensity(horizontal: -4.0, vertical: -4.0),
+          icon: Icon(
             Icons.notifications_none,
-            size: 30.0,
             color: Colors.redAccent,
           ),
           onPressed: () {},
         ),
-        SizedBox(width: 10.0),
+        IconButton(
+          visualDensity: VisualDensity(horizontal: -4.0, vertical: -4.0),
+          icon: Icon(
+            Icons.filter_list,
+            color: Colors.redAccent,
+          ),
+          onPressed: () {
+            showAdaptiveActionSheet(
+              context: context,
+              title: const Text('상품보기'),
+              actions: <BottomSheetAction>[
+                BottomSheetAction(
+                    title: const Text('거리순'),
+                    onPressed: () {
+                      Get.back();
+                    }),
+                BottomSheetAction(
+                    title: const Text('인기순'),
+                    onPressed: () {
+                      Get.back();
+                    }),
+                BottomSheetAction(
+                    title: const Text('추천순'),
+                    onPressed: () {
+                      Get.back();
+                    }),
+                BottomSheetAction(
+                    title: const Text('지역순'),
+                    onPressed: () {
+                      Get.back();
+                      showAdaptiveActionSheet(
+                        context: context,
+                        title: const Text('지역선택'),
+                        actions: <BottomSheetAction>[
+                          BottomSheetAction(
+                              title: const Text('서울특별시'),
+                              onPressed: () {
+                                Get.back();
+                              }),
+                          BottomSheetAction(
+                              title: const Text('경기도'),
+                              onPressed: () {
+                                Get.back();
+                              }),
+                          BottomSheetAction(
+                              title: const Text('경상남도'),
+                              onPressed: () {
+                                Get.back();
+                              }),
+                          BottomSheetAction(
+                              title: const Text('부산광역시'), onPressed: () {}),
+                        ],
+                        cancelAction: CancelAction(
+                            title: const Text(
+                                '닫기')), // onPressed parameter is optional by default will dismiss the ActionSheet
+                      );
+                    }),
+              ],
+              cancelAction: CancelAction(
+                  title: const Text(
+                      '닫기')), // onPressed parameter is optional by default will dismiss the ActionSheet
+            );
+          },
+        ),
       ],
     );
   }
 
-  dynamic noSearchBar(BuildContext context) {
+  dynamic noActionBar(BuildContext context) {
     return AppBar(
       centerTitle: true,
       iconTheme: IconThemeData(
@@ -144,18 +189,7 @@ class DamoAppBar {
         'assets/images/DAMO_logo-02.png',
         width: 115.0,
       ),
-      actions: [
-        CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: Icon(
-            Icons.notifications_none,
-            size: 30.0,
-            color: Colors.redAccent,
-          ),
-          onPressed: () {},
-        ),
-        SizedBox(width: 10.0),
-      ],
+
     );
   }
 

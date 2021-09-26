@@ -1,7 +1,11 @@
-import 'package:damo/main.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:damo/screen/bar/scroll_behavior.dart';
+import 'package:damo/screen/sign/sign.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:page_transition/page_transition.dart';
 
 class DrawerButton extends StatefulWidget {
   @override
@@ -26,34 +30,27 @@ class _DrawerButtonState extends State<DrawerButton> {
                     style: TextStyle(
                         fontFamily: 'NotoSans', color: Colors.red[400]),
                   ),
-                  onPressed: () => Navigator.pushAndRemoveUntil(
-                      //모든 stack 삭제하고 새로 push
-                      context,
-                      PageRouteBuilder(pageBuilder: (BuildContext context,
-                          Animation animation, Animation secondaryAnimation) {
-                        return Damo();
-                      }, transitionsBuilder: (BuildContext context,
-                          Animation<double> animation,
-                          Animation<double> secondaryAnimation,
-                          Widget child) {
-                        return new SlideTransition(
-                          position: new Tween<Offset>(
-                            begin: const Offset(1.0, 0.0),
-                            end: Offset.zero,
-                          ).animate(animation),
-                          child: child,
-                        );
-                      }),
-                      (Route route) => false),
+                  onPressed: () {
+                    Get.offAll(() => AnimatedSplashScreen(
+                          duration: 1500,
+                          splash: 'assets/images/DAMO_logo-03.png',
+                          nextScreen: Sign(),
+                          splashTransition: SplashTransition.fadeTransition,
+                          pageTransitionType: PageTransitionType.fade,
+                          backgroundColor: Colors.white,
+                          splashIconSize: 300.0,
+                        ));
+                  },
                 ),
                 TextButton(
-                  child: Text(
-                    "아니오",
-                    style: TextStyle(
-                        fontFamily: 'NotoSans', color: Colors.red[400]),
-                  ),
-                  onPressed: () => Navigator.pop(context, false),
-                ),
+                    child: Text(
+                      "아니오",
+                      style: TextStyle(
+                          fontFamily: 'NotoSans', color: Colors.red[400]),
+                    ),
+                    onPressed: () {
+                      Get.back();
+                    }),
               ],
             ));
   }

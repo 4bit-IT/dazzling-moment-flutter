@@ -12,7 +12,6 @@ class _NotificationMainState extends State<NotificationMain> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     for (int i = 0; i < 5; i++) {
       notificationList.add(

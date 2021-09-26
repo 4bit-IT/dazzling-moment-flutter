@@ -1,10 +1,9 @@
 import 'package:damo/screen/bar/scroll_behavior.dart';
 import 'package:damo/screen/main/home_main.dart';
 import 'package:damo/screen/seller/seller_login.dart';
-import 'package:damo/screen/sign/sign_in.dart';
-import 'package:damo/screen/sign/sign_up.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 
 class Sign extends StatefulWidget {
@@ -19,16 +18,12 @@ class _SignState extends State<Sign> {
       AccessTokenResponse token =
           await AuthApi.instance.issueAccessToken(authCode);
       TokenManager.instance.setToken(token);
-      print("성공");
-      print(token.accessToken);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeMain()),
-      );
+      print("토큰 :" + token.accessToken);
+      Get.offAll(() => HomeMain());
     } on KakaoAuthException {
       print("동의 취소");
     } on KakaoClientException {
-      print("카카오 클라이언트 문제");
+      print("카카오 클라이언트 문제 발생");
     } catch (e) {
       print("로그인 취소");
     }
@@ -43,12 +38,7 @@ class _SignState extends State<Sign> {
         actions: [
           CupertinoButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SellerLogin(),
-                ),
-              );
+              Get.to(() => SellerLogin());
             },
             child: Text(
               '업체 로그인',
@@ -95,18 +85,13 @@ class _SignState extends State<Sign> {
                       MaterialButton(
                         minWidth: double.infinity,
                         height: 60,
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignIn()));
-                        },
-                        color: Colors.red[200],
+                        onPressed: () {},
+                        color: Colors.blue,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
                         child: Text(
-                          "로그인",
+                          "페이스북으로 로그인",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
@@ -115,23 +100,18 @@ class _SignState extends State<Sign> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 7,
                       ),
                       MaterialButton(
                         minWidth: double.infinity,
                         height: 60,
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUp()));
-                        },
-                        color: Colors.red[200],
+                        onPressed: () {},
+                        color: Colors.green,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
                         child: Text(
-                          "회원가입",
+                          "네이버로 로그인",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
@@ -140,7 +120,7 @@ class _SignState extends State<Sign> {
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 7,
                       ),
                       MaterialButton(
                         minWidth: double.infinity,
@@ -154,6 +134,25 @@ class _SignState extends State<Sign> {
                             borderRadius: BorderRadius.circular(20)),
                         child: Text(
                           "카카오톡으로 로그인",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 7,
+                      ),
+                      MaterialButton(
+                        minWidth: double.infinity,
+                        height: 60,
+                        onPressed: () {},
+                        color: Colors.grey[400],
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Text(
+                          "애플 로그인",
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 18,

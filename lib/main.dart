@@ -1,7 +1,9 @@
 //import 'package:damo/screen/Internet_check.dart';
 //import 'package:damo/screen/loading.dart';
+
 import 'package:damo/screen/sign/sign.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
@@ -14,7 +16,7 @@ void main() {
 class Damo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
         debugShowCheckedModeBanner: false,
         home: AnimatedSplashScreen(
           duration: 1500,

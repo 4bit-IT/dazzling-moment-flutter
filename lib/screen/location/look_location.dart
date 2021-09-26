@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
-import '../bar/drawer.dart';
 import '../bar/app_bar.dart';
 import '../bar/bottom_navigaton.dart';
 
@@ -18,8 +17,7 @@ class LookLocationState extends State<LookLocation> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: DrawerButton(),
-      appBar: appBar.noSearchBar(context),
+      appBar: appBar.noActionBar(context),
       bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 1),
       body: KakaoMapView(
           width: MediaQuery.of(context).size.width,

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get_navigation/src/snackbar/snack.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:like_button/like_button.dart';
 
@@ -14,19 +17,20 @@ class ProductInfo extends StatelessWidget {
 
   Future<bool> onLikeButtonTapped(bool isLiked) async {
     if (isLiked) {
-      Fluttertoast.showToast(
-        msg: '찜목록에서 제거했어요!',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.red[200],
-        gravity: ToastGravity.BOTTOM,
-        fontSize: 15.0,
+      Get.snackbar(
+        '알림',
+        '찜목록에서 제거했어요!',
+        snackPosition: SnackPosition.TOP,
+        duration: Duration(seconds: 1),
+        icon: Icon(Icons.favorite),
       );
     } else {
-      Fluttertoast.showToast(
-        msg: '찜목록에 담았어요!',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.red[200],
-        fontSize: 15.0,
+      Get.snackbar(
+        '알림',
+        '찜목록에 담았어요!',
+        snackPosition: SnackPosition.TOP,
+        duration: Duration(seconds: 1),
+        icon: Icon(Icons.favorite, color: Colors.red),
       );
     }
     return !isLiked;
@@ -57,7 +61,7 @@ class ProductInfo extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: 300,
+                  width: MediaQuery.of(context).size.width * 0.65,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(
                       Radius.circular(
