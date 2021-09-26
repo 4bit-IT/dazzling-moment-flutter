@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:transition/transition.dart';
 import '../search/seach_product.dart';
 
 class DamoAppBar {
@@ -26,7 +25,6 @@ class DamoAppBar {
           padding: EdgeInsets.zero,
           child: Icon(
             Icons.search,
-            size: 25.0,
             color: Colors.redAccent,
           ),
           onPressed: () {},
@@ -35,7 +33,6 @@ class DamoAppBar {
           padding: EdgeInsets.zero,
           child: Icon(
             Icons.notifications_none,
-            size: 25.0,
             color: Colors.redAccent,
           ),
           onPressed: () {
@@ -94,31 +91,28 @@ class DamoAppBar {
         width: 115.0,
       ),
       actions: [
-        CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: Icon(
+        IconButton(
+          visualDensity: VisualDensity(horizontal: -4.0, vertical: -4.0),
+          icon: Icon(
             Icons.search,
-            size: 25.0,
             color: Colors.redAccent,
           ),
           onPressed: () {
             Get.to(SearchPage());
           },
         ),
-        CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: Icon(
+        IconButton(
+          visualDensity: VisualDensity(horizontal: -4.0, vertical: -4.0),
+          icon: Icon(
             Icons.notifications_none,
-            size: 25.0,
             color: Colors.redAccent,
           ),
           onPressed: () {},
         ),
-        CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: Icon(
-            Icons.near_me_outlined,
-            size: 25.0,
+        IconButton(
+          visualDensity: VisualDensity(horizontal: -4.0, vertical: -4.0),
+          icon: Icon(
+            Icons.filter_list,
             color: Colors.redAccent,
           ),
           onPressed: () {
@@ -183,7 +177,7 @@ class DamoAppBar {
     );
   }
 
-  dynamic noSearchBar(BuildContext context) {
+  dynamic noActionBar(BuildContext context) {
     return AppBar(
       centerTitle: true,
       iconTheme: IconThemeData(
@@ -195,18 +189,7 @@ class DamoAppBar {
         'assets/images/DAMO_logo-02.png',
         width: 115.0,
       ),
-      actions: [
-        CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: Icon(
-            Icons.notifications_none,
-            size: 25.0,
-            color: Colors.redAccent,
-          ),
-          onPressed: () {},
-        ),
-        SizedBox(width: 10.0),
-      ],
+
     );
   }
 

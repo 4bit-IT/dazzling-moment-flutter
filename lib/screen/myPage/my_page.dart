@@ -27,7 +27,7 @@ class _MyPageState extends State<MyPage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         drawer: DrawerButton(),
-        appBar: appBar.appBar(context),
+        appBar: appBar.noActionBar(context),
         bottomNavigationBar: BottomNavigation(
           bottomNavigationIndex: 3,
           scrollController: scrollController,
