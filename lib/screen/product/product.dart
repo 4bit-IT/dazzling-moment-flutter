@@ -36,17 +36,16 @@ class _ProductState extends State<Product> {
   @override
   Widget build(BuildContext context) {
     return DraggableHome(
-      backgroundColor: Colors.grey[100],
       centerTitle: true,
+      fullyStretchable: false,
       curvedBodyRadius: 20.0,
+      backgroundColor: Colors.white,
       headerExpandedHeight: 0.7,
-      stretchTriggerOffset: 80,
       title: Text('서면에서 입소문난 수제케이크'),
       headerWidget: headerWidget(context),
       body: [
         body(context),
       ],
-      fullyStretchable: true,
       expandedBody: expandedWidget(context),
       // floatingActionButton: IconButton(
       //     iconSize: 40.0,
@@ -65,8 +64,11 @@ class _ProductState extends State<Product> {
           child: Column(
             children: [
               TabBar(
-                indicatorColor: Colors.red[100],
-                automaticIndicatorColorAdjustment: false,
+                indicator: UnderlineTabIndicator(
+                    borderSide: BorderSide(width: 3.0, color: Colors.red),
+                    insets: EdgeInsets.symmetric(horizontal: 90.0)),
+                indicatorWeight: 0.0,
+                indicatorColor: Colors.red[200],
                 labelColor: Colors.red,
                 unselectedLabelColor: Colors.black,
                 tabs: [
@@ -78,10 +80,11 @@ class _ProductState extends State<Product> {
               Container(
                 height:
                     MediaQuery.of(context).size.height, //height of TabBarView
-                decoration: BoxDecoration(
-                    border: Border(
-                        top: BorderSide(color: Colors.grey, width: 0.5))),
+                // decoration: BoxDecoration(
+                //     border: Border(
+                //         top: BorderSide(color: Colors.grey, width: 0.5))),
                 child: TabBarView(
+                  physics: NeverScrollableScrollPhysics(), //스와이프 막기.
                   children: [
                     ProductInfo(), //상품설명
                     ProductReview(), //리뷰
@@ -124,7 +127,7 @@ class _ProductState extends State<Product> {
                           //   ),
                           // ),
                           Swiper.children(
-                            autoplay: true,
+                            autoplay: false,
                             pagination: SwiperPagination(
                                 margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                                 builder: DotSwiperPaginationBuilder(
@@ -165,10 +168,6 @@ class _ProductState extends State<Product> {
                     color: Colors.black,
                   ),
                 ),
-              ),
-              Divider(
-                thickness: 3.0,
-                color: Colors.grey[200],
               ),
             ]),
           ],

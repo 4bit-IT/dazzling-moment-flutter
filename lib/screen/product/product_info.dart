@@ -61,7 +61,7 @@ class ProductInfo extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: 300,
+                  width: MediaQuery.of(context).size.width * 0.65,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(
                       Radius.circular(

@@ -38,6 +38,7 @@ dependencies:
   flutter_staggered_animations: ^1.0.0    # 업체이미지 애니메이션
   draggable_home: ^1.0.2                  # product_info sliver
   card_swiper: ^1.0.4                     # 업체 이미지 좌우로 넘김
+  adaptive_action_sheet: ^2.0.0           # 상품 정렬창 보기
   #emoji_picker_flutter: ^1.0.7      # 이모지
 
 

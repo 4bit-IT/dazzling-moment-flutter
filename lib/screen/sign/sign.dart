@@ -147,25 +147,6 @@ class _SignState extends State<Sign> {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {},
-                        color: Colors.grey[200],
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Text(
-                          "구글로 로그인",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      MaterialButton(
-                        minWidth: double.infinity,
-                        height: 60,
-                        onPressed: () {},
                         color: Colors.grey[400],
                         elevation: 0,
                         shape: RoundedRectangleBorder(
