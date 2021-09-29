@@ -9,12 +9,26 @@ class ProductReview extends StatelessWidget {
     "배송이 늦어요",
     "만족합니다. ",
     "삼계탕이랑 어울려요",
+    "맛없어요 진짜 ;;",
+    "맛없어요 진짜 ;;",
+    "맛없어요 진짜 ;;",
+    "맛없어요 진짜 ;;",
+    "맛없어요 진짜 ;;",
+    "10",
+    "11",
   ];
   List<dynamic> reviewId = [
     "윤중진",
     "안정모",
     "황진성",
     "조영란",
+    "최근영",
+    "최근영",
+    "최근영",
+    "최근영",
+    "최근영",
+    "10",
+    "11",
   ];
 
   var _listTextStyle = TextStyle(
@@ -31,11 +45,11 @@ class ProductReview extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         return Card(
           elevation: 0.5,
-          margin: EdgeInsets.fromLTRB(5.0, 0, 5.0, 0),
+          margin: EdgeInsets.fromLTRB(1.5, 0, 1.5, 0),
           child: InkWell(
             onTap: () {},
             child: Container(
-              height: 100.0,
+              height: MediaQuery.of(context).size.height / 10,
               child: Row(
                 children: [
                   Row(

@@ -12,14 +12,38 @@ class Sign extends StatefulWidget {
 }
 
 class _SignState extends State<Sign> {
+  void _getUserInfo() async {
+    User user = await UserApi.instance.me();
+    _getUserNickName(user);
+    _getUserEmail(user);
+  }
+
+  void _getUserNickName(User user) async {
+    String nickName =
+        await user.kakaoAccount!.profile!.toJson()['nickname'].toString();
+    print(nickName);
+  }
+
+  void _getUserEmail(User user) async {
+    String accountEmail = await user.kakaoAccount!.email!;
+    print(accountEmail);
+  }
+
   void kakaoLogin() async {
     try {
       String authCode = await AuthCodeClient.instance.request();
+      // String authCode = await AuthCodeClient.instance.requestWithTalk() // Kakao app
       AccessTokenResponse token =
           await AuthApi.instance.issueAccessToken(authCode);
-      TokenManager.instance.setToken(token);
+      TokenManager.instance.setToken(
+          token); // Store access token in TokenManager for future API requests.
+      if (token.refreshToken == null) {
+        Get.offAll(() => Sign()); //토큰이 만료되었을 시 로그인화면으로 이동
+      } else {
+        _getUserInfo();
+        Get.offAll(() => HomeMain()); //토큰 기간이 남아있을 떄 메인화면으로 이동
+      }
       print("토큰 :" + token.accessToken);
-      Get.offAll(() => HomeMain());
     } on KakaoAuthException {
       print("동의 취소");
     } on KakaoClientException {
@@ -85,7 +109,9 @@ class _SignState extends State<Sign> {
                       MaterialButton(
                         minWidth: double.infinity,
                         height: 60,
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(() => HomeMain());
+                        },
                         color: Colors.blue,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
