@@ -53,7 +53,7 @@ class _ProductState extends State<Product> with TickerProviderStateMixin {
       fullyStretchable: false,
       curvedBodyRadius: 20.0,
       backgroundColor: Colors.white,
-      headerExpandedHeight: 0.68,
+      headerExpandedHeight: 0.71,
       title: Text('서면에서 입소문난 수제케이크'),
       headerWidget: headerWidget(context),
       body: [
@@ -91,7 +91,7 @@ class _ProductState extends State<Product> with TickerProviderStateMixin {
       );
   Container tabBarView(BuildContext context) => Container(
         child: Container(
-          height: MediaQuery.of(context).size.height / 1.28,
+          height: MediaQuery.of(context).size.height / 1.21,
           margin: EdgeInsets.only(left: 16.0, right: 16.0),
           child: TabBarView(
             controller: _controller,

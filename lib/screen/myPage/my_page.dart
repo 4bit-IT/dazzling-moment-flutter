@@ -1,11 +1,13 @@
 import 'package:damo/screen/bar/back_button_clicked.dart';
 import 'package:damo/screen/bar/drawer.dart';
 import 'package:damo/screen/bar/scroll_behavior.dart';
+import 'package:damo/screen/myPage/wish_list_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../bar/app_bar.dart';
 import '../bar/bottom_navigaton.dart';
+import 'package:get/get.dart';
 
 class MyPage extends StatefulWidget {
   MyPage({this.bottomNavigationIndex});
@@ -19,6 +21,14 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   DamoAppBar appBar = DamoAppBar();
   ScrollController scrollController = ScrollController();
+
+  onChangePrivacy() {
+
+  }
+
+  onWishListClicked() {
+    Get.to(() => WishListPage());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +98,9 @@ class _MyPageState extends State<MyPage> {
                         child: SizedBox(
                           width: MediaQuery.of(context).size.width,
                           child: CupertinoButton(
-                            onPressed: () {},
+                            onPressed: () {
+
+                            },
                             child: Text(
                               '개인정보 변경',
                               style: TextStyle(
@@ -108,7 +120,9 @@ class _MyPageState extends State<MyPage> {
                           CupertinoButton(
                             minSize: 0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              onWishListClicked();
+                            },
                             child: Container(
                               padding: EdgeInsets.all(15),
                               decoration: BoxDecoration(

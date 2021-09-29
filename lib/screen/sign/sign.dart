@@ -1,3 +1,4 @@
+import 'package:damo/data/kakao.dart';
 import 'package:damo/screen/bar/scroll_behavior.dart';
 import 'package:damo/screen/main/home_main.dart';
 import 'package:damo/screen/seller/seller_login.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk/all.dart';
+import 'package:http/http.dart' as http;
 
 class Sign extends StatefulWidget {
   @override
@@ -30,6 +32,7 @@ class _SignState extends State<Sign> {
   }
 
   void kakaoLogin() async {
+    AccessTokenResponse? token;
     try {
       String authCode = await AuthCodeClient.instance.request();
       // String authCode = await AuthCodeClient.instance.requestWithTalk() // Kakao app
@@ -37,6 +40,11 @@ class _SignState extends State<Sign> {
           await AuthApi.instance.issueAccessToken(authCode);
       TokenManager.instance.setToken(
           token); // Store access token in TokenManager for future API requests.
+
+      //String url = 'http://3.36.123.19:8080/api/oauth/kakao';
+      //String url = 'http://00a3-112-171-43-132.ngrok.io/api/oauth/kakao';
+      //Network(url, token).getJsonData();
+
       if (token.refreshToken == null) {
         Get.offAll(() => Sign()); //토큰이 만료되었을 시 로그인화면으로 이동
       } else {
@@ -51,6 +59,8 @@ class _SignState extends State<Sign> {
     } catch (e) {
       print("로그인 취소");
     }
+
+
   }
 
   @override
