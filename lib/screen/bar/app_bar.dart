@@ -107,7 +107,9 @@ class DamoAppBar {
             Icons.notifications_none,
             color: Colors.redAccent,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Get.to(NotificationMain());
+          },
         ),
         IconButton(
           visualDensity: VisualDensity(horizontal: -4.0, vertical: -4.0),
@@ -189,7 +191,6 @@ class DamoAppBar {
         'assets/images/DAMO_logo-02.png',
         width: 115.0,
       ),
-
     );
   }
 
