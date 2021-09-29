@@ -26,6 +26,7 @@ class Damo extends StatelessWidget {
           pageTransitionType: PageTransitionType.fade,
           backgroundColor: Colors.white,
           splashIconSize: 300.0,
-        ));
+        ),
+    );
   }
 }

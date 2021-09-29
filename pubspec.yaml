@@ -40,6 +40,7 @@ dependencies:
   card_swiper: ^1.0.4                     # 업체 이미지 좌우로 넘김
   adaptive_action_sheet: ^2.0.0           # 상품 정렬창 보기
   #emoji_picker_flutter: ^1.0.7      # 이모지
+  http: ^0.13.3
 
 
   # image_picker: ^0.8.3+2
