@@ -9,7 +9,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 void main() {
-  KakaoContext.clientId = '146054d09a25beea21919c465959bafe';
+  KakaoContext.clientId = '051ba7adea57eb74c808616d4969e482';
   runApp(Damo());
 }
 

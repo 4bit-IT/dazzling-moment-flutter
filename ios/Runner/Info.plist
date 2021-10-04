@@ -37,7 +37,7 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>kakao${146054d09a25beea21919c465959bafe}</string>
+		<string>kakao${051ba7adea57eb74c808616d4969e482}</string>
 		<string>kakaokompassauth</string>
 		<string>storykompassauth</string>
 		<string>kakaolink</string>
