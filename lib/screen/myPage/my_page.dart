@@ -1,6 +1,8 @@
 import 'package:damo/screen/bar/back_button_clicked.dart';
 import 'package:damo/screen/bar/drawer.dart';
 import 'package:damo/screen/bar/scroll_behavior.dart';
+import 'package:damo/screen/myPage/change_privacy.dart';
+import 'package:damo/screen/myPage/purchase_history.dart';
 import 'package:damo/screen/myPage/wish_list_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,11 +25,15 @@ class _MyPageState extends State<MyPage> {
   ScrollController scrollController = ScrollController();
 
   onChangePrivacy() {
-
+    Get.to(() => ChangePrivacy());
   }
 
   onWishListClicked() {
     Get.to(() => WishListPage());
+  }
+
+  onPurchaseHistoryClicked() {
+    Get.to(() => PurchaseHistory());
   }
 
   @override
@@ -99,7 +105,7 @@ class _MyPageState extends State<MyPage> {
                           width: MediaQuery.of(context).size.width,
                           child: CupertinoButton(
                             onPressed: () {
-
+                              onChangePrivacy();
                             },
                             child: Text(
                               '개인정보 변경',
@@ -182,7 +188,9 @@ class _MyPageState extends State<MyPage> {
                           CupertinoButton(
                             minSize: 0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              onPurchaseHistoryClicked();
+                            },
                             child: Container(
                               padding: EdgeInsets.all(15),
                               decoration: BoxDecoration(
