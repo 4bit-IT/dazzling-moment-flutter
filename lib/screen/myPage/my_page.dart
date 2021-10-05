@@ -11,6 +11,8 @@ import '../bar/app_bar.dart';
 import '../bar/bottom_navigaton.dart';
 import 'package:get/get.dart';
 
+import 'notice.dart';
+
 class MyPage extends StatefulWidget {
   MyPage({this.bottomNavigationIndex});
 
@@ -24,7 +26,7 @@ class _MyPageState extends State<MyPage> {
   DamoAppBar appBar = DamoAppBar();
   ScrollController scrollController = ScrollController();
 
-  onChangePrivacy() {
+  onChangePrivacyClicked() {
     Get.to(() => ChangePrivacy());
   }
 
@@ -34,6 +36,10 @@ class _MyPageState extends State<MyPage> {
 
   onPurchaseHistoryClicked() {
     Get.to(() => PurchaseHistory());
+  }
+
+  onNoticeClicked() {
+    Get.to(() => Notice());
   }
 
   @override
@@ -105,7 +111,7 @@ class _MyPageState extends State<MyPage> {
                           width: MediaQuery.of(context).size.width,
                           child: CupertinoButton(
                             onPressed: () {
-                              onChangePrivacy();
+                              onChangePrivacyClicked();
                             },
                             child: Text(
                               '개인정보 변경',
@@ -239,7 +245,9 @@ class _MyPageState extends State<MyPage> {
                           child: CupertinoButton(
                             minSize: 0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              onNoticeClicked();
+                            },
                             child: Row(
                               children: [
                                 Icon(
@@ -407,6 +415,32 @@ class _MyPageState extends State<MyPage> {
                         ),
                         Divider(
                           height: 1.0,
+                        ),
+                        Container(
+                          height: 60,
+                          child: CupertinoButton(
+                            minSize: 0,
+                            padding: EdgeInsets.zero,
+                            onPressed: () {},
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.settings,
+                                  color: Colors.black,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  '환경설정',
+                                  style: GoogleFonts.lato(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
