@@ -1,7 +1,6 @@
 import 'package:damo/data/kakao.dart';
 import 'package:damo/screen/bar/scroll_behavior.dart';
 import 'package:damo/screen/main/home_main.dart';
-import 'package:damo/screen/seller/seller_login.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -59,8 +58,6 @@ class _SignState extends State<Sign> {
     } catch (e) {
       print("로그인 취소");
     }
-
-
   }
 
   @override
@@ -69,21 +66,6 @@ class _SignState extends State<Sign> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actions: [
-          CupertinoButton(
-            onPressed: () {
-              Get.to(() => SellerLogin());
-            },
-            child: Text(
-              '업체 로그인',
-              style: TextStyle(
-                fontFamily: 'NotoSans',
-                color: Colors.black87,
-                fontSize: 17.0,
-              ),
-            ),
-          ),
-        ],
       ),
       backgroundColor: Colors.white,
       body: SafeArea(

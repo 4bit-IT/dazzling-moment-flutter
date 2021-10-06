@@ -39,60 +39,61 @@ class _SellerReviewManagementState extends State<SellerReviewManagement> {
   Future<dynamic> replyAlert(int index) {
     String tempString = reviewDialogController[index].text.toString();
     return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-      // return object of type Dialog
-      return AlertDialog(
-        title: Text("리뷰의 답글을 달아주세요"),
-        content: SingleChildScrollView(
-          child: Container(
-            child: TextFormField(
-              maxLines: 10,
-              enableSuggestions: false,
-              controller: reviewDialogController[index],
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.red,
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: Text("리뷰의 답글을 달아주세요"),
+          content: SingleChildScrollView(
+            child: Container(
+              child: TextFormField(
+                maxLines: 10,
+                enableSuggestions: false,
+                controller: reviewDialogController[index],
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                    ),
                   ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.redAccent,
-                    width: 2,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.redAccent,
+                      width: 2,
+                    ),
                   ),
-                ),
-                prefixIcon: Icon(
-                  Icons.comment_sharp,
-                  color: Colors.blueAccent,
+                  prefixIcon: Icon(
+                    Icons.comment_sharp,
+                    color: Colors.blueAccent,
+                  ),
                 ),
               ),
             ),
           ),
-        ),
-        actions: <Widget>[
-          CupertinoButton(
-              child: Text("확인"),
+          actions: <Widget>[
+            CupertinoButton(
+                child: Text("확인"),
+                onPressed: () {
+                  setState(() {
+                    accept = true;
+                    receivedReplyData[index] =
+                        reviewDialogController[index].value.text;
+                    Get.back();
+                  });
+                }),
+            CupertinoButton(
+              child: Text("취소"),
               onPressed: () {
                 setState(() {
-                  accept = true;
-                  receivedReplyData[index] = reviewDialogController[index].value.text;
+                  accept = false;
+                  reviewDialogController[index].text = tempString;
                   Get.back();
                 });
-              }),
-          CupertinoButton(
-            child: Text("취소"),
-            onPressed: () {
-              setState(() {
-                accept = false;
-                reviewDialogController[index].text = tempString;
-                Get.back();
-              });
-            },
-          ),
-        ],
-      );
-    },
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -136,7 +137,8 @@ class _SellerReviewManagementState extends State<SellerReviewManagement> {
                 onPressed: () {
                   setState(() {
                     accept = true;
-                    receivedReplyData[index] = reviewDialogController[index].value.text;
+                    receivedReplyData[index] =
+                        reviewDialogController[index].value.text;
                     Get.back();
                   });
                 }),
@@ -158,23 +160,23 @@ class _SellerReviewManagementState extends State<SellerReviewManagement> {
 
   onReplyButtonClicked(int index) async {
     await replyAlert(index);
-    if(accept)
-    reviewReply[index] = Container(
-      padding: EdgeInsets.all(10),
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        border: Border.all(width: 1, color: Colors.black38),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Text(
-        receivedReplyData[index],
-      ),
-    );
+    if (accept)
+      reviewReply[index] = Container(
+        padding: EdgeInsets.all(10),
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          border: Border.all(width: 1, color: Colors.black38),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Text(
+          receivedReplyData[index],
+        ),
+      );
   }
 
-  onReplyModifyButtonClicked(int index) async{
+  onReplyModifyButtonClicked(int index) async {
     await modifyAlert(index);
-    if(accept)
+    if (accept)
       reviewReply[index] = Container(
         padding: EdgeInsets.all(10),
         width: MediaQuery.of(context).size.width,
@@ -219,7 +221,8 @@ class _SellerReviewManagementState extends State<SellerReviewManagement> {
             ),
           ),
         );
-        reviewDialogController.add(TextEditingController(text: receivedReplyData[i]));
+        reviewDialogController
+            .add(TextEditingController(text: receivedReplyData[i]));
       }
     }
   }
@@ -343,7 +346,7 @@ class _SellerReviewManagementState extends State<SellerReviewManagement> {
                 ),
                 SizedBox(height: 10),
                 Container(
-                  width: MediaQuery.of(context).size.width,
+                    width: MediaQuery.of(context).size.width,
                     child: reviewReply[index]),
                 Divider(
                   thickness: 2,
