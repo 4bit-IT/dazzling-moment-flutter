@@ -4,6 +4,7 @@ import 'package:damo/screen/bar/scroll_behavior.dart';
 import 'package:damo/screen/myPage/change_privacy.dart';
 import 'package:damo/screen/myPage/purchase_history.dart';
 import 'package:damo/screen/myPage/wish_list_page.dart';
+import 'package:damo/screen/seller/seller_main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,6 +12,7 @@ import '../bar/app_bar.dart';
 import '../bar/bottom_navigaton.dart';
 import 'package:get/get.dart';
 
+import 'event.dart';
 import 'notice.dart';
 
 class MyPage extends StatefulWidget {
@@ -40,6 +42,10 @@ class _MyPageState extends State<MyPage> {
 
   onNoticeClicked() {
     Get.to(() => Notice());
+  }
+
+  onSellerClicked() {
+    Get.to(() => SellerMain());
   }
 
   @override
@@ -276,7 +282,9 @@ class _MyPageState extends State<MyPage> {
                           child: CupertinoButton(
                             minSize: 0,
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              Get.to(Event());
+                            },
                             child: Row(
                               children: [
                                 Icon(
@@ -297,7 +305,7 @@ class _MyPageState extends State<MyPage> {
                             ),
                           ),
                         ),
-                        Divider(
+                        /*Divider(
                           height: 1.0,
                         ),
                         Container(
@@ -354,7 +362,7 @@ class _MyPageState extends State<MyPage> {
                               ],
                             ),
                           ),
-                        ),
+                        ),*/
                         Divider(
                           height: 1.0,
                         ),
@@ -433,6 +441,40 @@ class _MyPageState extends State<MyPage> {
                                 ),
                                 Text(
                                   '환경설정',
+                                  style: GoogleFonts.lato(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Divider(
+                          height: 1.0,
+                        ),
+                        Container(
+                          height: 60,
+                          child: CupertinoButton(
+                            minSize: 0,
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
+                              if (true) {
+                                //판매자이면
+                                onSellerClicked();
+                              }
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.dashboard_outlined,
+                                  color: Colors.black,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  '판매자 페이지로 가기',
                                   style: GoogleFonts.lato(
                                     color: Colors.black,
                                     fontSize: 16,
