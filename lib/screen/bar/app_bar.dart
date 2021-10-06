@@ -2,6 +2,7 @@ import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:damo/screen/notification/notification_main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -190,6 +191,25 @@ class DamoAppBar {
       title: Image.asset(
         'assets/images/DAMO_logo-02.png',
         width: 115.0,
+      ),
+    );
+  }
+
+  dynamic textAppBar(BuildContext context, String text) {
+    return AppBar(
+      centerTitle: true,
+      iconTheme: IconThemeData(
+        color: Colors.red,
+      ),
+      elevation: 0.0,
+      backgroundColor: Colors.white,
+      title: Text(
+        text,
+        style: GoogleFonts.lato(
+          fontSize: 23,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
       ),
     );
   }

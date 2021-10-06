@@ -1,5 +1,6 @@
 import 'package:damo/screen/bar/app_bar.dart';
 import 'package:damo/screen/seller/seller_chat_management.dart';
+import 'package:damo/screen/seller/seller_faq_management.dart';
 import 'package:damo/screen/seller/seller_order_management.dart';
 import 'package:damo/screen/seller/seller_preview.dart';
 import 'package:damo/screen/seller/seller_product_main.dart';
@@ -161,7 +162,7 @@ class _SellerMainState extends State<SellerMain> {
                     ),
                   ),
                   onPressed: () {
-                    Get.to(() => SellerPreview());
+                    Get.to(() => SellerFAQManagement());
                   },
                 ),
               ]),

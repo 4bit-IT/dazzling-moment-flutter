@@ -22,6 +22,7 @@ class _SellerProductModifyState extends State<SellerProductModify> {
   String? sellerMain = '업체 설명';
   Image? sellerImage = Image.asset('assets/images/logo.png');
   List? sellerDetail;
+
   // List<XFile> resultImages = <XFile>[];
 
   @override
@@ -126,7 +127,9 @@ class _SellerProductModifyState extends State<SellerProductModify> {
           CircleAvatar(
             radius: 80,
             backgroundColor: Colors.white,
-            child: Image.asset('assets/images/DAMO_logo-01.png'),
+            child: Image.asset(
+              'assets/images/DAMO_logo-01.png',
+            ),
           ),
           // child: file == null
           //     ? Image.asset('assets/images/DAMO_logo-01.png')
