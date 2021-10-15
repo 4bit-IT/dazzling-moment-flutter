@@ -1,4 +1,5 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:damo/Model/kakao.dart';
 import 'package:damo/ViewModel/bar/scroll_behavior.dart';
 import 'package:damo/view/sign/sign.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,6 +32,7 @@ class _DrawerButtonState extends State<DrawerButton> {
                         fontFamily: 'NotoSans', color: Colors.red[400]),
                   ),
                   onPressed: () {
+                    Kakao().kakaoLogout();
                     Get.offAll(
                       () => AnimatedSplashScreen(
                         duration: 1500,

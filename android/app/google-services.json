@@ -1,49 +1,50 @@
 {
   "project_info": {
-    "project_number": "1075408420901",
-    "project_id": "apt-subset-321915",
-    "storage_bucket": "apt-subset-321915.appspot.com"
+    "project_number": "199393815819",
+    "project_id": "dazzling-moments",
+    "storage_bucket": "dazzling-moments.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1075408420901:android:f41a919721ae2f39e03fcc",
+        "mobilesdk_app_id": "1:199393815819:android:b80e2f280d6410ae02460e",
         "android_client_info": {
           "package_name": "com.fourbit.damo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1075408420901-l77h3qnfid5odtlcrrmbijivjmt8addr.apps.googleusercontent.com",
+          "client_id": "199393815819-nuj6j4b1bc09i2saro9154aiehad9soh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.fourbit.damo",
-            "certificate_hash": "a07da24213c931aee9a2459b102168cb895a93d6"
+            "certificate_hash": "3dcc6386a18bb6d2b4152811f9f9b2f66938724f"
           }
         },
         {
-          "client_id": "1075408420901-cq2f5nadgmna7kjo3s5vbm46v2so46e1.apps.googleusercontent.com",
+          "client_id": "199393815819-qcco37lju1rgk6ied7tkkhr9vff5jufj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fourbit.damo",
+            "certificate_hash": "4486f2ba3412e6f53c2c4c81348c6655b808ec54"
+          }
+        },
+        {
+          "client_id": "199393815819-rjlg281ncbqh32u6ffo64c01b00ea0gd.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB5qd5Qpi3rrs0OTTKRjNdDd9oBvWK3zYU"
+          "current_key": "AIzaSyB4cNusebu146mtEeBExn9Mc19hvMEs9E0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1075408420901-cq2f5nadgmna7kjo3s5vbm46v2so46e1.apps.googleusercontent.com",
+              "client_id": "199393815819-rjlg281ncbqh32u6ffo64c01b00ea0gd.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "1075408420901-p2d0fa1vjd2cjb28k6f59uu0tpegsbhv.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.fourbit.damo"
-              }
             }
           ]
         }
