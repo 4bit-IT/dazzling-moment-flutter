@@ -1,5 +1,6 @@
-import 'package:damo/data/kakao.dart';
-import 'package:damo/model/bar/scroll_behavior.dart';
+import 'package:damo/ViewModel/bar/scroll_behavior.dart';
+import 'package:damo/Model/kakao.dart';
+import 'package:damo/smsAuth.dart';
 import 'package:damo/view/main/home_main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class _SignState extends State<Sign> {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
-                          Get.to(() => HomeMain());
+                          Get.to(() => smsAuth());
                         },
                         color: Colors.blue,
                         elevation: 0,
@@ -74,7 +75,9 @@ class _SignState extends State<Sign> {
                       MaterialButton(
                         minWidth: double.infinity,
                         height: 60,
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(() => HomeMain());
+                        },
                         color: Colors.green,
                         elevation: 0,
                         shape: RoundedRectangleBorder(
@@ -95,7 +98,7 @@ class _SignState extends State<Sign> {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
-                          kakaoLogin();
+                          Kakao().kakaoLogin();
                         },
                         color: Colors.yellow,
                         elevation: 0,
