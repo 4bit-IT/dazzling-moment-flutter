@@ -1,5 +1,5 @@
-import 'package:damo/ViewModel/bar/app_bar.dart';
-import 'package:damo/ViewModel/bar/scroll_behavior.dart';
+import 'package:damo/viewmodel/bar/app_bar.dart';
+import 'package:damo/viewmodel/bar/scroll_behavior.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';

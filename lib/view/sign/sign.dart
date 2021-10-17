@@ -1,6 +1,6 @@
-import 'package:damo/ViewModel/bar/scroll_behavior.dart';
-import 'package:damo/Model/kakao.dart';
-import 'package:damo/smsAuth.dart';
+import 'package:damo/viewmodel/bar/scroll_behavior.dart';
+import 'package:damo/model/kakao.dart';
+import 'package:damo/view/sign/sms_auth.dart';
 import 'package:damo/view/main/home_main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

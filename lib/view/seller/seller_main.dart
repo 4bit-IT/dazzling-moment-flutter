@@ -1,4 +1,4 @@
-import 'package:damo/ViewModel/bar/app_bar.dart';
+import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/view/seller/seller_chat_management.dart';
 import 'package:damo/view/seller/seller_order_management.dart';
 import 'package:damo/view/seller/seller_preview.dart';

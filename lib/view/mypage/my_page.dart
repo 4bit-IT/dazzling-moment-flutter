@@ -1,8 +1,8 @@
-import 'package:damo/ViewModel/bar/app_bar.dart';
-import 'package:damo/ViewModel/bar/back_button_clicked.dart';
-import 'package:damo/ViewModel/bar/bottom_navigaton.dart';
-import 'package:damo/ViewModel/bar/drawer.dart';
-import 'package:damo/ViewModel/bar/scroll_behavior.dart';
+import 'package:damo/viewmodel/bar/app_bar.dart';
+import 'package:damo/viewmodel/bar/back_button_clicked.dart';
+import 'package:damo/viewmodel/bar/bottom_navigaton.dart';
+import 'package:damo/viewmodel/bar/drawer.dart';
+import 'package:damo/viewmodel/bar/scroll_behavior.dart';
 import 'package:damo/view/mypage/purchase_history.dart';
 import 'package:damo/view/mypage/wish_list_page.dart';
 import 'package:damo/view/seller/seller_main.dart';
@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 
 import 'change_privacy.dart';
+import 'chat.dart';
 import 'event.dart';
 import 'notice.dart';
 
@@ -363,6 +364,37 @@ class _MyPageState extends State<MyPage> {
                             ),
                           ),
                         ),*/
+                        Container(
+                          height: 60,
+                          child: CupertinoButton(
+                            minSize: 0,
+                            padding: EdgeInsets.zero,
+                            onPressed: () {
+                              Get.to(() => Chat());
+                            },
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.chat,
+                                  color: Colors.black,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  '쪽지보기',
+                                  style: GoogleFonts.lato(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Divider(
+                          height: 1.0,
+                        ),
                         Divider(
                           height: 1.0,
                         ),

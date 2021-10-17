@@ -1,4 +1,4 @@
-import 'package:damo/ViewModel/bar/app_bar.dart';
+import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/view/seller/seller_product_modify.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
