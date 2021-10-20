@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1075408420901-p2d0fa1vjd2cjb28k6f59uu0tpegsbhv.apps.googleusercontent.com</string>
+	<string>199393815819-iscdl9gr8htoo9nn6s2ecjd2ddmm2em3.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1075408420901-p2d0fa1vjd2cjb28k6f59uu0tpegsbhv</string>
+	<string>com.googleusercontent.apps.199393815819-iscdl9gr8htoo9nn6s2ecjd2ddmm2em3</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>1075408420901-l77h3qnfid5odtlcrrmbijivjmt8addr.apps.googleusercontent.com</string>
+	<string>199393815819-nuj6j4b1bc09i2saro9154aiehad9soh.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAOMrsZmzG7XBRPlyy6P9CQmzuDeIFWeCo</string>
+	<string>AIzaSyAA4Seybbz4vhdbYp8NsK-id9i6dOeHUsw</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1075408420901</string>
+	<string>199393815819</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.fourbit.damo</string>
 	<key>PROJECT_ID</key>
-	<string>apt-subset-321915</string>
+	<string>dazzling-moments</string>
 	<key>STORAGE_BUCKET</key>
-	<string>apt-subset-321915.appspot.com</string>
+	<string>dazzling-moments.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1075408420901:ios:58e4dbeee5c37005e03fcc</string>
+	<string>1:199393815819:ios:46146b41bea6e6d402460e</string>
 </dict>
 </plist>
