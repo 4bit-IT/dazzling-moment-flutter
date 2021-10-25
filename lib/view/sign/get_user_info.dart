@@ -14,9 +14,20 @@ class GetUserInfo extends StatelessWidget {
   FirebaseAuth auth = FirebaseAuth.instance;
 
   Widget smsAuthButton = SvgPicture.asset(
-    'assets/images_svg/btn_인증문자받기_off.svg',
-    width: 375.w,
+    'assets/images_svg/btn_인증번호받기_off.svg',
   );
+
+  List<Widget> authNumber = [
+    Text(
+      '인증 번호',
+      style: TextStyle(
+        color: Color(0xff283137),
+        fontFamily: 'NotoSansCJKKR',
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+  ];
 
   void verifyPhoneNumber() async {
     String phoneNumber = '+82' +
@@ -24,6 +35,8 @@ class GetUserInfo extends StatelessWidget {
         phoneNumberController.value.text.split('-')[0][2] +
         phoneNumberController.value.text.split('-')[1] +
         phoneNumberController.value.text.split('-')[2];
+
+    print(phoneNumber);
 
     //사용자가 이전에 인증했는지 확인하고, 다른 SMS 인증 코드를 제출하지 않고 Firebase에 로그인 할 수 있는지 확인
     PhoneVerificationCompleted verificationCompleted =
@@ -55,7 +68,7 @@ class GetUserInfo extends StatelessWidget {
 
     try {
       await auth.verifyPhoneNumber(
-          phoneNumber: phoneNumberController.text,
+          phoneNumber: phoneNumber,
           timeout: const Duration(seconds: 5),
           verificationCompleted: verificationCompleted,
           verificationFailed: verificationFailed,
@@ -135,12 +148,11 @@ class GetUserInfo extends StatelessWidget {
                                             phoneNumberController.value.text) ==
                                     false) {
                                   smsAuthButton = SvgPicture.asset(
-                                      'assets/images_svg/btn_인증문자받기_off.svg',
-                                      width: 375.w);
+                                    'assets/images_svg/btn_인증번호받기_off.svg',
+                                  );
                                 } else {
                                   smsAuthButton = SvgPicture.asset(
-                                    'assets/images_svg/btn_인증문자받기_on.svg',
-                                    width: 375.w,
+                                    'assets/images_svg/btn_인증번호받기_on.svg',
                                   );
                                 }
                               },
@@ -165,13 +177,16 @@ class GetUserInfo extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(0, 0, 16.w, 0),
                           child: InkWell(
                             onTap: () {
-                              phoneNumberController.text = '';
+                              if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
+                                      .hasMatch(
+                                          phoneNumberController.value.text) ==
+                                  true) {
+                                verifyPhoneNumber();
+                              }
                             },
-                            child: SvgPicture.asset(
-                                'assets/images_svg/ic_initialize_20.svg'),
+                            child: smsAuthButton,
                           ),
                         ),
                       ],
@@ -180,14 +195,8 @@ class GetUserInfo extends StatelessWidget {
                   SizedBox(
                     height: 24.h,
                   ),
-                  Text(
-                    '인증 번호',
-                    style: TextStyle(
-                      color: Color(0xff283137),
-                      fontFamily: 'NotoSansCJKKR',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  Row(
+                    children: authNumber,
                   ),
                   SizedBox(
                     height: 16.h,
@@ -210,21 +219,17 @@ class GetUserInfo extends StatelessWidget {
                             child: TextFormField(
                               onChanged: (text) {
                                 print(text);
-                                print(RegExp(
-                                    r'^([0-9]{6})$')
-                                    .hasMatch(
+                                print(RegExp(r'^([0-9]{6})$').hasMatch(
                                     smsAuthNumberController.value.text));
-                                if (RegExp(r'^([0-9]{6})$')
-                                    .hasMatch(
-                                    smsAuthNumberController.value.text) ==
+                                if (RegExp(r'^([0-9]{6})$').hasMatch(
+                                        smsAuthNumberController.value.text) ==
                                     false) {
                                   smsAuthButton = SvgPicture.asset(
-                                      'assets/images_svg/btn_인증문자받기_off.svg',
-                                      width: 375.w);
+                                    'assets/images_svg/btn_인증번호받기_off.svg',
+                                  );
                                 } else {
                                   smsAuthButton = SvgPicture.asset(
-                                    'assets/images_svg/btn_인증문자받기_on.svg',
-                                    width: 375.w,
+                                    'assets/images_svg/btn_인증번호받기_on.svg',
                                   );
                                 }
                               },
@@ -234,7 +239,7 @@ class GetUserInfo extends StatelessWidget {
                               inputFormatters: [
                                 MaskTextInputFormatter(
                                   mask: '######',
-                                  filter: {'#' : RegExp(r'^[0-9]')},
+                                  filter: {'#': RegExp(r'^[0-9]')},
                                 ),
                               ],
                               decoration: InputDecoration(
@@ -250,13 +255,12 @@ class GetUserInfo extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(0, 0, 16.w, 0),
                           child: InkWell(
                             onTap: () {
                               phoneNumberController.text = '';
                             },
                             child: SvgPicture.asset(
-                                'assets/images_svg/ic_initialize_20.svg'),
+                                'assets/images_svg/btn_인증번호받기_off.svg'),
                           ),
                         ),
                       ],
@@ -266,16 +270,6 @@ class GetUserInfo extends StatelessWidget {
               ),
             ),
           ),
-          InkWell(
-            child: smsAuthButton,
-            onTap: RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
-                        .hasMatch(phoneNumberController.value.text) ==
-                    false
-                ? null
-                : () async {
-                    verifyPhoneNumber();
-                  },
-          )
         ],
       ),
     );
