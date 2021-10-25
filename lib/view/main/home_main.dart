@@ -1,11 +1,12 @@
-import 'package:damo/ViewModel/bar/app_bar.dart';
-import 'package:damo/ViewModel/bar/back_button_clicked.dart';
-import 'package:damo/ViewModel/bar/bottom_navigaton.dart';
-import 'package:damo/ViewModel/bar/drawer.dart';
-import 'package:damo/ViewModel/bar/scroll_behavior.dart';
+import 'package:damo/viewmodel/bar/app_bar.dart';
+import 'package:damo/viewmodel/bar/back_button_clicked.dart';
+import 'package:damo/viewmodel/bar/bottom_navigaton.dart';
+import 'package:damo/viewmodel/bar/drawer.dart';
+import 'package:damo/viewmodel/bar/scroll_behavior.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/get_navigation/src/snackbar/snack.dart';
@@ -179,7 +180,7 @@ class _HomeMainState extends State<HomeMain> {
           drawer: DrawerButton(),
           appBar: appBar.appBar(context),
           bottomNavigationBar: BottomNavigation(
-            bottomNavigationIndex: 0,
+            selectedBottomNavigationBarIndex: 0,
             scrollController: scrollController,
           ),
           body: viewProduct(),

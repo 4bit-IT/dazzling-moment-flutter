@@ -1,5 +1,5 @@
-import 'package:damo/ViewModel/bar/app_bar.dart';
-import 'package:damo/ViewModel/bar/back_button_clicked.dart';
+import 'package:damo/viewmodel/bar/app_bar.dart';
+import 'package:damo/viewmodel/bar/back_button_clicked.dart';
 import 'package:damo/viewmodel/bar/bottom_navigaton.dart';
 import 'package:damo/viewmodel/bar/drawer.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class _LookCommunityState extends State<LookCommunity> {
       child: Scaffold(
         drawer: DrawerButton(),
         appBar: appBar.noActionBar(context),
-        bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 2),
+        bottomNavigationBar: BottomNavigation(selectedBottomNavigationBarIndex: 2,),
       ),
     );
   }

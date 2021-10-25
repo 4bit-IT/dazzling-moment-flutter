@@ -1,4 +1,4 @@
-import 'package:damo/ViewModel/bar/app_bar.dart';
+import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';

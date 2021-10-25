@@ -1,5 +1,5 @@
-import 'package:damo/ViewModel/bar/app_bar.dart';
-import 'package:damo/ViewModel/bar/scroll_behavior.dart';
+import 'package:damo/viewmodel/bar/app_bar.dart';
+import 'package:damo/viewmodel/bar/scroll_behavior.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

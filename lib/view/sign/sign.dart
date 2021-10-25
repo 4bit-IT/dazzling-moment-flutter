@@ -1,9 +1,12 @@
-import 'package:damo/ViewModel/bar/scroll_behavior.dart';
-import 'package:damo/Model/kakao.dart';
-import 'package:damo/smsAuth.dart';
+import 'package:damo/view/sign/get_user_info.dart';
+import 'package:damo/viewmodel/bar/scroll_behavior.dart';
+import 'package:damo/model/kakao.dart';
+import 'package:damo/view/sign/sms_auth.dart';
 import 'package:damo/view/main/home_main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class Sign extends StatefulWidget {
@@ -15,41 +18,108 @@ class _SignState extends State<Sign> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: ScrollConfiguration(
           behavior: NoGlowScrollBehavior(),
           child: Container(
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height,
-            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 50),
             child: SingleChildScrollView(
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
+                  SizedBox(
+                    height: 234.h,
+                  ),
+                  SvgPicture.asset('assets/images_svg/logo_login.svg'),
+                  SizedBox(
+                    height: 214.7.h,
+                  ),
+                  Row(
                     children: [
+                      Expanded(
+                        child: Divider(
+                          color: Colors.black45,
+                        ),
+                      ),
                       Text(
-                        "MZ세대를 위한 이벤트 관련 오픈마켓 및 정보공유 서비스",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.grey[700], fontSize: 15),
-                      )
+                        '   간편 로그인   ',
+                        style: TextStyle(
+                          color: Color(0xff8e8e93),
+                          fontSize: 18.sp,
+                          fontFamily: 'NotoSansCJKKR',
+                        ),
+                      ),
+                      Expanded(
+                        child: Divider(
+                          color: Colors.black45,
+                        ),
+                      ),
                     ],
                   ),
-                  Container(
-                    height: MediaQuery.of(context).size.height / 3,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image:
-                                AssetImage('assets/images/DAMO_logo-03.png'))),
+                  SizedBox(
+                    height: 40.h,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 94.w,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Get.to(() => GetUserInfo());
+                        },
+                        child: Container(
+                          width: 93.w,
+                          child: Column(
+                            children: [
+                              SvgPicture.asset(
+                                  'assets/images_svg/ic_login_apple.svg'),
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Text(
+                                '애플',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 13,
+                                  fontFamily: 'NotoSansCJKKR',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 93.w,
+                        child: Column(
+                          children: [
+                            SvgPicture.asset(
+                                'assets/images_svg/ic_login_kakao.svg'),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Text(
+                              '카카오',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 13,
+                                fontFamily: 'NotoSansCJKKR',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 95.w,
+                      ),
+                    ],
                   ),
                   Column(
                     children: [
+                      SizedBox(
+                        height: 200,
+                      ),
                       MaterialButton(
                         minWidth: double.infinity,
                         height: 60,
