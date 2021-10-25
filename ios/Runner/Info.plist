@@ -37,11 +37,15 @@
 		<string>$(FLUTTER_BUILD_NUMBER)</string>
 		<key>LSApplicationQueriesSchemes</key>
 		<array>
+<<<<<<< HEAD
 			<string>kakao${051ba7adea57eb74c808616d4969e482}</string>
 			<string>kakaokompassauth</string>
 			<string>storykompassauth</string>
 			<string>kakaolink</string>
 			<string>kakaotalk-5.9.7</string>
+=======
+			<string>com.googleusercontent.apps.199393815819-iscdl9gr8htoo9nn6s2ecjd2ddmm2em3</string>
+>>>>>>> 1f783397b37b6fd46c12f3815e50af6e4c287a76
 		</array>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
