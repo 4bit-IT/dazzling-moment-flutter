@@ -1,13 +1,8 @@
-import 'dart:convert';
-
 import 'package:damo/ViewModel/bar/app_bar.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
-import 'package:intl/intl.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class Chat extends StatefulWidget {
   @override
@@ -28,10 +23,9 @@ class _ChatState extends State<Chat> {
   5. 그래픽파일(이미지, GIF)의 형태는 아직 모르겠다.
   */
 
-  List<String> personName = []; // 채팅 상대방 이름(닉네임?) 리스트
-  List<List<String>> chatContent = [[]]; // 채팅 리스트
   TextEditingController controller = TextEditingController();
   int count = 0;
+  int yesterday = 0, today = 0;
 
   Future read() async {
     try {
@@ -48,20 +42,17 @@ class _ChatState extends State<Chat> {
   Future<void> write(String content) async {
     try {
       var now = DateTime.now(); //연월일
-      var dir = await getTemporaryDirectory();
-      String dirPath = dir.path.toString() + '/oppositeUserName.txt'; //상대방 닉네임
-      if (await File(dirPath).exists()) {
-        //파일이 존재하면 캐시디렉토리에서 파일을 불러온다.
-        String chatContents = await File(dirPath).readAsString();
-        print(chatContents);
-        chatContents += '0 $now, userName : $content\n';
-        await File(dirPath).writeAsString(chatContents);
-      } else {
-        //파일이 존재하지 않으면 캐시 디렉토리에서 파일을 만든다.
+      var dir = await getExternalStorageDirectory();
+      String dirPath = dir!.path.toString() + 'chat/oppositeUserName.txt'; //상대방 닉네임
+      if (!(await File(dirPath).exists())) {
+        //파일이 존재하지않으면 파일을 만든다.
         print('파일이 존재하지 않음');
         File(dirPath).create();
-        String chatContents = '$now, userName : $content\n';
       }
+      String chatContents = await File(dirPath).readAsString();
+      print(chatContents);
+      chatContents += '0 $now, userName : $content\n';
+      await File(dirPath).writeAsString(chatContents);
     } catch (e) {
       print('file is not exists');
       print(e);
@@ -108,19 +99,143 @@ class _ChatState extends State<Chat> {
                 child: Text('Error: ${snapshot.error}'),
               );
             } else {
-              print(snapshot.data[0].toString().split(' '));
+              yesterday = today;
+              today = int.parse(
+                  snapshot.data[0].toString().split(' ')[1].split('-')[2]);
               return ListView.builder(
                 itemCount: count,
                 shrinkWrap: true,
                 scrollDirection: Axis.vertical,
                 itemBuilder: (BuildContext context, int count) {
                   return Container(
-                    alignment:
-                        snapshot.data[count].toString().split(' ')[0] == '0'
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
-                    child: Text('${snapshot.data[count].toString().split(' ')[5]}'),
-                  );
+                      alignment:
+                          snapshot.data[count].toString().split(' ')[0] == '0'
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                      child: (count == 0) || //날짜 divider 계산
+                              snapshot.data[count]
+                                      .toString()
+                                      .split(' ')[1]
+                                      .split('-')[2] !=
+                                  snapshot.data[count - 1]
+                                      .toString()
+                                      .split(' ')[1]
+                                      .split('-')[2]
+                          ? Column(
+                              crossAxisAlignment: snapshot.data[count]
+                                          .toString()
+                                          .split(' ')[0] ==
+                                      '0'
+                                  ? CrossAxisAlignment.end
+                                  : CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Divider(color: Colors.black,),
+                                    ),
+                                    Text(
+                                      '${snapshot.data[count].toString().split(' ')[1]}',
+                                    ),
+                                    Expanded(
+                                      child: Divider(color: Colors.black,),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                snapshot.data[count].toString().split(' ')[0] ==
+                                        '0'
+                                    ? Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 3,
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                        borderRadius: BorderRadius.circular(3),
+                                      ),
+                                      child: Text(
+                                        '${snapshot.data[count].toString().split(' ')[5]}',
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 3,
+                                    ),
+                                  ],
+
+                                )
+                                    : Column(
+                                        children: [
+                                          Text(
+                                            '${snapshot.data[count].toString().split(' ')[3]}',
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.all(10),
+                                            decoration: BoxDecoration(
+                                              color: Colors.pink[100],
+                                              borderRadius:
+                                                  BorderRadius.circular(3),
+                                            ),
+                                            child: Text(
+                                              '${snapshot.data[count].toString().split(' ')[5]}',
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                              ],
+                            )
+                          : snapshot.data[count].toString().split(' ')[0] == '0'
+                              ? Column(
+                                children: [
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                        borderRadius: BorderRadius.circular(3),
+                                      ),
+                                      child: Text(
+                                        '${snapshot.data[count].toString().split(' ')[5]}',
+                                      ),
+                                    ),
+                                  SizedBox(
+                                    height: 3,
+                                  ),
+                                ],
+
+                              )
+                              : Column(
+                                  children: [
+                                    Text(
+                                      '${snapshot.data[count].toString().split(' ')[3]}',
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.pink[100],
+                                        borderRadius: BorderRadius.circular(3),
+                                      ),
+                                      child: Text(
+                                        '${snapshot.data[count].toString().split(' ')[5]}',
+                                      ),
+                                    ),
+                                  ],
+                                ));
                 },
               );
             }
@@ -132,15 +247,15 @@ class _ChatState extends State<Chat> {
 
   Future<dynamic> getChatData() async {
     try {
-      var dir = await getTemporaryDirectory();
-      String dirPath = dir.path.toString() + '/oppositeUserName.txt'; //상대방 닉네임
+      var dir = await getExternalStorageDirectory();
+      String dirPath = dir!.path.toString() + 'oppositeUserName.txt'; //상대방 닉네임
       File file = File(dirPath);
+      file.create();
+      file.writeAsString(
+          '0 0000-00-00 00:00 userName : content\n1 0000-00-01 00:00 userName : content\n1 0000-00-01 00:00 userName : content\n0 0000-00-01 00:00 userName : content\n0 0000-00-02 00:00 userName : content\n0 0000-00-02 00:00 userName : content\n0 0000-00-02 00:00 userName : content\n1 0000-00-02 00:00 userName : content\n1 0000-00-03 00:00 userName : content\n0 0000-00-04 00:00 userName : content\n0 0000-00-04 00:00 userName : content\n0 0000-00-05 00:00 userName : content\n');
       if (await file.exists()) {
         //파일이 존재하면 캐시디렉토리에서 파일을 불러온다.
-        String chatContents = await file.readAsString();
         count = file.readAsLinesSync().length;
-        print(chatContents);
-        print(count);
         List<dynamic> list = await file.readAsLines();
         return list;
       } else {

@@ -18,7 +18,7 @@ class LookLocationState extends State<LookLocation> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar.noActionBar(context),
-      bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 1),
+      bottomNavigationBar: BottomNavigation(selectedBottomNavigationBarIndex: 1,),
       body: KakaoMapView(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,

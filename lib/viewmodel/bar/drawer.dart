@@ -32,7 +32,7 @@ class _DrawerButtonState extends State<DrawerButton> {
                         fontFamily: 'NotoSans', color: Colors.red[400]),
                   ),
                   onPressed: () {
-                    Kakao().kakaoLogout();
+                    //Kakao().kakaoLogout();
                     Get.offAll(
                       () => AnimatedSplashScreen(
                         duration: 1500,

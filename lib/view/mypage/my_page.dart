@@ -1,3 +1,4 @@
+import 'package:damo/view/mypage/chat_list.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/viewmodel/bar/back_button_clicked.dart';
 import 'package:damo/viewmodel/bar/bottom_navigaton.dart';
@@ -58,7 +59,7 @@ class _MyPageState extends State<MyPage> {
         drawer: DrawerButton(),
         appBar: appBar.noActionBar(context),
         bottomNavigationBar: BottomNavigation(
-          bottomNavigationIndex: 3,
+          selectedBottomNavigationBarIndex: 3,
           scrollController: scrollController,
         ),
         body: ScrollConfiguration(
@@ -391,9 +392,6 @@ class _MyPageState extends State<MyPage> {
                               ],
                             ),
                           ),
-                        ),
-                        Divider(
-                          height: 1.0,
                         ),
                         Divider(
                           height: 1.0,

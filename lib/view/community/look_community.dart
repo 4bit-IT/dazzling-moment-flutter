@@ -18,7 +18,7 @@ class _LookCommunityState extends State<LookCommunity> {
       child: Scaffold(
         drawer: DrawerButton(),
         appBar: appBar.noActionBar(context),
-        bottomNavigationBar: BottomNavigation(bottomNavigationIndex: 2),
+        bottomNavigationBar: BottomNavigation(selectedBottomNavigationBarIndex: 2,),
       ),
     );
   }
