@@ -1,4 +1,5 @@
 import 'package:damo/view/sign/get_user_info.dart';
+import 'package:damo/view/sign/get_user_name.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
 import 'package:damo/model/kakao.dart';
 import 'package:damo/view/sign/sms_auth.dart';
@@ -188,7 +189,9 @@ class _SignState extends State<Sign> {
                       MaterialButton(
                         minWidth: double.infinity,
                         height: 60,
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(()=>GetUserNickname());
+                        },
                         color: Colors.grey[400],
                         elevation: 0,
                         shape: RoundedRectangleBorder(

@@ -6,42 +6,39 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 
 void main() async {
   KakaoContext.clientId = '051ba7adea57eb74c808616d4969e482';
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await FirebaseAppCheck.instance.activate(webRecaptchaSiteKey: 'recaptcha-v3-site-key');
   runApp(Damo());
 }
 
 class Damo extends StatelessWidget {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: Size(375, 812),
-      builder: () => FutureBuilder(
-        future: _initialization,
-        builder: (context, snapshot) {
-          return GetMaterialApp(
-            builder: (context, child) {
-              return MediaQuery(
-                child: child!,
-                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-              );
-            },
-            debugShowCheckedModeBanner: false,
-            home: AnimatedSplashScreen(
-              duration: 1500,
-              splash: 'assets/images/DAMO_logo-03.png',
-              nextScreen: Sign(),
-              splashTransition: SplashTransition.fadeTransition,
-              pageTransitionType: PageTransitionType.fade,
-              backgroundColor: Colors.white,
-              splashIconSize: 300.0,
-            ),
+      builder: () => GetMaterialApp(
+        builder: (context, child) {
+          return MediaQuery(
+            child: child!,
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
           );
         },
+        debugShowCheckedModeBanner: false,
+        home: AnimatedSplashScreen(
+          duration: 1500,
+          splash: 'assets/images/DAMO_logo-03.png',
+          nextScreen: Sign(),
+          splashTransition: SplashTransition.fadeTransition,
+          pageTransitionType: PageTransitionType.fade,
+          backgroundColor: Colors.white,
+          splashIconSize: 300.0,
+        ),
       ),
     );
   }
