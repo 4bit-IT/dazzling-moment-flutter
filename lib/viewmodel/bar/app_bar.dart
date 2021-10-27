@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -84,115 +85,53 @@ class DamoAppBar {
     return AppBar(
       centerTitle: true,
       iconTheme: IconThemeData(
-        color: Colors.red,
+        color: Colors.grey[700],
       ),
       elevation: 0.0,
       backgroundColor: Colors.white,
-      title: Image.asset(
-        'assets/images/DAMO_logo-02.png',
-        width: 115.0,
-      ),
+      title: SvgPicture.asset('assets/images_svg/logo_main.svg'),
       actions: [
-        IconButton(
-          visualDensity: VisualDensity(horizontal: -4.0, vertical: -4.0),
-          icon: Icon(
-            Icons.search,
-            color: Colors.redAccent,
-          ),
-          onPressed: () {
-            Get.to(SearchPage());
-          },
-        ),
-        IconButton(
-          visualDensity: VisualDensity(horizontal: -4.0, vertical: -4.0),
-          icon: Icon(
-            Icons.notifications_none,
-            color: Colors.redAccent,
-          ),
-          onPressed: () {
-            Get.to(NotificationMain());
-          },
-        ),
-        IconButton(
-          visualDensity: VisualDensity(horizontal: -4.0, vertical: -4.0),
-          icon: Icon(
-            Icons.filter_list,
-            color: Colors.redAccent,
-          ),
-          onPressed: () {
-            showAdaptiveActionSheet(
-              context: context,
-              title: const Text('상품보기'),
-              actions: <BottomSheetAction>[
-                BottomSheetAction(
-                    title: const Text('거리순'),
-                    onPressed: () {
-                      Get.back();
-                    }),
-                BottomSheetAction(
-                    title: const Text('인기순'),
-                    onPressed: () {
-                      Get.back();
-                    }),
-                BottomSheetAction(
-                    title: const Text('추천순'),
-                    onPressed: () {
-                      Get.back();
-                    }),
-                BottomSheetAction(
-                    title: const Text('지역순'),
-                    onPressed: () {
-                      Get.back();
-                      showAdaptiveActionSheet(
-                        context: context,
-                        title: const Text('지역선택'),
-                        actions: <BottomSheetAction>[
-                          BottomSheetAction(
-                              title: const Text('서울특별시'),
-                              onPressed: () {
-                                Get.back();
-                              }),
-                          BottomSheetAction(
-                              title: const Text('경기도'),
-                              onPressed: () {
-                                Get.back();
-                              }),
-                          BottomSheetAction(
-                              title: const Text('경상남도'),
-                              onPressed: () {
-                                Get.back();
-                              }),
-                          BottomSheetAction(
-                              title: const Text('부산광역시'), onPressed: () {}),
-                        ],
-                        cancelAction: CancelAction(
-                            title: const Text(
-                                '닫기')), // onPressed parameter is optional by default will dismiss the ActionSheet
-                      );
-                    }),
-              ],
-              cancelAction: CancelAction(
-                  title: const Text(
-                      '닫기')), // onPressed parameter is optional by default will dismiss the ActionSheet
-            );
-          },
+        Row(
+          children: [
+            InkWell(
+                onTap: () {
+                  Get.to(() => SearchPage());
+                },
+                child: SvgPicture.asset('assets/images_svg/ic_search.svg',
+                    width: 30.w, height: 30.h)),
+            SizedBox(width: 10.w),
+            InkWell(
+                onTap: () {},
+                child: SvgPicture.asset('assets/images_svg/ic_notification.svg',
+                    width: 30.w, height: 30.h)),
+            SizedBox(width: 10.w),
+          ],
         ),
       ],
     );
   }
 
-  dynamic noActionBar(BuildContext context) {
+  dynamic noSearchBar(BuildContext context) {
     return AppBar(
       centerTitle: true,
       iconTheme: IconThemeData(
-        color: Colors.red,
+        color: Colors.grey[700],
       ),
       elevation: 0.0,
       backgroundColor: Colors.white,
-      title: Image.asset(
-        'assets/images/DAMO_logo-02.png',
-        width: 115.0,
-      ),
+      title: SvgPicture.asset('assets/images_svg/logo_main.svg'),
+      actions: [
+        Row(
+          children: [
+            SizedBox(width: 10.w),
+            InkWell(
+                onTap: () {},
+                child: SvgPicture.asset('assets/images_svg/ic_notification.svg',
+                    width: 30.w, height: 30.h)),
+            SizedBox(width: 10.w),
+          ],
+        ),
+      ],
     );
   }
 

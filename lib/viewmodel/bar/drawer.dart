@@ -154,6 +154,7 @@ class _DrawerButtonState extends State<DrawerButton> {
               height: 15.h,
             ),
             InkWell(
+              onTap: () {},
               child: Row(
                 children: [
                   SvgPicture.asset('assets/images_svg/ic_my_notice.svg',
@@ -185,6 +186,7 @@ class _DrawerButtonState extends State<DrawerButton> {
               height: 15.h,
             ),
             InkWell(
+              onTap: () {},
               child: Row(
                 children: [
                   SvgPicture.asset('assets/images_svg/ic_my_event.svg',
@@ -216,6 +218,7 @@ class _DrawerButtonState extends State<DrawerButton> {
               height: 15.h,
             ),
             InkWell(
+              onTap: () {},
               child: Row(
                 children: [
                   SvgPicture.asset('assets/images_svg/ic_my_setting.svg',
@@ -252,6 +255,7 @@ class _DrawerButtonState extends State<DrawerButton> {
                 style: TextStyle(
                   color: Color(0xff8e97a0),
                   fontFamily: 'NotoSansCJKKR',
+                  decoration: TextDecoration.underline,
                 ),
               ),
               onTap: onLogout,

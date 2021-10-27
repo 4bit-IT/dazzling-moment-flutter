@@ -17,8 +17,10 @@ class LookLocationState extends State<LookLocation> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: appBar.noActionBar(context),
-      bottomNavigationBar: BottomNavigation(selectedBottomNavigationBarIndex: 1,),
+      appBar: appBar.noSearchBar(context),
+      bottomNavigationBar: BottomNavigation(
+        selectedBottomNavigationBarIndex: 1,
+      ),
       body: KakaoMapView(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,

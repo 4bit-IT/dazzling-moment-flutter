@@ -7,7 +7,7 @@ class EventInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DamoAppBar().noActionBar(context),
+      appBar: DamoAppBar().noSearchBar(context),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(

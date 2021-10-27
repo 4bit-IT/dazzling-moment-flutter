@@ -13,16 +13,16 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.red[200],
+        backgroundColor: Colors.white,
         iconTheme: IconThemeData(
           color: Colors.black54,
         ),
-        automaticallyImplyLeading: true, //뒤로 가기 제공
-
         title: CupertinoSearchTextField(
-          padding: const EdgeInsetsDirectional.fromSTEB(8.0, 10.0, 0.0, 10.0),
-          placeholder: '검색어를 입력하세요.',
-          placeholderStyle: TextStyle(color: Colors.black87),
+          placeholder: '원하시는 선물을 검색하세요.',
+          placeholderStyle: TextStyle(
+            color: Color(0xffd1d1d6),
+            fontFamily: 'NotoSansCJKKR',
+          ),
           onChanged: (String value) {
             print('The text has changed to: $value');
           },

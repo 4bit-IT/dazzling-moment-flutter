@@ -24,7 +24,7 @@ class _SellerFAQModifyState extends State<SellerFAQModify> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DamoAppBar().noActionBar(context),
+      appBar: DamoAppBar().noSearchBar(context),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
