@@ -12,12 +12,12 @@ void main() async {
   KakaoContext.clientId = '051ba7adea57eb74c808616d4969e482';
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseAppCheck.instance.activate(webRecaptchaSiteKey: 'recaptcha-v3-site-key');
+  await FirebaseAppCheck.instance
+      .activate(webRecaptchaSiteKey: 'recaptcha-v3-site-key');
   runApp(Damo());
 }
 
 class Damo extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(

@@ -4,8 +4,11 @@ import 'package:damo/viewmodel/bar/scroll_behavior.dart';
 import 'package:damo/view/sign/sign.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/route_manager.dart';
 import 'package:page_transition/page_transition.dart';
 
 class DrawerButton extends StatefulWidget {
@@ -23,6 +26,11 @@ class _DrawerButtonState extends State<DrawerButton> {
                   borderRadius: BorderRadius.circular(12.0)), //테두리 둥글기
               title: Text(
                 "로그아웃 하시겠습니까?",
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  color: Color(0xff283137),
+                  fontFamily: 'NotoSansCJKKR',
+                ),
               ),
               actions: [
                 TextButton(
@@ -65,99 +73,188 @@ class _DrawerButtonState extends State<DrawerButton> {
       behavior: NoGlowScrollBehavior(),
       child: Drawer(
         child: ListView(
-          padding: EdgeInsets.zero,
+          padding: EdgeInsets.fromLTRB(16.w, 65.h, 16.w, 0),
           children: [
-            UserAccountsDrawerHeader(
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: AssetImage('assets/images/DAMO_logo-01.png'),
-                backgroundColor: Colors.redAccent,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: Image.asset('assets/images/img_profile@3x.png'),
+                  height: 55,
+                ),
+                SizedBox(
+                  width: 113.w,
+                ),
+                InkWell(
+                    onTap: () {},
+                    child:
+                        SvgPicture.asset('assets/images_svg/ic_my_edit.svg')),
+              ],
+            ),
+            SizedBox(height: 16.h),
+            Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: '어서오세요.\n',
+                    style: TextStyle(
+                      color: Color(0xff283137),
+                      fontSize: 16,
+                      fontFamily: 'NotoSansCJKKR',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  TextSpan(
+                    text: '김다모',
+                    style: TextStyle(
+                      color: Color(0xff283137),
+                      fontSize: 16,
+                      fontFamily: 'NotoSansCJKKR',
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  TextSpan(
+                    text: '님',
+                    style: TextStyle(
+                      color: Color(0xff283137),
+                      fontSize: 16,
+                      fontFamily: 'NotoSansCJKKR',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ],
               ),
-              accountName: Text('윤중건'),
-              accountEmail: Text('zhaqh056@naver.com'),
+              style: TextStyle(
+                color: Color(0xff283137),
+                fontSize: 16,
+                fontFamily: 'NotoSansCJKKR',
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            SizedBox(
+              height: 8.h,
+            ),
+            Text(
+              '4bitdamo@naver.com',
+              style: TextStyle(
+                color: Color(0xff283137),
+                fontSize: 12,
+                fontFamily: 'NotoSansCJKKR',
+              ),
+            ),
+            SizedBox(height: 31.h),
+            Container(
+              height: 1.h,
               decoration: BoxDecoration(
-                color: Colors.red[200],
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(40.0),
-                  bottomRight: Radius.circular(40.0),
+                color: Color(0xfff1f3f5),
+              ),
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            InkWell(
+              child: Row(
+                children: [
+                  SvgPicture.asset('assets/images_svg/ic_my_notice.svg',
+                      width: 30.w, height: 30.h),
+                  SizedBox(
+                    width: 16.w,
+                  ),
+                  Text(
+                    '공지사항',
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Color(0xff283137),
+                      fontFamily: 'NotoSansCJKKR',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 14.h,
+            ),
+            Container(
+              height: 1.h,
+              decoration: BoxDecoration(
+                color: Color(0xfff1f3f5),
+              ),
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            InkWell(
+              child: Row(
+                children: [
+                  SvgPicture.asset('assets/images_svg/ic_my_event.svg',
+                      width: 30.w, height: 30.h),
+                  SizedBox(
+                    width: 16.w,
+                  ),
+                  Text(
+                    '이벤트',
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Color(0xff283137),
+                      fontFamily: 'NotoSansCJKKR',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 14.h,
+            ),
+            Container(
+              height: 1.h,
+              decoration: BoxDecoration(
+                color: Color(0xfff1f3f5),
+              ),
+            ),
+            SizedBox(
+              height: 15.h,
+            ),
+            InkWell(
+              child: Row(
+                children: [
+                  SvgPicture.asset('assets/images_svg/ic_my_setting.svg',
+                      width: 30.w, height: 30.h),
+                  SizedBox(
+                    width: 16.w,
+                  ),
+                  Text(
+                    '앱 알림 및 설정',
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Color(0xff283137),
+                      fontFamily: 'NotoSansCJKKR',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 14.h,
+            ),
+            Container(
+              height: 1.h,
+              decoration: BoxDecoration(
+                color: Color(0xfff1f3f5),
+              ),
+            ),
+            SizedBox(
+              height: 23.h,
+            ),
+            InkWell(
+              child: Text(
+                '로그아웃 ',
+                style: TextStyle(
+                  color: Color(0xff8e97a0),
+                  fontFamily: 'NotoSansCJKKR',
                 ),
               ),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.library_books_outlined,
-                color: Colors.grey[850],
-              ),
-              title: Text('공지사항'),
-              onTap: () {
-                print('Home is clicked');
-              },
-              // trailing: Icon(Icons.add),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.event,
-                color: Colors.grey[850],
-              ),
-              title: Text('이벤트'),
-              onTap: () {
-                print('Event is clicked');
-              },
-              // trailing: Icon(Icons.add),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
-              child: Divider(
-                height: 10.0,
-              ),
-            ),
-            ListTile(
-              leading: Icon(
-                CupertinoIcons.exclamationmark_circle,
-                color: Colors.grey[850],
-              ),
-              title: Text('버전정보'),
-              onTap: () {
-                print('Version is clicked');
-              },
-              // trailing: Icon(Icons.add),
-            ),
-            ListTile(
-              leading: Icon(
-                CupertinoIcons.doc_plaintext,
-                color: Colors.grey[850],
-              ),
-              title: Text('이용약관'),
-              onTap: () {
-                print('Terms of service is clicked');
-              },
-              // trailing: Icon(Icons.add),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
-              child: Divider(
-                height: 10.0,
-              ),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.settings,
-                color: Colors.grey[850],
-              ),
-              title: Text('환경설정'),
-              onTap: () {
-                print('Settings is clicked');
-              },
-              // trailing: Icon(Icons.add),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.logout_outlined,
-                color: Colors.grey[850],
-              ),
-              title: Text('로그아웃'),
-              onTap: () {
-                onLogout();
-              },
+              onTap: onLogout,
             ),
           ],
         ),

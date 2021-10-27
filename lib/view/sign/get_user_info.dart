@@ -76,7 +76,6 @@ class GetUserInfo extends StatelessWidget {
       _verificationId = verificationId;
     };
 
-
     try {
       await auth.verifyPhoneNumber(
           phoneNumber: phoneNumber,
@@ -93,8 +92,8 @@ class GetUserInfo extends StatelessWidget {
   void signInWithPhoneNumber() async {
     try {
       final AuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: _verificationId!,
-      smsCode: smsAuthNumberController.text,
+        verificationId: _verificationId!,
+        smsCode: smsAuthNumberController.text,
       );
 
       final User? user = (await auth.signInWithCredential(credential)).user;
@@ -227,8 +226,8 @@ class GetUserInfo extends StatelessWidget {
                       child: TextFormField(
                         onChanged: (text) {
                           print(text);
-                          print(RegExp(r'^([0-9]{6})$').hasMatch(
-                              smsAuthNumberController.value.text));
+                          print(RegExp(r'^([0-9]{6})$')
+                              .hasMatch(smsAuthNumberController.value.text));
                           if (RegExp(r'^([0-9]{6})$').hasMatch(
                                   smsAuthNumberController.value.text) ==
                               false) {
@@ -269,9 +268,9 @@ class GetUserInfo extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: (){
-              signInWithPhoneNumber();
-            },
+              onTap: () {
+                signInWithPhoneNumber();
+              },
               child: smsConfirmButton),
         ],
       ),

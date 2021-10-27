@@ -9,7 +9,8 @@ import 'package:transition/transition.dart';
 
 // ignore: must_be_immutable
 class BottomNavigation extends StatefulWidget {
-  BottomNavigation({this.selectedBottomNavigationBarIndex, this.scrollController});
+  BottomNavigation(
+      {this.selectedBottomNavigationBarIndex, this.scrollController});
 
   ScrollController? scrollController;
   int? selectedBottomNavigationBarIndex;
@@ -40,8 +41,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             curve: Curves.fastLinearToSlowEaseIn);
       });
       print(widget.selectedBottomNavigationBarIndex);
-    } else if (widget.selectedBottomNavigationBarIndex !=
-        index) {
+    } else if (widget.selectedBottomNavigationBarIndex != index) {
       setState(() {
         if (widget.selectedBottomNavigationBarIndex == 0) {
           icHome = SvgPicture.asset('assets/images_svg/ic_홈_off.svg');
@@ -68,8 +68,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
         Navigator.pushReplacement(
             context,
             Transition(
-                child:
-                    bottomNavigationBarPages[widget.selectedBottomNavigationBarIndex!],
+                child: bottomNavigationBarPages[
+                    widget.selectedBottomNavigationBarIndex!],
                 transitionEffect: TransitionEffect.FADE));
       });
     }
@@ -79,6 +79,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       backgroundColor: Colors.white,
+      selectedItemColor: Color(0xff283137),
+      selectedLabelStyle: TextStyle(
+        fontSize: 12,
+        fontFamily: 'NotoSansCJKKR',
+        fontWeight: FontWeight.w700,
+      ),
       type: BottomNavigationBarType.fixed,
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(

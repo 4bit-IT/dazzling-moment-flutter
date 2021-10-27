@@ -1,3 +1,4 @@
+import 'package:damo/model/token.dart';
 import 'package:damo/view/main/home_main.dart';
 import 'package:damo/view/sign/get_user_info.dart';
 import 'package:damo/view/sign/sign.dart';
@@ -98,14 +99,9 @@ class Kakao {
       String authCode = await AuthCodeClient.instance.request(); //웹으로 열기
       // String authCode = await AuthCodeClient.instance.requestWithTalk() // Kakao app 으로 열기
 
-      token =
-          await AuthApi.instance.issueAccessToken(authCode);
+      token = await AuthApi.instance.issueAccessToken(authCode);
       TokenManager.instance.setToken(token!);
       User user = await UserApi.instance.me();
-      Get.to(()=>HomeMain());
-
-      //Network(url, token, user).getKakaoData();
-
       String url =
           'http://ec2-13-209-10-201.ap-northeast-2.compute.amazonaws.com:8080/api/oauth/kakao/login';
       Map data = {
@@ -119,33 +115,29 @@ class Kakao {
         headers: {"Content-Type": "application/json"},
         body: body,
       );
-
       if (response.statusCode == 200) {
-
         String jsonData = utf8.decode(response.bodyBytes);
         var parsingData = jsonDecode(jsonData);
-
         int stateCode = parsingData['code'];
-        String accessToken = parsingData.toJson()['data'][0].toString();
-        bool isFirst = parsingData.toJson()['data'][1];
-        String refreshToken = parsingData.toJson()['data'][2].toString();
+        String accessToken = parsingData['data'][0].toString();
+        String isFirst = parsingData['data'][1].toString();
+        String refreshToken = parsingData['data'][2].toString();
         String description = parsingData['description'].toString();
-        bool result = parsingData['result'];
-
-        print(description);
-
+        print(parsingData);
         if (stateCode == 1) {
-          if (accessToken == '' || refreshToken == '' || isFirst == true) {
+          if (accessToken == 'null' ||
+              refreshToken == 'null' ||
+              isFirst == 'true') {
+            print('첫 로그인 입니다.');
             //첫 로그인이니까 닉네임 전화번호 받고 진행
-            Get.offAll(()=>GetUserInfo());
-
+            Get.to(() => GetUserInfo());
           }
-          Get.offAll(() => HomeMain());
-        } else if (stateCode == 2) {
+        } else if (stateCode == 2 || stateCode == 3) {
+          print('실패 || 토큰 만료');
           //2=실패,3=토큰만료
           Get.offAll(() => Sign());
         }
-      } else {}
+      }
     } on KakaoAuthException {
       print("동의 취소");
     } on KakaoClientException {
@@ -156,7 +148,6 @@ class Kakao {
   }
 
   void kakaoLogout() async {
-
     await UserApi.instance.logout();
     await TokenManager.instance.clear();
   }

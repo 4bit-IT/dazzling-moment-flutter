@@ -1,3 +1,4 @@
+import 'package:damo/model/token.dart';
 import 'package:damo/view/sign/get_user_info.dart';
 import 'package:damo/view/sign/get_user_name.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
@@ -16,6 +17,14 @@ class Sign extends StatefulWidget {
 }
 
 class _SignState extends State<Sign> {
+  @override
+  void initState() {
+    print(TokenCheck
+        .accessToken); // Run 기록으로 accessToken 과  refreshToken의 값을 확인할 수 있음.
+    print(TokenCheck.refreshToken);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -190,7 +199,7 @@ class _SignState extends State<Sign> {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
-                          Get.to(()=>GetUserNickname());
+                          Get.to(() => GetUserNickname());
                         },
                         color: Colors.grey[400],
                         elevation: 0,
