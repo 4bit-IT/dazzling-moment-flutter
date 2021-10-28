@@ -1,4 +1,5 @@
 import 'package:damo/view/mypage/setting.dart';
+import 'package:damo/view/notification/notice_admin.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/viewmodel/bar/back_button_clicked.dart';
 import 'package:damo/viewmodel/bar/bottom_navigaton.dart';
@@ -195,7 +196,9 @@ class _MyPageState extends State<MyPage> {
                         child: CupertinoButton(
                           minSize: 0,
                           padding: EdgeInsets.zero,
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(() => NotificationAdmin());
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

@@ -50,7 +50,7 @@ class _SearchPageState extends State<SearchPage> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(
-                        color: Colors.transparent,
+                        color: Color(0xffd1d1d6),
                         width: 2.0,
                       ),
                     ),

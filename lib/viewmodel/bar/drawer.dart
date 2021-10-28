@@ -1,6 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:damo/model/kakao.dart';
 import 'package:damo/view/mypage/setting.dart';
+import 'package:damo/view/notification/notice_admin.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
 import 'package:damo/view/sign/sign.dart';
 import 'package:flutter/cupertino.dart';
@@ -155,7 +155,9 @@ class _DrawerButtonState extends State<DrawerButton> {
               height: 15.h,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.to(() => NotificationAdmin());
+              },
               child: Row(
                 children: [
                   SvgPicture.asset('assets/images_svg/ic_my_notice.svg',
