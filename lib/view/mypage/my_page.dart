@@ -1,21 +1,16 @@
-import 'package:damo/view/mypage/chat_list.dart';
+import 'package:damo/view/mypage/setting.dart';
+import 'package:damo/view/notification/notice_admin.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/viewmodel/bar/back_button_clicked.dart';
 import 'package:damo/viewmodel/bar/bottom_navigaton.dart';
 import 'package:damo/viewmodel/bar/drawer.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
-import 'package:damo/view/mypage/purchase_history.dart';
-import 'package:damo/view/mypage/wish_list_page.dart';
-import 'package:damo/view/seller/seller_main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:get/get.dart';
-
-import 'change_privacy.dart';
-import 'chat.dart';
-import 'event.dart';
-import 'notice.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 
 class MyPage extends StatefulWidget {
   MyPage({this.bottomNavigationIndex});
@@ -30,26 +25,6 @@ class _MyPageState extends State<MyPage> {
   DamoAppBar appBar = DamoAppBar();
   ScrollController scrollController = ScrollController();
 
-  onChangePrivacyClicked() {
-    Get.to(() => ChangePrivacy());
-  }
-
-  onWishListClicked() {
-    Get.to(() => WishListPage());
-  }
-
-  onPurchaseHistoryClicked() {
-    Get.to(() => PurchaseHistory());
-  }
-
-  onNoticeClicked() {
-    Get.to(() => Notice());
-  }
-
-  onSellerClicked() {
-    Get.to(() => SellerMain());
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -57,7 +32,7 @@ class _MyPageState extends State<MyPage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         drawer: DrawerButton(),
-        appBar: appBar.noActionBar(context),
+        appBar: appBar.noSearchBar(context),
         bottomNavigationBar: BottomNavigation(
           selectedBottomNavigationBarIndex: 3,
           scrollController: scrollController,
@@ -65,459 +40,332 @@ class _MyPageState extends State<MyPage> {
         body: ScrollConfiguration(
           behavior: NoGlowScrollBehavior(),
           child: SingleChildScrollView(
-            controller: scrollController,
             child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: Row(
+                  height: 1.h,
+                  decoration: BoxDecoration(
+                    color: Color(0xfff1f3f5),
+                  ),
+                ),
+                SizedBox(height: 25.h),
+                Row(
+                  children: [
+                    SizedBox(width: 150.w),
+                    SvgPicture.asset('assets/images_svg/img_여자기본프로필.svg'),
+                    SizedBox(width: 110.w),
+                    Column(
+                      children: [
+                        InkWell(
+                          child: SvgPicture.asset(
+                              'assets/images_svg/ic_my_edit.svg'),
+                          onTap: () {},
+                        ),
+                        SizedBox(height: 54.h),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 11.h),
+                Text(
+                  '김다모',
+                  style: TextStyle(
+                    color: Color(0xff283137),
+                    fontSize: 16,
+                    fontFamily: 'NotoSansCJKKR',
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(height: 5.h),
+                Text(
+                  '4bitdamo@naver.com',
+                  style: TextStyle(
+                    color: Color(0xff283137),
+                    fontFamily: 'NotoSansCJKKR',
+                  ),
+                ),
+                SizedBox(height: 21.h),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    CupertinoButton(
+                      padding: EdgeInsets.all(0),
+                      onPressed: () {},
+                      child: Container(
+                        height: 80.h,
+                        width: 150.w,
+                        margin: EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                        ),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xfff1f3f5),
+                            width: 1.5.w,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Column(
                           children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon:
-                                  Image.asset('assets/images/DAMO_logo-01.png'),
-                              iconSize: 100,
-                            ),
                             SizedBox(
-                              width: 10,
+                              height: 10.h,
                             ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '김다모',
-                                  style: GoogleFonts.lato(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text('4bitdamo@naver.com'),
-                              ],
+                            Text(
+                              '6',
+                              style: TextStyle(
+                                color: Color(0xfff93f5b),
+                                fontSize: 20,
+                                fontFamily: 'NotoSansCJKKR',
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            SizedBox(height: 5.h),
+                            Text(
+                              '구매내역',
+                              style: TextStyle(
+                                color: Color(0xff283137),
+                                fontFamily: 'NotoSansCJKKR',
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      Container(
+                    ),
+                    CupertinoButton(
+                      padding: EdgeInsets.all(0),
+                      onPressed: () {},
+                      child: Container(
+                        height: 80.h,
+                        width: 150.w,
+                        margin: EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                        ),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            width: 1,
-                            color: Colors.black38,
+                            color: Color(0xfff1f3f5),
+                            width: 1.5.w,
                           ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5.0),
-                          ),
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                        child: SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: CupertinoButton(
-                            onPressed: () {
-                              onChangePrivacyClicked();
-                            },
-                            child: Text(
-                              '개인정보 변경',
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Text(
+                              '7',
                               style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
+                                color: Color(0xfff93f5b),
+                                fontSize: 20,
+                                fontFamily: 'NotoSansCJKKR',
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
+                            SizedBox(height: 5.h),
+                            Text(
+                              '찜 목록',
+                              style: TextStyle(
+                                color: Color(0xff283137),
+                                fontFamily: 'NotoSansCJKKR',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15.h),
+                Container(
+                  height: 1,
+                  margin: EdgeInsets.only(
+                    left: 16,
+                    right: 16,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Color(0xfff1f3f5),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 24, 0),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 60,
+                        child: CupertinoButton(
+                          minSize: 0,
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            Get.to(() => NotificationAdmin());
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                      'assets/images_svg/ic_my_notice.svg'),
+                                  SizedBox(width: 16.w),
+                                  Text(
+                                    '공지사항',
+                                    style: TextStyle(
+                                      color: Color(0xff283137),
+                                      fontFamily: 'NotoSansCJKKR',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SvgPicture.asset('assets/images_svg/ic_바로가기.svg',
+                                  width: 20.w, height: 20.h),
+                            ],
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 10,
+                      Container(
+                        height: 1,
+                        margin: EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color(0xfff1f3f5),
+                        ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          CupertinoButton(
-                            minSize: 0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {
-                              onWishListClicked();
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.red[100],
-                              ),
-                              child: Column(
+                      Container(
+                        height: 60,
+                        child: CupertinoButton(
+                          minSize: 0,
+                          padding: EdgeInsets.zero,
+                          onPressed: () {},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
                                 children: [
+                                  SvgPicture.asset(
+                                      'assets/images_svg/ic_my_event.svg'),
+                                  SizedBox(width: 16.w),
                                   Text(
-                                    '찜 목록',
-                                    style: GoogleFonts.lato(
-                                      fontSize: 16,
-                                      color: Colors.black,
+                                    '이벤트',
+                                    style: TextStyle(
+                                      color: Color(0xff283137),
+                                      fontFamily: 'NotoSansCJKKR',
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Icon(
-                                    Icons.favorite_outline,
-                                    color: Colors.black,
                                   ),
                                 ],
                               ),
-                            ),
+                              SvgPicture.asset('assets/images_svg/ic_바로가기.svg',
+                                  width: 20.w, height: 20.h),
+                            ],
                           ),
-                          CupertinoButton(
-                            minSize: 0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {},
-                            child: Container(
-                              padding: EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.red[100],
-                              ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    '장바구니',
-                                    style: GoogleFonts.lato(
-                                      fontSize: 16,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Icon(
-                                    CupertinoIcons.cart,
-                                    color: Colors.black,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          CupertinoButton(
-                            minSize: 0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {
-                              onPurchaseHistoryClicked();
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(15),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.red[100],
-                              ),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    '구매 내역',
-                                    style: GoogleFonts.lato(
-                                      fontSize: 16,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Icon(
-                                    Icons.shopping_bag_outlined,
-                                    color: Colors.black,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
+                      Container(
+                        height: 1,
+                        margin: EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color(0xfff1f3f5),
+                        ),
+                      ),
+                      Container(
+                        height: 60,
+                        child: CupertinoButton(
+                          minSize: 0,
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            Get.to(() => SettingApp());
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                      'assets/images_svg/ic_my_setting.svg'),
+                                  SizedBox(width: 16.w),
+                                  Text(
+                                    '앱 알림 및 설정',
+                                    style: TextStyle(
+                                      color: Color(0xff283137),
+                                      fontFamily: 'NotoSansCJKKR',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SvgPicture.asset('assets/images_svg/ic_바로가기.svg',
+                                  width: 20.w, height: 20.h),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 1,
+                        margin: EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color(0xfff1f3f5),
+                        ),
+                      ),
+                      Container(
+                        height: 60,
+                        child: CupertinoButton(
+                          minSize: 0,
+                          padding: EdgeInsets.zero,
+                          onPressed: () {},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                      'assets/images_svg/ic_my_Q&A.svg'),
+                                  SizedBox(width: 16.w),
+                                  Text(
+                                    '자주 묻는 질문',
+                                    style: TextStyle(
+                                      color: Color(0xff283137),
+                                      fontFamily: 'NotoSansCJKKR',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SvgPicture.asset('assets/images_svg/ic_바로가기.svg',
+                                  width: 20.w, height: 20.h),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 1,
+                        margin: EdgeInsets.only(
+                          left: 16,
+                          right: 16,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Color(0xfff1f3f5),
+                        ),
+                      ),
+                      SizedBox(height: 24.h),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          '판매자 신청하기',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Color(0xff8e97a0),
+                            fontFamily: 'NotoSansCJKKR',
+                          ),
+                        ),
+                      )
                     ],
                   ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Divider(
-                  color: Colors.black12,
-                  thickness: 8,
-                ),
-                SingleChildScrollView(
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 60,
-                          child: CupertinoButton(
-                            minSize: 0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {
-                              onNoticeClicked();
-                            },
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.library_books_outlined,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  '공지사항',
-                                  style: GoogleFonts.lato(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Divider(
-                          height: 1.0,
-                        ),
-                        Container(
-                          height: 60,
-                          child: CupertinoButton(
-                            minSize: 0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {
-                              Get.to(Event());
-                            },
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.event,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  '이벤트',
-                                  style: GoogleFonts.lato(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        /*Divider(
-                          height: 1.0,
-                        ),
-                        Container(
-                          height: 60,
-                          child: CupertinoButton(
-                            minSize: 0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {},
-                            child: Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.text_alignleft,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  '내가 쓴 글',
-                                  style: GoogleFonts.lato(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Divider(
-                          height: 1.0,
-                        ),
-                        Container(
-                          height: 60,
-                          child: CupertinoButton(
-                            minSize: 0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {},
-                            child: Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.chat_bubble_text,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  '내가 쓴 댓글',
-                                  style: GoogleFonts.lato(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),*/
-                        Container(
-                          height: 60,
-                          child: CupertinoButton(
-                            minSize: 0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {
-                              Get.to(() => Chat());
-                            },
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.chat,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  '쪽지보기',
-                                  style: GoogleFonts.lato(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Divider(
-                          height: 1.0,
-                        ),
-                        Container(
-                          height: 60,
-                          child: CupertinoButton(
-                            minSize: 0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {},
-                            child: Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.doc_plaintext,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  '이용약관',
-                                  style: GoogleFonts.lato(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Divider(
-                          height: 1.0,
-                        ),
-                        Container(
-                          height: 60,
-                          child: CupertinoButton(
-                            minSize: 0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {},
-                            child: Row(
-                              children: [
-                                Icon(
-                                  CupertinoIcons.exclamationmark_circle,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  '버전정보',
-                                  style: GoogleFonts.lato(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Divider(
-                          height: 1.0,
-                        ),
-                        Container(
-                          height: 60,
-                          child: CupertinoButton(
-                            minSize: 0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {},
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.settings,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  '환경설정',
-                                  style: GoogleFonts.lato(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Divider(
-                          height: 1.0,
-                        ),
-                        Container(
-                          height: 60,
-                          child: CupertinoButton(
-                            minSize: 0,
-                            padding: EdgeInsets.zero,
-                            onPressed: () {
-                              if (true) {
-                                //판매자이면
-                                onSellerClicked();
-                              }
-                            },
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.dashboard_outlined,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  '판매자 페이지로 가기',
-                                  style: GoogleFonts.lato(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                )
               ],
             ),
           ),

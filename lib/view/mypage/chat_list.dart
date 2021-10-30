@@ -14,7 +14,7 @@ class _ChatListState extends State<ChatList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DamoAppBar().noActionBar(context),
+      appBar: DamoAppBar().noSearchBar(context),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Container(
@@ -47,14 +47,12 @@ class _ChatListState extends State<ChatList> {
   }
 
   Future<dynamic> getChatList() async {
-
     var dir = await getExternalStorageDirectory();
     String dirPath = dir!.path.toString() + 'chat/'; //채팅 디렉토리
     File file = File(dirPath);
-    if(await File(dir.path.toString()).exists()){
+    if (await File(dir.path.toString()).exists()) {
       print('1');
-    }
-    else{
+    } else {
       file.create(recursive: true);
       print('0');
     }

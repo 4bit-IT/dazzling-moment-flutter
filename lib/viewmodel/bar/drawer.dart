@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
-import 'package:damo/model/kakao.dart';
+import 'package:damo/view/mypage/setting.dart';
+import 'package:damo/view/notification/notice_admin.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
 import 'package:damo/view/sign/sign.dart';
 import 'package:flutter/cupertino.dart';
@@ -154,6 +155,9 @@ class _DrawerButtonState extends State<DrawerButton> {
               height: 15.h,
             ),
             InkWell(
+              onTap: () {
+                Get.to(() => NotificationAdmin());
+              },
               child: Row(
                 children: [
                   SvgPicture.asset('assets/images_svg/ic_my_notice.svg',
@@ -185,6 +189,7 @@ class _DrawerButtonState extends State<DrawerButton> {
               height: 15.h,
             ),
             InkWell(
+              onTap: () {},
               child: Row(
                 children: [
                   SvgPicture.asset('assets/images_svg/ic_my_event.svg',
@@ -216,6 +221,9 @@ class _DrawerButtonState extends State<DrawerButton> {
               height: 15.h,
             ),
             InkWell(
+              onTap: () {
+                Get.to(() => SettingApp());
+              },
               child: Row(
                 children: [
                   SvgPicture.asset('assets/images_svg/ic_my_setting.svg',
@@ -252,6 +260,7 @@ class _DrawerButtonState extends State<DrawerButton> {
                 style: TextStyle(
                   color: Color(0xff8e97a0),
                   fontFamily: 'NotoSansCJKKR',
+                  decoration: TextDecoration.underline,
                 ),
               ),
               onTap: onLogout,

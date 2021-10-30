@@ -17,8 +17,10 @@ class _LookCommunityState extends State<LookCommunity> {
       onWillPop: BackButtonClicked().onWillPop,
       child: Scaffold(
         drawer: DrawerButton(),
-        appBar: appBar.noActionBar(context),
-        bottomNavigationBar: BottomNavigation(selectedBottomNavigationBarIndex: 2,),
+        appBar: appBar.noSearchBar(context),
+        bottomNavigationBar: BottomNavigation(
+          selectedBottomNavigationBarIndex: 2,
+        ),
       ),
     );
   }

@@ -12,15 +12,13 @@ class smsAuth extends StatefulWidget {
 }
 
 class _smsAuthState extends State<smsAuth> {
-  TextEditingController controller= TextEditingController();
+  TextEditingController controller = TextEditingController();
   TextEditingController controller2 = TextEditingController();
   final SmsAutoFill _autoFill = SmsAutoFill();
   String? _verificationId;
   FirebaseAuth auth = FirebaseAuth.instance;
 
-
   void verifyPhoneNumber() async {
-
     print(controller.value.text);
 
     //사용자가 이전에 인증했는지 확인하고, 다른 SMS 인증 코드를 제출하지 않고 Firebase에 로그인 할 수 있는지 확인
@@ -33,11 +31,13 @@ class _smsAuthState extends State<smsAuth> {
     //오류 수신
     PhoneVerificationFailed verificationFailed =
         (FirebaseAuthException authException) {
-      print('전화 번호 인증 실패. Code: ${authException.code}. Message: ${authException.message}');
+      print(
+          '전화 번호 인증 실패. Code: ${authException.code}. Message: ${authException.message}');
     };
 
     //SMS를 보낼 때 Firebase에서 생성 한 확인 ID를 저장. 이 값은 나중에 사용자가 로그인 할 때 필요.
-    void Function(String verificationId, int? forceResendingToken) codeSent = (String verificationId, int? forceResendingToken) async {
+    void Function(String verificationId, int? forceResendingToken) codeSent =
+        (String verificationId, int? forceResendingToken) async {
       print('Please check your phone for the verification code.');
       _verificationId = verificationId;
     };
@@ -60,7 +60,6 @@ class _smsAuthState extends State<smsAuth> {
     } catch (e) {
       print("Failed to Verify Phone Number: $e");
     }
-
   }
 
   void signInWithPhoneNumber() async {
@@ -73,25 +72,24 @@ class _smsAuthState extends State<smsAuth> {
       final User? user = (await auth.signInWithCredential(credential)).user;
 
       print("Successfully signed in UID: ${user!.uid}");
-      Get.to(()=>HomeMain());
+      Get.to(() => HomeMain());
     } catch (e) {
       print("Failed to sign in: " + e.toString());
       Get.snackbar('실패', '실패');
     }
-
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DamoAppBar().noActionBar(context),
+      appBar: DamoAppBar().noSearchBar(context),
       body: SingleChildScrollView(
         child: Column(
           children: [
             TextFormField(
               controller: controller,
-              decoration: const InputDecoration(labelText: 'Phone number (+xx xxx-xxx-xxxx)'),
+              decoration: const InputDecoration(
+                  labelText: 'Phone number (+xx xxx-xxx-xxxx)'),
             ),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -102,7 +100,7 @@ class _smsAuthState extends State<smsAuth> {
                 onPressed: () async {
                   try {
                     controller.text = (await _autoFill.hint)!;
-                  } catch(e){
+                  } catch (e) {
                     print(e);
                   }
                 },
