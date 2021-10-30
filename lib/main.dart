@@ -23,12 +23,6 @@ class Damo extends StatelessWidget {
     return ScreenUtilInit(
       designSize: Size(375, 812),
       builder: () => GetMaterialApp(
-        builder: (context, child) {
-          return MediaQuery(
-            child: child!,
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-          );
-        },
         debugShowCheckedModeBanner: false,
         home: AnimatedSplashScreen(
           duration: 1500,
