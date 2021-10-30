@@ -1,5 +1,6 @@
 import 'package:damo/view/mypage/setting.dart';
 import 'package:damo/view/notification/notice_admin.dart';
+import 'package:damo/view/seller/seller_main.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/viewmodel/bar/back_button_clicked.dart';
 import 'package:damo/viewmodel/bar/bottom_navigaton.dart';
@@ -353,7 +354,9 @@ class _MyPageState extends State<MyPage> {
                       ),
                       SizedBox(height: 24.h),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(()=>SellerMain());
+                        },
                         child: Text(
                           '판매자 신청하기',
                           style: TextStyle(
