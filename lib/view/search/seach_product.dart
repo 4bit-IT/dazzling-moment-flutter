@@ -39,8 +39,6 @@ class _SearchPageState extends State<SearchPage> {
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                     counterText: '',
-                    fillColor: Colors.red,
-                    focusColor: Color(0xff283137),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(
@@ -50,7 +48,7 @@ class _SearchPageState extends State<SearchPage> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0),
                       borderSide: BorderSide(
-                        color: Color(0xffd1d1d6),
+                        color: Colors.grey.shade200,
                         width: 2.0,
                       ),
                     ),
