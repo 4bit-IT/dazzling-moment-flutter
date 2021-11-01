@@ -1,28 +1,18 @@
-import 'package:damo/view/main/home_main.dart';
+import 'package:damo/app/controller/sign_controller.dart';
 import 'package:damo/view/sign/get_user_name.dart';
-import 'package:damo/view/sign/sms_auth.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class GetUserInfo extends StatelessWidget {
-  TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController smsAuthNumberController = TextEditingController();
+  final SignController getController = Get.put(SignController());
   String? _verificationId;
   FirebaseAuth auth = FirebaseAuth.instance;
-
-  Widget smsAuthButton = SvgPicture.asset(
-    'assets/images_svg/btn_인증번호받기_off.svg',
-  );
-  Widget smsConfirmButton = SvgPicture.asset(
-    'assets/images_svg/btn_인증문자확인_off.svg',
-    width: 375.w,
-  );
 
   List<Widget> authNumber = [
     Text(
@@ -37,14 +27,11 @@ class GetUserInfo extends StatelessWidget {
   ];
 
   void verifyPhoneNumber() async {
-    smsAuthButton = SvgPicture.asset('assets/images_svg/btn_인증번호받기_off.svg');
     String phoneNumber = '+82' +
-        phoneNumberController.value.text.split('-')[0][1] +
-        phoneNumberController.value.text.split('-')[0][2] +
-        phoneNumberController.value.text.split('-')[1] +
-        phoneNumberController.value.text.split('-')[2];
-
-    print(phoneNumber);
+        getController.phoneNumberController.value.text.split('-')[0][1] +
+        getController.phoneNumberController.value.text.split('-')[0][2] +
+        getController.phoneNumberController.value.text.split('-')[1] +
+        getController.phoneNumberController.value.text.split('-')[2];
 
     //auth.setSettings(appVerificationDisabledForTesting: true);
 
@@ -84,6 +71,9 @@ class GetUserInfo extends StatelessWidget {
           verificationFailed: verificationFailed,
           codeSent: codeSent,
           codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
+
+      getController.offGetAuthNumberButton();
+      getController.changeReadOnly();
     } catch (e) {
       print("Failed to Verify Phone Number: $e");
     }
@@ -93,7 +83,7 @@ class GetUserInfo extends StatelessWidget {
     try {
       final AuthCredential credential = PhoneAuthProvider.credential(
         verificationId: _verificationId!,
-        smsCode: smsAuthNumberController.text,
+        smsCode: getController.smsAuthNumberController.text,
       );
 
       final User? user = (await auth.signInWithCredential(credential)).user;
@@ -124,8 +114,9 @@ class GetUserInfo extends StatelessWidget {
                     style: TextStyle(
                       color: Color(0xff283137),
                       fontFamily: 'NotoSansCJKKR',
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w500,
+                      height: 1
                     ),
                   ),
                   SizedBox(
@@ -133,41 +124,36 @@ class GetUserInfo extends StatelessWidget {
                   ),
                   Container(
                     height: 52.h,
+                    width: 343.w,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
                         color: Color(0xffd1d1d6),
-                        width: 1,
+                        width: 1.w,
                       ),
-                      borderRadius: BorderRadius.circular(6),
+                      borderRadius: BorderRadius.circular(10.r),
                     ),
                     child: Row(
                       children: [
-                        Flexible(
+                        Expanded(
                           child: Container(
-                            padding: EdgeInsets.fromLTRB(16.w, 0, 0, 0),
                             child: TextFormField(
                               onChanged: (text) {
                                 print(text);
                                 print(RegExp(
                                         r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
                                     .hasMatch(
-                                        phoneNumberController.value.text));
+                                    getController.phoneNumberController.value.text));
                                 if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
                                         .hasMatch(
-                                            phoneNumberController.value.text) ==
+                                    getController.phoneNumberController.value.text) ==
                                     false) {
-                                  smsAuthButton = SvgPicture.asset(
-                                    'assets/images_svg/btn_인증번호받기_off.svg',
-                                  );
+                                  getController.offGetAuthNumberButton();
                                 } else {
-                                  smsAuthButton = SvgPicture.asset(
-                                    'assets/images_svg/btn_인증번호받기_on.svg',
-                                  );
+                                  getController.onGetAuthNumberButton();
                                 }
                               },
-                              controller: phoneNumberController,
-                              textAlign: TextAlign.start,
+                              controller: getController.phoneNumberController,
                               keyboardType: TextInputType.phone,
                               inputFormatters: [
                                 MaskTextInputFormatter(
@@ -176,29 +162,30 @@ class GetUserInfo extends StatelessWidget {
                               ],
                               decoration: InputDecoration(
                                 border: InputBorder.none,
-                                focusColor: Colors.black,
-                                hintText: '휴대폰 번호를 입력해주세요( - 없이 입력)',
+                                hintText: '  휴대폰 번호를 입력해주세요',
                                 hintStyle: TextStyle(
-                                    color: Color(0xffd1d1d6),
-                                    fontFamily: 'NotoSansCJKKR',
-                                    fontSize: 14),
+                                  color: Color(0xffd1d1d6),
+                                  fontFamily: 'NotoSansCJKKR',
+                                  fontSize: 14.sp,
+                                  height: 1,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                        Container(
-                          child: InkWell(
+                        GetBuilder<SignController>(builder: (_) {
+                          return InkWell(
                             onTap: () {
                               if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
                                       .hasMatch(
-                                          phoneNumberController.value.text) ==
+                                  getController.phoneNumberController.value.text) ==
                                   true) {
                                 verifyPhoneNumber();
                               }
                             },
-                            child: smsAuthButton,
-                          ),
-                        ),
+                            child: getController.getAuthNumberButton,
+                          );
+                        }),
                       ],
                     ),
                   ),
@@ -219,47 +206,38 @@ class GetUserInfo extends StatelessWidget {
                         color: Color(0xffd1d1d6),
                         width: 1,
                       ),
-                      borderRadius: BorderRadius.circular(6),
+                      borderRadius: BorderRadius.circular(10.r),
                     ),
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(16.w, 0, 0, 0),
-                      child: TextFormField(
-                        onChanged: (text) {
-                          print(text);
-                          print(RegExp(r'^([0-9]{6})$')
-                              .hasMatch(smsAuthNumberController.value.text));
-                          if (RegExp(r'^([0-9]{6})$').hasMatch(
-                                  smsAuthNumberController.value.text) ==
-                              false) {
-                            smsConfirmButton = SvgPicture.asset(
-                              'assets/images_svg/btn_인증문자확인_off.svg',
-                              width: 375.w,
-                            );
-                          } else {
-                            smsConfirmButton = SvgPicture.asset(
-                              'assets/images_svg/btn_인증문자확인_on.svg',
-                              width: 375.w,
-                            );
-                          }
-                        },
-                        controller: smsAuthNumberController,
-                        textAlign: TextAlign.start,
-                        keyboardType: TextInputType.phone,
-                        inputFormatters: [
-                          MaskTextInputFormatter(
-                            mask: '######',
-                            filter: {'#': RegExp(r'^[0-9]')},
-                          ),
-                        ],
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          focusColor: Colors.black,
-                          hintText: '인증번호를 입력해주세요',
-                          hintStyle: TextStyle(
-                              color: Color(0xffd1d1d6),
-                              fontFamily: 'NotoSansCJKKR',
-                              fontSize: 14),
-                        ),
+                      child: GetBuilder<SignController>(
+                        builder: ((_) {
+                          return TextFormField(
+                            readOnly: getController.readOnly,
+                            onChanged: (text) {
+                              getController.conditionAuthNumber(text);
+                            },
+                            controller: getController.smsAuthNumberController,
+                            textAlign: TextAlign.start,
+                            keyboardType: TextInputType.phone,
+                            inputFormatters: [
+                              MaskTextInputFormatter(
+                                mask: '######',
+                                filter: {'#': RegExp(r'^[0-9]')},
+                              ),
+                            ],
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              focusColor: Colors.black,
+                              hintText: '  인증번호를 입력해주세요',
+                              hintStyle: TextStyle(
+                                color: Color(0xffd1d1d6),
+                                fontFamily: 'NotoSansCJKKR',
+                                fontSize: 14.sp,
+                                height: 1,
+                              ),
+                            ),
+                          );
+                        }),
                       ),
                     ),
                   ),
@@ -267,11 +245,13 @@ class GetUserInfo extends StatelessWidget {
               ),
             ),
           ),
-          InkWell(
-              onTap: () {
-                signInWithPhoneNumber();
-              },
-              child: smsConfirmButton),
+          GetBuilder<SignController>(builder: (_) {
+            return InkWell(
+                onTap: () {
+                  signInWithPhoneNumber();
+                },
+                child: getController.confirmAuthNumberButton);
+          }),
         ],
       ),
     );

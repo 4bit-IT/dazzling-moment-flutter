@@ -10,7 +10,10 @@ class GetUserNickname extends StatelessWidget {
   List<Widget> radioList = [];
   List<Widget> radioImage = [];
   List<String> radioText = [];
-  Widget confirmButton = SvgPicture.asset('assets/images_svg/btn_확인_off.svg',width: 375.w,);
+  Widget confirmButton = SvgPicture.asset(
+    'assets/images_svg/btn_확인_off.svg',
+    width: 375.w,
+  );
 
   @override
   Widget build(BuildContext context) {
