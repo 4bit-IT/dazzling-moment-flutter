@@ -1,5 +1,7 @@
 import 'package:damo/view/mypage/edit_my_info.dart';
+import 'package:damo/view/mypage/purchase_history.dart';
 import 'package:damo/view/mypage/setting.dart';
+import 'package:damo/view/mypage/wish_list_page.dart';
 import 'package:damo/view/notification/notice_admin.dart';
 import 'package:damo/view/seller/seller_main.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
@@ -103,7 +105,9 @@ class _MyPageState extends State<MyPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Get.to(()=>WishListPage());
+                          },
                           child: Container(
                             height: 79.h,
                             width: 164.w,
@@ -143,7 +147,9 @@ class _MyPageState extends State<MyPage> {
                           ),
                         ),
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Get.to(()=>PurchaseHistory());
+                          },
                           child: Container(
                             height: 79.h,
                             width: 163.w,

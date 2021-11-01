@@ -12,10 +12,10 @@ class EditMyInfo extends StatelessWidget {
     return Scaffold(
       appBar: DamoAppBar().textAppBar(context, '내 정보 수정'),
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Expanded(
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
               child: Column(
                 children: [
                   Container(
@@ -133,7 +133,7 @@ class EditMyInfo extends StatelessWidget {
                                           hintStyle: TextStyle(
                                             color: Color(0xffd1d1d6),
                                             fontFamily: 'NotoSansCJKKR',
-                                            fontSize: 14.sp,
+                                            fontSize: 14.h,
                                             height: 1,
                                           ),
                                         ),
@@ -168,7 +168,7 @@ class EditMyInfo extends StatelessWidget {
                                 style: TextStyle(
                                   color: Color(0xff283137),
                                   fontFamily: 'NotoSansCJKKR',
-                                  fontSize: 14.sp,
+                                  fontSize: 14.h,
                                   height: 1,
                                 ),
                               ),
@@ -197,7 +197,7 @@ class EditMyInfo extends StatelessWidget {
                                 style: TextStyle(
                                   color: Color(0xff283137),
                                   fontFamily: 'NotoSansCJKKR',
-                                  fontSize: 14.sp,
+                                  fontSize: 14.h,
                                   height: 1,
                                 ),
                               ),
@@ -208,7 +208,7 @@ class EditMyInfo extends StatelessWidget {
                                     style: TextStyle(
                                       color: Color(0xfff93f5b),
                                       fontFamily: 'NotoSansCJKKR',
-                                      fontSize: 14.sp,
+                                      fontSize: 14.h,
                                       height: 1,
                                     ),
                                   ),
@@ -237,13 +237,12 @@ class EditMyInfo extends StatelessWidget {
                 ],
               ),
             ),
-            SvgPicture.asset(
-              'assets/images_svg/btn_수정완료.svg',
-              width: 375.w,
-              fit: BoxFit.fitWidth,
-            ),
-          ],
-        ),
+          ),
+          SvgPicture.asset(
+            'assets/images_svg/btn_수정완료.svg',
+            width: 375.w,
+          ),
+        ],
       ),
     );
   }

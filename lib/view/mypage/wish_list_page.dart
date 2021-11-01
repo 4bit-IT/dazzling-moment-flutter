@@ -1,127 +1,178 @@
 import 'package:damo/viewmodel/bar/app_bar.dart';
-import 'package:damo/viewmodel/bar/scroll_behavior.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class WishListPage extends StatelessWidget {
-  List<Widget> wishList = [];
-  ScrollController scrollController = ScrollController();
-  List<Image> imageList = [
-    Image.asset(
-      'assets/images/DAMO_logo-01.png',
-      fit: BoxFit.fill,
-    ),
-    Image.asset(
-      'assets/images/DAMO_logo-03.png',
-      fit: BoxFit.fill,
-    ),
-    Image.asset(
-      'assets/images/pro.JPG',
-      fit: BoxFit.fill,
-    ),
-    Image.asset(
-      'assets/images/logo.png',
-      fit: BoxFit.fill,
-    ),
-    Image.asset(
-      'assets/images/pro.JPG',
-      fit: BoxFit.fill,
-    ),
-    Image.asset(
-      'assets/images/DAMO_logo-01.png',
-      fit: BoxFit.fill,
-    ),
-    Image.asset(
-      'assets/images/DAMO_logo-02.png',
-      fit: BoxFit.fill,
-    ),
-  ];
+  const WishListPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: DamoAppBar().noSearchBar(context),
-        backgroundColor: Colors.white,
-        body: Container(
-          color: Colors.white,
-          child: ScrollConfiguration(
-            behavior: NoGlowScrollBehavior(),
-            child: AnimationLimiter(
-              child: GridView.builder(
-                  controller: scrollController,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1,
-                      mainAxisSpacing: 15.0,
-                      mainAxisExtent: 330.0,
-                      crossAxisSpacing: 6.0,
-                      childAspectRatio: 1.0),
-                  padding: const EdgeInsets.fromLTRB(5.5, 0.0, 5.5, 0.0),
-                  itemCount: imageList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return AnimationConfiguration.staggeredGrid(
-                      position: 2,
-                      columnCount: 2,
-                      duration: Duration(milliseconds: 500),
-                      child: InkWell(
-                        onTap: () {}, //클릭시 이동
-                        child: SlideAnimation(
-                          verticalOffset: 50.0,
-                          child: FadeInAnimation(
-                            child: Card(
-                              shadowColor: Colors.black87,
-                              child: Column(
-                                children: [
-                                  Container(
-                                    child: imageList[index],
-                                    height: 180.0,
-                                    width: 200.0,
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Text(
-                                    "곰돌곰돌",
-                                    style: TextStyle(
-                                        fontFamily: 'NotoSans',
-                                        color: Colors.black87,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Text(
-                                    ' 서면에서 입소문난 수제 케이크 서면에서 입소문난 수제 케이크 서면에서 입소문난 수제 케이크 ',
-                                    //최대 3줄까지 지정.
-                                    style: TextStyle(color: Colors.black54),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.star,
-                                            color: Colors.orangeAccent,
-                                          ),
-                                          Text(
-                                            "5.0",
-                                            style: TextStyle(
-                                                color: Colors.black87,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
+      appBar: DamoAppBar().textAppBar(context, '찜 목록'),
+      backgroundColor: Colors.white,
+      body: GridView.builder(
+        itemCount: 100,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          mainAxisExtent: 294.h,
+          crossAxisCount: 2,
+          crossAxisSpacing: 5.w,
+        ),
+        itemBuilder: (BuildContext context, int index) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 5.h,
+              ),
+              Stack(
+                children: [
+                  Image.asset(
+                    'assets/images/img.png',
+                    width: 185.w,
+                    height: 185.h,
+                  ),
+                  Positioned(
+                    left: 10.w,
+                    bottom: 10.h,
+                    child: SvgPicture.asset(
+                      'assets/images_svg/ic_new.svg',
+                      width: 38.w,
+                      height: 20.h,
+                    ),
+                  ),
+                  Positioned(
+                    right: 5.w,
+                    bottom: 5.h,
+                    child: SvgPicture.asset(
+                      'assets/images_svg/ic_wish_on.svg',
+                      width: 30.w,
+                      height: 30.h,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(10.w, 0, 10.w, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '이로아케이크',
+                      style: TextStyle(
+                        color: Color(0xff283137),
+                        fontSize: 10.sp,
+                        height: 1,
+                        fontFamily: 'NotoSansCJKKR',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(height: 9.h,),
+                    Text('플루트 딸기가득 케이크',
+                      style: TextStyle(
+                        color: Color(0xff283137),
+                        fontSize: 13.sp,
+                        height: 1,
+                        fontFamily: 'NotoSansCJKKR',
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(height: 7.h,),
+                    Text('서울에서 입소문난 수제디저트 공방...',
+                      style: TextStyle(
+                        color: Color(0xff283137),
+                        fontSize: 11.sp,
+                        height: 1,
+                        fontFamily: 'NotoSansCJKKR',
+                      ),
+                    ),
+                    SizedBox(height: 15.h,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            SvgPicture.asset('assets/images_svg/ic_review_10.svg',width: 10.w,height: 10.h,),
+                            SizedBox(width: 4.w,),
+                            Text('4.9',
+                              style: TextStyle(
+                                color: Color(0xff283137),
+                                fontSize: 12.sp,
+                                height: 1,
+                                fontFamily: 'NotoSansCJKKR',
                               ),
                             ),
+                            SizedBox(width: 2.w,),
+                            Text('(1,234)',
+                              style: TextStyle(
+                                color: Color(0xff8e97a0),
+                                fontSize: 12.sp,
+                                height: 1,
+                                fontFamily: 'NotoSansCJKKR',
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text('29,500',
+                          style: TextStyle(
+                            color: Color(0xff283137),
+                            fontFamily: 'NotoSansCJKKR',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14.sp,
+                            height: 1
                           ),
                         ),
-                      ),
-                    );
-                  }),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+
+      /*Column(
+        children: [
+          Container(
+            height: 1.h,
+            decoration: BoxDecoration(
+              color: Color(0xfff1f3f5),
             ),
           ),
-        ));
+          SizedBox(
+            height: 5.h,
+          ),
+          Stack(
+            children: [
+              Image.asset(
+                'assets/images/img@3x.png',
+                width: 185.w,
+                height: 185.h,
+              ),
+              Positioned(
+                left: 10.w,
+                bottom: 10.h,
+                child: SvgPicture.asset(
+                  'assets/images_svg/ic_new.svg',
+                  width: 38.w,
+                  height: 20.h,
+                ),
+              ),
+              Positioned(
+                child: SvgPicture.asset(
+                  'assets/images_svg/ic_wish_on.svg',
+                  width: 30.w,
+                  height: 30.h,
+                ),
+              ),
+            ],
+          )
+        ],
+      ),*/
+    );
   }
 }
