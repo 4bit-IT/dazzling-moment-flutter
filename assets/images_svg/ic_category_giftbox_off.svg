@@ -1,0 +1,7 @@
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="25" cy="25" r="25" fill="#F1F3F5"/>
+    <path d="M25 15h10v20H25V15zM15 15h10v20H15V15z" fill="#CFD6DC" stroke="#8E97A0" stroke-linejoin="round"/>
+    <path d="M15 25.5h20" stroke="#8E97A0"/>
+    <path d="M25 25.194c.5-2.5 2.1-6.9 4.5-4.5 2.4 2.4-2 4-4.5 4.5z" stroke="#8E97A0" stroke-linejoin="bevel"/>
+    <path d="M25.194 25.194c-2.5-.5-6.9-2.1-4.5-4.5 2.4-2.4 4 2 4.5 4.5zM25 25.194c-1 .5-3 2.2-3 5M25 25.694c.5 1 2.2 3 5 3" stroke="#8E97A0" stroke-linejoin="bevel"/>
+</svg>
