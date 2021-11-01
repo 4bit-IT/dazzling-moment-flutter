@@ -79,7 +79,7 @@ class DamoAppBar {
         text,
         style: TextStyle(
           color: Color(0xff283137),
-          fontSize: 16,
+          fontSize: 21.3.sp,
           fontFamily: 'NotoSansCJKKR',
           fontWeight: FontWeight.w700,
         ),

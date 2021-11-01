@@ -1,5 +1,4 @@
-import 'package:damo/model/token.dart';
-import 'package:damo/view/sign/get_user_info.dart';
+import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/get_user_name.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
 import 'package:damo/model/kakao.dart';
@@ -17,14 +16,6 @@ class Sign extends StatefulWidget {
 }
 
 class _SignState extends State<Sign> {
-  @override
-  void initState() {
-    print(TokenCheck
-        .accessToken); // Run 기록으로 accessToken 과  refreshToken의 값을 확인할 수 있음.
-    print(TokenCheck.refreshToken);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,23 +38,38 @@ class _SignState extends State<Sign> {
                   ),
                   Row(
                     children: [
+                      SizedBox(
+                        width: 16.w,
+                      ),
                       Expanded(
                         child: Divider(
-                          color: Colors.black45,
+                          color: Color(0xfff1f3f5),
+                          thickness: 1.h,
                         ),
                       ),
+                      SizedBox(
+                        width: 9.w,
+                      ),
                       Text(
-                        '   간편 로그인   ',
+                        '간편 로그인',
                         style: TextStyle(
                           color: Color(0xff8e8e93),
                           fontSize: 18.sp,
                           fontFamily: 'NotoSansCJKKR',
+                          height: 1,
                         ),
+                      ),
+                      SizedBox(
+                        width: 9.w,
                       ),
                       Expanded(
                         child: Divider(
-                          color: Colors.black45,
+                          color: Color(0xfff1f3f5),
+                          thickness: 1.h,
                         ),
+                      ),
+                      SizedBox(
+                        width: 16.w,
                       ),
                     ],
                   ),

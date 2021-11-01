@@ -1,6 +1,6 @@
 import 'package:damo/model/token.dart';
 import 'package:damo/view/main/home_main.dart';
-import 'package:damo/view/sign/get_user_info.dart';
+import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/sign.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
