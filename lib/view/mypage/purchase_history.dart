@@ -2,6 +2,8 @@ import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get_core/get_core.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 
 class PurchaseHistory extends StatelessWidget {
   const PurchaseHistory({Key? key}) : super(key: key);
@@ -9,7 +11,33 @@ class PurchaseHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DamoAppBar().textAppBar(context, '구매 내역'),
+      appBar: AppBar(
+        elevation: 0.0,
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Text(
+          '구매 내역',
+          style: TextStyle(
+            color: Color(0xff283137),
+            fontSize: 16,
+            fontFamily: 'NotoSansCJKKR',
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Container(
+            child: InkWell(
+              onTap: Get.back,
+              child: SvgPicture.asset(
+                'assets/images_svg/ic_back.svg',
+                width: 30.w,
+                height: 30.h,
+              ),
+            ),
+          ),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: Column(
         children: [
@@ -69,7 +97,8 @@ class PurchaseHistory extends StatelessWidget {
                             ),
                             borderRadius: BorderRadius.circular(56.r),
                           ),
-                          child: Text('주문상세',
+                          child: Text(
+                            '주문상세',
                             style: TextStyle(
                               color: Color(0xff283137),
                               fontSize: 12.sp,

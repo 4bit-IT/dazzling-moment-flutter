@@ -1,7 +1,7 @@
-import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class WishListPage extends StatelessWidget {
   const WishListPage({Key? key}) : super(key: key);
@@ -9,7 +9,33 @@ class WishListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DamoAppBar().textAppBar(context, '찜 목록'),
+      appBar: AppBar(
+        elevation: 0.0,
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Text(
+          '찜 목록',
+          style: TextStyle(
+            color: Color(0xff283137),
+            fontSize: 16,
+            fontFamily: 'NotoSansCJKKR',
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Container(
+            child: InkWell(
+              onTap: Get.back,
+              child: SvgPicture.asset(
+                'assets/images_svg/ic_back.svg',
+                width: 30.w,
+                height: 30.h,
+              ),
+            ),
+          ),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: GridView.builder(
         itemCount: 100,
@@ -70,8 +96,11 @@ class WishListPage extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 9.h,),
-                    Text('플루트 딸기가득 케이크',
+                    SizedBox(
+                      height: 9.h,
+                    ),
+                    Text(
+                      '플루트 딸기가득 케이크',
                       style: TextStyle(
                         color: Color(0xff283137),
                         fontSize: 13.sp,
@@ -80,8 +109,11 @@ class WishListPage extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    SizedBox(height: 7.h,),
-                    Text('서울에서 입소문난 수제디저트 공방...',
+                    SizedBox(
+                      height: 7.h,
+                    ),
+                    Text(
+                      '서울에서 입소문난 수제디저트 공방...',
                       style: TextStyle(
                         color: Color(0xff283137),
                         fontSize: 11.sp,
@@ -89,15 +121,24 @@ class WishListPage extends StatelessWidget {
                         fontFamily: 'NotoSansCJKKR',
                       ),
                     ),
-                    SizedBox(height: 15.h,),
+                    SizedBox(
+                      height: 15.h,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
-                            SvgPicture.asset('assets/images_svg/ic_review_10.svg',width: 10.w,height: 10.h,),
-                            SizedBox(width: 4.w,),
-                            Text('4.9',
+                            SvgPicture.asset(
+                              'assets/images_svg/ic_review_10.svg',
+                              width: 10.w,
+                              height: 10.h,
+                            ),
+                            SizedBox(
+                              width: 4.w,
+                            ),
+                            Text(
+                              '4.9',
                               style: TextStyle(
                                 color: Color(0xff283137),
                                 fontSize: 12.sp,
@@ -105,8 +146,11 @@ class WishListPage extends StatelessWidget {
                                 fontFamily: 'NotoSansCJKKR',
                               ),
                             ),
-                            SizedBox(width: 2.w,),
-                            Text('(1,234)',
+                            SizedBox(
+                              width: 2.w,
+                            ),
+                            Text(
+                              '(1,234)',
                               style: TextStyle(
                                 color: Color(0xff8e97a0),
                                 fontSize: 12.sp,
@@ -116,14 +160,14 @@ class WishListPage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Text('29,500',
+                        Text(
+                          '29,500',
                           style: TextStyle(
-                            color: Color(0xff283137),
-                            fontFamily: 'NotoSansCJKKR',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14.sp,
-                            height: 1
-                          ),
+                              color: Color(0xff283137),
+                              fontFamily: 'NotoSansCJKKR',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14.sp,
+                              height: 1),
                         ),
                       ],
                     )

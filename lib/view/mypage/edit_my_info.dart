@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class EditMyInfo extends StatelessWidget {
   const EditMyInfo({Key? key}) : super(key: key);
@@ -10,7 +11,33 @@ class EditMyInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DamoAppBar().textAppBar(context, '내 정보 수정'),
+      appBar: AppBar(
+        elevation: 0.0,
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Text(
+          '내 정보 수정',
+          style: TextStyle(
+            color: Color(0xff283137),
+            fontSize: 16,
+            fontFamily: 'NotoSansCJKKR',
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        leading: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Container(
+            child: InkWell(
+              onTap: Get.back,
+              child: SvgPicture.asset(
+                'assets/images_svg/ic_back.svg',
+                width: 30.w,
+                height: 30.h,
+              ),
+            ),
+          ),
+        ),
+      ),
       backgroundColor: Colors.white,
       body: Column(
         children: [
