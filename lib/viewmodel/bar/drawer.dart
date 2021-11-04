@@ -1,4 +1,5 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:damo/view/mypage/edit_my_info.dart';
 import 'package:damo/view/mypage/setting.dart';
 import 'package:damo/view/notification/notice_admin.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
@@ -88,7 +89,9 @@ class _DrawerButtonState extends State<DrawerButton> {
                   width: 113.w,
                 ),
                 InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => EditMyInfo());
+                    },
                     child:
                         SvgPicture.asset('assets/images_svg/ic_my_edit.svg')),
               ],

@@ -25,34 +25,57 @@ class _HomeMainState extends State<HomeMain> {
         selectedBottomNavigationBarIndex: 0,
         scrollController: scrollController,
       ),
-      body: Column(
-        children: [
-          SvgPicture.asset('assets/images_svg/img_main_banner.svg',
-              width: 375.w, height: 100.h),
-          SizedBox(height: 12.h),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
-            child: Container(
-              // 컨테이너의 높이를 200으로 설정
-              height: 76.h,
-              // 리스트뷰 추가
-              child: ListView(
-                // 스크롤 방향 설정. 수평적으로 스크롤되도록 설정
-                scrollDirection: Axis.horizontal,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SvgPicture.asset('assets/images_svg/img_main_banner.svg',
+                width: 375.w, height: 100.h),
+            SizedBox(height: 12.h),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+              child: Container(
+                // 컨테이너의 높이를 200으로 설정
+                height: 76.h,
+                // 리스트뷰 추가
+                child: ListView(
+                  // 스크롤 방향 설정. 수평적으로 스크롤되도록 설정
+                  scrollDirection: Axis.horizontal,
 
-                // 컨테이너들을 ListView의 자식들로 추가
-                children: [
-                  InkWell(
-                    onTap: () {},
-                    child: Column(
+                  // 컨테이너들을 ListView의 자식들로 추가
+                  children: [
+                    InkWell(
+                      onTap: () {},
+                      child: Column(
+                        children: [
+                          SvgPicture.asset(
+                              'assets/images_svg/ic_category_all_off.svg',
+                              width: 50.w,
+                              height: 50.h),
+                          SizedBox(height: 7.h),
+                          Text(
+                            '전체',
+                            style: TextStyle(
+                              color: Color(0xff283137),
+                              fontSize: 10,
+                              fontFamily: 'NotoSansCJKKR',
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 7.w),
+                    Column(
                       children: [
-                        SvgPicture.asset(
-                            'assets/images_svg/ic_category_all_off.svg',
-                            width: 50.w,
-                            height: 50.h),
+                        InkWell(
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                              'assets/images_svg/ic_category_cake_off.svg',
+                              width: 50.w,
+                              height: 50.h),
+                        ),
                         SizedBox(height: 7.h),
                         Text(
-                          '전체',
+                          '케이크',
                           style: TextStyle(
                             color: Color(0xff283137),
                             fontSize: 10,
@@ -61,146 +84,223 @@ class _HomeMainState extends State<HomeMain> {
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(width: 7.w),
-                  Column(
+                    SizedBox(width: 7.w),
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                              'assets/images_svg/ic_category_flower_off.svg',
+                              width: 50.w,
+                              height: 50.h),
+                        ),
+                        SizedBox(height: 7.h),
+                        Text(
+                          '꽃',
+                          style: TextStyle(
+                            color: Color(0xff283137),
+                            fontSize: 10,
+                            fontFamily: 'NotoSansCJKKR',
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 7.w),
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                              'assets/images_svg/ic_category_dessert_off.svg',
+                              width: 50.w,
+                              height: 50.h),
+                        ),
+                        SizedBox(height: 7.h),
+                        Text(
+                          '디저트',
+                          style: TextStyle(
+                            color: Color(0xff283137),
+                            fontSize: 10,
+                            fontFamily: 'NotoSansCJKKR',
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 7.w),
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                              'assets/images_svg/ic_category_wine_off.svg',
+                              width: 50.w,
+                              height: 50.h),
+                        ),
+                        SizedBox(height: 7.h),
+                        Text(
+                          '와인',
+                          style: TextStyle(
+                            color: Color(0xff283137),
+                            fontSize: 10,
+                            fontFamily: 'NotoSansCJKKR',
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 7.w),
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                              'assets/images_svg/ic_category_giftcard_off.svg',
+                              width: 50.w,
+                              height: 50.h),
+                        ),
+                        SizedBox(height: 7.h),
+                        Text(
+                          '선물카드',
+                          style: TextStyle(
+                            color: Color(0xff283137),
+                            fontSize: 10,
+                            fontFamily: 'NotoSansCJKKR',
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(width: 7.w),
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                              'assets/images_svg/ic_category_giftbox_off.svg',
+                              width: 50.w,
+                              height: 50.h),
+                        ),
+                        SizedBox(height: 7.h),
+                        Text(
+                          '선물상자',
+                          style: TextStyle(
+                            color: Color(0xff283137),
+                            fontSize: 10,
+                            fontFamily: 'NotoSansCJKKR',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 12.h),
+            Container(
+              height: 1,
+              decoration: BoxDecoration(
+                color: Color(0xfff1f3f5),
+              ),
+            ),
+            SizedBox(height: 12.h),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 10, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
                     children: [
                       InkWell(
                         onTap: () {},
-                        child: SvgPicture.asset(
-                            'assets/images_svg/ic_category_cake_off.svg',
-                            width: 50.w,
-                            height: 50.h),
+                        child: Container(
+                          height: 26.h,
+                          width: 52.w,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Color(0xfff93f5b), width: 1.h),
+                            borderRadius: BorderRadius.circular(13.r),
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                '주문순',
+                                style: TextStyle(
+                                  color: Color(0xfff93f5b),
+                                  fontSize: 12,
+                                  fontFamily: 'NotoSansCJKKR',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      SizedBox(height: 7.h),
-                      Text(
-                        '케이크',
-                        style: TextStyle(
-                          color: Color(0xff283137),
-                          fontSize: 10,
-                          fontFamily: 'NotoSansCJKKR',
+                      SizedBox(width: 8.w),
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          height: 26.h,
+                          width: 52.w,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Color(0xfff1f3f5), width: 1.h),
+                            color: Color(0xfff1f3f5),
+                            borderRadius: BorderRadius.circular(13.r),
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                '별점순',
+                                style: TextStyle(
+                                  color: Color(0xff283137),
+                                  fontSize: 12,
+                                  fontFamily: 'NotoSansCJKKR',
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8.w),
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          height: 26.h,
+                          width: 74.w,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Color(0xfff1f3f5), width: 1.h),
+                            color: Color(0xfff1f3f5),
+                            borderRadius: BorderRadius.circular(13.r),
+                          ),
+                          child: Column(
+                            children: [
+                              Text(
+                                '리뷰많은순',
+                                style: TextStyle(
+                                  color: Color(0xff283137),
+                                  fontSize: 12,
+                                  fontFamily: 'NotoSansCJKKR',
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(width: 7.w),
-                  Column(
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: SvgPicture.asset(
-                            'assets/images_svg/ic_category_flower_off.svg',
-                            width: 50.w,
-                            height: 50.h),
-                      ),
-                      SizedBox(height: 7.h),
-                      Text(
-                        '꽃',
-                        style: TextStyle(
-                          color: Color(0xff283137),
-                          fontSize: 10,
-                          fontFamily: 'NotoSansCJKKR',
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 7.w),
-                  Column(
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: SvgPicture.asset(
-                            'assets/images_svg/ic_category_dessert_off.svg',
-                            width: 50.w,
-                            height: 50.h),
-                      ),
-                      SizedBox(height: 7.h),
-                      Text(
-                        '디저트',
-                        style: TextStyle(
-                          color: Color(0xff283137),
-                          fontSize: 10,
-                          fontFamily: 'NotoSansCJKKR',
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 7.w),
-                  Column(
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: SvgPicture.asset(
-                            'assets/images_svg/ic_category_wine_off.svg',
-                            width: 50.w,
-                            height: 50.h),
-                      ),
-                      SizedBox(height: 7.h),
-                      Text(
-                        '와인',
-                        style: TextStyle(
-                          color: Color(0xff283137),
-                          fontSize: 10,
-                          fontFamily: 'NotoSansCJKKR',
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 7.w),
-                  Column(
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: SvgPicture.asset(
-                            'assets/images_svg/ic_category_giftcard_off.svg',
-                            width: 50.w,
-                            height: 50.h),
-                      ),
-                      SizedBox(height: 7.h),
-                      Text(
-                        '선물카드',
-                        style: TextStyle(
-                          color: Color(0xff283137),
-                          fontSize: 10,
-                          fontFamily: 'NotoSansCJKKR',
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(width: 7.w),
-                  Column(
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: SvgPicture.asset(
-                            'assets/images_svg/ic_category_giftbox_off.svg',
-                            width: 50.w,
-                            height: 50.h),
-                      ),
-                      SizedBox(height: 7.h),
-                      Text(
-                        '선물상자',
-                        style: TextStyle(
-                          color: Color(0xff283137),
-                          fontSize: 10,
-                          fontFamily: 'NotoSansCJKKR',
-                        ),
-                      ),
-                    ],
+                  InkWell(
+                    onTap: () {},
+                    child: SvgPicture.asset(
+                      'assets/images_svg/ic_filter.svg',
+                      width: 30.w,
+                      height: 30.h,
+                    ),
                   ),
                 ],
               ),
             ),
-          ),
-          SizedBox(height: 12.h),
-          Container(
-            height: 1,
-            decoration: BoxDecoration(
-              color: Color(0xfff1f3f5),
-            ),
-          ),
-          SizedBox(height: 12.h),
-        ],
+            SizedBox(height: 12.h),
+          ],
+        ),
       ),
     );
   }
