@@ -1,8 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Token {
-  static String? accessToken;
-  static String? refreshToken;
+  String? accessToken;
+  String? refreshToken;
   static SharedPreferences? prefs;
 
   Future<Map<String, String>> loadToken() async {
