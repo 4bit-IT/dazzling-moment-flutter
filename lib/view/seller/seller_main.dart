@@ -1,3 +1,4 @@
+import 'package:damo/view/seller/seller_product_list.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/view/seller/seller_chat_management.dart';
 import 'package:damo/view/seller/seller_order_management.dart';
@@ -40,7 +41,7 @@ class _SellerMainState extends State<SellerMain> {
               children: [
                 InkWell(
                   onTap: () {
-                    Get.to(() => SellerProductMain());
+                    Get.to(() => SellerProductList());
                   },
                   child: Container(
                     width: 164.w,
@@ -58,7 +59,7 @@ class _SellerMainState extends State<SellerMain> {
                           height: 14.h,
                         ),
                         Text(
-                          '107',
+                          '1',
                           style: TextStyle(
                               color: Color(0xfff93f5b),
                               fontSize: 20.sp,

@@ -11,6 +11,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 class DamoAppBar {
   dynamic appBar(BuildContext context) {
     return AppBar(
+      shape: Border(bottom: BorderSide(color: Color(0xfff1f3f5), width: 1.h)),
       centerTitle: true,
       iconTheme: IconThemeData(
         color: Colors.grey[700],
@@ -43,6 +44,7 @@ class DamoAppBar {
 
   dynamic noSearchBar(BuildContext context) {
     return AppBar(
+      shape: Border(bottom: BorderSide(color: Color(0xfff1f3f5), width: 1.h)),
       centerTitle: true,
       iconTheme: IconThemeData(
         color: Colors.grey[700],
@@ -69,6 +71,7 @@ class DamoAppBar {
 
   dynamic textAppBar(BuildContext context, String text) {
     return AppBar(
+      shape: Border(bottom: BorderSide(color: Color(0xfff1f3f5), width: 1.h)),
       centerTitle: true,
       iconTheme: IconThemeData(
         color: Colors.black,
@@ -89,6 +92,7 @@ class DamoAppBar {
 
   dynamic sellerAppBar(BuildContext context) {
     return AppBar(
+      shape: Border(bottom: BorderSide(color: Color(0xfff1f3f5), width: 1.h)),
       centerTitle: true,
       iconTheme: IconThemeData(
         color: Colors.red,

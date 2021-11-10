@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/get_user_name.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
@@ -89,8 +92,38 @@ class _SignState extends State<Sign> {
                           width: 93.w,
                           child: Column(
                             children: [
-                              SvgPicture.asset(
-                                  'assets/images_svg/ic_login_apple.svg'),
+                              InkWell(
+                                onTap: ()async{
+                                  try {
+                                    String body;
+                                    Map signUpData = {
+                                      'content': 'test content',
+                                      'description': 'test',
+                                      'location': {
+                                        'latitude': 0,
+                                        'longitude': 0
+                                      },
+                                      'name':'test',
+                                      'registrationNumber': '000-00-00000'
+                                    };
+                                    body = json.encode(signUpData);
+                                    http.Response response = await http.post(
+                                      Uri.parse(
+                                          'https://www.damoforyou.com/api/shop'),
+                                      headers: {
+                                        'Content-Type': 'application/json',
+                                        'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdCIsIm5pY2tuYW1lIjoidGVzdCIsImVtYWlsIjoiZXhhbXBsZUBkYW1vLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjM2NDczMjY1LCJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTYzNjQ3NTA2NX0.mERbk7Lu_ElLzm2gHpMlr_SOfBL9XXLkrp6sNsT4Jd4'
+                                      },
+                                      body: body,
+                                    );
+                                    print(jsonDecode(utf8.decode(response.bodyBytes)));
+                                  }catch(e){
+                                    print(e);
+                                  }
+                                },
+                                child: SvgPicture.asset(
+                                    'assets/images_svg/ic_login_apple.svg'),
+                              ),
                               SizedBox(
                                 height: 10.h,
                               ),
