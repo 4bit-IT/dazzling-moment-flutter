@@ -93,7 +93,7 @@ class _SignState extends State<Sign> {
                           child: Column(
                             children: [
                               InkWell(
-                                onTap: ()async{
+                                onTap: () async {
                                   try {
                                     String body;
                                     Map signUpData = {
@@ -103,7 +103,7 @@ class _SignState extends State<Sign> {
                                         'latitude': 0,
                                         'longitude': 0
                                       },
-                                      'name':'test',
+                                      'name': 'test',
                                       'registrationNumber': '000-00-00000'
                                     };
                                     body = json.encode(signUpData);
@@ -112,12 +112,14 @@ class _SignState extends State<Sign> {
                                           'https://www.damoforyou.com/api/shop'),
                                       headers: {
                                         'Content-Type': 'application/json',
-                                        'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdCIsIm5pY2tuYW1lIjoidGVzdCIsImVtYWlsIjoiZXhhbXBsZUBkYW1vLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjM2NDczMjY1LCJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTYzNjQ3NTA2NX0.mERbk7Lu_ElLzm2gHpMlr_SOfBL9XXLkrp6sNsT4Jd4'
+                                        'token':
+                                            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdCIsIm5pY2tuYW1lIjoidGVzdCIsImVtYWlsIjoiZXhhbXBsZUBkYW1vLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjM2NDczMjY1LCJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTYzNjQ3NTA2NX0.mERbk7Lu_ElLzm2gHpMlr_SOfBL9XXLkrp6sNsT4Jd4'
                                       },
                                       body: body,
                                     );
-                                    print(jsonDecode(utf8.decode(response.bodyBytes)));
-                                  }catch(e){
+                                    print(jsonDecode(
+                                        utf8.decode(response.bodyBytes)));
+                                  } catch (e) {
                                     print(e);
                                   }
                                 },
@@ -217,7 +219,7 @@ class _SignState extends State<Sign> {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
-                          Kakao().kakaoLogin();
+                          // Kakao().kakaoLogin();
                         },
                         color: Colors.yellow,
                         elevation: 0,

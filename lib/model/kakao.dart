@@ -1,4 +1,3 @@
-import 'package:damo/model/token.dart';
 import 'package:damo/view/main/home_main.dart';
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/sign.dart';
@@ -84,13 +83,12 @@ class Kakao {
     };
     var body = json.encode(signUpData);
     http.Response response = await http.post(
-      Uri.parse(
-          'http://ec2-13-209-10-201.ap-northeast-2.compute.amazonaws.com:8080/api/oauth/kakao'),
+      Uri.parse('https://www.damoforyou.com/api/oauth/kakao'),
       headers: {"Content-Type": "application/json"},
       body: body,
     );
-    print('받은 데이터: ' + utf8.decode(response.bodyBytes));
-    print(jsonDecode(utf8.decode(response.bodyBytes)));
+    // print('받은 데이터: ' + utf8.decode(response.bodyBytes));
+    // print(jsonDecode(utf8.decode(response.bodyBytes)));
   }
 
   void kakaoLogin() async {
@@ -102,8 +100,7 @@ class Kakao {
       token = await AuthApi.instance.issueAccessToken(authCode);
       TokenManager.instance.setToken(token!);
       User user = await UserApi.instance.me();
-      String url =
-          'http://ec2-13-209-10-201.ap-northeast-2.compute.amazonaws.com:8080/api/oauth/kakao/login';
+      String url = 'https://www.damoforyou.com/api/oauth/kakao/login';
       Map data = {
         'fcmToken': "",
         'oauthAccessToken': token!.accessToken,
