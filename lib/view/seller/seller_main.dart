@@ -1,3 +1,4 @@
+import 'package:damo/app/controller/seller_controller.dart';
 import 'package:damo/view/seller/seller_product_list.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/view/seller/seller_chat_management.dart';
@@ -8,9 +9,8 @@ import 'package:damo/view/seller/seller_review_management.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import 'seller_faq_management.dart';
 
@@ -20,6 +20,9 @@ class SellerMain extends StatefulWidget {
 }
 
 class _SellerMainState extends State<SellerMain> {
+
+  final controller = Get.put(SellerController(),permanent: true);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

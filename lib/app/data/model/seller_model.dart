@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShopRegistrationModel {
   late int code;
@@ -63,11 +65,8 @@ class ShopGetDetailModel {
       description,
       result});
 
-  String toJson(Map<String, dynamic> input) {
-    String body;
-    Map sendData = {};
-    body = json.encode(sendData);
-    return body;
+  String toJson(String id) {
+    return id;
   }
 
   ShopGetDetailModel.fromJson(Map<String, dynamic> json) {
@@ -163,7 +162,7 @@ class ShopGetMeModel {
   late var images;
   late double latitude;
   late double longitude;
-  late String mainImage;
+  late var mainImage;
   late String name;
   late dynamic options;
   late double rating;
