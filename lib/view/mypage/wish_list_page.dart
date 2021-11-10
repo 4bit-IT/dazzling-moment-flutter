@@ -55,6 +55,7 @@ class WishListPage extends StatelessWidget {
                 children: [
                   Image.asset(
                     'assets/images/img.png',
+                    fit: BoxFit.fill,
                     width: 185.w,
                     height: 185.h,
                   ),

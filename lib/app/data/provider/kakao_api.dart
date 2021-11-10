@@ -11,7 +11,7 @@ import 'package:kakao_flutter_sdk/all.dart';
 import 'kakao.dart';
 
 final baseUri =
-('http://ec2-13-209-10-201.ap-northeast-2.compute.amazonaws.com:8080');
+('https://www.damoforyou.com/api');
 
 class OauthNetwork {
   final headers = {'Content-Type': 'application/json'};
@@ -26,7 +26,7 @@ class OauthNetwork {
       body = AuthLoginModel().toJson(token!);
 
       http.Response response = await http.post(
-        Uri.parse(baseUri + '/api/oauth/kakao/login'),
+        Uri.parse(baseUri + '/oauth/kakao/login'),
         headers: headers,
         body: body,
       );
@@ -64,7 +64,7 @@ class OauthNetwork {
       body = AuthSignModel().toJson(token!);
 
       http.Response response = await http.post(
-        Uri.parse(baseUri + '/api/oauth/kakao'),
+        Uri.parse(baseUri + '/oauth/kakao'),
         headers: headers,
         body: body,
       );
