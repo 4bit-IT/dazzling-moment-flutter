@@ -23,8 +23,7 @@ class Kakao {
       print("로그인 취소");
       return null;
     }
-
-}
+  }
 
   void kakaoLogout() async {
     await UserApi.instance.logout();

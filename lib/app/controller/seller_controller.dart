@@ -1,6 +1,5 @@
 import 'package:damo/app/data/model/seller_model.dart';
-import 'package:damo/app/data/model/token.dart';
-import 'package:damo/app/data/provider/shop/shop_api.dart';
+
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
