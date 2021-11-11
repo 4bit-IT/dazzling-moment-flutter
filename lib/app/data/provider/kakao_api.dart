@@ -1,5 +1,5 @@
 import 'package:damo/app/data/model/oauth_model.dart';
-import 'package:damo/app/data/model/token.dart';
+import 'package:damo/app/data/model/token_model.dart';
 import 'package:damo/view/main/home_main.dart';
 import 'package:damo/view/sign/sign.dart';
 import 'package:get/get_core/src/get_main.dart';

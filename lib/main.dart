@@ -20,7 +20,7 @@ void main() async {
 }
 
 class Damo extends StatelessWidget {
-  final TokenController tokenController = Get.put(TokenController());
+  final TokenController tokenController = Get.put(TokenController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {

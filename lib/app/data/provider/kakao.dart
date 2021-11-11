@@ -12,6 +12,8 @@ class Kakao {
       TokenManager.instance.setToken(token!);
       User user = await UserApi.instance.me();
 
+      print(token!.accessToken);
+
       return token;
     } on KakaoAuthException {
       print("동의 취소");

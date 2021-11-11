@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:damo/app/data/provider/kakao.dart';
 import 'package:http/http.dart' as http;
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/get_user_name.dart';
@@ -217,7 +218,7 @@ class _SignState extends State<Sign> {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
-                          // Kakao().kakaoLogin();
+                          Kakao().getKakaoToken();
                         },
                         color: Colors.yellow,
                         elevation: 0,

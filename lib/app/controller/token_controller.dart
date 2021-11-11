@@ -1,9 +1,10 @@
-import 'package:damo/app/data/model/token.dart';
+import 'package:damo/app/data/model/token_model.dart';
+import 'package:damo/app/data/provider/user/user_api.dart';
 import 'package:get/get.dart';
 
 class TokenController extends GetxController {
-  late String accessToken;
-  late String refreshToken;
+  late var accessToken;
+  late var refreshToken;
   late Map<String, String> token;
 
   @override
@@ -11,7 +12,9 @@ class TokenController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     token = await Token().loadToken();
-    accessToken = token['accessToken']!;
-    refreshToken = token['refreshToken']!;
+    accessToken = token['accessToken'];
+    refreshToken = token['refreshToken'];
+
+    //UserNetwork().getUsers();
   }
 }
