@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/get_user_name.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
-import 'package:damo/model/kakao.dart';
 import 'package:damo/view/sign/sms_auth.dart';
 import 'package:damo/view/main/home_main.dart';
 import 'package:flutter/cupertino.dart';

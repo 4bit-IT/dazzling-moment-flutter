@@ -2,15 +2,16 @@ import 'package:damo/app/data/model/token.dart';
 import 'package:get/get.dart';
 
 class TokenController extends GetxController {
-  late var accessToken;
-  late var refreshToken;
+  late String accessToken;
+  late String refreshToken;
+  late Map<String, String> token;
 
   @override
-  void onInit() {
+  void onInit() async {
     // TODO: implement onInit
     super.onInit();
-    Token().loadToken();
-    accessToken = Token().accessToken.obs;
-    refreshToken = Token().refreshToken.obs;
+    token = await Token().loadToken();
+    accessToken = token['accessToken']!;
+    refreshToken = token['refreshToken']!;
   }
 }

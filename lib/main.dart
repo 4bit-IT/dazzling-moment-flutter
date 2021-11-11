@@ -1,5 +1,7 @@
+import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/view/sign/sign.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
@@ -18,6 +20,8 @@ void main() async {
 }
 
 class Damo extends StatelessWidget {
+  final TokenController tokenController = Get.put(TokenController());
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
