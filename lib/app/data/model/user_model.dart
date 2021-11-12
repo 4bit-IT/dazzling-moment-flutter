@@ -1,9 +1,4 @@
-import 'package:damo/app/controller/token_controller.dart';
-import 'package:damo/app/data/model/user_model.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:get/get.dart';
 
 class GetUserInfoModel {
   late String code;

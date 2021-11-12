@@ -43,8 +43,8 @@ class AuthLoginModel {
   late String description;
   late String result;
 
-  AuthLoginModel({fcmToken,oauthAccessToken});
-  String toJson(AccessTokenResponse token){
+  AuthLoginModel({fcmToken, oauthAccessToken});
+  String toJson(AccessTokenResponse token) {
     String body;
     Map loginData = {
       'fcmToken': '',

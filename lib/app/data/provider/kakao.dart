@@ -1,3 +1,4 @@
+import 'package:damo/app/data/provider/user/user_api.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 
 class Kakao {
@@ -10,7 +11,6 @@ class Kakao {
 
       token = await AuthApi.instance.issueAccessToken(authCode);
       TokenManager.instance.setToken(token!);
-      User user = await UserApi.instance.me();
 
       print(token!.accessToken);
 
