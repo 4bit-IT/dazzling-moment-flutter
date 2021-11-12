@@ -32,11 +32,12 @@ class _SignState extends State<Sign> {
                 // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 234.h,
+                    height: 200.h,
                   ),
-                  SvgPicture.asset('assets/images_svg/logo_login.svg'),
+                  SvgPicture.asset('assets/images_svg/logo_login.svg',
+                      width: 180.w, height: 180.h),
                   SizedBox(
-                    height: 214.7.h,
+                    height: 150.h,
                   ),
                   Row(
                     children: [
@@ -144,8 +145,13 @@ class _SignState extends State<Sign> {
                         width: 93.w,
                         child: Column(
                           children: [
-                            SvgPicture.asset(
-                                'assets/images_svg/ic_login_kakao.svg'),
+                            InkWell(
+                              onTap: () {
+                                Kakao().getKakaoToken();
+                              },
+                              child: SvgPicture.asset(
+                                  'assets/images_svg/ic_login_kakao.svg'),
+                            ),
                             SizedBox(
                               height: 10.h,
                             ),
