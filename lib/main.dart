@@ -25,7 +25,7 @@ Future<void> main() async {
 }
 
 Future<void> fetchData() async {
-  await Future.delayed(Duration(seconds: 3), () {
+  await Future.delayed(Duration(seconds: 1), () {
     if (tokenController.isAutoLogin == false) {
       nextScreen = Sign();
     } else {

@@ -6,14 +6,15 @@ class Token {
   Future<Map<String, String>> loadToken() async {
     prefs = await SharedPreferences.getInstance();
 
-    return ({'accessToken': (prefs!.getString('accessToken') ?? ''), 'refreshToken': (prefs!.getString('refreshToken') ?? '')});
+    return ({
+      'accessToken': (prefs!.getString('accessToken') ?? ''),
+      'refreshToken': (prefs!.getString('refreshToken') ?? '')
+    });
   }
 
   void saveToken(String accessToken, String refreshToken) async {
-
     prefs = await SharedPreferences.getInstance();
     prefs!.setString('accessToken', accessToken);
     prefs!.setString('refreshToken', refreshToken);
-
   }
 }
