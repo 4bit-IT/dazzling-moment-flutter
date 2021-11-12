@@ -9,24 +9,25 @@ final baseUri = ('https://www.damoforyou.com/api');
 TokenController tokenController = Get.find();
 
 class UserNetwork {
-  late UserModel userModel;
+  late GetUserInfoModel getUserInfoModel;
 
   final headers = {
     'Content-Type': 'application/json',
-    'token': tokenController.accessToken,
+    'token': tokenController.accessToken.toString(),
   };
   var body;
 
   void getUsers() async {
+    print(headers);
     try {
       http.Response response = await http.get(
         Uri.parse(baseUri + '/users'),
         headers: headers,
       );
       if (response.statusCode == 200) {
-        userModel =
-            UserModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
-        print(userModel);
+        getUserInfoModel =
+            GetUserInfoModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+        print(getUserInfoModel);
       }
     } catch (e) {}
   }

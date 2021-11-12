@@ -5,45 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:get/get.dart';
 
-final baseUri = ('https://www.damoforyou.com/api');
-TokenController tokenController = Get.find();
-
-class UserNetwork {
-  late UserModel userModel;
-
-  final headers = {
-    'Content-Type': 'application/json',
-    'token': tokenController.accessToken,
-  };
-  var body;
-
-  void getUsers() async {
-    try {
-      http.Response response = await http.get(
-        Uri.parse(baseUri + '/users'),
-        headers: headers,
-      );
-      if (response.statusCode == 200) {
-        userModel =
-            UserModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
-        print(userModel);
-      }
-    } catch (e) {}
-  }
-
-// void postUsersAddress() async {
-//   try {
-//     body = UserChangeAddress().toJson();
-//     http.Response response = await http.post(
-//       Uri.parse(baseUri + '/users/address'),
-//       headers: headers,
-//       body: body,
-//     );
-//   } catch (e) {}
-// }
-}
-
-class UserModel {
+class GetUserInfoModel {
   late String code;
   late String addr1;
   late String addr2;
@@ -68,7 +30,7 @@ class UserModel {
   late String description;
   late String result;
 
-  UserModel.fromJson(Map<String, dynamic> json) {
+  GetUserInfoModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     addr1 = json['data']['address'][0];
     addr2 = json['data']['address'][1];
