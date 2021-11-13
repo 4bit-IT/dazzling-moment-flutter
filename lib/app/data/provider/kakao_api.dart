@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:kakao_flutter_sdk/all.dart';
 
-final baseUri = ('https://www.damoforyou.com/api');
+const baseUri = ('https://www.damoforyou.com/api');
 
 class OauthNetwork {
   final headers = {'Content-Type': 'application/json'};
@@ -12,26 +12,49 @@ class OauthNetwork {
   late AuthLoginModel loginModel;
   late AuthSignModel signModel;
 
-  Future<List> postOauthKakaoLogin(String accessToken) async {
+  Future<List> postOauthKakaoLogin(String KakaoAccessToken) async {
     try {
       http.Response response = await http.post(
           Uri.parse(
             baseUri + '/oauth/kakao/login',
           ),
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: headers,
           body: json.encode(<String, String>{
             'fcmToken': 'fcm_token',
-            'oauthAccessToken': accessToken,
+            'oauthAccessToken': KakaoAccessToken,
           }));
+
       bool isFirstLogin =
           jsonDecode(utf8.decode(response.bodyBytes))['data']['isFirst'];
       int code = jsonDecode(utf8.decode(response.bodyBytes))['code'];
+
       return [isFirstLogin, code];
     } catch (e) {
       print('postOauthKakaoLogin 예외발생');
       return [false];
+    }
+  }
+
+  Future<void> postOauthKakao(String KakaoAccessToken) async {
+    try {
+      http.Response response = await http.post(
+        Uri.parse(
+          baseUri + '/oauth/kakao',
+        ),
+        headers: headers,
+        body: json.encode(
+          <String, dynamic>{
+            "agreements": {"marketing": true, "pushNotification": true},
+            "fcmToken": "234n1",
+            "nickname": "11",
+            "oauthAccessToken": KakaoAccessToken,
+            "phoneNumber": "010-0123-0200"
+          },
+        ),
+      );
+      print(jsonDecode(utf8.decode(response.bodyBytes)));
+    } catch (e) {
+      print('postOauthKakao 예외발생');
     }
   }
 }

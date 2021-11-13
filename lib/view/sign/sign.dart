@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:damo/app/data/provider/kakao.dart';
+import 'package:damo/app/data/provider/kakao_api.dart';
+import 'package:damo/app/data/provider/user/user_api.dart';
 import 'package:http/http.dart' as http;
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/get_user_name.dart';
@@ -94,34 +96,8 @@ class _SignState extends State<Sign> {
                             children: [
                               InkWell(
                                 onTap: () async {
-                                  try {
-                                    String body;
-                                    Map signUpData = {
-                                      'content': 'test content',
-                                      'description': 'test',
-                                      'location': {
-                                        'latitude': 0,
-                                        'longitude': 0
-                                      },
-                                      'name': 'test',
-                                      'registrationNumber': '000-00-00000'
-                                    };
-                                    body = json.encode(signUpData);
-                                    http.Response response = await http.post(
-                                      Uri.parse(
-                                          'https://www.damoforyou.com/api/shop'),
-                                      headers: {
-                                        'Content-Type': 'application/json',
-                                        'token':
-                                            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidGVzdCIsIm5pY2tuYW1lIjoidGVzdCIsImVtYWlsIjoiZXhhbXBsZUBkYW1vLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNjM2NDczMjY1LCJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTYzNjQ3NTA2NX0.mERbk7Lu_ElLzm2gHpMlr_SOfBL9XXLkrp6sNsT4Jd4'
-                                      },
-                                      body: body,
-                                    );
-                                    print(jsonDecode(
-                                        utf8.decode(response.bodyBytes)));
-                                  } catch (e) {
-                                    print(e);
-                                  }
+                                  OauthNetwork().postOauthKakao(
+                                      'BEmfHXpDQaOZESn46yFNJvqwBfdjSM2hTNyRewopb9QAAAF9Git-GQ123');
                                 },
                                 child: SvgPicture.asset(
                                     'assets/images_svg/ic_login_apple.svg'),
@@ -214,27 +190,6 @@ class _SignState extends State<Sign> {
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
                             color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      MaterialButton(
-                        minWidth: double.infinity,
-                        height: 60,
-                        onPressed: () {
-                          Kakao().getKakaoToken();
-                        },
-                        color: Colors.yellow,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Text(
-                          "카카오톡으로 로그인",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 18,
                           ),
                         ),
                       ),

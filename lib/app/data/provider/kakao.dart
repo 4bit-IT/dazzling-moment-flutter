@@ -7,26 +7,25 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 
 class Kakao {
-  AccessTokenResponse? token;
+  AccessTokenResponse? kakaoAccessToken;
 
   Future<AccessTokenResponse?> getKakaoToken() async {
     try {
       String authCode = await AuthCodeClient.instance.request(); //웹으로 열기
       // String authCode = await AuthCodeClient.instance.requestWithTalk() // Kakao app 으로 열기
 
-      token = await AuthApi.instance.issueAccessToken(authCode);
-      TokenManager.instance.setToken(token!);
+      kakaoAccessToken = await AuthApi.instance.issueAccessToken(authCode);
+      TokenManager.instance.setToken(kakaoAccessToken!);
 
-      print('KakaoToken: ' + token!.accessToken);
-      List getOauthKakaoLogin =
-          await OauthNetwork().postOauthKakaoLogin(token!.accessToken);
+      print('KakaoToken: ' + kakaoAccessToken!.accessToken);
+      List getOauthKakaoLogin = await OauthNetwork()
+          .postOauthKakaoLogin(kakaoAccessToken!.accessToken);
       bool isFirstLogin = getOauthKakaoLogin[0];
       int code = getOauthKakaoLogin[1];
 
       if (isFirstLogin == false) {
         // 이미 가입 된 적이 있는 유저일 경우
         print('이미 가입된 회원입니다.');
-        await UserNetwork().getUsersRefresh();
         Get.off(() => HomeMain());
       } else if (isFirstLogin == true) {
         // 처음 가입하는 유저일 경우
@@ -35,10 +34,15 @@ class Kakao {
       } else if (code == 3) {
         // 토큰이 만료 된 경우
         print('토큰 재갱신이 필요한 회원입니다.');
-        await UserNetwork().getUsersRefresh();
+        bool isSuccessRefreshToken = await UserNetwork().getUsersRefresh();
+        if (isSuccessRefreshToken == true) {
+          // 토큰 재발급에 성공
+          Get.to(() => HomeMain());
+        } else {
+          // 토큰 재발급에 실패
+        }
       }
-
-      return token;
+      return kakaoAccessToken;
     } on KakaoAuthException {
       print("동의 취소");
       return null;
