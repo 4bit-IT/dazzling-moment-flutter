@@ -13,6 +13,7 @@ class TokenController extends GetxController {
     token = await Token().loadToken();
     accessToken = token['accessToken']!;
     refreshToken = token['refreshToken']!;
+
     if (accessToken == '' && refreshToken == '') {
       // 아무 토큰이 없으니 로그인 화면으로 이동
       print('토큰이 없으므로 로그인 화면으로 이동');
