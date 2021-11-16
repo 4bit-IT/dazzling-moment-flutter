@@ -1,8 +1,10 @@
+import 'package:damo/app/controller/sign_controller.dart';
 import 'package:damo/app/data/provider/kakao_api.dart';
 import 'package:damo/app/data/provider/user/user_api.dart';
 import 'package:damo/view/main/home_main.dart';
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 
@@ -18,24 +20,24 @@ class Kakao {
       TokenManager.instance.setToken(kakaoAccessToken!);
 
       print('KakaoToken: ' + kakaoAccessToken!.accessToken);
-      List getOauthKakaoLogin = await OauthNetwork()
-          .postOauthKakaoLogin(kakaoAccessToken!.accessToken);
-      bool isFirstLogin = getOauthKakaoLogin[0];
-      int code = getOauthKakaoLogin[1];
+      await OauthNetwork().postOauthKakaoLogin(kakaoAccessToken!.accessToken);
 
-      if (isFirstLogin == false) {
+      PostKakaoLoginController kakaoLoginData = Get.find();
+
+      if (kakaoLoginData.isFirst == false) {
         // 이미 가입 된 적이 있는 유저일 경우
         print('이미 가입된 회원입니다.');
         Get.off(() => HomeMain());
-      } else if (isFirstLogin == true) {
+      } else if (kakaoLoginData.isFirst == true) {
         // 처음 가입하는 유저일 경우
         print('처음 가입하는 회원입니다.');
         Get.to(() => GetUserInfo());
-      } else if (code == 3) {
+      } else if (kakaoLoginData.description == "토큰이 만료되었습니다.") {
         // 토큰이 만료 된 경우
         print('토큰 재갱신이 필요한 회원입니다.');
-        bool isSuccessRefreshToken = await UserNetwork().getUsersRefresh();
-        if (isSuccessRefreshToken == true) {
+        UserNetwork().getUsersRefresh();
+        GetRefreshTokenController refreshTokenData = Get.find();
+        if (refreshTokenData.result == true) {
           // 토큰 재발급에 성공
           Get.to(() => HomeMain());
         } else {

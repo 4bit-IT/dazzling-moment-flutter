@@ -1,8 +1,5 @@
-import 'dart:convert';
 import 'package:damo/app/data/provider/kakao.dart';
 import 'package:damo/app/data/provider/kakao_api.dart';
-import 'package:damo/app/data/provider/user/user_api.dart';
-import 'package:http/http.dart' as http;
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/get_user_name.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';

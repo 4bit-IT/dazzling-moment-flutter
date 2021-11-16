@@ -28,17 +28,14 @@ dependencies:
   cupertino_icons: ^1.0.3      
   google_fonts: ^2.1.0                    # 구글 폰트
   transition: ^2.0.2                      # 화면전환 애니메이션
-  page_transition: ^2.0.0                 # 화면전환 애니메이션 (로딩화면 사용)
+  # page_transition: ^2.0.0                 # 화면전환 애니메이션 (로딩화면 사용)
   fluttertoast: ^8.0.8                    # 토스트메시지
   kakaomap_webview: ^0.3.0                # 카카오 맵
-  flutter_login: ^2.2.1                   # 로그인 애니메이션 
   font_awesome_flutter: ^9.1.0            # 폰트 아이콘
-  like_button: ^2.0.2                     # 좋아요(하트) 버튼 
   animated_splash_screen: ^1.1.0          # 로딩화면 구성
   flutter_staggered_animations: ^1.0.0    # 업체이미지 애니메이션
-  draggable_home: ^1.0.2                  # product_info sliver
-  card_swiper: ^1.0.4                     # 업체 이미지 좌우로 넘김
-  adaptive_action_sheet: ^2.0.0           # 상품 정렬창 보기
+  # draggable_home: ^1.0.2                  # product_info sliver
+  # card_swiper: ^1.0.4                     # 업체 이미지 좌우로 넘김
   shared_preferences: ^2.0.8              # 자동 로그인을 위한 device DB
   #emoji_picker_flutter: ^1.0.7      # 이모지
   http: ^0.13.3
@@ -47,11 +44,9 @@ dependencies:
   firebase_core: ^1.7.0
   path_provider: ^2.0.5
   cached_network_image: ^3.1.0+1
-  flutter_cache_manager: ^3.1.2
-  sqflite: ^2.0.0+4
   path: ^1.6.2
   flutter_svg: ^0.23.0+1
-  flutter_native_splash: ^1.2.4
+  # flutter_native_splash: ^1.2.4
   flutter_screenutil: ^5.0.0+2
   mask_text_input_formatter: ^2.0.0
   firebase_app_check: ^0.0.2+3

@@ -1,5 +1,3 @@
-import 'package:damo/app/data/model/seller_model.dart';
-
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
