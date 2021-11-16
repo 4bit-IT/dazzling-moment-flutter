@@ -1,4 +1,6 @@
 import 'package:damo/app/controller/sign_controller.dart';
+import 'package:damo/app/controller/token_controller.dart';
+import 'package:damo/app/data/model/token_model.dart';
 import 'package:damo/app/data/provider/kakao_api.dart';
 import 'package:damo/app/data/provider/user/user_api.dart';
 import 'package:damo/view/main/home_main.dart';
@@ -27,6 +29,10 @@ class Kakao {
       if (kakaoLoginData.isFirst == false) {
         // 이미 가입 된 적이 있는 유저일 경우
         print('이미 가입된 회원입니다.');
+        await Token()
+            .saveToken(kakaoLoginData.accessToken, kakaoLoginData.refreshToken);
+        await UserNetwork().getUsers();
+
         Get.off(() => HomeMain());
       } else if (kakaoLoginData.isFirst == true) {
         // 처음 가입하는 유저일 경우

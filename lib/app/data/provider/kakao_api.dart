@@ -24,8 +24,10 @@ class OauthNetwork {
             'fcmToken': 'fcm_token',
             'oauthAccessToken': kakaoAccessToken,
           }));
+
       PostKakaoLoginController kakaoLoginData =
           Get.put(PostKakaoLoginController());
+
       await kakaoLoginData
           .saveKakaoLoingData(jsonDecode(utf8.decode(response.bodyBytes)));
     } catch (e) {
@@ -44,9 +46,9 @@ class OauthNetwork {
           <String, dynamic>{
             "agreements": {"marketing": true, "pushNotification": true},
             "fcmToken": "234n1",
-            "nickname": "11",
+            "nickname": "안주형",
             "oauthAccessToken": kakaoAccessToken,
-            "phoneNumber": "010-0123-0200"
+            "phoneNumber": "010-9780-1480"
           },
         ),
       );

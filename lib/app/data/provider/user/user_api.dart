@@ -1,5 +1,6 @@
 import 'package:damo/app/controller/sign_controller.dart';
 import 'package:damo/app/controller/token_controller.dart';
+import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/app/data/model/token_model.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
@@ -12,14 +13,6 @@ TokenController tokenController = Get.find();
 class UserNetwork {
   GetRefreshTokenController refreshTokenData =
       Get.put(GetRefreshTokenController());
-  final accessTokenHeaders = {
-    'Content-Type': 'application/json',
-    'token': tokenController.accessToken,
-  };
-  final refreshTokenHeaders = {
-    'Content-Type': 'application/json',
-    'token': tokenController.refreshToken,
-  };
 
   Future<bool> postUsersAccess() async {
     // AccessToken 사용할 수 있는지 확인
@@ -28,7 +21,10 @@ class UserNetwork {
         Uri.parse(
           baseUri + '/oauth/users/access',
         ),
-        headers: accessTokenHeaders,
+        headers: {
+          'Content-Type': 'application/json',
+          'token': tokenController.accessToken,
+        },
       );
       PostUsersAccessController usersAccessData =
           Get.put(PostUsersAccessController());
@@ -57,11 +53,14 @@ class UserNetwork {
   }
 
   Future<void> getUsersRefresh() async {
-    //AccessToken 재발급
+    // AccessToken 재발급
     try {
       http.Response response = await http.get(
         Uri.parse(baseUri + '/users/refresh'),
-        headers: refreshTokenHeaders,
+        headers: {
+          'Content-Type': 'application/json',
+          'token': tokenController.accessToken,
+        },
       );
       await refreshTokenData
           .saveRefreshTokenData(jsonDecode(utf8.decode(response.bodyBytes)));
@@ -74,6 +73,36 @@ class UserNetwork {
       }
     } catch (e) {
       print('getUsersRefreshError!');
+    }
+  }
+
+  Future<void> getUsers() async {
+    // 회원 정보 조회
+    GetUsersData userData = Get.put(GetUsersData(), permanent: true);
+    try {
+      print(tokenController.accessToken);
+      http.Response response = await http.get(
+        Uri.parse(baseUri + '/users'),
+        headers: {
+          'Content-Type': 'application/json',
+          'token': tokenController.accessToken,
+        },
+      );
+      userData.saveUsersData(jsonDecode(utf8.decode(response.bodyBytes)));
+      // if (userData.code == 1) {
+      // } else if (userData.code == 2 || userData.code == 3) {
+      //   //토큰 만료일 경우
+      //   await UserNetwork().getUsersRefresh();
+      //   if (refreshTokenData.code == 1) {
+      //     print('토큰이 성공적으로 재 갱신되었습니다!');
+      //     await Token().saveToken(
+      //         refreshTokenData.refreshToken, tokenController.refreshToken);
+      //   } else {
+      //     print('토큰 갱신에 실패했습니다.');
+      //   }
+      // }
+    } catch (e) {
+      print('회원정보조회 오류!');
     }
   }
 }

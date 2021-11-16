@@ -94,7 +94,7 @@ class _SignState extends State<Sign> {
                               InkWell(
                                 onTap: () async {
                                   OauthNetwork().postOauthKakao(
-                                      'BEmfHXpDQaOZESn46yFNJvqwBfdjSM2hTNyRewopb9QAAAF9Git-GQ123');
+                                      'HS9924fjDCu1yxa4FTzy7LzLISAMDDx6NsnT_wopb9QAAAF9KVTImw');
                                 },
                                 child: SvgPicture.asset(
                                     'assets/images_svg/ic_login_apple.svg'),
