@@ -15,12 +15,14 @@ late final TokenController tokenController;
 Future<void> main() async {
   KakaoContext.clientId = '051ba7adea57eb74c808616d4969e482';
   WidgetsFlutterBinding.ensureInitialized();
+
   tokenController = Get.put(TokenController(), permanent: true);
 
   await Firebase.initializeApp();
   await FirebaseAppCheck.instance
       .activate(webRecaptchaSiteKey: 'recaptcha-v3-site-key');
   await fetchData();
+
   runApp(Damo());
 }
 

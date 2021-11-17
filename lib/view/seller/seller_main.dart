@@ -20,8 +20,7 @@ class SellerMain extends StatefulWidget {
 }
 
 class _SellerMainState extends State<SellerMain> {
-
-  final controller = Get.put(SellerController(),permanent: true);
+  final controller = Get.put(SellerController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -274,7 +273,7 @@ class _SellerMainState extends State<SellerMain> {
             ),
             InkWell(
               onTap: () {
-                Get.to(() => SellerPreview());
+                // Get.to(() => SellerPreview());
               },
               child: Column(
                 children: [

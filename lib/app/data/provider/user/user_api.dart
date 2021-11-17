@@ -1,32 +1,20 @@
+import 'package:damo/app/controller/sign_controller.dart';
 import 'package:damo/app/controller/token_controller.dart';
+import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/app/data/model/token_model.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:get/get.dart';
 
-final baseUri = ('https://damoforyou.com/api');
+const baseUri = ('https://damoforyou.com/api');
 TokenController tokenController = Get.find();
 
 class UserNetwork {
-  final headers = {
-    'Content-Type': 'application/json',
-    'token': tokenController.accessToken,
-  };
+  GetRefreshTokenController refreshTokenData =
+      Get.put(GetRefreshTokenController());
 
-  Future<void> getUsers() async {
-    // 회원 정보 조회
-    try {
-      http.Response response = await http.get(
-        Uri.parse(baseUri + '/users'),
-        headers: headers,
-      );
-
-      int code = jsonDecode(utf8.decode(response.bodyBytes))['code'];
-    } catch (e) {}
-  }
-
-  Future<bool> postUsersAccess(String accessToken) async {
+  Future<bool> postUsersAccess() async {
     // AccessToken 사용할 수 있는지 확인
     try {
       http.Response response = await http.post(
@@ -35,41 +23,86 @@ class UserNetwork {
         ),
         headers: {
           'Content-Type': 'application/json',
-          'token': accessToken,
+          'token': tokenController.accessToken,
         },
       );
-      int code = jsonDecode(utf8.decode(response.bodyBytes))['code'];
-      String description =
-          jsonDecode(utf8.decode(response.bodyBytes))['description'];
-      if (code == 1) {
-        //성공
-        print(description);
+      PostUsersAccessController usersAccessData =
+          Get.put(PostUsersAccessController());
+      await usersAccessData
+          .checkUsersAccess(jsonDecode(utf8.decode(response.bodyBytes)));
+      if (usersAccessData.code == 1) {
+        // 유요한 토큰이므로 성공
         return true;
-      } else if (code == 2) {
-        //실패
-        print(description);
+      } else if (usersAccessData.code == 2) {
+        // 유효하지 않은 토큰이므로 실패
         return false;
-      } else if (code == 3) {
-        //토큰 만료
-        print(description);
+      } else {
+        //code ==3, 만료된 토큰이므로 토큰 재발급
+        await UserNetwork().getUsersRefresh();
+        if (refreshTokenData.code == 1) {
+          // 토큰 재발급에 성공
+          return true;
+        } else {
+          // 토큰 재발급에 실패
+          return false;
+        }
       }
-      return false;
     } catch (e) {
       return false;
     }
   }
 
   Future<void> getUsersRefresh() async {
+    // AccessToken 재발급
     try {
       http.Response response = await http.get(
         Uri.parse(baseUri + '/users/refresh'),
-        headers: headers,
+        headers: {
+          'Content-Type': 'application/json',
+          'token': tokenController.accessToken,
+        },
       );
-      String refreshToken = jsonDecode(utf8.decode(response.bodyBytes))['data'];
-      Token().saveToken(tokenController.accessToken, refreshToken);
-      print('getUsersRefresh!');
+      await refreshTokenData
+          .saveRefreshTokenData(jsonDecode(utf8.decode(response.bodyBytes)));
+      if (refreshTokenData.code == 1) {
+        print('토큰이 성공적으로 재 갱신되었습니다!');
+        await Token().saveToken(
+            refreshTokenData.refreshToken, tokenController.refreshToken);
+      } else {
+        print('토큰 갱신에 실패했습니다.');
+      }
     } catch (e) {
       print('getUsersRefreshError!');
+    }
+  }
+
+  Future<void> getUsers() async {
+    // 회원 정보 조회
+    GetUsersData userData = Get.put(GetUsersData(), permanent: true);
+    try {
+      print(tokenController.accessToken);
+      http.Response response = await http.get(
+        Uri.parse(baseUri + '/users'),
+        headers: {
+          'Content-Type': 'application/json',
+          'token': tokenController.accessToken,
+        },
+      );
+      userData.saveUsersData(jsonDecode(utf8.decode(response.bodyBytes)));
+      // if (userData.code == 1) {
+      // } else if (userData.code == 2 || userData.code == 3) {
+      //   //토큰 만료일 경우
+      //   await UserNetwork().getUsersRefresh();
+      //   if (refreshTokenData.code == 1) {
+      //     print('토큰이 성공적으로 재 갱신되었습니다!');
+      //     await Token().saveToken(
+      //         refreshTokenData.refreshToken, tokenController.refreshToken);
+      //   } else {
+      //     print('토큰 갱신에 실패했습니다.');
+      //   }
+      // }
+    } catch (e) {
+      print('회원정보조회 오류!');
     }
   }
 }

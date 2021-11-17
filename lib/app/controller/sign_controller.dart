@@ -64,11 +64,56 @@ class SignController extends GetxController {
 
   void conditionAuthNumber(String text) {
     print(RegExp(r'^([0-9]{6})$').hasMatch(text));
-    if (RegExp(r'^([0-9]{6})$').hasMatch(text) ==
-        false) {
+    if (RegExp(r'^([0-9]{6})$').hasMatch(text) == false) {
       offConfirmAuthNumberButton();
     } else {
       onConfirmAuthNumberButton();
     }
+  }
+}
+
+class PostKakaoLoginController extends GetxController {
+  late int code;
+  late String accessToken;
+  late bool isFirst;
+  late String refreshToken;
+  late String description;
+  late bool result;
+
+  Future<void> saveKakaoLoingData(dynamic json) async {
+    code = json['code'];
+    accessToken = json['data']['accessToken'].toString();
+    isFirst = json['data']['isFirst'];
+    refreshToken = json['data']['refreshToken'].toString();
+    description = json['description'].toString();
+    result = json['result'];
+  }
+}
+
+class GetRefreshTokenController extends GetxController {
+  late int code;
+  late String refreshToken;
+  late String description;
+  late bool result;
+
+  Future<void> saveRefreshTokenData(dynamic json) async {
+    code = json['code'];
+    refreshToken = json['data'].toString();
+    description = json['description'].toString();
+    result = json['result'];
+  }
+}
+
+class PostUsersAccessController extends GetxController {
+  late int code;
+  late String data;
+  late String description;
+  late bool result;
+
+  Future<void> checkUsersAccess(dynamic json) async {
+    code = json['code'];
+    data = json['data'].toString();
+    description = json['description'].toString();
+    result = json['result'];
   }
 }

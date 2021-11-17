@@ -1,4 +1,5 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/view/mypage/edit_my_info.dart';
 import 'package:damo/view/mypage/setting.dart';
 import 'package:damo/view/notification/notice_admin.dart';
@@ -9,9 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/route_manager.dart';
 import 'package:page_transition/page_transition.dart';
+
+GetUsersData userData = Get.find();
 
 class DrawerButton extends StatefulWidget {
   @override
@@ -110,7 +114,7 @@ class _DrawerButtonState extends State<DrawerButton> {
                     ),
                   ),
                   TextSpan(
-                    text: '김다모',
+                    text: userData.nickname,
                     style: TextStyle(
                       color: Color(0xff283137),
                       fontSize: 16,
@@ -140,7 +144,7 @@ class _DrawerButtonState extends State<DrawerButton> {
               height: 8.h,
             ),
             Text(
-              '4bitdamo@naver.com',
+              userData.email,
               style: TextStyle(
                 color: Color(0xff283137),
                 fontSize: 12,
