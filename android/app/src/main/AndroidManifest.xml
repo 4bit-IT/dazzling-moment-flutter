@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.fourbit.damo">
+    package="com.damoforyou.damo">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -34,18 +34,22 @@
                 android:name="io.flutter.embedding.android.SplashScreenDrawable"
                 android:resource="@drawable/launch_background"
                 />
+            <meta-data
+                android:name="com.kakao.sdk.AppKey"
+                android:value="051ba7adea57eb74c808616d4969e482" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity">
+        <activity android:name="com.kakao.sdk.flutter.AuthCodeHandlerActivity"
+            android:exported="true">
             <intent-filter android:label="flutter_web_auth">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:host="oauth"
-                android:scheme="kakao051ba7adea57eb74c808616d4969e482" />
+                android:scheme="kakao051ba7adea57eb74c808616d4969e482"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

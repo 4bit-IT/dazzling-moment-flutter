@@ -1,10 +1,149 @@
+import 'package:damo/app/data/model/user_model.dart';
+import 'package:damo/app/data/provider/user/user_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class SignController extends GetxController {
   bool readOnly = false;
+
+
+  var isNicknameCheck = false.obs;
+  NicknameDoubleCheckModel? nicknameDoubleCheckModel;
+  var nicknameController = TextEditingController().obs;
+  var acceptList = [
+    AcceptRadioModel(
+      '모두 동의',
+    ).obs,
+    AcceptRadioModel(
+      '서비스 이용약관 동의(필수)',
+    ).obs,
+    AcceptRadioModel(
+      '개인정보의 수집 및 이용 동의(필수)',
+    ).obs,
+    AcceptRadioModel(
+      '앱푸쉬 알림 동의(선택)',
+    ).obs,
+    AcceptRadioModel(
+      '마케팅 수신 동의(선택)',
+    ).obs,
+  ].obs;
+
+  void doubleCheckClicked() async {
+    if (RegExp(r'^([가-힣a-zA-Z0-9]){2,8}$')
+        .hasMatch(nicknameController.value.text) ==
+        true) {
+      Map<String, dynamic> input = {
+        'nickname': nicknameController.value.value.text.toString()
+      };
+      nicknameDoubleCheckModel =
+      await UserNetwork().postUsersCheckNickname(input);
+      if (nicknameDoubleCheckModel!.data == true) {
+        isNicknameCheck = true.obs;
+        Get.snackbar('닉네임 중복확인', '사용가능한 닉네임 입니다.');
+      } else {
+        isNicknameCheck = false.obs;
+        Get.snackbar('닉네임 중복확인', '이미 존재하는 닉네임 입니다.');
+      }
+      isNicknameCheck = true.obs;
+      print('ok');
+      print(isNicknameCheck.value);
+      print(acceptList[1].value.check);
+      print(acceptList[2].value.check);
+    } else {
+      Get.snackbar('닉네임', '알맞지 않은 닉네임 입력입니다.');
+    }
+  }
+
+  void acceptClicked(int index) {
+    if (index == 0) {
+      if (acceptList[0].value.check == true) {
+        for (int i = 0; i < 5; i++) {
+          acceptList[i].update((val) {
+            val!.check = false;
+            val.ic = SvgPicture.asset(
+              'assets/images_svg/ic_radiobtn_off.svg',
+              width: 20.w,
+              height: 20.h,
+            );
+          });
+        }
+      } else {
+        for (int i = 0; i < 5; i++) {
+          acceptList[i].update((val) {
+            val!.check = true;
+            val.ic = SvgPicture.asset(
+              'assets/images_svg/ic_radiobtn_on.svg',
+              width: 20.w,
+              height: 20.h,
+            );
+          });
+        }
+      }
+    } else {
+      if (acceptList[index].value.check == true) {
+        acceptList[index].update((val) {
+          val!.check = false;
+          val.ic = SvgPicture.asset(
+            'assets/images_svg/ic_radiobtn_off.svg',
+            width: 20.w,
+            height: 20.h,
+          );
+        });
+      } else {
+        acceptList[index].update((val) {
+          val!.check = true;
+          val.ic = SvgPicture.asset(
+            'assets/images_svg/ic_radiobtn_on.svg',
+            width: 20.w,
+            height: 20.h,
+          );
+        });
+      }
+      for (int i = 1; i < 5; i++) {
+        if (acceptList[i].value.check == false) {
+          acceptList[0].update((val) {
+            val!.check = false;
+            val.ic = SvgPicture.asset(
+              'assets/images_svg/ic_radiobtn_off.svg',
+              width: 20.w,
+              height: 20.h,
+            );
+          });
+          break;
+        }
+        if (i == 4) {
+          acceptList[0].update((val) {
+            val!.check = true;
+            val.ic = SvgPicture.asset(
+              'assets/images_svg/ic_radiobtn_on.svg',
+              width: 20.w,
+              height: 20.h,
+            );
+          });
+        }
+      }
+    }
+  }
+
+  get getConfirmButton => (acceptList[1].value.check &&
+      acceptList[2].value.check &&
+      isNicknameCheck.value)
+      ? SvgPicture.asset(
+        'assets/images_svg/btn_확인_on.svg',
+        width: 375.w,
+        fit: BoxFit.fill,
+      ).obs
+      : SvgPicture.asset(
+    'assets/images_svg/btn_확인_off.svg',
+    width: 375.w,
+    fit: BoxFit.fill,
+  ).obs;
+
+
+
   Widget getAuthNumberButton = SvgPicture.asset(
     'assets/images_svg/btn_인증번호받기_off.svg',
     width: 92.w,
@@ -116,4 +255,16 @@ class PostUsersAccessController extends GetxController {
     description = json['description'].toString();
     result = json['result'];
   }
+}
+
+class AcceptRadioModel {
+  bool check = false;
+  var ic = SvgPicture.asset(
+    'assets/images_svg/ic_radiobtn_off.svg',
+    width: 20.w,
+    height: 20.h,
+  );
+  late String description;
+
+  AcceptRadioModel(String description) : this.description = description;
 }

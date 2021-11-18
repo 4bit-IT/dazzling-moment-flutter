@@ -35,8 +35,7 @@ class OauthNetwork {
     }
   }
 
-  Future<void> postOauthKakao(String kakaoAccessToken) async {
-    try {
+  Future<void> postOauthKakao(String kakaoAccessToken) async {    try {
       http.Response response = await http.post(
         Uri.parse(
           baseUri + '/oauth/kakao',
