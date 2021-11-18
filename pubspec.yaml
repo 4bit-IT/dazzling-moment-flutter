@@ -87,7 +87,7 @@ flutter:
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "font" key with a
   # list giving the asset and other descriptors for the font. For
-  # example:
+  # damoforyou:
   #    - family: Schyler
   #      font:
   #        - asset: font/Schyler-Regular.ttf

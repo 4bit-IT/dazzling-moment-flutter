@@ -2,6 +2,7 @@ import 'package:damo/app/controller/sign_controller.dart';
 import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/app/data/model/token_model.dart';
+import 'package:damo/app/data/model/user_model.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -9,8 +10,15 @@ import 'package:get/get.dart';
 
 const baseUri = ('https://damoforyou.com/api');
 TokenController tokenController = Get.find();
+var headers = {
+  'Content-Type': 'application/json',
+  'token': tokenController.accessToken.value.toString(),
+};
 
 class UserNetwork {
+  var body;
+  NicknameDoubleCheckModel nicknameDoubleCheckModel = NicknameDoubleCheckModel();
+
   GetRefreshTokenController refreshTokenData =
       Get.put(GetRefreshTokenController());
 
@@ -103,6 +111,42 @@ class UserNetwork {
       // }
     } catch (e) {
       print('회원정보조회 오류!');
+    }
+  }
+
+  Future<NicknameDoubleCheckModel> postUsersCheckNickname(
+      Map<String, dynamic> input) async {
+    try {
+      body = NicknameDoubleCheckModel().toJson(input);
+      http.Response response = await http.post(
+          Uri.parse(
+            baseUri + '/users/check/nickname',
+          ),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: body);
+
+      if (response.statusCode == 200) {
+        nicknameDoubleCheckModel = NicknameDoubleCheckModel.fromJson(
+            jsonDecode(utf8.decode(response.bodyBytes)));
+        if (nicknameDoubleCheckModel.code == '1' &&
+            nicknameDoubleCheckModel.result == true) {
+          return nicknameDoubleCheckModel;
+        } else if (nicknameDoubleCheckModel.code == '2' &&
+            nicknameDoubleCheckModel.result == false) {
+          //실패
+        } else if (nicknameDoubleCheckModel.code == '3' &&
+            nicknameDoubleCheckModel.result == false) {
+          //토큰 만료, 토큰재발급 필요
+        }
+      } else {
+        //오류
+      }
+      return nicknameDoubleCheckModel;
+    } catch (e) {
+      return nicknameDoubleCheckModel;
+      print(e);
     }
   }
 }

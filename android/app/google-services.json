@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:199393815819:android:b80e2f280d6410ae02460e",
         "android_client_info": {
-          "package_name": "com.fourbit.damo"
+          "package_name": "com.damoforyou.damo"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "199393815819-nuj6j4b1bc09i2saro9154aiehad9soh.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.fourbit.damo",
+            "package_name": "com.damoforyou.damo",
             "certificate_hash": "3dcc6386a18bb6d2b4152811f9f9b2f66938724f"
           }
         },
@@ -25,7 +25,7 @@
           "client_id": "199393815819-qcco37lju1rgk6ied7tkkhr9vff5jufj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.fourbit.damo",
+            "package_name": "com.damoforyou.damo",
             "certificate_hash": "4486f2ba3412e6f53c2c4c81348c6655b808ec54"
           }
         },

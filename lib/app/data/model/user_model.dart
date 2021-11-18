@@ -23,3 +23,35 @@
 //   late String description;
 //   late String result;
 // }
+
+import 'dart:convert';
+
+class NicknameDoubleCheckModel {
+  late int code;
+  late bool data;
+  late String description;
+  late bool result;
+
+  NicknameDoubleCheckModel({code, data, description, result});
+
+  String toJson(Map<String, dynamic> input) {
+    print(input);
+    String body;
+    Map sendData = {
+      'nickname': input['nickname']
+    };
+    body = json.encode(sendData);
+    return body;
+  }
+
+  NicknameDoubleCheckModel.fromJson(Map<String, dynamic> json) {
+    print(json);
+    print((json['code']).runtimeType);
+    print(1);
+    code = json['code'];
+    print(code.runtimeType);
+    data = json['data'];
+    description = json['description'];
+    result = json['result'];
+  }
+}
