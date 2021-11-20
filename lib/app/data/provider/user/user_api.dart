@@ -12,7 +12,6 @@ const baseUri = ('https://damoforyou.com/api');
 TokenController tokenController = Get.find();
 var headers = {
   'Content-Type': 'application/json',
-  'token': tokenController.accessToken.value.toString(),
 };
 
 class UserNetwork {
@@ -22,7 +21,7 @@ class UserNetwork {
   GetRefreshTokenController refreshTokenData =
       Get.put(GetRefreshTokenController());
 
-  Future<bool> postUsersAccess() async {
+  Future<dynamic> postUsersAccess() async {
     // AccessToken 사용할 수 있는지 확인
     try {
       http.Response response = await http.post(
@@ -31,14 +30,11 @@ class UserNetwork {
         ),
         headers: {
           'Content-Type': 'application/json',
-          'token': tokenController.accessToken,
+          'token': tokenController.accessToken.value,
         },
       );
-      PostUsersAccessController usersAccessData =
-          Get.put(PostUsersAccessController());
-      await usersAccessData
-          .checkUsersAccess(jsonDecode(utf8.decode(response.bodyBytes)));
-      if (usersAccessData.code == 1) {
+      return jsonDecode(utf8.decode(response.bodyBytes));
+      /*if (usersAccessData.code == 1) {
         // 유요한 토큰이므로 성공
         return true;
       } else if (usersAccessData.code == 2) {
@@ -54,20 +50,20 @@ class UserNetwork {
           // 토큰 재발급에 실패
           return false;
         }
-      }
+      }*/
     } catch (e) {
-      return false;
+      print(e);
     }
   }
 
-  Future<void> getUsersRefresh() async {
+  Future<RefreshAccessTokenModel> getUsersRefresh() async {
     // AccessToken 재발급
     try {
       http.Response response = await http.get(
         Uri.parse(baseUri + '/users/refresh'),
         headers: {
           'Content-Type': 'application/json',
-          'token': tokenController.accessToken,
+          'token': tokenController.accessToken.value,
         },
       );
       await refreshTokenData
@@ -75,7 +71,7 @@ class UserNetwork {
       if (refreshTokenData.code == 1) {
         print('토큰이 성공적으로 재 갱신되었습니다!');
         await Token().saveToken(
-            refreshTokenData.refreshToken, tokenController.refreshToken);
+            refreshTokenData.refreshToken, tokenController.refreshToken.value);
       } else {
         print('토큰 갱신에 실패했습니다.');
       }
@@ -84,7 +80,7 @@ class UserNetwork {
     }
   }
 
-  Future<void> getUsers() async {
+  /*Future<void> getUsers() async {
     // 회원 정보 조회
     GetUsersData userData = Get.put(GetUsersData(), permanent: true);
     try {
@@ -93,7 +89,7 @@ class UserNetwork {
         Uri.parse(baseUri + '/users'),
         headers: {
           'Content-Type': 'application/json',
-          'token': tokenController.accessToken,
+          'token': tokenController.accessToken.value,
         },
       );
       userData.saveUsersData(jsonDecode(utf8.decode(response.bodyBytes)));
@@ -112,7 +108,7 @@ class UserNetwork {
     } catch (e) {
       print('회원정보조회 오류!');
     }
-  }
+  }*/
 
   Future<NicknameDoubleCheckModel> postUsersCheckNickname(
       Map<String, dynamic> input) async {

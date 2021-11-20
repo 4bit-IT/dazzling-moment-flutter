@@ -32,6 +32,7 @@ class GetUserInfo extends StatelessWidget {
     try {
       final authCredential =
           await auth.signInWithCredential(phoneAuthCredential);
+      Get.to(() => GetUserNickname());
       if (authCredential.user != null) {
         await auth.currentUser!.delete();
         print("auth정보삭제");
@@ -63,7 +64,7 @@ class GetUserInfo extends StatelessWidget {
         print(verificationFailed);
         print("코드발송실패");
       },
-      codeSent: (verificationId, resendingToken) async {
+      codeSent: (verificationId, resendToken) async {
         print("코드보냄");
         _verificationId = verificationId;
       },
@@ -229,6 +230,7 @@ class GetUserInfo extends StatelessWidget {
                         smsCode:
                             getController.smsAuthNumberController.value.text);
                     signInWithPhoneAuthCredential(phoneAuthCredential!);
+                    print(phoneAuthCredential!.token);
                   },
                   child: getController.confirmAuthNumberButton);
             },
