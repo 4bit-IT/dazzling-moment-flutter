@@ -10,6 +10,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 
+import 'app/data/provider/user/user_api.dart';
+
 late Widget nextScreen;
 late final TokenController tokenController;
 Future<void> main() async {
@@ -27,10 +29,13 @@ Future<void> main() async {
 }
 
 Future<void> fetchData() async {
-  await Future.delayed(Duration(seconds: 1), () {
+  await Future.delayed(Duration(seconds: 2), () async {
     if (tokenController.isAutoLogin == false) {
+      print('로그인 화면으로 이동합니다');
       nextScreen = Sign();
     } else {
+      await UserNetwork().getUsers();
+      print('메인화면으로 이동합니다.');
       nextScreen = HomeMain();
     }
   });

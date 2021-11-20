@@ -18,7 +18,7 @@ class ShopNetwork {
   late ShopOptionRegistration shopOptionRegistration;
   final headers = {
     'Content-Type': 'application/json',
-    'token': tokenController.accessToken.value.toString()
+    'token': tokenController.accessToken.value,
   };
   var body;
 
@@ -77,7 +77,7 @@ class ShopNetwork {
   void postShopImage(List<File> images) async {
     try {
       var request =
-      http.MultipartRequest("POST", Uri.parse(baseUri + '/shop/image'));
+          http.MultipartRequest("POST", Uri.parse(baseUri + '/shop/image'));
       for (var image in images) {
         request.files
             .add(await http.MultipartFile.fromPath('image', image.path));
@@ -110,7 +110,8 @@ class ShopNetwork {
     try {
       var request = http.MultipartRequest(
           "POST", Uri.parse(baseUri + '/shop/image/main'));
-      request.files.add(await http.MultipartFile.fromPath('mainImage', image.path));
+      request.files
+          .add(await http.MultipartFile.fromPath('mainImage', image.path));
 
       http.StreamedResponse response = await request.send();
       if (response.statusCode == 200) {

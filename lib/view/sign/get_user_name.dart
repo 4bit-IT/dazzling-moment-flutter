@@ -3,10 +3,8 @@ import 'package:damo/view/main/home_main.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class GetUserNickname extends StatelessWidget {
   final SignController signController = Get.put(SignController());

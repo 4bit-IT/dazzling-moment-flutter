@@ -29,8 +29,9 @@ class Kakao {
       if (kakaoLoginData.isFirst == false) {
         // 이미 가입 된 적이 있는 유저일 경우
         print('이미 가입된 회원입니다.');
-        await Token()
-            .saveToken(kakaoLoginData.accessToken, kakaoLoginData.refreshToken);
+        TokenController tokenController = Get.find();
+        await tokenController.saveToken(
+            kakaoLoginData.accessToken, kakaoLoginData.refreshToken);
         await UserNetwork().getUsers();
 
         Get.off(() => HomeMain());

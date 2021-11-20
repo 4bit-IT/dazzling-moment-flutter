@@ -3,7 +3,6 @@ import 'package:damo/app/data/provider/kakao_api.dart';
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/get_user_name.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
-import 'package:damo/view/sign/sms_auth.dart';
 import 'package:damo/view/main/home_main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -153,7 +152,7 @@ class _SignState extends State<Sign> {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
-                          Get.to(() => smsAuth());
+                          // Get.to(() => smsAuth());
                         },
                         color: Colors.blue,
                         elevation: 0,
