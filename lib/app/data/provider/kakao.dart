@@ -1,19 +1,9 @@
-import 'package:damo/app/controller/sign_controller.dart';
-import 'package:damo/app/controller/token_controller.dart';
-import 'package:damo/app/data/model/token_model.dart';
-import 'package:damo/app/data/provider/kakao_api.dart';
-import 'package:damo/app/data/provider/user/user_api.dart';
-import 'package:damo/view/main/home_main.dart';
-import 'package:damo/view/sign/get_user_number.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 
 class Kakao {
   AccessTokenResponse? kakaoAccessToken;
 
-  Future<AccessTokenResponse?> getKakaoToken() async {
+  Future<String> getKakaoToken() async {
     try {
       String authCode = await AuthCodeClient.instance.request(); //웹으로 열기
       // String authCode = await AuthCodeClient.instance.requestWithTalk() // Kakao app 으로 열기
@@ -22,10 +12,10 @@ class Kakao {
       TokenManager.instance.setToken(kakaoAccessToken!);
 
       print('KakaoToken: ' + kakaoAccessToken!.accessToken);
-      await OauthNetwork().postOauthKakaoLogin(kakaoAccessToken!.accessToken);
 
-      PostKakaoLoginController kakaoLoginData = Get.find();
+      return kakaoAccessToken!.accessToken;
 
+<<<<<<< HEAD
       if (kakaoLoginData.isFirst == false) {
         // 이미 가입 된 적이 있는 유저일 경우
         print('이미 가입된 회원입니다.');
@@ -52,15 +42,17 @@ class Kakao {
         }
       }
       return kakaoAccessToken;
+=======
+>>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
     } on KakaoAuthException {
       print("동의 취소");
-      return null;
+      return '';
     } on KakaoClientException {
       print("카카오 클라이언트 문제 발생");
-      return null;
+      return '';
     } catch (e) {
       print("로그인 취소");
-      return null;
+      return '';
     }
   }
 

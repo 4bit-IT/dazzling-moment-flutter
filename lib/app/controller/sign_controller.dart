@@ -1,5 +1,11 @@
+import 'package:damo/app/data/model/oauth_model.dart';
+import 'package:damo/app/data/model/token_model.dart';
 import 'package:damo/app/data/model/user_model.dart';
+import 'package:damo/app/data/provider/kakao.dart';
+import 'package:damo/app/data/provider/oauth_api.dart';
 import 'package:damo/app/data/provider/user/user_api.dart';
+import 'package:damo/view/main/home_main.dart';
+import 'package:damo/view/sign/get_user_number.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -8,7 +14,34 @@ import 'package:get/get.dart';
 
 class SignController extends GetxController {
   bool readOnly = false;
+  late Rx<AuthSignModel> authSignModel;
+  late Rx<AuthLoginModel> authLoginModel;
+  late Rx<Future<String>> oauthAccessToken;
+  Map<String, dynamic> input = {};
+  onKakaoLoginClicked() async {
+    oauthAccessToken = Kakao().getKakaoToken().obs;
+    input.clear();
+    input['oauthAccessToken'] = oauthAccessToken;
+    authLoginModel = AuthLoginModel.fromJson(await OauthNetwork().postOauthKakaoLogin(input)).obs;
 
+<<<<<<< HEAD
+=======
+    if(authLoginModel.value.code == 1 && authLoginModel.value.result == true) {
+      if(authLoginModel.value.isFirst == true && authLoginModel.value.accessToken =='' && authLoginModel.value.refreshToken == ''){
+        //첫 로그인
+        Get.to(() => GetUserInfo());
+      }
+      else {
+        Token().saveToken(authLoginModel.value.accessToken, authLoginModel.value.refreshToken);
+        Get.to(() => HomeMain());
+      }
+    }
+    else {
+      print('잘못된 카카오 토큰');
+    }
+  }
+
+>>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
   var isNicknameCheck = false.obs;
   NicknameDoubleCheckModel? nicknameDoubleCheckModel;
   var nicknameController = TextEditingController().obs;

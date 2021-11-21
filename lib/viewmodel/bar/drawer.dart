@@ -16,9 +16,12 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/route_manager.dart';
 import 'package:page_transition/page_transition.dart';
 
+<<<<<<< HEAD
 GetUsersData userData = Get.find();
 TokenController TokenData = Get.find();
 
+=======
+>>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
 class DrawerButton extends StatefulWidget {
   @override
   _DrawerButtonState createState() => _DrawerButtonState();
@@ -117,7 +120,7 @@ class _DrawerButtonState extends State<DrawerButton> {
                     ),
                   ),
                   TextSpan(
-                    text: userData.nickname,
+                    text: '윤중건',
                     style: TextStyle(
                       color: Color(0xff283137),
                       fontSize: 16,
@@ -147,7 +150,7 @@ class _DrawerButtonState extends State<DrawerButton> {
               height: 8.h,
             ),
             Text(
-              userData.email,
+              '임시이메일, 변경해야함',
               style: TextStyle(
                 color: Color(0xff283137),
                 fontSize: 12,
