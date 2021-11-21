@@ -26,6 +26,7 @@ class _EditMyAddressState extends State<EditMyAddress> {
           callback: (Kpostal result) async {
             userData.zipcode.value = result.postCode;
             userData.addr1.value = result.address;
+            userData.addrEditCheck = true;
             // await UserNetwork().postUsersAddress();
           },
         ),

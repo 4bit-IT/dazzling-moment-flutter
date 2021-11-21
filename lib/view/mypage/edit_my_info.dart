@@ -1,6 +1,5 @@
 import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/app/data/provider/user/user_api.dart';
-import 'package:damo/view/main/home_main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -192,56 +191,68 @@ class _EditMyInfoState extends State<EditMyInfo> {
                               InkWell(
                                 onTap: () async {
                                   await Get.to(() => EditMyAddress());
-                                  Get.defaultDialog(
-                                    title: '상세 주소',
-                                    titleStyle: TextStyle(
-                                      color: Color(0xff283137),
-                                      fontSize: 16,
-                                      fontFamily: 'NotoSansCJKKR',
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                    content: TextFormField(
-                                      controller: addr2Controller,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: '없으시면 입력하지 않아도 됩니다.',
-                                        hintStyle: TextStyle(
-                                            color: Color(0xff283137),
-                                            fontFamily: 'NotoSansCJKKR',
-                                            fontSize: 14.h,
-                                            height: 1),
+                                  if (userData.addrEditCheck == true) {
+                                    Get.defaultDialog(
+                                      title: '상세 주소입력',
+                                      titleStyle: TextStyle(
+                                        color: Color(0xff283137),
+                                        fontSize: 16,
+                                        fontFamily: 'NotoSansCJKKR',
+                                        fontWeight: FontWeight.w700,
                                       ),
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                          child: Text(
-                                            "예",
-                                            style: TextStyle(
-                                                fontFamily: 'NotoSans',
-                                                color: Colors.red[400]),
+                                      content: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 20, 0, 0),
+                                        child: TextFormField(
+                                          controller: addr2Controller,
+                                          decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: '없으시면 입력하지 않아도 됩니다.',
+                                            hintStyle: TextStyle(
+                                                color: Color(0xff283137),
+                                                fontFamily: 'NotoSansCJKKR',
+                                                fontSize: 14.h,
+                                                height: 1),
                                           ),
-                                          onPressed: () async {
-                                            userData.addr2.value =
-                                                addr2Controller.text.obs
-                                                    .toString();
-                                            addr2Controller.clear();
-                                            await UserNetwork()
-                                                .postUsersAddress();
-                                            print('주소변경 완료');
-                                            Get.back();
-                                          }),
-                                      TextButton(
-                                          child: Text(
-                                            "아니오",
-                                            style: TextStyle(
-                                                fontFamily: 'NotoSans',
-                                                color: Colors.red[400]),
-                                          ),
-                                          onPressed: () {
-                                            Get.back();
-                                          }),
-                                    ],
-                                  );
+                                        ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                            child: Text(
+                                              "확인",
+                                              style: TextStyle(
+                                                  color: Color(0xff283137),
+                                                  fontFamily: 'NotoSansCJKKR',
+                                                  fontSize: 14.h,
+                                                  height: 1),
+                                            ),
+                                            onPressed: () async {
+                                              userData.addr2.value =
+                                                  addr2Controller.text.obs
+                                                      .toString();
+                                              await UserNetwork()
+                                                  .postUsersAddress();
+                                              print('주소변경 완료');
+                                              addr2Controller.clear();
+                                              Get.back();
+                                            }),
+                                        TextButton(
+                                            child: Text(
+                                              "취소",
+                                              style: TextStyle(
+                                                  color: Color(0xff283137),
+                                                  fontFamily: 'NotoSansCJKKR',
+                                                  fontSize: 14.h,
+                                                  height: 1),
+                                            ),
+                                            onPressed: () {
+                                              addr2Controller.clear();
+                                              Get.back();
+                                            }),
+                                      ],
+                                    );
+                                    userData.addrEditCheck = false;
+                                  }
                                 },
                                 child: Row(
                                   children: [

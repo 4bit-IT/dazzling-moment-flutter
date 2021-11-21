@@ -6,6 +6,7 @@ class GetUsersData extends GetxController {
   late RxString addr1; // example: 서울특별시 금천구 가산디지털1로 5
   late RxString addr2; // example: 807호
   late RxString zipcode; // example: 12345
+  bool addrEditCheck = false; // 주소가 변경됐는지 확인하는 클라이언트 전용 변수.
   late String lastAgreeDateOfMarketing; // $date
   late String lastAgreeDateOfPushNotification; // $date
   late String lastAgreeDateOfServiceAndPersonalData; // $date
