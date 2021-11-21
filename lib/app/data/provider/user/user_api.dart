@@ -11,7 +11,10 @@ const baseUri = ('https://damoforyou.com/api');
 TokenController tokenController = Get.find();
 var headers = {
   'Content-Type': 'application/json',
+<<<<<<< HEAD
   'token': tokenController.accessToken,
+=======
+>>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
 };
 
 class UserNetwork {
@@ -21,7 +24,7 @@ class UserNetwork {
   GetRefreshTokenController refreshTokenData =
       Get.put(GetRefreshTokenController());
 
-  Future<bool> postUsersAccess() async {
+  Future<dynamic> postUsersAccess() async {
     // AccessToken 사용할 수 있는지 확인
     try {
       http.Response response = await http.post(
@@ -33,11 +36,8 @@ class UserNetwork {
           'token': tokenController.accessToken.value,
         },
       );
-      PostUsersAccessController usersAccessData =
-          Get.put(PostUsersAccessController());
-      await usersAccessData
-          .checkUsersAccess(jsonDecode(utf8.decode(response.bodyBytes)));
-      if (usersAccessData.code == 1) {
+      return jsonDecode(utf8.decode(response.bodyBytes));
+      /*if (usersAccessData.code == 1) {
         // 유요한 토큰이므로 성공
         print('유효한 토큰입니다.');
         return true;
@@ -56,13 +56,13 @@ class UserNetwork {
           // 토큰 재발급에 실패
           return false;
         }
-      }
+      }*/
     } catch (e) {
-      return false;
+      print(e);
     }
   }
 
-  Future<void> getUsersRefresh() async {
+  Future<RefreshAccessTokenModel> getUsersRefresh() async {
     // AccessToken 재발급
     try {
       http.Response response = await http.get(
@@ -77,8 +77,13 @@ class UserNetwork {
       if (refreshTokenData.code == 1) {
         TokenController tokenController = Get.find();
         print('토큰이 성공적으로 재 갱신되었습니다!');
+<<<<<<< HEAD
         await tokenController.saveToken(refreshTokenData.refreshToken.value,
             tokenController.refreshToken.value);
+=======
+        await Token().saveToken(
+            refreshTokenData.refreshToken, tokenController.refreshToken.value);
+>>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
       } else {
         print('토큰 갱신에 실패했습니다.');
       }
@@ -87,7 +92,7 @@ class UserNetwork {
     }
   }
 
-  Future<void> getUsers() async {
+  /*Future<void> getUsers() async {
     // 회원 정보 조회
     GetUsersData userData = Get.put(GetUsersData(), permanent: true);
     try {
@@ -114,7 +119,7 @@ class UserNetwork {
     } catch (e) {
       print('회원정보조회 오류!');
     }
-  }
+  }*/
 
   Future<void> postUsersAddress() async {
     try {

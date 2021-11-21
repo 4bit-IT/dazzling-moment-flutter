@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+=======
+import 'package:damo/app/data/model/user_model.dart';
+import 'package:damo/app/data/provider/kakao.dart';
+>>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/get.dart';
 
+<<<<<<< HEAD
 class GetUsersData extends GetxController {
   late int code;
   late RxString addr1; // example: 서울특별시 금천구 가산디지털1로 5
@@ -53,5 +60,21 @@ class GetUsersData extends GetxController {
     sex = json['data']['sex'];
     description = json['description'];
     result = json['result'];
+=======
+class UserController extends GetxController {
+  GetUserInfoModel? getUserInfoModel;
+  AccessTokenAvailableCheckModel? accessTokenAvailableCheckModel;
+  ChangeAddressModel? changeAddressModel;
+  NicknameDoubleCheckModel? nicknameDoubleCheckModel;
+  CheckOwnerModel? checkOwnerModel;
+  UserPhoneNumberModel? userPhoneNumberModel;
+  ChangeProfileImageModel? changeProfileImageModel;
+  ChangeDefaultProfileImageModel? changeDefaultProfileImageModel;
+  RefreshAccessTokenModel? refreshAccessTokenModel;
+
+  void isAvailableAccessToken() {
+
+>>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
   }
+
 }

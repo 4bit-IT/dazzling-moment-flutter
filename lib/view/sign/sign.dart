@@ -1,5 +1,6 @@
-import 'package:damo/app/data/provider/kakao.dart';
-import 'package:damo/app/data/provider/kakao_api.dart';
+import 'package:damo/app/controller/sign_controller.dart';
+import 'package:damo/app/controller/user_controller.dart';
+import 'package:damo/app/data/provider/oauth_api.dart';
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/get_user_name.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
@@ -10,12 +11,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class Sign extends StatefulWidget {
-  @override
-  _SignState createState() => _SignState();
-}
+class Sign extends StatelessWidget {
+  final SignController signController = Get.put(SignController());
+  final UserController userController = Get.put(UserController());
 
-class _SignState extends State<Sign> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +25,8 @@ class _SignState extends State<Sign> {
           child: Container(
             child: SingleChildScrollView(
               child: Column(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.center,
+// mainAxisAlignment: MainAxisAlignment.spaceBetween,
+// crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
                     height: 200.h,
@@ -92,8 +91,6 @@ class _SignState extends State<Sign> {
                             children: [
                               InkWell(
                                 onTap: () async {
-                                  OauthNetwork().postOauthKakao(
-                                      'HS9924fjDCu1yxa4FTzy7LzLISAMDDx6NsnT_wopb9QAAAF9KVTImw');
                                 },
                                 child: SvgPicture.asset(
                                     'assets/images_svg/ic_login_apple.svg'),
@@ -119,7 +116,7 @@ class _SignState extends State<Sign> {
                           children: [
                             InkWell(
                               onTap: () {
-                                Kakao().getKakaoToken();
+                                signController.onKakaoLoginClicked();
                               },
                               child: SvgPicture.asset(
                                   'assets/images_svg/ic_login_kakao.svg'),
