@@ -16,12 +16,9 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/route_manager.dart';
 import 'package:page_transition/page_transition.dart';
 
-<<<<<<< HEAD
 GetUsersData userData = Get.find();
 TokenController TokenData = Get.find();
 
-=======
->>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
 class DrawerButton extends StatefulWidget {
   @override
   _DrawerButtonState createState() => _DrawerButtonState();

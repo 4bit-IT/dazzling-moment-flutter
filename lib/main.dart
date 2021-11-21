@@ -29,14 +29,10 @@ Future<void> main() async {
 }
 
 Future<void> fetchData() async {
-  await Future.delayed(Duration(seconds: 2), () async {
-    if (tokenController.isAutoLogin == false) {
-      print('로그인 화면으로 이동합니다');
+  await Future.delayed(Duration(seconds: 1), () {
+    if (tokenController.isAutoLogin.value == false) {
       nextScreen = Sign();
     } else {
-      await UserNetwork().getUsers();
-      print('메인화면으로 이동합니다.');
-      print('main');
       nextScreen = HomeMain();
     }
   });

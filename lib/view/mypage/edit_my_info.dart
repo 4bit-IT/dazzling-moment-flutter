@@ -259,7 +259,7 @@ class _EditMyInfoState extends State<EditMyInfo> {
                                     SizedBox(
                                       width: 210.w,
                                       child: Obx(
-                                        () => Text(
+                                            () => Text(
                                           userData.addr1.value +
                                               ' ' +
                                               userData.addr2.value,

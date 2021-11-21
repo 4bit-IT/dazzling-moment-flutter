@@ -1,6 +1,7 @@
 import 'package:damo/app/controller/sign_controller.dart';
 import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
+import 'package:damo/app/data/model/token_model.dart';
 import 'package:damo/app/data/model/user_model.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
@@ -11,10 +12,7 @@ const baseUri = ('https://damoforyou.com/api');
 TokenController tokenController = Get.find();
 var headers = {
   'Content-Type': 'application/json',
-<<<<<<< HEAD
   'token': tokenController.accessToken,
-=======
->>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
 };
 
 class UserNetwork {
@@ -62,7 +60,7 @@ class UserNetwork {
     }
   }
 
-  Future<RefreshAccessTokenModel> getUsersRefresh() async {
+  Future<dynamic> getUsersRefresh() async {
     // AccessToken 재발급
     try {
       http.Response response = await http.get(
@@ -75,15 +73,9 @@ class UserNetwork {
       await refreshTokenData
           .saveRefreshTokenData(jsonDecode(utf8.decode(response.bodyBytes)));
       if (refreshTokenData.code == 1) {
-        TokenController tokenController = Get.find();
         print('토큰이 성공적으로 재 갱신되었습니다!');
-<<<<<<< HEAD
-        await tokenController.saveToken(refreshTokenData.refreshToken.value,
-            tokenController.refreshToken.value);
-=======
         await Token().saveToken(
             refreshTokenData.refreshToken, tokenController.refreshToken.value);
->>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
       } else {
         print('토큰 갱신에 실패했습니다.');
       }

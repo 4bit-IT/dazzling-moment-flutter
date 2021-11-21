@@ -1,13 +1,9 @@
-<<<<<<< HEAD
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
-=======
 import 'package:damo/app/data/model/user_model.dart';
 import 'package:damo/app/data/provider/kakao.dart';
->>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/get.dart';
 
-<<<<<<< HEAD
 class GetUsersData extends GetxController {
   late int code;
   late RxString addr1; // example: 서울특별시 금천구 가산디지털1로 5
@@ -35,20 +31,26 @@ class GetUsersData extends GetxController {
 
   Future<void>? saveUsersData(dynamic json) {
     code = json['code'];
-    addr1 = json['data']['address']['addr1'].toString().obs;
-    addr2 = json['data']['address']['addr2'].toString().obs;
-    zipcode = json['data']['address']['zipcode'].toString().obs;
+    addr1 = json['data']['address']['addr1']
+        .toString()
+        .obs;
+    addr2 = json['data']['address']['addr2']
+        .toString()
+        .obs;
+    zipcode = json['data']['address']['zipcode']
+        .toString()
+        .obs;
     ageRange = json['data']['ageRange'];
     lastAgreeDateOfMarketing =
-        json['data']['agreements']['lastAgreeDateOfMarketing'];
+    json['data']['agreements']['lastAgreeDateOfMarketing'];
     lastAgreeDateOfPushNotification =
-        json['data']['agreements']['lastAgreeDateOfPushNotification'];
+    json['data']['agreements']['lastAgreeDateOfPushNotification'];
     lastAgreeDateOfServiceAndPersonalData =
-        json['data']['agreements']['lastAgreeDateOfServiceAndPersonalData'];
+    json['data']['agreements']['lastAgreeDateOfServiceAndPersonalData'];
     marketing = json['data']['agreements']['marketing'];
     pushNotification = json['data']['agreements']['pushNotification'];
     serviceAndPersonalData =
-        json['data']['agreements']['serviceAndPersonalData'];
+    json['data']['agreements']['serviceAndPersonalData'];
     birth = json['data']['birth'];
     createdAt = json['data']['createdAt'];
     email = json['data']['email'];
@@ -56,11 +58,15 @@ class GetUsersData extends GetxController {
     name = json['data']['name'];
     nickname = json['data']['nickname'];
     phoneNumber = json['data']['phoneNumber'];
-    profileImage = json['data']['profileImage'].toString().obs;
+    profileImage = json['data']['profileImage']
+        .toString()
+        .obs;
     sex = json['data']['sex'];
     description = json['description'];
     result = json['result'];
-=======
+  }
+}
+
 class UserController extends GetxController {
   GetUserInfoModel? getUserInfoModel;
   AccessTokenAvailableCheckModel? accessTokenAvailableCheckModel;
@@ -74,7 +80,6 @@ class UserController extends GetxController {
 
   void isAvailableAccessToken() {
 
->>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
   }
 
 }

@@ -26,27 +26,27 @@ class GetUserInfoModel {
 
   GetUserInfoModel(
       {code,
-      addr1,
-      addr2,
-      zipcode,
-      ageRange,
-      lastAgreeDateOfMarketing,
-      lastAgreeDateOfPushNotification,
-      lateAgreeDateOfServiceAndPersonalData,
-      marketing,
-      pushNotification,
-      serviceAndPersonalData,
-      birth,
-      createdAt,
-      email,
-      id,
-      name,
-      nickname,
-      phoneNumber,
-      profileImage,
-      sex,
-      description,
-      result});
+        addr1,
+        addr2,
+        zipcode,
+        ageRange,
+        lastAgreeDateOfMarketing,
+        lastAgreeDateOfPushNotification,
+        lateAgreeDateOfServiceAndPersonalData,
+        marketing,
+        pushNotification,
+        serviceAndPersonalData,
+        birth,
+        createdAt,
+        email,
+        id,
+        name,
+        nickname,
+        phoneNumber,
+        profileImage,
+        sex,
+        description,
+        result});
 
   GetUserInfoModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
@@ -55,15 +55,15 @@ class GetUserInfoModel {
     zipcode = json['data']['address']['zipcode'];
     ageRange = json['data']['ageRange'];
     lastAgreeDateOfMarketing =
-        json['data']['agreements']['lastAgreeDateOfMarketing'];
+    json['data']['agreements']['lastAgreeDateOfMarketing'];
     lastAgreeDateOfPushNotification =
-        json['data']['agreements']['lastAgreeDateOfPushNotification'];
+    json['data']['agreements']['lastAgreeDateOfPushNotification'];
     lastAgreeDateOfServiceAndPersonalData =
-        json['data']['agreements']['lastAgreeDateOfServiceAndPersonalData'];
+    json['data']['agreements']['lastAgreeDateOfServiceAndPersonalData'];
     marketing = json['data']['agreements']['marketing'];
     pushNotification = json['data']['agreements']['pushNotification'];
     serviceAndPersonalData =
-        json['data']['agreements']['serviceAndPersonalData'];
+    json['data']['agreements']['serviceAndPersonalData'];
     birth = json['data']['birth'];
     createdAt = json['data']['createdAt'];
     email = json['data']['email'];
@@ -120,18 +120,14 @@ class ChangeAddressModel {
 }
 
 class NicknameDoubleCheckModel {
-  late int code; // example: 성공은 1 or 실패는 2 or 토큰 만료는 3
-  late bool data; // boolean
-  late String description; //example: 성공 or 에러 메세지 or 토큰이 만료되었습니다.
-  late bool result; // example: true
+  late int code;
+  late bool data;
+  late String description;
+  late bool result;
 
   NicknameDoubleCheckModel({code, data, description, result});
 
   String toJson(Map<String, dynamic> input) {
-<<<<<<< HEAD
-    String body;
-    Map sendData = {'nickname': input['nickname']};
-=======
     String body;
     Map sendData = {'nickname': input['nickname']};
     body = json.encode(sendData);
@@ -174,14 +170,10 @@ class UserPhoneNumberModel {
     Map sendData = {
       'phoneNumber' : input['phoneNumber'].toString()
     };
->>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
     body = json.encode(sendData);
     return body;
   }
 
-<<<<<<< HEAD
-  NicknameDoubleCheckModel.fromJson(Map<String, dynamic> json) {
-=======
   UserPhoneNumberModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     description = json['description'];
@@ -232,7 +224,6 @@ class RefreshAccessTokenModel {
   RefreshAccessTokenModel({code,data,description,result});
 
   RefreshAccessTokenModel.fromJson(Map<String, dynamic> json) {
->>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
     code = json['code'];
     data = json['data'];
     description = json['description'];
