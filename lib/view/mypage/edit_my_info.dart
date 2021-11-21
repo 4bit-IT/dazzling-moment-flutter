@@ -1,12 +1,24 @@
+import 'package:damo/app/controller/user_controller.dart';
+import 'package:damo/app/data/provider/user/user_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class EditMyInfo extends StatelessWidget {
+import 'edit_my_address.dart';
+
+GetUsersData userData = Get.find();
+TextEditingController addr2Controller = TextEditingController();
+
+class EditMyInfo extends StatefulWidget {
   const EditMyInfo({Key? key}) : super(key: key);
 
+  @override
+  State<EditMyInfo> createState() => _EditMyInfoState();
+}
+
+class _EditMyInfoState extends State<EditMyInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,8 +67,8 @@ class EditMyInfo extends StatelessWidget {
                   ),
                   Stack(
                     children: [
-                      SvgPicture.asset(
-                        'assets/images_svg/img_여자기본프로필.svg',
+                      Image.network(
+                        userData.profileImage.value,
                         width: 75.w,
                         height: 75.h,
                       ),
@@ -101,13 +113,16 @@ class EditMyInfo extends StatelessWidget {
                                     fontSize: 14.h,
                                     height: 1),
                               ),
-                              Text(
-                                '4bitdamo@naver.com',
-                                style: TextStyle(
-                                    color: Color(0xff283137),
-                                    fontFamily: 'NotoSansCJKKR',
-                                    fontSize: 14.h,
-                                    height: 1),
+                              SizedBox(
+                                width: 164.w,
+                                child: Text(
+                                  userData.email,
+                                  style: TextStyle(
+                                      color: Color(0xff283137),
+                                      fontFamily: 'NotoSansCJKKR',
+                                      fontSize: 14.h,
+                                      height: 1),
+                                ),
                               ),
                               SvgPicture.asset(
                                 'assets/images_svg/ic_kakao_20.svg',
@@ -137,43 +152,18 @@ class EditMyInfo extends StatelessWidget {
                                     fontSize: 14.h,
                                     height: 1),
                               ),
-                              Container(
-                                height: 40.h,
-                                width: 230.w,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Color(0xffd1d1d6),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(
-                                    8.r,
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: TextFormField(
-                                        inputFormatters: [],
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintStyle: TextStyle(
-                                            color: Color(0xffd1d1d6),
-                                            fontFamily: 'NotoSansCJKKR',
-                                            fontSize: 14.h,
-                                            height: 1,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SvgPicture.asset(
-                                      'assets/images_svg/btn_중복확인.svg',
-                                      width: 80.w,
-                                      height: 40.h,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ],
+                              SizedBox(
+                                width: 168.w,
+                                child: Text(
+                                  userData.nickname,
+                                  style: TextStyle(
+                                      color: Color(0xff283137),
+                                      fontFamily: 'NotoSansCJKKR',
+                                      fontSize: 14.h,
+                                      height: 1),
                                 ),
                               ),
+                              SizedBox(width: 15.w),
                             ],
                           ),
                         ),
@@ -198,10 +188,97 @@ class EditMyInfo extends StatelessWidget {
                                   height: 1,
                                 ),
                               ),
-                              SvgPicture.asset(
-                                'assets/images_svg/ic_바로가기.svg',
-                                width: 20.w,
-                                height: 20.h,
+                              InkWell(
+                                onTap: () async {
+                                  await Get.to(() => EditMyAddress());
+                                  if (userData.addrEditCheck == true) {
+                                    Get.defaultDialog(
+                                      title: '상세 주소입력',
+                                      titleStyle: TextStyle(
+                                        color: Color(0xff283137),
+                                        fontSize: 16,
+                                        fontFamily: 'NotoSansCJKKR',
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                      content: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 20, 0, 0),
+                                        child: TextFormField(
+                                          controller: addr2Controller,
+                                          decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: '없으시면 입력하지 않아도 됩니다.',
+                                            hintStyle: TextStyle(
+                                                color: Color(0xff283137),
+                                                fontFamily: 'NotoSansCJKKR',
+                                                fontSize: 14.h,
+                                                height: 1),
+                                          ),
+                                        ),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                            child: Text(
+                                              "확인",
+                                              style: TextStyle(
+                                                  color: Color(0xff283137),
+                                                  fontFamily: 'NotoSansCJKKR',
+                                                  fontSize: 14.h,
+                                                  height: 1),
+                                            ),
+                                            onPressed: () async {
+                                              userData.addr2.value =
+                                                  addr2Controller.text.obs
+                                                      .toString();
+                                              await UserNetwork()
+                                                  .postUsersAddress();
+                                              print('주소변경 완료');
+                                              addr2Controller.clear();
+                                              Get.back();
+                                            }),
+                                        TextButton(
+                                            child: Text(
+                                              "취소",
+                                              style: TextStyle(
+                                                  color: Color(0xff283137),
+                                                  fontFamily: 'NotoSansCJKKR',
+                                                  fontSize: 14.h,
+                                                  height: 1),
+                                            ),
+                                            onPressed: () {
+                                              addr2Controller.clear();
+                                              Get.back();
+                                            }),
+                                      ],
+                                    );
+                                    userData.addrEditCheck = false;
+                                  }
+                                },
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 210.w,
+                                      child: Obx(
+                                        () => Text(
+                                          userData.addr1.value +
+                                              ' ' +
+                                              userData.addr2.value,
+                                          style: TextStyle(
+                                              color: Color(0xff283137),
+                                              fontFamily: 'NotoSansCJKKR',
+                                              fontSize: 14.h,
+                                              height: 1),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ),
+                                    SvgPicture.asset(
+                                      'assets/images_svg/ic_바로가기.svg',
+                                      width: 20.w,
+                                      height: 20.h,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -263,10 +340,6 @@ class EditMyInfo extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          SvgPicture.asset(
-            'assets/images_svg/btn_수정완료.svg',
-            width: 375.w,
           ),
         ],
       ),

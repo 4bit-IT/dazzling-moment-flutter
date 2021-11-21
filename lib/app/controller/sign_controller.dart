@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 class SignController extends GetxController {
   bool readOnly = false;
 
-
   var isNicknameCheck = false.obs;
   NicknameDoubleCheckModel? nicknameDoubleCheckModel;
   var nicknameController = TextEditingController().obs;
@@ -33,13 +32,13 @@ class SignController extends GetxController {
 
   void doubleCheckClicked() async {
     if (RegExp(r'^([가-힣a-zA-Z0-9]){2,8}$')
-        .hasMatch(nicknameController.value.text) ==
+            .hasMatch(nicknameController.value.text) ==
         true) {
       Map<String, dynamic> input = {
         'nickname': nicknameController.value.value.text.toString()
       };
       nicknameDoubleCheckModel =
-      await UserNetwork().postUsersCheckNickname(input);
+          await UserNetwork().postUsersCheckNickname(input);
       if (nicknameDoubleCheckModel!.data == true) {
         isNicknameCheck = true.obs;
         Get.snackbar('닉네임 중복확인', '사용가능한 닉네임 입니다.');
@@ -48,10 +47,6 @@ class SignController extends GetxController {
         Get.snackbar('닉네임 중복확인', '이미 존재하는 닉네임 입니다.');
       }
       isNicknameCheck = true.obs;
-      print('ok');
-      print(isNicknameCheck.value);
-      print(acceptList[1].value.check);
-      print(acceptList[2].value.check);
     } else {
       Get.snackbar('닉네임', '알맞지 않은 닉네임 입력입니다.');
     }
@@ -129,20 +124,18 @@ class SignController extends GetxController {
   }
 
   get getConfirmButton => (acceptList[1].value.check &&
-      acceptList[2].value.check &&
-      isNicknameCheck.value)
+          acceptList[2].value.check &&
+          isNicknameCheck.value)
       ? SvgPicture.asset(
-        'assets/images_svg/btn_확인_on.svg',
-        width: 375.w,
-        fit: BoxFit.fill,
-      ).obs
+          'assets/images_svg/btn_확인_on.svg',
+          width: 375.w,
+          fit: BoxFit.fill,
+        ).obs
       : SvgPicture.asset(
-    'assets/images_svg/btn_확인_off.svg',
-    width: 375.w,
-    fit: BoxFit.fill,
-  ).obs;
-
-
+          'assets/images_svg/btn_확인_off.svg',
+          width: 375.w,
+          fit: BoxFit.fill,
+        ).obs;
 
   Widget getAuthNumberButton = SvgPicture.asset(
     'assets/images_svg/btn_인증번호받기_off.svg',
@@ -220,25 +213,25 @@ class PostKakaoLoginController extends GetxController {
   late bool result;
 
   Future<void> saveKakaoLoingData(dynamic json) async {
-    code = json['code'];
-    accessToken = json['data']['accessToken'].toString();
-    isFirst = json['data']['isFirst'];
-    refreshToken = json['data']['refreshToken'].toString();
-    description = json['description'].toString();
-    result = json['result'];
+    code = await json['code'];
+    accessToken = await json['data']['accessToken'];
+    isFirst = await json['data']['isFirst'];
+    refreshToken = await json['data']['refreshToken'];
+    description = await json['description'];
+    result = await json['result'];
   }
 }
 
 class GetRefreshTokenController extends GetxController {
   late int code;
-  late String refreshToken;
-  late String description;
+  late RxString refreshToken;
+  late RxString description;
   late bool result;
 
   Future<void> saveRefreshTokenData(dynamic json) async {
     code = json['code'];
-    refreshToken = json['data'].toString();
-    description = json['description'].toString();
+    refreshToken = json['data'].toString().obs;
+    description = json['description'].toString().obs;
     result = json['result'];
   }
 }
@@ -250,9 +243,9 @@ class PostUsersAccessController extends GetxController {
   late bool result;
 
   Future<void> checkUsersAccess(dynamic json) async {
+    description = json['description'].toString();
     code = json['code'];
     data = json['data'].toString();
-    description = json['description'].toString();
     result = json['result'];
   }
 }

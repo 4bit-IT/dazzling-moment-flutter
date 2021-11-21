@@ -1,4 +1,5 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/view/mypage/edit_my_info.dart';
 import 'package:damo/view/mypage/setting.dart';
@@ -16,6 +17,7 @@ import 'package:get/route_manager.dart';
 import 'package:page_transition/page_transition.dart';
 
 GetUsersData userData = Get.find();
+TokenController TokenData = Get.find();
 
 class DrawerButton extends StatefulWidget {
   @override
@@ -46,7 +48,8 @@ class _DrawerButtonState extends State<DrawerButton> {
                         fontFamily: 'NotoSans', color: Colors.red[400]),
                   ),
                   onPressed: () {
-                    //Kakao().kakaoLogout();
+                    print('로그아웃 합니다.');
+                    TokenData.removeToken();
                     Get.offAll(
                       () => AnimatedSplashScreen(
                         duration: 1500,
@@ -86,7 +89,7 @@ class _DrawerButtonState extends State<DrawerButton> {
               children: [
                 Container(
                   alignment: Alignment.topLeft,
-                  child: Image.asset('assets/images/img_profile@3x.png'),
+                  child: Image.network(userData.profileImage.value),
                   height: 55,
                 ),
                 SizedBox(

@@ -1,3 +1,4 @@
+import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/view/mypage/edit_my_info.dart';
 import 'package:damo/view/mypage/purchase_history.dart';
 import 'package:damo/view/mypage/setting.dart';
@@ -14,7 +15,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+
+GetUsersData userData = Get.find();
 
 class MyPage extends StatefulWidget {
   MyPage({this.bottomNavigationIndex});
@@ -58,8 +62,8 @@ class _MyPageState extends State<MyPage> {
                     Row(
                       children: [
                         SizedBox(width: 150.w),
-                        SvgPicture.asset(
-                          'assets/images_svg/img_여자기본프로필.svg',
+                        Image.network(
+                          userData.profileImage.value,
                           width: 75.w,
                           height: 75.h,
                         ),
@@ -73,7 +77,7 @@ class _MyPageState extends State<MyPage> {
                                 height: 30.h,
                               ),
                               onTap: () {
-                                Get.to(()=>EditMyInfo());
+                                Get.to(() => EditMyInfo());
                               },
                             ),
                             SizedBox(height: 54.h),
@@ -83,7 +87,7 @@ class _MyPageState extends State<MyPage> {
                     ),
                     SizedBox(height: 11.h),
                     Text(
-                      '김다모',
+                      userData.nickname,
                       style: TextStyle(
                         color: Color(0xff283137),
                         fontSize: 16.h,
@@ -94,7 +98,7 @@ class _MyPageState extends State<MyPage> {
                     ),
                     SizedBox(height: 5.h),
                     Text(
-                      '4bitdamo@naver.com',
+                      userData.email,
                       style: TextStyle(
                         color: Color(0xff283137),
                         fontFamily: 'NotoSansCJKKR',
@@ -106,7 +110,7 @@ class _MyPageState extends State<MyPage> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(()=>WishListPage());
+                            Get.to(() => WishListPage());
                           },
                           child: Container(
                             height: 79.h,
@@ -148,7 +152,7 @@ class _MyPageState extends State<MyPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            Get.to(()=>PurchaseHistory());
+                            Get.to(() => PurchaseHistory());
                           },
                           child: Container(
                             height: 79.h,
