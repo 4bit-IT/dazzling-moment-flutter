@@ -36,6 +36,7 @@ Future<void> fetchData() async {
     } else {
       await UserNetwork().getUsers();
       print('메인화면으로 이동합니다.');
+      print('main');
       nextScreen = HomeMain();
     }
   });
