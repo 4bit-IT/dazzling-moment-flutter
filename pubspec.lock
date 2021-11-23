@@ -43,6 +43,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  card_swiper:
+    dependency: "direct main"
+    description:
+      name: card_swiper
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
   characters:
     dependency: transitive
     description:
@@ -590,6 +597,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  simple_star_rating:
+    dependency: "direct main"
+    description:
+      name: simple_star_rating
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -693,6 +707,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  vertical_barchart:
+    dependency: "direct main"
+    description:
+      name: vertical_barchart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0+2"
   webview_flutter:
     dependency: transitive
     description:

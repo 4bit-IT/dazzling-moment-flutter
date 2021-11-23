@@ -8,14 +8,6 @@ import 'package:flutter/material.dart';
 
 class GetUserNickname extends StatelessWidget {
   final SignController signController = Get.put(SignController());
-  TextEditingController nicknameController = TextEditingController();
-  List<Widget> radioList = [];
-  List<Widget> radioImage = [];
-  List<String> radioText = [];
-  Widget confirmButton = SvgPicture.asset(
-    'assets/images_svg/btn_확인_off.svg',
-    width: 375.w,
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -171,6 +163,7 @@ class GetUserNickname extends StatelessWidget {
               if (signController.acceptList[1].value.check &&
                   signController.acceptList[2].value.check &&
                   signController.isNicknameCheck.value) {
+                signController.signUpClicked();
                 //회원가입 api 호출한 뒤
                 Get.offAll(() => HomeMain());
               }

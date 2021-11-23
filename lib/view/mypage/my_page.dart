@@ -4,7 +4,7 @@ import 'package:damo/view/mypage/purchase_history.dart';
 import 'package:damo/view/mypage/setting.dart';
 import 'package:damo/view/mypage/wish_list_page.dart';
 import 'package:damo/view/notification/notice_admin.dart';
-import 'package:damo/view/seller/seller_main.dart';
+import 'package:damo/view/shop/shop_main.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/viewmodel/bar/back_button_clicked.dart';
 import 'package:damo/viewmodel/bar/bottom_navigaton.dart';
@@ -18,7 +18,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 
-GetUsersData userData = Get.find();
+UserController userController = Get.find();
 
 class MyPage extends StatefulWidget {
   MyPage({this.bottomNavigationIndex});
@@ -63,7 +63,7 @@ class _MyPageState extends State<MyPage> {
                       children: [
                         SizedBox(width: 150.w),
                         Image.network(
-                          userData.profileImage.value,
+                          userController.getUserInfoModel!.value.profileImage!,
                           width: 75.w,
                           height: 75.h,
                         ),
@@ -87,7 +87,7 @@ class _MyPageState extends State<MyPage> {
                     ),
                     SizedBox(height: 11.h),
                     Text(
-                      userData.nickname,
+                      userController.getUserInfoModel!.value.nickname!,
                       style: TextStyle(
                         color: Color(0xff283137),
                         fontSize: 16.h,
@@ -98,7 +98,7 @@ class _MyPageState extends State<MyPage> {
                     ),
                     SizedBox(height: 5.h),
                     Text(
-                      userData.email,
+                      userController.getUserInfoModel!.value.email!,
                       style: TextStyle(
                         color: Color(0xff283137),
                         fontFamily: 'NotoSansCJKKR',
@@ -364,7 +364,7 @@ class _MyPageState extends State<MyPage> {
                           SizedBox(height: 24.h),
                           TextButton(
                             onPressed: () {
-                              Get.to(() => SellerMain());
+                              Get.to(() => ShopMain());
                             },
                             child: Text(
                               '판매자 신청하기',

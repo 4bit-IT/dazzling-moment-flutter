@@ -1,189 +1,276 @@
-// import 'package:damo/view/product/product_info.dart';
-// import 'package:damo/view/product/product_qa.dart';
-// import 'package:damo/view/product/product_review.dart';
-// import 'package:draggable_home/draggable_home.dart';
-// import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter/rendering.dart';
-// import 'package:google_fonts/google_fonts.dart';
-// import 'dart:ui';
-// import 'package:card_swiper/card_swiper.dart';
+import 'package:card_swiper/card_swiper.dart';
+import 'package:damo/view/product/product_info.dart';
+import 'package:damo/view/product/product_qa.dart';
+import 'package:damo/view/product/product_review.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:simple_star_rating/simple_star_rating.dart';
 
-// class Product extends StatefulWidget {
-//   @override
-//   _ProductState createState() => _ProductState();
-// }
+class Product extends StatelessWidget {
+  const Product({Key? key}) : super(key: key);
 
-// class _ProductState extends State<Product> with TickerProviderStateMixin {
-//   late TabController _controller;
-//   String reviewCount = '30';
-//   String questionCount = '30';
-//   String productName = '곰돌곰돌';
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: DefaultTabController(
+        length: 3,
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return [
+              SliverAppBar(
+                backgroundColor: Colors.transparent,
+                pinned: true,
+                leading: CupertinoButton(
+                  padding: EdgeInsets.all(0),
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: SvgPicture.asset(
+                    'assets/images_svg/ic_back_white_30.svg',
+                    width: 30.w,
+                    height: 30.h,
+                  ),
+                ),
+                actions: [
+                  Row(
+                    children: [
+                      InkWell(
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                              'assets/images_svg/ic_share_white_30.svg',
+                              width: 30.w,
+                              height: 30.h)),
+                      SizedBox(width: 10.w),
+                      InkWell(
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                              'assets/images_svg/ic_wish_on.svg',
+                              width: 30.w,
+                              height: 30.h)),
+                      SizedBox(width: 10.w),
+                    ],
+                  ),
+                ],
+                expandedHeight: 375.h,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Swiper.children(
+                    autoplay: false,
+                    pagination: SwiperPagination(
+                        margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 17.h),
+                        builder: DotSwiperPaginationBuilder(
+                            color: Colors.grey,
+                            activeColor: Colors.white,
+                            size: 7.0,
+                            activeSize: 7.0)),
+                    children: [
+                      Image.asset(
+                        "assets/images/상품사진1@3x.png",
+                        fit: BoxFit.cover,
+                      ),
+                      Image.asset(
+                        "assets/images/상품사진2@3x.png",
+                        fit: BoxFit.cover,
+                      ),
+                      Image.asset(
+                        "assets/images/상품사진3@3x.png",
+                        fit: BoxFit.cover,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(17.0.w, 15.h, 10.w, 0),
+                  child: Text(
+                    '이로아케이크',
+                    style: TextStyle(
+                      color: Color(0xfff93f5b),
+                      fontSize: 12.sp,
+                      height: 1,
+                      fontFamily: 'NotoSansCJKKR',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(17.0.w, 9.h, 10.w, 0),
+                  child: Text(
+                    '플루트 딸기가득 케이크',
+                    style: TextStyle(
+                      color: Color(0xff283137),
+                      fontSize: 20,
+                      fontFamily: 'NotoSansCJKKR',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(17.0.w, 10.h, 15.w, 20.h),
+                  child: Text(
+                    '서울에서 입소문난 수제케이크 집입니다. 기념일용 아름다운 케이크와 함께 눈부신 순간을 축복하세요.  ',
+                    style: TextStyle(
+                      color: Color(0xff283137),
+                      fontFamily: 'NotoSansCJKKR',
+                    ),
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(17.0.w, 4.h, 0.w, 20.h),
+                  child: Row(
+                    children: [
+                      SimpleStarRating(
+                        allowHalfRating: true,
+                        starCount: 5,
+                        rating: 3.0,
+                        size: 10.w,
+                        isReadOnly: true,
+                        spacing: 2.5.w,
+                      ),
+                      SizedBox(width: 5.0.w),
+                      Text(
+                        '4.9',
+                        style: TextStyle(
+                          color: Color(0xff283137),
+                          fontFamily: 'NotoSansCJKKR',
+                        ),
+                      ),
+                      SizedBox(width: 2.0.w),
+                      Text(
+                        '(1,234)',
+                        style: TextStyle(
+                          color: Color(0xff8e97a0),
+                          fontFamily: 'NotoSansCJKKR',
+                        ),
+                      ),
+                      SizedBox(width: 110.w),
+                      Text(
+                        '30%',
+                        style: TextStyle(
+                          color: Color(0xfff93f5b),
+                          fontSize: 16.sp,
+                          fontFamily: 'NotoSansCJKKR',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      SizedBox(width: 5.0),
+                      Text(
+                        '29,500',
+                        style: TextStyle(
+                          color: Color(0xff283137),
+                          fontSize: 20.sp,
+                          fontFamily: 'NotoSansCJKKR',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SliverPersistentHeader(
+                delegate: _SliverAppBarDelegate(
+                  TabBar(
+                    indicator: UnderlineTabIndicator(
+                      borderSide: BorderSide(width: 3.0, color: Colors.black),
+                    ),
+                    tabs: [
+                      Tab(
+                        child: Text(
+                          '상품정보',
+                          style: TextStyle(
+                            color: Color(0xff283137),
+                            fontFamily: 'NotoSansCJKKR',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          'Review',
+                          style: TextStyle(
+                            color: Color(0xff283137),
+                            fontFamily: 'NotoSansCJKKR',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          'F&Q',
+                          style: TextStyle(
+                            color: Color(0xff283137),
+                            fontFamily: 'NotoSansCJKKR',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                pinned: false,
+              ),
+            ];
+          },
+          body: TabBarView(
+            children: [
+              ProductInfo(),
+              ProductReview(),
+              ProductQnA(),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        child: Center(
+          child: Text(
+            '구매하기',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16.sp,
+              fontFamily: 'NotoSansCJKKR',
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+        height: 90.h,
+        width: 375.w,
+        decoration: BoxDecoration(
+          color: Color(0xff283137),
+        ),
+      ),
+    );
+  }
+}
 
-//   var currentSelectedValue;
-//   List a = [
-//     Image.asset('assets/images/logo.png'),
-//     Image.asset('assets/images/logo.png'),
-//     Image.asset('assets/images/logo.png'),
-//     Image.asset('assets/images/logo.png'),
-//     Image.asset('assets/images/logo.png'),
-//   ];
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate(this._tabBar);
 
-//   void onChange(String value) {
-//     currentSelectedValue = value;
-//   }
+  final TabBar _tabBar;
 
-//   @override
-//   void initState() {
-//     super.initState();
+  @override
+  double get minExtent => _tabBar.preferredSize.height;
+  @override
+  double get maxExtent => _tabBar.preferredSize.height;
 
-//     _controller = new TabController(length: 3, vsync: this);
-//   }
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return new Container(
+      child: _tabBar,
+    );
+  }
 
-//   @override
-//   void dispose() {
-//     super.dispose();
-//     _controller.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return DraggableHome(
-//       centerTitle: true,
-//       fullyStretchable: false,
-//       curvedBodyRadius: 20.0,
-//       backgroundColor: Colors.white,
-//       headerExpandedHeight: 0.71,
-//       title: Text('서면에서 입소문난 수제케이크'),
-//       headerWidget: headerWidget(context),
-//       body: [
-//         tabBar(context),
-//         Container(height: MediaQuery.of(context).size.height * 0.015),
-//         tabBarView(context),
-//       ],
-
-//       // floatingActionButton: IconButton(
-//       //     iconSize: 40.0
-//       //     color: Colors.red[200],
-//       //     onPressed: () {
-//       //       //맨위로 이동하는 버튼 함수
-//       //     },
-//       //     icon: Icon(Icons.arrow_circle_up)),
-//     );
-//   }
-
-//   Container tabBar(BuildContext context) => Container(
-//         child: TabBar(
-//           controller: _controller,
-//           indicator: UnderlineTabIndicator(
-//               borderSide: BorderSide(width: 3.0, color: Colors.red),
-//               insets: EdgeInsets.symmetric(horizontal: 90.0)),
-//           indicatorWeight: 0.0,
-//           indicatorColor: Colors.red[200],
-//           labelColor: Colors.red,
-//           unselectedLabelColor: Colors.black,
-//           tabs: [
-//             Tab(text: '상품설명'),
-//             Tab(text: '리뷰 ($reviewCount)'),
-//             Tab(text: 'Q&A ($questionCount)'),
-//           ],
-//         ),
-//       );
-//   Container tabBarView(BuildContext context) => Container(
-//         child: Container(
-//           height: MediaQuery.of(context).size.height / 1.21,
-//           margin: EdgeInsets.only(left: 16.0, right: 16.0),
-//           child: TabBarView(
-//             controller: _controller,
-//             children: <Widget>[
-//               ProductInfo(), //상품설명
-//               ProductReview(), //리뷰
-//               ProductQnA(), //QnA
-//             ],
-//           ),
-//         ),
-//       );
-
-//   Scaffold headerWidget(BuildContext context) => Scaffold(
-//         appBar: AppBar(
-//           iconTheme: IconThemeData(
-//             color: Colors.white,
-//           ),
-//           backgroundColor: Colors.red[200],
-//           title: Text(productName),
-//         ),
-//         body: Column(
-//           children: [
-//             Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-//               Container(
-//                 height: MediaQuery.of(context).size.height / 2,
-//                 child: Swiper(
-//                   itemHeight: MediaQuery.of(context).size.height,
-//                   itemWidth: MediaQuery.of(context).size.width,
-//                   itemBuilder: (BuildContext context, int index) {
-//                     return Padding(
-//                       padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-//                       child: Stack(
-//                         children: [
-//                           // ConstrainedBox(
-//                           //   constraints: BoxConstraints.expand(),
-//                           //   child: Image.asset(
-//                           //     "assets/images/white.jpg", //배경사진
-//                           //     fit: BoxFit.fill,
-//                           //   ),
-//                           // ),
-//                           Swiper.children(
-//                             autoplay: false,
-//                             pagination: SwiperPagination(
-//                                 margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
-//                                 builder: DotSwiperPaginationBuilder(
-//                                     color: Colors.grey,
-//                                     activeColor: Colors.red[200],
-//                                     size: 15.0,
-//                                     activeSize: 15.0)),
-//                             children: [
-//                               Image.asset(
-//                                 "assets/images/logo.png",
-//                                 fit: BoxFit.contain,
-//                               ),
-//                               Image.asset(
-//                                 "assets/images/DAMO_logo-01.png",
-//                                 fit: BoxFit.contain,
-//                               ),
-//                               Image.asset("assets/images/DAMO_logo-02.png",
-//                                   fit: BoxFit.contain)
-//                             ],
-//                           )
-//                         ],
-//                       ),
-//                     );
-//                   },
-//                   // indicatorLayout: PageIndicatorLayout.COLOR,
-//                   itemCount: 10,
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 20.0,
-//               ),
-//               Center(
-//                 child: Text(
-//                   '서면에서 입소문난 수제 케이크 집',
-//                   style: GoogleFonts.lato(
-//                     fontWeight: FontWeight.bold,
-//                     fontSize: 25,
-//                     color: Colors.black,
-//                   ),
-//                 ),
-//               ),
-//               SizedBox(
-//                 height: 10.0,
-//               ),
-//               Divider(
-//                 color: Colors.black12,
-//                 thickness: 8,
-//               ),
-//             ]),
-//           ],
-//         ),
-//       );
-// }
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return false;
+  }
+}

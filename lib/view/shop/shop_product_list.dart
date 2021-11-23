@@ -1,12 +1,12 @@
-import 'package:damo/view/seller/seller_product_main.dart';
+import 'package:damo/view/shop/shop_product_main.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-class SellerProductList extends StatelessWidget {
-  const SellerProductList({Key? key}) : super(key: key);
+class ShopProductList extends StatelessWidget {
+  const ShopProductList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class SellerProductList extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Get.to(()=>SellerProductMain());
+                Get.to(()=>ShopProductMain());
               },
               child: Column(
                 children: [

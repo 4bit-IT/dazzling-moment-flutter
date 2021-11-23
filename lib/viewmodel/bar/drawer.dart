@@ -16,12 +16,9 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/route_manager.dart';
 import 'package:page_transition/page_transition.dart';
 
-<<<<<<< HEAD
-GetUsersData userData = Get.find();
+UserController userController = Get.find();
 TokenController TokenData = Get.find();
 
-=======
->>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
 class DrawerButton extends StatefulWidget {
   @override
   _DrawerButtonState createState() => _DrawerButtonState();
@@ -52,7 +49,7 @@ class _DrawerButtonState extends State<DrawerButton> {
                   ),
                   onPressed: () {
                     print('로그아웃 합니다.');
-                    TokenData.removeToken();
+                    //TokenData.removeToken();
                     Get.offAll(
                       () => AnimatedSplashScreen(
                         duration: 1500,
@@ -92,7 +89,7 @@ class _DrawerButtonState extends State<DrawerButton> {
               children: [
                 Container(
                   alignment: Alignment.topLeft,
-                  child: Image.network(userData.profileImage.value),
+                  child: Image.network(userController.getUserInfoModel!.value.profileImage!),
                   height: 55,
                 ),
                 SizedBox(

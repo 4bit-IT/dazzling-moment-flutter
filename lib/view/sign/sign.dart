@@ -1,6 +1,5 @@
 import 'package:damo/app/controller/sign_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
-import 'package:damo/app/data/provider/oauth_api.dart';
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/get_user_name.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
@@ -25,8 +24,6 @@ class Sign extends StatelessWidget {
           child: Container(
             child: SingleChildScrollView(
               child: Column(
-// mainAxisAlignment: MainAxisAlignment.spaceBetween,
-// crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
                     height: 200.h,

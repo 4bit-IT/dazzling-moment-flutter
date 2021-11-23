@@ -1,12 +1,12 @@
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
 
-class SellerFAQModify extends StatefulWidget {
+class ShopFAQModify extends StatefulWidget {
   @override
-  _SellerFAQModifyState createState() => _SellerFAQModifyState();
+  _ShopFAQModifyState createState() => _ShopFAQModifyState();
 }
 
-class _SellerFAQModifyState extends State<SellerFAQModify> {
+class _ShopFAQModifyState extends State<ShopFAQModify> {
   TextEditingController faqTitleController = TextEditingController();
   TextEditingController faqDocumentController = TextEditingController();
 

@@ -9,7 +9,7 @@ class EditMyAddress extends StatefulWidget {
   _EditMyAddressState createState() => _EditMyAddressState();
 }
 
-GetUsersData userData = Get.find();
+UserController userController = Get.find();
 
 class _EditMyAddressState extends State<EditMyAddress> {
   String postCode = '-';
@@ -20,13 +20,11 @@ class _EditMyAddressState extends State<EditMyAddress> {
     return Scaffold(
       body: Container(
         child: KpostalView(
-          useLocalServer: true,
-          localPort: 1024,
-          // kakaoKey: 'f531a0ec792da7f77d6b58255ae76aa0',
+          kakaoKey: 'f531a0ec792da7f77d6b58255ae76aa0',
           callback: (Kpostal result) async {
-            userData.zipcode.value = result.postCode;
-            userData.addr1.value = result.address;
-            userData.addrEditCheck = true;
+            userController.getUserInfoModel!.value.zipcode = result.postCode;
+            userController.getUserInfoModel!.value.addr1 = result.address;
+            userController.addrEditCheck!.value = true;
             // await UserNetwork().postUsersAddress();
           },
         ),

@@ -3,14 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SellerOrderManagement extends StatefulWidget {
-  const SellerOrderManagement({Key? key}) : super(key: key);
+class ShopOrderManagement extends StatefulWidget {
+  const ShopOrderManagement({Key? key}) : super(key: key);
 
   @override
-  _SellerOrderManagementState createState() => _SellerOrderManagementState();
+  _ShopOrderManagementState createState() => _ShopOrderManagementState();
 }
 
-class _SellerOrderManagementState extends State<SellerOrderManagement> {
+class _ShopOrderManagementState extends State<ShopOrderManagement> {
   ScrollController scrollController = ScrollController();
 
   Future<dynamic> onOrderAccept() {
@@ -77,7 +77,7 @@ class _SellerOrderManagementState extends State<SellerOrderManagement> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: DamoAppBar().sellerAppBar(context),
+      appBar: DamoAppBar().shopAppBar(context),
       body: GridView.builder(
           controller: scrollController,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

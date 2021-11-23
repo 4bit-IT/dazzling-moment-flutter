@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 
-class SellerReviewManagement extends StatefulWidget {
+class ShopReviewManagement extends StatefulWidget {
   @override
-  _SellerReviewManagementState createState() => _SellerReviewManagementState();
+  _ShopReviewManagementState createState() => _ShopReviewManagementState();
 }
 
-class _SellerReviewManagementState extends State<SellerReviewManagement> {
+class _ShopReviewManagementState extends State<ShopReviewManagement> {
   int reviewCount = 5; //리뷰 개수
   List<String> reviewOption = []; //각 주문 옵션
   List<double> reviewScore = []; // 각 리뷰 별점
@@ -22,7 +22,7 @@ class _SellerReviewManagementState extends State<SellerReviewManagement> {
   List<int> selectedReviewIndex = [];
   List<Widget> review = [];
   List<CupertinoButton> reviewButton = [];
-  String sellerName = '판매자 이름';
+  String shopName = '판매자 이름';
   List<String> reviewReplyDate = []; //리뷰 최근 수정 날짜
   List<TextEditingController> reviewDialogController = [];
 
@@ -231,7 +231,7 @@ class _SellerReviewManagementState extends State<SellerReviewManagement> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: DamoAppBar().sellerAppBar(context),
+      appBar: DamoAppBar().shopAppBar(context),
       body: ListView.builder(
         padding: EdgeInsets.all(20),
         itemCount: reviewCount,

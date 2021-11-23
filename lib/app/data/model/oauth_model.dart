@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'package:kakao_flutter_sdk/all.dart';
 
 class AuthSignModel {
-  late int code;
-  late String accessToken;
-  late bool isFirst;
-  late String refreshToken;
-  late String description;
-  late bool result;
+  int? code;
+  String? accessToken;
+  bool? isFirst;
+  String? refreshToken;
+  String? description;
+  bool? result;
 
   AuthSignModel(
       {code, accessToken, isFirst, refreshToken, description, result});
@@ -16,8 +16,8 @@ class AuthSignModel {
     String body;
     Map signUpData = {
       'agreements': {
-        'marketing': input['agreements']['marketing'],
-        'pushNotification': input['agreements']['pushNotification']
+        'marketing': input['marketing'],
+        'pushNotification': input['pushNotification']
       },
       'fcmToken': '',
       'nickname': input['nickname'],
@@ -39,12 +39,12 @@ class AuthSignModel {
 }
 
 class AuthLoginModel {
-  late int code;
-  late String accessToken;
-  late bool isFirst;
-  late String refreshToken;
-  late String description;
-  late bool result;
+  int? code;
+  String? accessToken;
+  bool? isFirst;
+  String? refreshToken;
+  String? description;
+  bool? result;
 
   AuthLoginModel(
       {code, accessToken, isFirst, refreshToken, description, result});
@@ -61,9 +61,9 @@ class AuthLoginModel {
 
   AuthLoginModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    accessToken = json['data']['accessToken'];
+    accessToken = json['data']['accessToken'].toString();
     isFirst = json['data']['isFirst'];
-    refreshToken = json['data']['refreshToken'];
+    refreshToken = json['data']['refreshToken'].toString();
     description = json['description'];
     result = json['result'];
   }

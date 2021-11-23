@@ -1,28 +1,28 @@
 import 'dart:convert';
 
 class GetUserInfoModel {
-  late int code;
-  late String addr1;
-  late String addr2;
-  late String zipcode;
-  late String ageRange;
-  late String lastAgreeDateOfMarketing;
-  late String lastAgreeDateOfPushNotification;
-  late String lastAgreeDateOfServiceAndPersonalData;
-  late bool marketing;
-  late bool pushNotification;
-  late bool serviceAndPersonalData;
-  late String birth;
-  late String createdAt;
-  late String email;
-  late int id;
-  late String name;
-  late String nickname;
-  late String phoneNumber;
-  late String profileImage;
-  late String sex;
-  late String description;
-  late bool result;
+  int? code;
+  String? addr1;
+  String? addr2;
+  String? zipcode;
+  String? ageRange;
+  String? lastAgreeDateOfMarketing;
+  String? lastAgreeDateOfPushNotification;
+  String? lastAgreeDateOfServiceAndPersonalData;
+  bool? marketing;
+  bool? pushNotification;
+  bool? serviceAndPersonalData;
+  String? birth;
+  String? createdAt;
+  String? email;
+  int? id;
+  String? name;
+  String? nickname;
+  String? phoneNumber;
+  String? profileImage;
+  String? sex;
+  String? description;
+  bool? result;
 
   GetUserInfoModel(
       {code,
@@ -49,9 +49,10 @@ class GetUserInfoModel {
       result});
 
   GetUserInfoModel.fromJson(Map<String, dynamic> json) {
+    print(json);
     code = json['code'];
-    addr1 = json['data']['address']['addr1'];
-    addr2 = json['data']['address']['addr2'];
+    addr1 = json['data']['address']['addr1'].toString();
+    addr2 = json['data']['address']['addr2'].toString();
     zipcode = json['data']['address']['zipcode'];
     ageRange = json['data']['ageRange'];
     lastAgreeDateOfMarketing =
@@ -79,14 +80,15 @@ class GetUserInfoModel {
 }
 
 class AccessTokenAvailableCheckModel {
-  late int code;
-  late bool data;
-  late String description;
-  late bool result;
+  int? code;
+  bool? data;
+  String? description;
+  bool? result;
 
   AccessTokenAvailableCheckModel({code, data, description, result});
 
   AccessTokenAvailableCheckModel.fromJson(Map<String, dynamic> json) {
+    print(json);
     code = json['code'];
     data = json['data'];
     description = json['description'];
@@ -95,9 +97,9 @@ class AccessTokenAvailableCheckModel {
 }
 
 class ChangeAddressModel {
-  late int code;
-  late String description;
-  late bool result;
+  int? code;
+  String? description;
+  bool? result;
 
   ChangeAddressModel({code, description, result});
 
@@ -120,18 +122,14 @@ class ChangeAddressModel {
 }
 
 class NicknameDoubleCheckModel {
-  late int code; // example: 성공은 1 or 실패는 2 or 토큰 만료는 3
-  late bool data; // boolean
-  late String description; //example: 성공 or 에러 메세지 or 토큰이 만료되었습니다.
-  late bool result; // example: true
+  int? code;
+  bool? data;
+  String? description;
+  bool? result;
 
   NicknameDoubleCheckModel({code, data, description, result});
 
   String toJson(Map<String, dynamic> input) {
-<<<<<<< HEAD
-    String body;
-    Map sendData = {'nickname': input['nickname']};
-=======
     String body;
     Map sendData = {'nickname': input['nickname']};
     body = json.encode(sendData);
@@ -147,12 +145,12 @@ class NicknameDoubleCheckModel {
 }
 
 class CheckOwnerModel {
-  late int code;
-  late bool data;
-  late String description;
-  late bool result;
+  int? code;
+  bool? data;
+  String? description;
+  bool? result;
 
-  CheckOwnerModel({code,data,description,result});
+  CheckOwnerModel({code, data, description, result});
 
   CheckOwnerModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
@@ -163,25 +161,19 @@ class CheckOwnerModel {
 }
 
 class UserPhoneNumberModel {
-  late int code;
-  late String description;
-  late bool result;
+  int? code;
+  String? description;
+  bool? result;
 
   UserPhoneNumberModel({code, description, result});
 
   String toJson(Map<String, dynamic> input) {
     String body;
-    Map sendData = {
-      'phoneNumber' : input['phoneNumber'].toString()
-    };
->>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
+    Map sendData = {'phoneNumber': input['phoneNumber'].toString()};
     body = json.encode(sendData);
     return body;
   }
 
-<<<<<<< HEAD
-  NicknameDoubleCheckModel.fromJson(Map<String, dynamic> json) {
-=======
   UserPhoneNumberModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     description = json['description'];
@@ -190,12 +182,12 @@ class UserPhoneNumberModel {
 }
 
 class ChangeProfileImageModel {
-  late int code;
-  late String imageUrl;
-  late String description;
-  late bool result;
+  int? code;
+  String? imageUrl;
+  String? description;
+  bool? result;
 
-  ChangeProfileImageModel({code, imageUrl,description,result});
+  ChangeProfileImageModel({code, imageUrl, description, result});
 
   //String toJson
 
@@ -208,12 +200,12 @@ class ChangeProfileImageModel {
 }
 
 class ChangeDefaultProfileImageModel {
-  late int code;
-  late String imageUrl;
-  late String description;
-  late bool result;
+  int? code;
+  String? imageUrl;
+  String? description;
+  bool? result;
 
-  ChangeDefaultProfileImageModel({code,imageUrl,description,result});
+  ChangeDefaultProfileImageModel({code, imageUrl, description, result});
 
   ChangeDefaultProfileImageModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
@@ -224,15 +216,15 @@ class ChangeDefaultProfileImageModel {
 }
 
 class RefreshAccessTokenModel {
-  late int code;
-  late String data;
-  late String description;
-  late bool result;
+  int? code;
+  String? data;
+  String? description;
+  bool? result;
 
-  RefreshAccessTokenModel({code,data,description,result});
+  RefreshAccessTokenModel({code, data, description, result});
 
   RefreshAccessTokenModel.fromJson(Map<String, dynamic> json) {
->>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
+    print(json);
     code = json['code'];
     data = json['data'];
     description = json['description'];

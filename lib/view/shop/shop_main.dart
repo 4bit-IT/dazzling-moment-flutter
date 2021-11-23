@@ -1,26 +1,23 @@
-import 'package:damo/app/controller/seller_controller.dart';
-import 'package:damo/view/seller/seller_product_list.dart';
+import 'package:damo/app/controller/shop_controller.dart';
+import 'package:damo/view/shop/shop_product_list.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
-import 'package:damo/view/seller/seller_chat_management.dart';
-import 'package:damo/view/seller/seller_order_management.dart';
-import 'package:damo/view/seller/seller_preview.dart';
-import 'package:damo/view/seller/seller_product_main.dart';
-import 'package:damo/view/seller/seller_review_management.dart';
+import 'package:damo/view/shop/shop_chat_management.dart';
+import 'package:damo/view/shop/shop_review_management.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'seller_faq_management.dart';
+import 'shop_faq_management.dart';
 
-class SellerMain extends StatefulWidget {
+class ShopMain extends StatefulWidget {
   @override
-  _SellerMainState createState() => _SellerMainState();
+  _ShopMainState createState() => _ShopMainState();
 }
 
-class _SellerMainState extends State<SellerMain> {
-  final controller = Get.put(SellerController(), permanent: true);
+class _ShopMainState extends State<ShopMain> {
+  final controller = Get.put(ShopController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +40,7 @@ class _SellerMainState extends State<SellerMain> {
               children: [
                 InkWell(
                   onTap: () {
-                    Get.to(() => SellerProductList());
+                    Get.to(() => ShopProductList());
                   },
                   child: Container(
                     width: 164.w,
@@ -183,7 +180,7 @@ class _SellerMainState extends State<SellerMain> {
             ),
             InkWell(
               onTap: () {
-                Get.to(() => SellerChatManagement());
+                Get.to(() => ShopChatManagement());
               },
               child: Column(
                 children: [
@@ -228,7 +225,7 @@ class _SellerMainState extends State<SellerMain> {
             ),
             InkWell(
               onTap: () {
-                Get.to(() => SellerReviewManagement());
+                Get.to(() => ShopReviewManagement());
               },
               child: Column(
                 children: [
@@ -273,7 +270,7 @@ class _SellerMainState extends State<SellerMain> {
             ),
             InkWell(
               onTap: () {
-                // Get.to(() => SellerPreview());
+                // Get.to(() => ShopPreview());
               },
               child: Column(
                 children: [
@@ -318,7 +315,7 @@ class _SellerMainState extends State<SellerMain> {
             ),
             InkWell(
               onTap: () {
-                Get.to(() => SellerFAQManagement());
+                Get.to(() => ShopFAQManagement());
               },
               child: Column(
                 children: [

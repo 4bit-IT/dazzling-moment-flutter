@@ -7,12 +7,12 @@
 // import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:card_swiper/card_swiper.dart';
 
-// class SellerPreview extends StatefulWidget {
+// class ShopPreview extends StatefulWidget {
 //   @override
-//   _SellerPreviewState createState() => _SellerPreviewState();
+//   _ShopPreviewState createState() => _ShopPreviewState();
 // }
 
-// class _SellerPreviewState extends State<SellerPreview> {
+// class _ShopPreviewState extends State<ShopPreview> {
 //   Future<bool> onLikeButtonTapped(bool isLiked) async {
 //     /// send your request here
 //     // final bool success= await sendRequest();
@@ -65,7 +65,7 @@
 //   Widget build(BuildContext context) {
 //     return Scaffold(
 //       backgroundColor: Colors.white,
-//       appBar: DamoAppBar().sellerAppBar(context),
+//       appBar: DamoAppBar().shopAppBar(context),
 //       body: ScrollConfiguration(
 //         behavior: NoGlowScrollBehavior(),
 //         child: Column(

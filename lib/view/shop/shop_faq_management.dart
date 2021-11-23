@@ -1,15 +1,15 @@
 import 'package:damo/viewmodel/bar/app_bar.dart';
-import 'package:damo/view/seller/seller_faq_info.dart';
+import 'package:damo/view/shop/shop_faq_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class SellerFAQManagement extends StatefulWidget {
+class ShopFAQManagement extends StatefulWidget {
   @override
-  _SellerFAQManagementState createState() => _SellerFAQManagementState();
+  _ShopFAQManagementState createState() => _ShopFAQManagementState();
 }
 
-class _SellerFAQManagementState extends State<SellerFAQManagement> {
+class _ShopFAQManagementState extends State<ShopFAQManagement> {
   TextEditingController faqTitleController = TextEditingController();
   TextEditingController faqDocumentController = TextEditingController();
 
@@ -127,7 +127,7 @@ class _SellerFAQManagementState extends State<SellerFAQManagement> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SellerFAQInfo(),
+                      builder: (context) => ShopFAQInfo(),
                     ),
                   );
                 },
@@ -152,7 +152,7 @@ class _SellerFAQManagementState extends State<SellerFAQManagement> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: DamoAppBar().sellerAppBar(context),
+      appBar: DamoAppBar().shopAppBar(context),
       body: Container(
         padding: EdgeInsets.all(10),
         child: SingleChildScrollView(

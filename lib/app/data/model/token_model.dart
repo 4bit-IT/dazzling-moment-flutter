@@ -1,4 +1,6 @@
+import 'package:damo/app/controller/token_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get/get.dart';
 
 class Token {
   SharedPreferences? prefs;
@@ -11,10 +13,14 @@ class Token {
     });
   }
 
-  // Future<void> saveToken(String accessToken, String refreshToken) async {
-  //   prefs = await SharedPreferences.getInstance();
-  //   await prefs!.setString('accessToken', accessToken);
-  //   await prefs!.setString('refreshToken', refreshToken);
-  //   print('토큰을 업데이트 했습니다.');
-  // }
+  Future<void> saveToken(String accessToken, String refreshToken) async {
+    prefs = await SharedPreferences.getInstance();
+    prefs!.setString('accessToken', accessToken);
+    prefs!.setString('refreshToken', refreshToken);
+  }
+
+  Future<void> removeToken() async {
+    prefs = await SharedPreferences.getInstance();
+    prefs!.clear();
+  }
 }

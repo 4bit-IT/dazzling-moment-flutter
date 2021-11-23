@@ -4,7 +4,6 @@ import 'package:damo/app/data/model/user_model.dart';
 import 'package:damo/app/data/provider/kakao.dart';
 import 'package:damo/app/data/provider/oauth_api.dart';
 import 'package:damo/app/data/provider/user/user_api.dart';
-import 'package:damo/view/main/home_main.dart';
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,38 +12,111 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class SignController extends GetxController {
-  bool readOnly = false;
   late Rx<AuthSignModel> authSignModel;
   late Rx<AuthLoginModel> authLoginModel;
-  late Rx<Future<String>> oauthAccessToken;
-  Map<String, dynamic> input = {};
-  onKakaoLoginClicked() async {
-    oauthAccessToken = Kakao().getKakaoToken().obs;
-    input.clear();
-    input['oauthAccessToken'] = oauthAccessToken;
-    authLoginModel = AuthLoginModel.fromJson(await OauthNetwork().postOauthKakaoLogin(input)).obs;
+  late NicknameDoubleCheckModel nicknameDoubleCheckModel;
 
-<<<<<<< HEAD
-=======
-    if(authLoginModel.value.code == 1 && authLoginModel.value.result == true) {
-      if(authLoginModel.value.isFirst == true && authLoginModel.value.accessToken =='' && authLoginModel.value.refreshToken == ''){
-        //첫 로그인
+  late RxString oauthAccessToken;
+  RxBool isNicknameCheck = false.obs;
+  RxBool readOnly = false.obs;
+  Rx<TextEditingController> nicknameController = TextEditingController().obs;
+  Rx<TextEditingController> phoneNumberController = TextEditingController().obs;
+  Rx<TextEditingController> smsAuthNumberController = TextEditingController().obs;
+  Rx<SvgPicture> getAuthNumberButton = SvgPicture.asset(
+    'assets/images_svg/btn_인증번호받기_off.svg',
+    width: 92.w,
+    height: 52.h,
+    fit: BoxFit.fill,
+  ).obs;
+  Rx<SvgPicture> confirmAuthNumberButton = SvgPicture.asset(
+    'assets/images_svg/btn_인증문자확인_off.svg',
+    width: 375.w,
+  ).obs;
+
+  Map<String, dynamic> input = {};
+  String sendData = '';
+  var response;
+
+  void signUpClicked() async {
+    input.clear();
+    input['marketing'] = acceptList[2].value.check;
+    input['pushNotification'] = acceptList[3].value.check;
+    input['fcmToken'] = 'fcm_token';
+    input['nickname'] = nicknameController.value.value.text;
+    input['oauthAccessToken'] = oauthAccessToken.value;
+    input['phoneNumber'] = '010-3874-0360';
+    sendData = AuthSignModel().toJson(input);
+    response = await OauthNetwork().postOauthKakao(sendData);
+    authSignModel = AuthSignModel.fromJson(response).obs;
+    Token().saveToken(authSignModel.value.accessToken!, authSignModel.value.refreshToken!);
+    tokenController.token!['accessToken'] = authSignModel.value.accessToken!;
+    tokenController.token!['refreshToken'] = authSignModel.value.refreshToken!;
+  }
+
+  onKakaoLoginClicked() async {
+    oauthAccessToken = (await Kakao().getKakaoToken()).obs;
+
+    input.clear();
+    input['oauthAccessToken'] = oauthAccessToken.value;
+    sendData = AuthLoginModel().toJson(input);
+    response = await OauthNetwork().postOauthKakaoLogin(sendData);
+    authLoginModel = AuthLoginModel.fromJson(response).obs;
+
+    if (authLoginModel.value.code == 1 && authLoginModel.value.result == true) {
+      if (authLoginModel.value.isFirst == true &&
+          authLoginModel.value.accessToken == 'null' &&
+          authLoginModel.value.refreshToken == 'null') {
+        print('첫 로그인');
+        Get.to(() => GetUserInfo());
+      } else {
+        print('첫 로그인 아님');
+        Token().saveToken(authLoginModel.value.accessToken!,
+            authLoginModel.value.refreshToken!);
         Get.to(() => GetUserInfo());
       }
-      else {
-        Token().saveToken(authLoginModel.value.accessToken, authLoginModel.value.refreshToken);
-        Get.to(() => HomeMain());
-      }
-    }
-    else {
+    } else {
       print('잘못된 카카오 토큰');
     }
   }
 
->>>>>>> d65dc7e35b3a3b372cacae7872facdab7a099334
-  var isNicknameCheck = false.obs;
-  NicknameDoubleCheckModel? nicknameDoubleCheckModel;
-  var nicknameController = TextEditingController().obs;
+  void onPhoneNumberChanged() {
+    if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
+        .hasMatch(phoneNumberController.value.value.text) ==
+        false) {
+      getAuthNumberButton.value = SvgPicture.asset(
+        'assets/images_svg/btn_인증번호받기_off.svg',
+        width: 92.w,
+        height: 52.h,
+        fit: BoxFit.fill,
+      );
+    } else {
+      getAuthNumberButton.value = SvgPicture.asset(
+        'assets/images_svg/btn_인증번호받기_on.svg',
+        width: 92.w,
+        height: 52.h,
+        fit: BoxFit.fill,
+      );
+    }
+  }
+
+  void onAuthNumberChanged() {
+    print(RegExp(r'^([0-9]{6})$').hasMatch(smsAuthNumberController.value.value.text));
+    if (RegExp(r'^([0-9]{6})$').hasMatch(smsAuthNumberController.value.value.text) == false) {
+      confirmAuthNumberButton.value = SvgPicture.asset(
+        'assets/images_svg/btn_인증문자확인_off.svg',
+        width: 375.w,
+        fit: BoxFit.fill,
+      );
+    } else {
+      confirmAuthNumberButton.value = SvgPicture.asset(
+        'assets/images_svg/btn_인증문자확인_on.svg',
+        width: 375.w,
+        height: 52.h,
+        fit: BoxFit.fill,
+      );
+    }
+  }
+
   var acceptList = [
     AcceptRadioModel(
       '모두 동의',
@@ -65,14 +137,14 @@ class SignController extends GetxController {
 
   void doubleCheckClicked() async {
     if (RegExp(r'^([가-힣a-zA-Z0-9]){2,8}$')
-            .hasMatch(nicknameController.value.text) ==
+        .hasMatch(nicknameController.value.text) ==
         true) {
       Map<String, dynamic> input = {
         'nickname': nicknameController.value.value.text.toString()
       };
       nicknameDoubleCheckModel =
-          await UserNetwork().postUsersCheckNickname(input);
-      if (nicknameDoubleCheckModel!.data == true) {
+      await UserNetwork().postUsersCheckNickname(input);
+      if (nicknameDoubleCheckModel.data == true) {
         isNicknameCheck = true.obs;
         Get.snackbar('닉네임 중복확인', '사용가능한 닉네임 입니다.');
       } else {
@@ -157,130 +229,24 @@ class SignController extends GetxController {
   }
 
   get getConfirmButton => (acceptList[1].value.check &&
-          acceptList[2].value.check &&
-          isNicknameCheck.value)
+      acceptList[2].value.check &&
+      isNicknameCheck.value)
       ? SvgPicture.asset(
-          'assets/images_svg/btn_확인_on.svg',
-          width: 375.w,
-          fit: BoxFit.fill,
-        ).obs
-      : SvgPicture.asset(
-          'assets/images_svg/btn_확인_off.svg',
-          width: 375.w,
-          fit: BoxFit.fill,
-        ).obs;
-
-  Widget getAuthNumberButton = SvgPicture.asset(
-    'assets/images_svg/btn_인증번호받기_off.svg',
-    width: 92.w,
-    height: 52.h,
-    fit: BoxFit.fill,
-  );
-  Widget confirmAuthNumberButton = SvgPicture.asset(
-    'assets/images_svg/btn_인증문자확인_off.svg',
+    'assets/images_svg/btn_확인_on.svg',
     width: 375.w,
-  );
-  TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController smsAuthNumberController = TextEditingController();
-
-  void onGetAuthNumberButton() {
-    getAuthNumberButton = SvgPicture.asset(
-      'assets/images_svg/btn_인증번호받기_on.svg',
-      width: 92.w,
-      height: 52.h,
-      fit: BoxFit.fill,
-    );
-
-    update();
-  }
-
-  void offGetAuthNumberButton() {
-    getAuthNumberButton = SvgPicture.asset(
-      'assets/images_svg/btn_인증번호받기_off.svg',
-      width: 92.w,
-      height: 52.h,
-      fit: BoxFit.fill,
-    );
-
-    update();
-  }
-
-  void onConfirmAuthNumberButton() {
-    confirmAuthNumberButton = SvgPicture.asset(
-      'assets/images_svg/btn_인증문자확인_on.svg',
-      width: 375.w,
-    );
-
-    update();
-  }
-
-  void offConfirmAuthNumberButton() {
-    confirmAuthNumberButton = SvgPicture.asset(
-      'assets/images_svg/btn_인증문자확인_off.svg',
-      width: 375.w,
-    );
-  }
+    fit: BoxFit.fill,
+  ).obs
+      : SvgPicture.asset(
+    'assets/images_svg/btn_확인_off.svg',
+    width: 375.w,
+    fit: BoxFit.fill,
+  ).obs;
 
   void changeReadOnly() {
-    readOnly = false;
-
-    update();
+    readOnly = false.obs;
   }
 
-  void conditionAuthNumber(String text) {
-    print(RegExp(r'^([0-9]{6})$').hasMatch(text));
-    if (RegExp(r'^([0-9]{6})$').hasMatch(text) == false) {
-      offConfirmAuthNumberButton();
-    } else {
-      onConfirmAuthNumberButton();
-    }
-  }
-}
 
-class PostKakaoLoginController extends GetxController {
-  late int code;
-  late String accessToken;
-  late bool isFirst;
-  late String refreshToken;
-  late String description;
-  late bool result;
-
-  Future<void> saveKakaoLoingData(dynamic json) async {
-    code = await json['code'];
-    accessToken = await json['data']['accessToken'];
-    isFirst = await json['data']['isFirst'];
-    refreshToken = await json['data']['refreshToken'];
-    description = await json['description'];
-    result = await json['result'];
-  }
-}
-
-class GetRefreshTokenController extends GetxController {
-  late int code;
-  late RxString refreshToken;
-  late RxString description;
-  late bool result;
-
-  Future<void> saveRefreshTokenData(dynamic json) async {
-    code = json['code'];
-    refreshToken = json['data'].toString().obs;
-    description = json['description'].toString().obs;
-    result = json['result'];
-  }
-}
-
-class PostUsersAccessController extends GetxController {
-  late int code;
-  late String data;
-  late String description;
-  late bool result;
-
-  Future<void> checkUsersAccess(dynamic json) async {
-    description = json['description'].toString();
-    code = json['code'];
-    data = json['data'].toString();
-    result = json['result'];
-  }
 }
 
 class AcceptRadioModel {

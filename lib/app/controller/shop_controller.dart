@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-class SellerController extends GetxController {
+class ShopController extends GetxController {
   final ImagePicker _picker = ImagePicker();
 /*  late ShopRegistrationModel shopRegistrationModel;
   late ShopGetDetailModel shopGetDetailModel;
@@ -23,5 +23,5 @@ class SellerController extends GetxController {
     shopImageCount = 5;
   }
 
-  void onChangeSellerMainImage() async {}
+  void onChangeShopMainImage() async {}
 }

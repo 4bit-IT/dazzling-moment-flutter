@@ -1,19 +1,19 @@
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
 
-class SellerChatManagement extends StatefulWidget {
-  const SellerChatManagement({Key? key}) : super(key: key);
+class ShopChatManagement extends StatefulWidget {
+  const ShopChatManagement({Key? key}) : super(key: key);
 
   @override
-  _SellerChatManagementState createState() => _SellerChatManagementState();
+  _ShopChatManagementState createState() => _ShopChatManagementState();
 }
 
-class _SellerChatManagementState extends State<SellerChatManagement> {
+class _ShopChatManagementState extends State<ShopChatManagement> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: DamoAppBar().sellerAppBar(context),
+      appBar: DamoAppBar().shopAppBar(context),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(15),

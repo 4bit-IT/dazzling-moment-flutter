@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:damo/app/controller/token_controller.dart';
-import 'package:damo/app/data/model/seller_model.dart';
+import 'package:damo/app/data/model/shop_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
@@ -18,7 +18,7 @@ class ShopNetwork {
   late ShopOptionRegistration shopOptionRegistration;
   final headers = {
     'Content-Type': 'application/json',
-    'token': tokenController.accessToken.value,
+    'token': tokenController.token!['accessToken']!,
   };
   var body;
 

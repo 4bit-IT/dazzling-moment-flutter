@@ -1,25 +1,25 @@
 import 'package:damo/viewmodel/bar/app_bar.dart';
-import 'package:damo/view/seller/seller_faq_modify.dart';
+import 'package:damo/view/shop/shop_faq_modify.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 
-class SellerFAQInfo extends StatefulWidget {
-  const SellerFAQInfo({Key? key}) : super(key: key);
+class ShopFAQInfo extends StatefulWidget {
+  const ShopFAQInfo({Key? key}) : super(key: key);
 
   @override
-  _SellerFAQInfoState createState() => _SellerFAQInfoState();
+  _ShopFAQInfoState createState() => _ShopFAQInfoState();
 }
 
-class _SellerFAQInfoState extends State<SellerFAQInfo> {
+class _ShopFAQInfoState extends State<ShopFAQInfo> {
   String faqTitle = 'FAQ 제목';
   String faqDocument = 'FAQ 내용';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DamoAppBar().sellerAppBar(context),
+      appBar: DamoAppBar().shopAppBar(context),
       backgroundColor: Colors.white,
       body: Container(
         padding: EdgeInsets.all(20),
@@ -58,7 +58,7 @@ class _SellerFAQInfoState extends State<SellerFAQInfo> {
                     ),
                   ),
                   onPressed: () {
-                    Get.to(() => SellerFAQModify());
+                    Get.to(() => ShopFAQModify());
                   },
                 ),
               ),
