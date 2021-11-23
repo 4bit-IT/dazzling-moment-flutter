@@ -1,7 +1,10 @@
+import 'package:damo/app/controller/sign_controller.dart';
 import 'package:kakao_flutter_sdk/all.dart';
+import 'package:get/get.dart';
 
 class Kakao {
   AccessTokenResponse? kakaoAccessToken;
+  SignController signController = Get.find();
 
   Future<String> getKakaoToken() async {
     try {

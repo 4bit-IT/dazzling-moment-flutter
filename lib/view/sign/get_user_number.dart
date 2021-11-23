@@ -10,7 +10,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class GetUserInfo extends StatelessWidget {
-  final SignController getController = Get.put(SignController());
+  final SignController signController = Get.find();
   String? _verificationId;
   FirebaseAuth auth = FirebaseAuth.instance;
   PhoneAuthCredential? phoneAuthCredential;
@@ -44,10 +44,10 @@ class GetUserInfo extends StatelessWidget {
 
   void verifyPhoneNumber() async {
     String phoneNumber = '+82' +
-        getController.phoneNumberController.value.text.split('-')[0][1] +
-        getController.phoneNumberController.value.text.split('-')[0][2] +
-        getController.phoneNumberController.value.text.split('-')[1] +
-        getController.phoneNumberController.value.text.split('-')[2];
+        signController.phoneNumberController.value.value.text.split('-')[0][1] +
+        signController.phoneNumberController.value.value.text.split('-')[0][2] +
+        signController.phoneNumberController.value.value.text.split('-')[1] +
+        signController.phoneNumberController.value.value.text.split('-')[2];
 
     await auth.verifyPhoneNumber(
       timeout: const Duration(seconds: 120),
@@ -113,23 +113,10 @@ class GetUserInfo extends StatelessWidget {
                           child: Container(
                             child: TextFormField(
                               onChanged: (text) {
-                                print(text);
-                                print(RegExp(
-                                        r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
-                                    .hasMatch(getController
-                                        .phoneNumberController.value.text));
-                                if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
-                                        .hasMatch(getController
-                                            .phoneNumberController
-                                            .value
-                                            .text) ==
-                                    false) {
-                                  getController.offGetAuthNumberButton();
-                                } else {
-                                  getController.onGetAuthNumberButton();
-                                }
+                                signController.onPhoneNumberChanged();
                               },
-                              controller: getController.phoneNumberController,
+                              controller:
+                                  signController.phoneNumberController.value,
                               keyboardType: TextInputType.phone,
                               inputFormatters: [
                                 MaskTextInputFormatter(
@@ -149,19 +136,18 @@ class GetUserInfo extends StatelessWidget {
                             ),
                           ),
                         ),
-                        GetBuilder<SignController>(builder: (_) {
-                          return InkWell(
-                            onTap: () {
-                              if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
-                                      .hasMatch(getController
-                                          .phoneNumberController.value.text) ==
-                                  true) {
-                                verifyPhoneNumber();
-                              }
-                            },
-                            child: getController.getAuthNumberButton,
-                          );
-                        }),
+                        InkWell(
+                          onTap: () {
+                            if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
+                                    .hasMatch(signController
+                                        .phoneNumberController.value.text) ==
+                                true) {
+                              verifyPhoneNumber();
+                            }
+                          },
+                          child: Obx(
+                              () => signController.getAuthNumberButton.value),
+                        ),
                       ],
                     ),
                   ),
@@ -188,11 +174,12 @@ class GetUserInfo extends StatelessWidget {
                       child: GetBuilder<SignController>(
                         builder: ((_) {
                           return TextFormField(
-                            readOnly: getController.readOnly,
+                            readOnly: signController.readOnly.value,
                             onChanged: (text) {
-                              getController.conditionAuthNumber(text);
+                              signController.onAuthNumberChanged();
                             },
-                            controller: getController.smsAuthNumberController,
+                            controller:
+                                signController.smsAuthNumberController.value,
                             textAlign: TextAlign.start,
                             keyboardType: TextInputType.phone,
                             inputFormatters: [
@@ -221,19 +208,15 @@ class GetUserInfo extends StatelessWidget {
               ),
             ),
           ),
-          GetBuilder<SignController>(
-            builder: (_) {
-              return InkWell(
-                  onTap: () {
-                    phoneAuthCredential = PhoneAuthProvider.credential(
-                        verificationId: _verificationId!,
-                        smsCode:
-                            getController.smsAuthNumberController.value.text);
-                    signInWithPhoneAuthCredential(phoneAuthCredential!);
-                    print(phoneAuthCredential!.token);
-                  },
-                  child: getController.confirmAuthNumberButton);
+          InkWell(
+            onTap: () {
+              phoneAuthCredential = PhoneAuthProvider.credential(
+                  verificationId: _verificationId!,
+                  smsCode: signController.smsAuthNumberController.value.text);
+              signInWithPhoneAuthCredential(phoneAuthCredential!);
+              print(phoneAuthCredential!.token);
             },
+            child: Obx(() => signController.confirmAuthNumberButton.value),
           ),
         ],
       ),

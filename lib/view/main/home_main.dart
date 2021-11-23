@@ -1,4 +1,6 @@
 import 'package:damo/app/controller/token_controller.dart';
+import 'package:damo/app/controller/user_controller.dart';
+import 'package:damo/view/product/product.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/viewmodel/bar/bottom_navigaton.dart';
 import 'package:damo/viewmodel/bar/drawer.dart';
@@ -16,8 +18,9 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMainState extends State<HomeMain> {
-  TokenController tokenController = Get.put(TokenController());
+  TokenController tokenController = Get.find();
   ScrollController scrollController = ScrollController();
+  UserController userController = Get.put(UserController());
   DamoAppBar appBar = DamoAppBar();
   @override
   Widget build(BuildContext context) {
@@ -313,137 +316,146 @@ class _HomeMainState extends State<HomeMain> {
                 crossAxisSpacing: 5.w,
               ),
               itemBuilder: (BuildContext context, int index) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 5.h,
-                    ),
-                    Stack(
-                      children: [
-                        Image.asset(
-                          'assets/images/img.png',
-                          fit: BoxFit.fill,
-                          width: 185.w,
-                          height: 185.h,
-                        ),
-                        Positioned(
-                          left: 10.w,
-                          bottom: 10.h,
-                          child: SvgPicture.asset(
-                            'assets/images_svg/ic_new.svg',
-                            width: 38.w,
-                            height: 20.h,
-                          ),
-                        ),
-                        Positioned(
-                          right: 5.w,
-                          bottom: 5.h,
-                          child: SvgPicture.asset(
-                            'assets/images_svg/ic_wish_on.svg',
-                            width: 30.w,
-                            height: 30.h,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(10.w, 0, 10.w, 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                return CupertinoButton(
+                  padding: EdgeInsets.all(0),
+                  onPressed: () {
+                    Get.to(() => Product());
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      Stack(
                         children: [
-                          Text(
-                            '이로아케이크',
-                            style: TextStyle(
-                              color: Color(0xff283137),
-                              fontSize: 10.sp,
-                              height: 1,
-                              fontFamily: 'NotoSansCJKKR',
-                              fontWeight: FontWeight.w500,
+                          Image.asset(
+                            'assets/images/img.png',
+                            fit: BoxFit.fill,
+                            width: 185.w,
+                            height: 185.h,
+                          ),
+                          Positioned(
+                            left: 10.w,
+                            bottom: 10.h,
+                            child: SvgPicture.asset(
+                              'assets/images_svg/ic_new.svg',
+                              width: 38.w,
+                              height: 20.h,
                             ),
                           ),
-                          SizedBox(
-                            height: 9.h,
-                          ),
-                          Text(
-                            '플루트 딸기가득 케이크',
-                            style: TextStyle(
-                              color: Color(0xff283137),
-                              fontSize: 13.sp,
-                              height: 1,
-                              fontFamily: 'NotoSansCJKKR',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 7.h,
-                          ),
-                          Text(
-                            '서울에서 입소문난 수제디저트 공방...',
-                            style: TextStyle(
-                              color: Color(0xff283137),
-                              fontSize: 11.sp,
-                              height: 1,
-                              fontFamily: 'NotoSansCJKKR',
-                            ),
-                          ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/images_svg/ic_review_10.svg',
-                                    width: 10.w,
-                                    height: 10.h,
-                                  ),
-                                  SizedBox(
-                                    width: 4.w,
-                                  ),
-                                  Text(
-                                    '4.9',
-                                    style: TextStyle(
-                                      color: Color(0xff283137),
-                                      fontSize: 12.sp,
-                                      height: 1,
-                                      fontFamily: 'NotoSansCJKKR',
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 2.w,
-                                  ),
-                                  Text(
-                                    '(1,234)',
-                                    style: TextStyle(
-                                      color: Color(0xff8e97a0),
-                                      fontSize: 12.sp,
-                                      height: 1,
-                                      fontFamily: 'NotoSansCJKKR',
-                                    ),
-                                  ),
-                                ],
+                          Positioned(
+                            right: 5.w,
+                            bottom: 5.h,
+                            child: InkWell(
+                              onTap: () {},
+                              child: SvgPicture.asset(
+                                'assets/images_svg/ic_wish_on.svg',
+                                width: 30.w,
+                                height: 30.h,
                               ),
-                              Text(
-                                '29,500',
-                                style: TextStyle(
-                                    color: Color(0xff283137),
-                                    fontFamily: 'NotoSansCJKKR',
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 14.sp,
-                                    height: 1),
-                              ),
-                            ],
-                          )
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(10.w, 0, 10.w, 0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '이로아케이크',
+                              style: TextStyle(
+                                color: Color(0xff283137),
+                                fontSize: 10.sp,
+                                height: 1,
+                                fontFamily: 'NotoSansCJKKR',
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 9.h,
+                            ),
+                            Text(
+                              '플루트 딸기가득 케이크',
+                              style: TextStyle(
+                                color: Color(0xff283137),
+                                fontSize: 13.sp,
+                                height: 1,
+                                fontFamily: 'NotoSansCJKKR',
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 7.h,
+                            ),
+                            Text(
+                              '서울에서 입소문난 수제디저트 공방...',
+                              style: TextStyle(
+                                color: Color(0xff283137),
+                                fontSize: 11.sp,
+                                height: 1,
+                                fontFamily: 'NotoSansCJKKR',
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images_svg/ic_review_10.svg',
+                                      width: 10.w,
+                                      height: 10.h,
+                                    ),
+                                    SizedBox(
+                                      width: 4.w,
+                                    ),
+                                    Text(
+                                      '4.9',
+                                      style: TextStyle(
+                                        color: Color(0xff283137),
+                                        fontSize: 12.sp,
+                                        height: 1,
+                                        fontFamily: 'NotoSansCJKKR',
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 2.w,
+                                    ),
+                                    Text(
+                                      '(1,234)',
+                                      style: TextStyle(
+                                        color: Color(0xff8e97a0),
+                                        fontSize: 12.sp,
+                                        height: 1,
+                                        fontFamily: 'NotoSansCJKKR',
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  '29,500',
+                                  style: TextStyle(
+                                      color: Color(0xff283137),
+                                      fontFamily: 'NotoSansCJKKR',
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14.sp,
+                                      height: 1),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               },
             ),

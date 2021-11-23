@@ -6,22 +6,22 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 // import 'package:image_picker/image_picker.dart';
 
-class SellerProductModify extends StatefulWidget {
+class ShopProductModify extends StatefulWidget {
   @override
-  _SellerProductModifyState createState() => _SellerProductModifyState();
+  _ShopProductModifyState createState() => _ShopProductModifyState();
 }
 
-class _SellerProductModifyState extends State<SellerProductModify> {
+class _ShopProductModifyState extends State<ShopProductModify> {
   // ImagePicker _picker = ImagePicker(); // 카메라/갤러리에서 사진 가져올 때 사용함 (image_picker)
   // XFile? file;
   String result = '';
-  TextEditingController sellerNameController = TextEditingController();
-  TextEditingController sellerMainController = TextEditingController();
+  TextEditingController shopNameController = TextEditingController();
+  TextEditingController shopMainController = TextEditingController();
 
-  String? sellerName = '업체명';
-  String? sellerMain = '업체 설명';
-  Image? sellerImage = Image.asset('assets/images/logo.png');
-  List? sellerDetail;
+  String? shopName = '업체명';
+  String? shopMain = '업체 설명';
+  Image? shopImage = Image.asset('assets/images/logo.png');
+  List? shopDetail;
 
   // List<XFile> resultImages = <XFile>[];
 
@@ -29,8 +29,8 @@ class _SellerProductModifyState extends State<SellerProductModify> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    sellerNameController = TextEditingController(text: sellerName);
-    sellerMainController = TextEditingController(text: sellerMain);
+    shopNameController = TextEditingController(text: shopName);
+    shopMainController = TextEditingController(text: shopMain);
   }
 
   takeMultiImage(mContext) {
@@ -211,7 +211,7 @@ class _SellerProductModifyState extends State<SellerProductModify> {
       child: WillPopScope(
         onWillPop: onBackClicked,
         child: Scaffold(
-          appBar: DamoAppBar().sellerAppBar(context),
+          appBar: DamoAppBar().shopAppBar(context),
           backgroundColor: Colors.white,
           body: Padding(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -221,7 +221,7 @@ class _SellerProductModifyState extends State<SellerProductModify> {
                 SizedBox(height: 20),
                 TextFormField(
                   enableSuggestions: false,
-                  controller: sellerNameController,
+                  controller: shopNameController,
                   maxLength: 20,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(20),
@@ -247,7 +247,7 @@ class _SellerProductModifyState extends State<SellerProductModify> {
                 ),
                 SizedBox(height: 20),
                 TextFormField(
-                  controller: sellerMainController,
+                  controller: shopMainController,
                   maxLength: 50,
                   inputFormatters: [
                     LengthLimitingTextInputFormatter(50),

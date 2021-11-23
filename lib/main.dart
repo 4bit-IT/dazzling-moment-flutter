@@ -5,44 +5,41 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:kakao_flutter_sdk/all.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 
-import 'app/data/provider/user/user_api.dart';
-
 late Widget nextScreen;
-late final TokenController tokenController;
+TokenController tokenController = Get.put(TokenController(), permanent: true);
+
 Future<void> main() async {
   KakaoContext.clientId = '051ba7adea57eb74c808616d4969e482';
   WidgetsFlutterBinding.ensureInitialized();
-
-  tokenController = Get.put(TokenController(), permanent: true);
-
   await Firebase.initializeApp();
   await FirebaseAppCheck.instance
       .activate(webRecaptchaSiteKey: 'recaptcha-v3-site-key');
-  await fetchData();
-
+  await tokenController.fetchData();
   runApp(Damo());
-}
 
-Future<void> fetchData() async {
-  await Future.delayed(Duration(seconds: 1), () {
-    if (tokenController.isAutoLogin.value == false) {
-      nextScreen = Sign();
-    } else {
-      nextScreen = HomeMain();
-    }
-  });
 }
 
 class Damo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: Size(375, 812),
+    print(6);
+    return GetMaterialApp(
+      home: ScreenUtilInit(
+        designSize: Size(375, 812),
+        builder: () {
+          print(tokenController.isAutoLogin);
+          return tokenController.isAutoLogin!.value == true
+              ? HomeMain()
+              : Sign();
+        },
+      ),
+    );
+    /*ScreenUtilInit(
+      designSize: size,
       builder: () => GetMaterialApp(
         debugShowCheckedModeBanner: false,
         // home: AnimatedSplashScreen(
@@ -56,6 +53,6 @@ class Damo extends StatelessWidget {
         // ),
         home: nextScreen,
       ),
-    );
+    );*/
   }
 }

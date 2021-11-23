@@ -34,9 +34,6 @@
                 android:name="io.flutter.embedding.android.SplashScreenDrawable"
                 android:resource="@drawable/launch_background"
                 />
-            <meta-data
-                android:name="com.kakao.sdk.AppKey"
-                android:value="051ba7adea57eb74c808616d4969e482" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -48,7 +45,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:host="oauth"
-                android:scheme="kakao051ba7adea57eb74c808616d4969e482"/>
+                    android:scheme="kakao051ba7adea57eb74c808616d4969e482"/>
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.

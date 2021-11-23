@@ -90,7 +90,7 @@ class DamoAppBar {
     );
   }
 
-  dynamic sellerAppBar(BuildContext context) {
+  dynamic shopAppBar(BuildContext context) {
     return AppBar(
       shape: Border(bottom: BorderSide(color: Color(0xfff1f3f5), width: 1.h)),
       centerTitle: true,
