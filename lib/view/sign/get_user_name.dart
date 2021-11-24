@@ -159,11 +159,11 @@ class GetUserNickname extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: () {
+            onTap: () async {
               if (signController.acceptList[1].value.check &&
                   signController.acceptList[2].value.check &&
                   signController.isNicknameCheck.value) {
-                signController.signUpClicked();
+                await signController.signUpClicked();
                 //회원가입 api 호출한 뒤
                 Get.offAll(() => HomeMain());
               }
