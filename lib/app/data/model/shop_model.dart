@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'dart:io';
+
 class ShopRegistrationModel {
-  late int code;
-  late String description;
-  late bool result;
+  int? code;
+  String? description;
+  bool? result;
 
   ShopRegistrationModel({code, description, result});
 
@@ -19,8 +21,8 @@ class ShopRegistrationModel {
       'content': input['content'],
       'description': input['description'],
       'location': {
-        'latitude': input['location'][0],
-        'longitude': input['location'][1],
+        'latitude': input['location']['latitude'],
+        'longitude': input['location']['longitude'],
       },
       'name': input['name'],
       'registrationNumber': input['registrationNumber']
@@ -31,20 +33,21 @@ class ShopRegistrationModel {
 }
 
 class ShopGetDetailModel {
-  late int code;
-  late String content;
-  late String dataDescription;
-  late int id;
-  late var images;
-  late double latitude;
-  late double longitude;
-  late String mainImage;
-  late String name;
-  late dynamic options;
-  late double rating;
-  late int reviewCount;
-  late String description;
-  late bool result;
+  int? code;
+  String? content;
+  String? dataDescription;
+  int? id;
+  List<String>? images;
+  double? latitude;
+  double? longitude;
+  String? mainImage;
+  String? name;
+  dynamic? options;
+  double? rating;
+  int? reviewCount;
+  String? shopProfileImage;
+  String? description;
+  bool? result;
 
   ShopGetDetailModel(
       {code,
@@ -59,6 +62,7 @@ class ShopGetDetailModel {
       options,
       rating,
       reviewCount,
+      shopProfileImage,
       description,
       result});
 
@@ -68,27 +72,28 @@ class ShopGetDetailModel {
 
   ShopGetDetailModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    content = json['data'][0];
-    dataDescription = json['data'][1];
-    id = json['data'][2];
-    images = json['data'][3];
-    latitude = json['data'][4][0];
-    longitude = json['data'][4][1];
-    mainImage = json['data'][5];
-    name = json['data'][6];
-    options = json['data'][7];
-    rating = json['data'][8];
-    reviewCount = json['data'][9];
+    content = json['data']['content'];
+    dataDescription = json['data']['description'];
+    id = json['data']['id'];
+    images = json['data']['images'];
+    latitude = json['data']['location']['latitude'];
+    longitude = json['data']['location']['longitude'];
+    mainImage = json['data']['name'];
+    name = json['data']['name'];
+    options = json['data']['options'];
+    rating = json['data']['rating'];
+    reviewCount = json['data']['reviewCount'];
+    shopProfileImage = json['data']['shopProfileImage'];
     description = json['description'];
     result = json['result'];
   }
 }
 
 class ShopImageRegistrationModel {
-  late int code;
-  late List<String> imageUrlList;
-  late String description;
-  late bool result;
+  int? code;
+  List<String>? imageUrlList;
+  String? description;
+  bool? result;
 
   ShopImageRegistrationModel({code, imageUrlList, description, result});
 
@@ -101,16 +106,16 @@ class ShopImageRegistrationModel {
 
   ShopImageRegistrationModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    imageUrlList = json['data'][0];
+    imageUrlList = json['data']['imageUrlList'];
     description = json['description'];
     result = json['true'];
   }
 }
 
 class ShopImageDeleteModel {
-  late int code;
-  late String description;
-  late bool result;
+  int? code;
+  String? description;
+  bool? result;
 
   ShopImageDeleteModel({code, description, result});
 
@@ -129,10 +134,10 @@ class ShopImageDeleteModel {
 }
 
 class ShopChangeMainImageModel {
-  late int code;
-  late String imageUrl;
-  late String description;
-  late bool result;
+  int? code;
+  String? imageUrl;
+  String? description;
+  bool? result;
 
   ShopChangeMainImageModel({code, imageUrl, description, result});
 
@@ -145,27 +150,28 @@ class ShopChangeMainImageModel {
 
   ShopChangeMainImageModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    imageUrl = json['data'][0];
+    imageUrl = json['data']['imageUrl'];
     description = json['description'];
     result = json['result'];
   }
 }
 
 class ShopGetMeModel {
-  late int code;
-  late String content;
-  late String dataDescription;
-  late int id;
-  late var images;
-  late double latitude;
-  late double longitude;
-  late var mainImage;
-  late String name;
-  late dynamic options;
-  late double rating;
-  late int reviewCount;
-  late String description;
-  late bool result;
+  int? code;
+  String? content;
+  String? dataDescription;
+  int? id;
+  dynamic images;
+  var latitude;
+  var longitude;
+  String? name;
+  int? basePrice;
+  List<Map<String, dynamic>>? optionList;
+  var rating;
+  int? reviewCount;
+  String? shopProfileImage;
+  String? description;
+  bool? result;
 
   ShopGetMeModel(
       {code,
@@ -175,11 +181,12 @@ class ShopGetMeModel {
       images,
       latitude,
       longitude,
-      mainImage,
       name,
-      options,
+      basePrice,
+      optionList,
       rating,
       reviewCount,
+      shopProfileImage,
       description,
       result});
 
@@ -192,26 +199,27 @@ class ShopGetMeModel {
 
   ShopGetMeModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    content = json['data'][0];
-    dataDescription = json['data'][1];
-    id = json['data'][2];
-    images = json['data'][3];
-    latitude = json['data'][4][0];
-    longitude = json['data'][4][1];
-    mainImage = json['data'][5];
-    name = json['data'][6];
-    options = json['data'][7];
-    rating = json['data'][8];
-    reviewCount = json['data'][9];
+    content = json['data']['content'];
+    dataDescription = json['data']['description'];
+    id = json['data']['id'];
+    images = json['data']['images'];
+    latitude = json['data']['location']['latitude'];
+    longitude = json['data']['location']['longitude'];
+    name = json['data']['name'];
+    basePrice = json['data']['options']['basePrice'];
+    optionList = json['data']['options']['optionList'];
+    rating = json['data']['rating'];
+    reviewCount = json['data']['reviewCount'];
+    shopProfileImage = json['data']['shopProfileImage'].toString();
     description = json['description'];
     result = json['result'];
   }
 }
 
 class ShopOptionRegistration {
-  late int code;
-  late String description;
-  late bool result;
+  int? code;
+  String? description;
+  bool? result;
 
   ShopOptionRegistration({code, description, result});
 

@@ -40,7 +40,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
             duration: const Duration(milliseconds: 500),
             curve: Curves.fastLinearToSlowEaseIn);
       });
-      print(widget.selectedBottomNavigationBarIndex);
     } else if (widget.selectedBottomNavigationBarIndex != index) {
       setState(() {
         if (widget.selectedBottomNavigationBarIndex == 0) {
@@ -62,8 +61,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
         } else {
           icMy = SvgPicture.asset('assets/images_svg/ic_마이_on.svg');
         }
-        print(widget.selectedBottomNavigationBarIndex);
-        print(index);
         widget.selectedBottomNavigationBarIndex = index;
         Navigator.pushReplacement(
             context,

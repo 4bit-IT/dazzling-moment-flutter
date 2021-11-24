@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:get/get.dart';
 
 class GetUserInfoModel {
   int? code;
@@ -16,6 +17,7 @@ class GetUserInfoModel {
   String? createdAt;
   String? email;
   int? id;
+  bool? isOwner;
   String? name;
   String? nickname;
   String? phoneNumber;
@@ -40,6 +42,7 @@ class GetUserInfoModel {
       createdAt,
       email,
       id,
+        isOwner,
       name,
       nickname,
       phoneNumber,
@@ -51,8 +54,8 @@ class GetUserInfoModel {
   GetUserInfoModel.fromJson(Map<String, dynamic> json) {
     print(json);
     code = json['code'];
-    addr1 = json['data']['address']['addr1'].toString();
-    addr2 = json['data']['address']['addr2'].toString();
+    addr1 = json['data']['address']['addr1'];
+    addr2 = json['data']['address']['addr2'];
     zipcode = json['data']['address']['zipcode'];
     ageRange = json['data']['ageRange'];
     lastAgreeDateOfMarketing =
@@ -69,6 +72,7 @@ class GetUserInfoModel {
     createdAt = json['data']['createdAt'];
     email = json['data']['email'];
     id = json['data']['id'];
+    isOwner = json['data']['isOwner'];
     name = json['data']['name'];
     nickname = json['data']['nickname'];
     phoneNumber = json['data']['phoneNumber'];
@@ -88,7 +92,6 @@ class AccessTokenAvailableCheckModel {
   AccessTokenAvailableCheckModel({code, data, description, result});
 
   AccessTokenAvailableCheckModel.fromJson(Map<String, dynamic> json) {
-    print(json);
     code = json['code'];
     data = json['data'];
     description = json['description'];

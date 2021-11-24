@@ -28,6 +28,7 @@ class Damo extends StatelessWidget {
   Widget build(BuildContext context) {
     print(6);
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       home: ScreenUtilInit(
         designSize: Size(375, 812),
         builder: () {

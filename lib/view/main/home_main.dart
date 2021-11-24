@@ -10,14 +10,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class HomeMain extends StatefulWidget {
-  const HomeMain({Key? key}) : super(key: key);
+class HomeMain extends StatelessWidget {
 
-  @override
-  _HomeMainState createState() => _HomeMainState();
-}
-
-class _HomeMainState extends State<HomeMain> {
   TokenController tokenController = Get.find();
   ScrollController scrollController = ScrollController();
   UserController userController = Get.put(UserController());
