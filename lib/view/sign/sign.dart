@@ -11,11 +11,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class Sign extends StatelessWidget {
-  final SignController signController = Get.put(SignController());
-  final UserController userController = Get.put(UserController());
+  SignController signController = Get.put(SignController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
+    signController.initialized
+        ? signController = Get.find()
+        : Get.lazyPut(() => SignController());
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -87,8 +89,7 @@ class Sign extends StatelessWidget {
                           child: Column(
                             children: [
                               InkWell(
-                                onTap: () async {
-                                },
+                                onTap: () async {},
                                 child: SvgPicture.asset(
                                     'assets/images_svg/ic_login_apple.svg'),
                               ),

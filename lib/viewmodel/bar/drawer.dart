@@ -1,6 +1,8 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:damo/app/controller/sign_controller.dart';
 import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
+import 'package:damo/app/data/model/token_model.dart';
 import 'package:damo/view/mypage/edit_my_info.dart';
 import 'package:damo/view/mypage/setting.dart';
 import 'package:damo/view/notification/notice_admin.dart';
@@ -18,6 +20,7 @@ import 'package:page_transition/page_transition.dart';
 
 UserController userController = Get.find();
 TokenController TokenData = Get.find();
+SignController signController = Get.find();
 
 class DrawerButton extends StatefulWidget {
   @override
@@ -49,10 +52,10 @@ class _DrawerButtonState extends State<DrawerButton> {
                   ),
                   onPressed: () {
                     print('로그아웃 합니다.');
-                    //TokenData.removeToken();
+                    Token().removeToken();
                     Get.offAll(
                       () => AnimatedSplashScreen(
-                        duration: 1500,
+                        duration: 500,
                         splash: 'assets/images/DAMO_logo-03.png',
                         nextScreen: Sign(),
                         splashTransition: SplashTransition.fadeTransition,
@@ -89,7 +92,7 @@ class _DrawerButtonState extends State<DrawerButton> {
               children: [
                 Container(
                   alignment: Alignment.topLeft,
-                  child: Image.network(userController.getUserInfoModel!.value.profileImage!),
+                  child: Image.network(userController.getUserInfoModel.value.profileImage!),
                   height: 55,
                 ),
                 SizedBox(
@@ -117,7 +120,7 @@ class _DrawerButtonState extends State<DrawerButton> {
                     ),
                   ),
                   TextSpan(
-                    text: '윤중건',
+                    text: userController.getUserInfoModel.value.nickname,
                     style: TextStyle(
                       color: Color(0xff283137),
                       fontSize: 16,
@@ -147,7 +150,7 @@ class _DrawerButtonState extends State<DrawerButton> {
               height: 8.h,
             ),
             Text(
-              '임시이메일, 변경해야함',
+              userController.getUserInfoModel.value.email!,
               style: TextStyle(
                 color: Color(0xff283137),
                 fontSize: 12,

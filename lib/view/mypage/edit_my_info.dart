@@ -6,10 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import 'edit_my_address.dart';
-
 UserController userController = Get.find();
-TextEditingController addr2Controller = TextEditingController();
 
 class EditMyInfo extends StatefulWidget {
   const EditMyInfo({Key? key}) : super(key: key);
@@ -68,7 +65,7 @@ class _EditMyInfoState extends State<EditMyInfo> {
                   Stack(
                     children: [
                       Image.network(
-                        userController.getUserInfoModel!.value.profileImage!,
+                        userController.getUserInfoModel.value.profileImage!,
                         width: 75.w,
                         height: 75.h,
                       ),
@@ -116,7 +113,7 @@ class _EditMyInfoState extends State<EditMyInfo> {
                               SizedBox(
                                 width: 164.w,
                                 child: Text(
-                                  userController.getUserInfoModel!.value.email!,
+                                  userController.getUserInfoModel.value.email!,
                                   style: TextStyle(
                                       color: Color(0xff283137),
                                       fontFamily: 'NotoSansCJKKR',
@@ -155,7 +152,8 @@ class _EditMyInfoState extends State<EditMyInfo> {
                               SizedBox(
                                 width: 168.w,
                                 child: Text(
-                                  userController.getUserInfoModel!.value.nickname!,
+                                  userController
+                                      .getUserInfoModel.value.nickname!,
                                   style: TextStyle(
                                       color: Color(0xff283137),
                                       fontFamily: 'NotoSansCJKKR',
@@ -190,78 +188,17 @@ class _EditMyInfoState extends State<EditMyInfo> {
                               ),
                               InkWell(
                                 onTap: () async {
-                                  await Get.to(() => EditMyAddress());
-                                  if (userController.addrEditCheck!.value == true) {
-                                    Get.defaultDialog(
-                                      title: '상세 주소입력',
-                                      titleStyle: TextStyle(
-                                        color: Color(0xff283137),
-                                        fontSize: 16,
-                                        fontFamily: 'NotoSansCJKKR',
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                      content: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            0, 20, 0, 0),
-                                        child: TextFormField(
-                                          controller: addr2Controller,
-                                          decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: '없으시면 입력하지 않아도 됩니다.',
-                                            hintStyle: TextStyle(
-                                                color: Color(0xff283137),
-                                                fontFamily: 'NotoSansCJKKR',
-                                                fontSize: 14.h,
-                                                height: 1),
-                                          ),
-                                        ),
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                            child: Text(
-                                              "확인",
-                                              style: TextStyle(
-                                                  color: Color(0xff283137),
-                                                  fontFamily: 'NotoSansCJKKR',
-                                                  fontSize: 14.h,
-                                                  height: 1),
-                                            ),
-                                            onPressed: () async {
-                                              userController.getUserInfoModel!.value.addr2 =
-                                                  addr2Controller.text.obs
-                                                      .toString();
-                                              userController.registerAddress();
-                                              print('주소변경 완료');
-                                              addr2Controller.clear();
-                                              Get.back();
-                                            }),
-                                        TextButton(
-                                            child: Text(
-                                              "취소",
-                                              style: TextStyle(
-                                                  color: Color(0xff283137),
-                                                  fontFamily: 'NotoSansCJKKR',
-                                                  fontSize: 14.h,
-                                                  height: 1),
-                                            ),
-                                            onPressed: () {
-                                              addr2Controller.clear();
-                                              Get.back();
-                                            }),
-                                      ],
-                                    );
-                                    userController.addrEditCheck = false.obs;
-                                  }
+                                  await userController.onAddressChanged();
                                 },
                                 child: Row(
                                   children: [
                                     SizedBox(
                                       width: 210.w,
                                       child: Obx(
-                                            () => Text(
-                                          userController.getUserInfoModel!.value.addr1! +
+                                        () => Text(
+                                          userController.getUserInfoModel.value.addr1! +
                                               ' ' +
-                                              userController.getUserInfoModel!.value.addr2!,
+                                              userController.getUserInfoModel.value.addr2!,
                                           style: TextStyle(
                                               color: Color(0xff283137),
                                               fontFamily: 'NotoSansCJKKR',
@@ -304,8 +241,7 @@ class _EditMyInfoState extends State<EditMyInfo> {
                                 ),
                               ),
                               Text(
-                                '${userController.getUserInfoModel!.value.phoneNumber}'
-                              ),
+                                  '${userController.getUserInfoModel.value.phoneNumber}'),
                               Row(
                                 children: [
                                   Text(

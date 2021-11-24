@@ -45,7 +45,7 @@ class UserNetwork {
         Uri.parse(baseUri + '/users/refresh'),
         headers: {
           'Content-Type': 'application/json',
-          'token': tokenController.token!['accessToken']!,
+          'token': tokenController.token!['refreshToken']!,
         },
       );
       return jsonDecode(utf8.decode(response.bodyBytes));

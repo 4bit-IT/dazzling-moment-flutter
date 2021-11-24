@@ -9,20 +9,13 @@ final TokenController tokenController = Get.find();
 final baseUri = ('https://www.damoforyou.com/api');
 
 class ShopNetwork {
-  late ShopRegistrationModel shopRegistrationModel;
-  late ShopGetDetailModel shopGetDetailModel;
-  late ShopImageRegistrationModel shopImageRegistrationModel;
-  late ShopImageDeleteModel shopImageDeleteModel;
-  late ShopChangeMainImageModel shopChangeMainImageModel;
-  late ShopGetMeModel shopGetMeModel;
-  late ShopOptionRegistration shopOptionRegistration;
   final headers = {
     'Content-Type': 'application/json',
     'token': tokenController.token!['accessToken']!,
   };
   var body;
 
-  void postShop(Map<String, dynamic> input) async {
+  dynamic postShop(Map<String, dynamic> input) async {
     try {
       body = ShopRegistrationModel().toJson(input);
       http.Response response = await http.post(
@@ -31,22 +24,7 @@ class ShopNetwork {
         body: body,
       );
 
-      if (response.statusCode == 200) {
-        shopRegistrationModel = ShopRegistrationModel.fromJson(
-            jsonDecode(utf8.decode(response.bodyBytes)));
-        if (shopRegistrationModel.code == 1 &&
-            shopRegistrationModel.result == true) {
-          //업체 등록 성공
-        } else if (shopRegistrationModel.code == 2 &&
-            shopRegistrationModel.result == false) {
-          //업체 등록 실패
-        } else if (shopRegistrationModel.code == 3 &&
-            shopRegistrationModel.result == false) {
-          //토큰 만료, 토큰재발급 필요
-        }
-      } else {
-        //오류
-      }
+      return jsonDecode(utf8.decode(response.bodyBytes));
     } catch (e) {
       print(e);
     }
@@ -58,19 +36,7 @@ class ShopNetwork {
         Uri.parse(baseUri + '/shop?id=$id'),
         headers: headers,
       );
-      if (response.statusCode == 200) {
-        shopGetDetailModel = ShopGetDetailModel.fromJson(
-            jsonDecode(utf8.decode(response.bodyBytes)));
-        if (shopGetDetailModel.code == 1 && shopGetDetailModel.result == true) {
-          return shopGetDetailModel;
-        } else if (shopGetDetailModel.code == 2 &&
-            shopGetDetailModel.result == false) {
-          //실패
-        } else if (shopGetDetailModel.code == 3 &&
-            shopGetDetailModel.result == false) {
-          //토큰만료
-        }
-      }
+      return jsonDecode(utf8.decode(response.bodyBytes));
     } catch (e) {}
   }
 
@@ -83,22 +49,7 @@ class ShopNetwork {
             .add(await http.MultipartFile.fromPath('image', image.path));
       }
       http.StreamedResponse response = await request.send();
-      if (response.statusCode == 200) {
-        shopImageRegistrationModel = ShopImageRegistrationModel.fromJson(
-            json.decode(await response.stream.bytesToString()));
-        if (shopImageRegistrationModel.code == 1 &&
-            shopImageRegistrationModel.result == true) {
-          //netword cached image 사용해야함
-        } else if (shopImageRegistrationModel.code == 2 &&
-            shopImageRegistrationModel.result == false) {
-          //실패
-        } else if (shopImageRegistrationModel.code == 3 &&
-            shopImageRegistrationModel.result == false) {
-          //토큰만료
-        }
-      } else {
-        //통신 실패
-      }
+      //return jsonDecode(utf8.decode(response.stream));
     } catch (e) {
       print(e);
     }
@@ -114,48 +65,61 @@ class ShopNetwork {
           .add(await http.MultipartFile.fromPath('mainImage', image.path));
 
       http.StreamedResponse response = await request.send();
-      if (response.statusCode == 200) {
-        shopChangeMainImageModel = ShopChangeMainImageModel.fromJson(
-            json.decode(await response.stream.bytesToString()));
-        if (shopImageRegistrationModel.code == 1 &&
-            shopImageRegistrationModel.result == true) {
-          //netword cached image 사용해야함
-        } else if (shopImageRegistrationModel.code == 2 &&
-            shopImageRegistrationModel.result == false) {
-          //실패
-        } else if (shopImageRegistrationModel.code == 3 &&
-            shopImageRegistrationModel.result == false) {
-          //토큰만료
-        }
-      } else {
-        //통신 실패
-      }
+      //return
     } catch (e) {
       print(e);
     }
   }
 
-  Future<ShopGetMeModel> getShopMe() async {
-    try {
+  Future<dynamic> getShopMe() async {
+    /*try {
       http.Response response = await http.get(
         Uri.parse(baseUri + '/shop/me'),
         headers: headers,
       );
-      if (response.statusCode == 200) {
-        shopGetMeModel = ShopGetMeModel.fromJson(
-            jsonDecode(utf8.decode(response.bodyBytes)));
-        if (shopGetDetailModel.code == 1 && shopGetDetailModel.result == true) {
-          return shopGetMeModel;
-        } else if (shopGetDetailModel.code == 2 &&
-            shopGetDetailModel.result == false) {
-          //실패
-        } else if (shopGetDetailModel.code == 3 &&
-            shopGetDetailModel.result == false) {
-          //토큰만료
-        }
+      if(response.statusCode == 200){
+        return jsonDecode(utf8.decode(response.bodyBytes));
       }
-    } catch (e) {}
-    return shopGetMeModel;
+      else{
+        print('통신 오류');
+      }
+    } catch (e) {
+      print(e);
+    }*/
+    return {
+      "code": 1,
+      "result": true,
+      "data": {
+        "id": 1,
+        "name": "test",
+        "description": "test",
+        "content": "test",
+        "options": {
+          "basePrice": 10000,
+          "optionList": [
+            {
+              "title": "1. 사이즈를 선택해주세요.",
+              "description": "반드시 1개 이상 선택해주세요.",
+              "allowMultipleChoices": true,
+              "optionDetailList": [
+                {
+                  "content": "오레오 토핑",
+                  "price": 1000,
+                  "count": 3,
+                  "allowMultipleChoices": true
+                }
+              ]
+            }
+          ]
+        },
+        "rating": 0,
+        "reviewCount": 0,
+        "location": {"latitude": 0, "longitude": 0},
+        "shopProfileImage": null,
+        "images": []
+      },
+      "description": "성공"
+    };
   }
 
   void postShopOption(Map<String, dynamic> input) async {
@@ -167,22 +131,7 @@ class ShopNetwork {
         body: body,
       );
 
-      if (response.statusCode == 200) {
-        shopOptionRegistration = ShopOptionRegistration.fromJson(
-            jsonDecode(utf8.decode(response.bodyBytes)));
-        if (shopRegistrationModel.code == 1 &&
-            shopRegistrationModel.result == true) {
-          //업체 등록 성공
-        } else if (shopRegistrationModel.code == 2 &&
-            shopRegistrationModel.result == false) {
-          //업체 등록 실패
-        } else if (shopRegistrationModel.code == 3 &&
-            shopRegistrationModel.result == false) {
-          //토큰 만료, 토큰재발급 필요
-        }
-      } else {
-        //오류
-      }
+      return jsonDecode(utf8.decode(response.bodyBytes));
     } catch (e) {
       print(e);
     }

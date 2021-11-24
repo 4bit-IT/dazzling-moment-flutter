@@ -63,7 +63,7 @@ class _MyPageState extends State<MyPage> {
                       children: [
                         SizedBox(width: 150.w),
                         Image.network(
-                          userController.getUserInfoModel!.value.profileImage!,
+                          userController.getUserInfoModel.value.profileImage!,
                           width: 75.w,
                           height: 75.h,
                         ),
@@ -87,7 +87,7 @@ class _MyPageState extends State<MyPage> {
                     ),
                     SizedBox(height: 11.h),
                     Text(
-                      userController.getUserInfoModel!.value.nickname!,
+                      userController.getUserInfoModel.value.nickname!,
                       style: TextStyle(
                         color: Color(0xff283137),
                         fontSize: 16.h,
@@ -98,7 +98,7 @@ class _MyPageState extends State<MyPage> {
                     ),
                     SizedBox(height: 5.h),
                     Text(
-                      userController.getUserInfoModel!.value.email!,
+                      userController.getUserInfoModel.value.email!,
                       style: TextStyle(
                         color: Color(0xff283137),
                         fontFamily: 'NotoSansCJKKR',

@@ -1,9 +1,11 @@
+import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/app/data/model/oauth_model.dart';
 import 'package:damo/app/data/model/token_model.dart';
 import 'package:damo/app/data/model/user_model.dart';
 import 'package:damo/app/data/provider/kakao.dart';
 import 'package:damo/app/data/provider/oauth_api.dart';
 import 'package:damo/app/data/provider/user/user_api.dart';
+import 'package:damo/view/main/home_main.dart';
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,8 +14,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class SignController extends GetxController {
-  late Rx<AuthSignModel> authSignModel;
-  late Rx<AuthLoginModel> authLoginModel;
+  UserController? userController;
+  Rx<AuthSignModel> authSignModel = AuthSignModel().obs;
+  Rx<AuthLoginModel> authLoginModel = AuthLoginModel().obs;
   late NicknameDoubleCheckModel nicknameDoubleCheckModel;
 
   late RxString oauthAccessToken;
@@ -36,6 +39,7 @@ class SignController extends GetxController {
   Map<String, dynamic> input = {};
   String sendData = '';
   var response;
+  var model;
 
   void signUpClicked() async {
     input.clear();
@@ -47,7 +51,15 @@ class SignController extends GetxController {
     input['phoneNumber'] = '010-3874-0360';
     sendData = AuthSignModel().toJson(input);
     response = await OauthNetwork().postOauthKakao(sendData);
-    authSignModel = AuthSignModel.fromJson(response).obs;
+    model = AuthSignModel.fromJson(response);
+    authSignModel.update((val) {
+      val!.code = model.code;
+      val.accessToken = model.accessToken;
+      val.refreshToken = model.refreshToken;
+      val.description = model.description;
+      val.isFirst = model.isFirst;
+      val.result = model.result;
+    });
     Token().saveToken(authSignModel.value.accessToken!, authSignModel.value.refreshToken!);
     tokenController.token!['accessToken'] = authSignModel.value.accessToken!;
     tokenController.token!['refreshToken'] = authSignModel.value.refreshToken!;
@@ -60,19 +72,28 @@ class SignController extends GetxController {
     input['oauthAccessToken'] = oauthAccessToken.value;
     sendData = AuthLoginModel().toJson(input);
     response = await OauthNetwork().postOauthKakaoLogin(sendData);
-    authLoginModel = AuthLoginModel.fromJson(response).obs;
-
+    model = AuthLoginModel.fromJson(response);
+    authLoginModel.update((val) {
+      val!.code = model.code;
+      val.accessToken = model.accessToken;
+      val.refreshToken = model.refreshToken;
+      val.description = model.description;
+      val.isFirst = model.isFirst;
+      val.result = model.result;
+    });
     if (authLoginModel.value.code == 1 && authLoginModel.value.result == true) {
       if (authLoginModel.value.isFirst == true &&
-          authLoginModel.value.accessToken == 'null' &&
-          authLoginModel.value.refreshToken == 'null') {
+          authLoginModel.value.accessToken == '' &&
+          authLoginModel.value.refreshToken == '') {
         print('첫 로그인');
         Get.to(() => GetUserInfo());
       } else {
         print('첫 로그인 아님');
         Token().saveToken(authLoginModel.value.accessToken!,
             authLoginModel.value.refreshToken!);
-        Get.to(() => GetUserInfo());
+        authLoginModel.value.isFirst = true;
+        userController = await Get.put(UserController());
+        Get.to(() => HomeMain());
       }
     } else {
       print('잘못된 카카오 토큰');
@@ -245,7 +266,6 @@ class SignController extends GetxController {
   void changeReadOnly() {
     readOnly = false.obs;
   }
-
 
 }
 

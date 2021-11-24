@@ -1,15 +1,14 @@
 import 'package:damo/app/controller/shop_controller.dart';
-import 'package:damo/view/shop/shop_product_list.dart';
-import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/view/shop/shop_chat_management.dart';
+import 'package:damo/view/shop/shop_faq_management.dart';
+import 'package:damo/view/shop/shop_product_list.dart';
 import 'package:damo/view/shop/shop_review_management.dart';
+import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import 'shop_faq_management.dart';
 
 class ShopMain extends StatefulWidget {
   @override
@@ -17,7 +16,7 @@ class ShopMain extends StatefulWidget {
 }
 
 class _ShopMainState extends State<ShopMain> {
-  final controller = Get.put(ShopController(), permanent: true);
+  final shopController = Get.put(ShopController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {

@@ -3,15 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:kpostal/kpostal.dart';
+import 'package:get/get.dart';
 
-class EditMyAddress extends StatefulWidget {
-  @override
-  _EditMyAddressState createState() => _EditMyAddressState();
-}
-
-UserController userController = Get.find();
-
-class _EditMyAddressState extends State<EditMyAddress> {
+class EditMyAddress extends StatelessWidget {
+  UserController userController = Get.find();
   String postCode = '-';
   String address = '-';
 
@@ -22,8 +17,8 @@ class _EditMyAddressState extends State<EditMyAddress> {
         child: KpostalView(
           kakaoKey: 'f531a0ec792da7f77d6b58255ae76aa0',
           callback: (Kpostal result) async {
-            userController.getUserInfoModel!.value.zipcode = result.postCode;
-            userController.getUserInfoModel!.value.addr1 = result.address;
+            userController.zipcode.value = result.postCode;
+            userController.addr1.value = result.address;
             userController.addrEditCheck!.value = true;
             // await UserNetwork().postUsersAddress();
           },
