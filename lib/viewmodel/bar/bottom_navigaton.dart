@@ -1,6 +1,7 @@
 import 'package:damo/view/community/look_community.dart';
 import 'package:damo/view/location/look_location.dart';
 import 'package:damo/view/main/home_main.dart';
+import 'package:damo/view/mypage/chat.dart';
 import 'package:damo/view/mypage/my_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -23,7 +24,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   static List bottomNavigationBarPages = [
     HomeMain(),
     LookLocation(),
-    LookCommunity(),
+    Chat(),
     MyPage(),
   ];
 

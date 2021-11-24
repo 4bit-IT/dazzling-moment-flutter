@@ -39,7 +39,6 @@ class UserController extends GetxController {
 
   Future<void> getUserInfo() async {
     print(tokenController.isAutoLogin!.value);
-    if (tokenController.isAutoLogin!.value == true) {
       input.clear();
       response = await UserNetwork().getUsers();
       model = GetUserInfoModel.fromJson(response);
@@ -74,7 +73,7 @@ class UserController extends GetxController {
       } else {
         tokenController.reGetAccessToken();
       }
-    }
+
 
   }
 

@@ -13,9 +13,16 @@ class TokenController extends GetxController {
   var response;
   var model;
 
+  @override
+  Future<void> onInit() async {
+    // TODO: implement onInit
+    super.onInit();
+  }
+
   Future<void> fetchData() async {
     token = (await Token().loadToken()).obs; //기기에 저장되어있는 토큰을 불러온다.
-    if (token!['accessToken'] == '' && token!['refreshToken'] == '') {
+    if ((token!['accessToken'] == '' && token!['refreshToken'] == '') ||
+        (token!['accessToken'] == 'null' && token!['refreshToken'] == 'null')) {
       // 아무 토큰이 없으니 로그인 화면으로 이동
       print('토큰이 없으므로 로그인 화면으로 이동');
       isAutoLogin = false.obs;
@@ -38,16 +45,17 @@ class TokenController extends GetxController {
       print(accessTokenAvailableCheckModel.value.result);
       if (accessTokenAvailableCheckModel.value.code == 1 &&
           accessTokenAvailableCheckModel.value.result == true) {
-        isAutoLogin = true.obs;
+        isAutoLogin!.value = true;
       } else if (accessTokenAvailableCheckModel.value.code == 2 &&
           accessTokenAvailableCheckModel.value.result == false) {
         print('api 호출 중 오류');
-        isAutoLogin = false.obs;
+        isAutoLogin!.value = false;
       } else {
         print('토큰 만료');
         reGetAccessToken();
       }
     }
+    //Token().removeToken();
   }
 
   reGetAccessToken() async {
@@ -72,4 +80,6 @@ class TokenController extends GetxController {
       isAutoLogin = true.obs;
     }
   }
+
+
 }

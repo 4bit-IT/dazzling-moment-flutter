@@ -24,7 +24,8 @@ class SignController extends GetxController {
   RxBool readOnly = false.obs;
   Rx<TextEditingController> nicknameController = TextEditingController().obs;
   Rx<TextEditingController> phoneNumberController = TextEditingController().obs;
-  Rx<TextEditingController> smsAuthNumberController = TextEditingController().obs;
+  Rx<TextEditingController> smsAuthNumberController =
+      TextEditingController().obs;
   Rx<SvgPicture> getAuthNumberButton = SvgPicture.asset(
     'assets/images_svg/btn_인증번호받기_off.svg',
     width: 92.w,
@@ -41,7 +42,7 @@ class SignController extends GetxController {
   var response;
   var model;
 
-  void signUpClicked() async {
+  Future<void> signUpClicked() async {
     input.clear();
     input['marketing'] = acceptList[2].value.check;
     input['pushNotification'] = acceptList[3].value.check;
@@ -60,7 +61,8 @@ class SignController extends GetxController {
       val.isFirst = model.isFirst;
       val.result = model.result;
     });
-    Token().saveToken(authSignModel.value.accessToken!, authSignModel.value.refreshToken!);
+    Token().saveToken(
+        authSignModel.value.accessToken!, authSignModel.value.refreshToken!);
     tokenController.token!['accessToken'] = authSignModel.value.accessToken!;
     tokenController.token!['refreshToken'] = authSignModel.value.refreshToken!;
   }
@@ -73,6 +75,8 @@ class SignController extends GetxController {
     sendData = AuthLoginModel().toJson(input);
     response = await OauthNetwork().postOauthKakaoLogin(sendData);
     model = AuthLoginModel.fromJson(response);
+    print(model.code);
+    print(model.accessToken);
     authLoginModel.update((val) {
       val!.code = model.code;
       val.accessToken = model.accessToken;
@@ -81,17 +85,30 @@ class SignController extends GetxController {
       val.isFirst = model.isFirst;
       val.result = model.result;
     });
+
+    print(authLoginModel.value.code);
+    print(authLoginModel.value.isFirst);
+
     if (authLoginModel.value.code == 1 && authLoginModel.value.result == true) {
-      if (authLoginModel.value.isFirst == true &&
-          authLoginModel.value.accessToken == '' &&
-          authLoginModel.value.refreshToken == '') {
+      if ((authLoginModel.value.isFirst == true &&
+              authLoginModel.value.accessToken == 'null' &&
+              authLoginModel.value.refreshToken == 'null') ||
+          (authLoginModel.value.isFirst == true &&
+              authLoginModel.value.accessToken == '' &&
+              authLoginModel.value.refreshToken == '')) {
         print('첫 로그인');
         Get.to(() => GetUserInfo());
       } else {
         print('첫 로그인 아님');
+        print(authLoginModel.value.accessToken!);
         Token().saveToken(authLoginModel.value.accessToken!,
             authLoginModel.value.refreshToken!);
-        authLoginModel.value.isFirst = true;
+        tokenController.token!['accessToken'] =
+            authLoginModel.value.accessToken!;
+        tokenController.token!['refreshToken'] =
+            authLoginModel.value.refreshToken!;
+        print(authLoginModel.value.accessToken);
+        authLoginModel.value.isFirst = false;
         userController = await Get.put(UserController());
         Get.to(() => HomeMain());
       }
@@ -102,7 +119,7 @@ class SignController extends GetxController {
 
   void onPhoneNumberChanged() {
     if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
-        .hasMatch(phoneNumberController.value.value.text) ==
+            .hasMatch(phoneNumberController.value.value.text) ==
         false) {
       getAuthNumberButton.value = SvgPicture.asset(
         'assets/images_svg/btn_인증번호받기_off.svg',
@@ -121,8 +138,11 @@ class SignController extends GetxController {
   }
 
   void onAuthNumberChanged() {
-    print(RegExp(r'^([0-9]{6})$').hasMatch(smsAuthNumberController.value.value.text));
-    if (RegExp(r'^([0-9]{6})$').hasMatch(smsAuthNumberController.value.value.text) == false) {
+    print(RegExp(r'^([0-9]{6})$')
+        .hasMatch(smsAuthNumberController.value.value.text));
+    if (RegExp(r'^([0-9]{6})$')
+            .hasMatch(smsAuthNumberController.value.value.text) ==
+        false) {
       confirmAuthNumberButton.value = SvgPicture.asset(
         'assets/images_svg/btn_인증문자확인_off.svg',
         width: 375.w,
@@ -158,13 +178,13 @@ class SignController extends GetxController {
 
   void doubleCheckClicked() async {
     if (RegExp(r'^([가-힣a-zA-Z0-9]){2,8}$')
-        .hasMatch(nicknameController.value.text) ==
+            .hasMatch(nicknameController.value.text) ==
         true) {
       Map<String, dynamic> input = {
         'nickname': nicknameController.value.value.text.toString()
       };
       nicknameDoubleCheckModel =
-      await UserNetwork().postUsersCheckNickname(input);
+          await UserNetwork().postUsersCheckNickname(input);
       if (nicknameDoubleCheckModel.data == true) {
         isNicknameCheck = true.obs;
         Get.snackbar('닉네임 중복확인', '사용가능한 닉네임 입니다.');
@@ -250,23 +270,22 @@ class SignController extends GetxController {
   }
 
   get getConfirmButton => (acceptList[1].value.check &&
-      acceptList[2].value.check &&
-      isNicknameCheck.value)
+          acceptList[2].value.check &&
+          isNicknameCheck.value)
       ? SvgPicture.asset(
-    'assets/images_svg/btn_확인_on.svg',
-    width: 375.w,
-    fit: BoxFit.fill,
-  ).obs
+          'assets/images_svg/btn_확인_on.svg',
+          width: 375.w,
+          fit: BoxFit.fill,
+        ).obs
       : SvgPicture.asset(
-    'assets/images_svg/btn_확인_off.svg',
-    width: 375.w,
-    fit: BoxFit.fill,
-  ).obs;
+          'assets/images_svg/btn_확인_off.svg',
+          width: 375.w,
+          fit: BoxFit.fill,
+        ).obs;
 
   void changeReadOnly() {
     readOnly = false.obs;
   }
-
 }
 
 class AcceptRadioModel {
