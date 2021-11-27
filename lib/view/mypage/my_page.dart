@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/view/mypage/edit_my_info.dart';
 import 'package:damo/view/mypage/purchase_history.dart';
@@ -62,10 +63,15 @@ class _MyPageState extends State<MyPage> {
                     Row(
                       children: [
                         SizedBox(width: 150.w),
-                        Image.network(
-                          userController.getUserInfoModel.value.profileImage!,
+                        CachedNetworkImage(
+                          imageUrl: userController
+                              .getUserInfoModel.value.profileImage!,
                           width: 75.w,
                           height: 75.h,
+                          fadeInDuration: Duration(milliseconds: 100),
+                          fadeOutDuration: Duration(milliseconds: 100),
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(),
                         ),
                         SizedBox(width: 110.w),
                         Column(

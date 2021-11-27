@@ -9,8 +9,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 
-import 'app/data/model/token_model.dart';
-
 late Widget nextScreen;
 TokenController tokenController = Get.put(TokenController(), permanent: true);
 
