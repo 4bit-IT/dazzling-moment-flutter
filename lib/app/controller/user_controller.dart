@@ -10,16 +10,22 @@ import 'package:flutter/material.dart';
 class UserController extends GetxController {
   TokenController tokenController = Get.find();
   Rx<GetUserInfoModel> getUserInfoModel = GetUserInfoModel().obs;
-  Rx<AccessTokenAvailableCheckModel> accessTokenAvailableCheckModel = AccessTokenAvailableCheckModel().obs;
+  Rx<AccessTokenAvailableCheckModel> accessTokenAvailableCheckModel =
+      AccessTokenAvailableCheckModel().obs;
   Rx<ChangeAddressModel> changeAddressModel = ChangeAddressModel().obs;
-  Rx<NicknameDoubleCheckModel> nicknameDoubleCheckModel = NicknameDoubleCheckModel().obs;
+  Rx<NicknameDoubleCheckModel> nicknameDoubleCheckModel =
+      NicknameDoubleCheckModel().obs;
   Rx<CheckOwnerModel> checkOwnerModel = CheckOwnerModel().obs;
   Rx<UserPhoneNumberModel> userPhoneNumberModel = UserPhoneNumberModel().obs;
-  Rx<ChangeProfileImageModel> changeProfileImageModel = ChangeProfileImageModel().obs;
-  Rx<ChangeDefaultProfileImageModel> changeDefaultProfileImageModel = ChangeDefaultProfileImageModel().obs;
-  Rx<RefreshAccessTokenModel> refreshAccessTokenModel = RefreshAccessTokenModel().obs;
+  Rx<ChangeProfileImageModel> changeProfileImageModel =
+      ChangeProfileImageModel().obs;
+  Rx<ChangeDefaultProfileImageModel> changeDefaultProfileImageModel =
+      ChangeDefaultProfileImageModel().obs;
+  Rx<RefreshAccessTokenModel> refreshAccessTokenModel =
+      RefreshAccessTokenModel().obs;
   RxBool? addrEditCheck = false.obs;
-  Rx<TextEditingController> addr2Controller = TextEditingController(text: '').obs;
+  Rx<TextEditingController> addr2Controller =
+      TextEditingController(text: '').obs;
   RxString addr1 = ''.obs;
   RxString zipcode = ''.obs;
   RxString addr2 = ''.obs;
@@ -39,42 +45,41 @@ class UserController extends GetxController {
 
   Future<void> getUserInfo() async {
     print(tokenController.isAutoLogin!.value);
-      input.clear();
-      response = await UserNetwork().getUsers();
-      model = GetUserInfoModel.fromJson(response);
-      getUserInfoModel.update((val) {
-        val!.code = model.code;
-        val.addr1 = model.addr1;
-        val.addr2 = model.addr2;
-        val.zipcode = model.zipcode;
-        val.ageRange = model.ageRange;
-        val.lastAgreeDateOfMarketing = model.lastAgreeDateOfMarketing;
-        val.lastAgreeDateOfPushNotification = model.lastAgreeDateOfPushNotification;
-        val.lastAgreeDateOfServiceAndPersonalData = model.lastAgreeDateOfServiceAndPersonalData;
-        val.marketing = model.marketing;
-        val.pushNotification = model.pushNotification;
-        val.serviceAndPersonalData = model.serviceAndPersonalData;
-        val.birth = model.birth;
-        val.createdAt = model.createdAt;
-        val.email = model.email;
-        val.id = model.id;
-        val.isOwner = model.isOwner;
-        val.name = model.name;
-        val.nickname = model.nickname;
-        val.phoneNumber = model.phoneNumber;
-        val.profileImage = model.profileImage;
-        val.sex = model.sex;
-        val.description = model.description;
-        val.result = model.result;
-      });
-      print(getUserInfoModel.value.profileImage);
-      if (getUserInfoModel.value.code == 1) {
-      } else if (getUserInfoModel.value.code == 2) {
-      } else {
-        tokenController.reGetAccessToken();
-      }
-
-
+    input.clear();
+    response = await UserNetwork().getUsers();
+    model = GetUserInfoModel.fromJson(response);
+    getUserInfoModel.update((val) {
+      val!.code = model.code;
+      val.addr1 = model.addr1;
+      val.addr2 = model.addr2;
+      val.zipcode = model.zipcode;
+      val.ageRange = model.ageRange;
+      val.lastAgreeDateOfMarketing = model.lastAgreeDateOfMarketing;
+      val.lastAgreeDateOfPushNotification =
+          model.lastAgreeDateOfPushNotification;
+      val.lastAgreeDateOfServiceAndPersonalData =
+          model.lastAgreeDateOfServiceAndPersonalData;
+      val.marketing = model.marketing;
+      val.pushNotification = model.pushNotification;
+      val.serviceAndPersonalData = model.serviceAndPersonalData;
+      val.birth = model.birth;
+      val.createdAt = model.createdAt;
+      val.email = model.email;
+      val.id = model.id;
+      val.isOwner = model.isOwner;
+      val.name = model.name;
+      val.nickname = model.nickname;
+      val.phoneNumber = model.phoneNumber;
+      val.profileImage = model.profileImage;
+      val.sex = model.sex;
+      val.description = model.description;
+      val.result = model.result;
+    });
+    if (getUserInfoModel.value.code == 1) {
+    } else if (getUserInfoModel.value.code == 2) {
+    } else {
+      tokenController.reGetAccessToken();
+    }
   }
 
   void isAvailableAccessToken() {}
@@ -98,7 +103,7 @@ class UserController extends GetxController {
     if (changeAddressModel.value.code == 3) {
       tokenController.reGetAccessToken();
       print(3);
-    } else if (changeAddressModel.value.code == 2){
+    } else if (changeAddressModel.value.code == 2) {
       return;
     }
     print(1);
@@ -111,13 +116,8 @@ class UserController extends GetxController {
     print(getUserInfoModel.value.addr2);
   }
 
-  change({
-    String? addr1,
-    String? addr2,
-    String? zipcode
-  }) {
-    getUserInfoModel.update((val){
-
+  change({String? addr1, String? addr2, String? zipcode}) {
+    getUserInfoModel.update((val) {
       val!.addr1 = addr1;
       val.addr2 = addr2;
       val.zipcode = zipcode;
@@ -126,8 +126,7 @@ class UserController extends GetxController {
 
   Future<void> onAddressChanged() async {
     await Get.to(() => EditMyAddress());
-    if (addrEditCheck!.value ==
-        true) {
+    if (addrEditCheck!.value == true) {
       await Get.defaultDialog(
         title: '상세 주소입력',
         titleStyle: TextStyle(
@@ -137,8 +136,7 @@ class UserController extends GetxController {
           fontWeight: FontWeight.w700,
         ),
         content: Padding(
-          padding: const EdgeInsets.fromLTRB(
-              0, 20, 0, 0),
+          padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
           child: TextFormField(
             controller: addr2Controller.value,
             decoration: InputDecoration(

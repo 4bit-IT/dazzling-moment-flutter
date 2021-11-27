@@ -12,14 +12,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class HomeMain extends StatelessWidget {
+  UserController userController = Get.put(UserController(), permanent: true);
   ProductController productController = Get.put(ProductController());
   TokenController tokenController = Get.find();
   ScrollController scrollController = ScrollController();
-  UserController userController = Get.put(UserController());
   DamoAppBar appBar = DamoAppBar();
 
   @override
   Widget build(BuildContext context) {
+    print('home main');
     return Scaffold(
       appBar: appBar.appBar(context),
       drawer: DrawerButton(),
@@ -388,7 +389,7 @@ class HomeMain extends StatelessWidget {
                                 width: 180.w,
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [

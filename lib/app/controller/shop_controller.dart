@@ -1,25 +1,26 @@
 import 'package:damo/app/data/model/shop_model.dart';
 import 'package:damo/app/data/provider/shop/shop_api.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 
 class ShopController extends GetxController {
-  final ImagePicker _picker = ImagePicker();
   Rx<ShopRegistrationModel> shopRegistrationModel = ShopRegistrationModel().obs;
   Rx<ShopGetDetailModel> shopGetDetailModel = ShopGetDetailModel().obs;
-  Rx<ShopImageRegistrationModel> shopImageRegistrationModel = ShopImageRegistrationModel().obs;
+  Rx<ShopImageRegistrationModel> shopImageRegistrationModel =
+      ShopImageRegistrationModel().obs;
   Rx<ShopImageDeleteModel> shopImageDeleteModel = ShopImageDeleteModel().obs;
-  Rx<ShopChangeMainImageModel> shopChangeMainImageModel = ShopChangeMainImageModel().obs;
+  Rx<ShopChangeMainImageModel> shopChangeMainImageModel =
+      ShopChangeMainImageModel().obs;
   Rx<ShopGetMeModel> shopGetMeModel = ShopGetMeModel().obs;
-  Rx<ShopOptionRegistration> shopOptionRegistration = ShopOptionRegistration().obs;
-  List<ShopOptionModel>? mainOptionList;
-  Rx<TextEditingController>? shopNameController = TextEditingController().obs;
-  Rx<TextEditingController>? shopContentController =
+  Rx<ShopOptionRegistration> shopOptionRegistration =
+      ShopOptionRegistration().obs;
+  RxList<ShopMainOptionModel> mainOptionList = <ShopMainOptionModel>[].obs;
+  Rx<TextEditingController> shopNameController = TextEditingController().obs;
+  Rx<TextEditingController> shopContentController = TextEditingController().obs;
+  Rx<TextEditingController> shopDescriptionController =
       TextEditingController().obs;
-  Rx<TextEditingController>? shopDescriptionController =
+  Rx<TextEditingController> shopBasePriceController =
       TextEditingController().obs;
-
 
   Map<String, dynamic> input = {};
   String sendData = '';
@@ -41,7 +42,7 @@ class ShopController extends GetxController {
       val.content = model.content;
       val.dataDescription = model.dataDescription;
       val.id = model.id;
-      val. images = model.images;
+      val.images = model.images;
       val.latitude = model.latitude;
       val.longitude = model.longitude;
       val.name = model.name;
@@ -64,81 +65,147 @@ class ShopController extends GetxController {
     }
     if (shopGetMeModel.value.dataDescription != '') {
       shopDescriptionController =
-          TextEditingController(text: shopGetMeModel.value.dataDescription)
+          TextEditingController(text: shopGetMeModel.value.dataDescription).obs;
+    }
+    if (shopGetMeModel.value.basePrice != null) {
+      shopBasePriceController =
+          TextEditingController(text: shopGetMeModel.value.basePrice.toString())
               .obs;
     }
 
-    for (int i = 0; i < shopGetMeModel.value.optionList!.length; i++) {
-      List<TextEditingController> optionDetailTitleController = [];
-      List<TextEditingController> optionDetailPriceController = [];
-      List<int> optionDetailCount = [];
-      List<bool> optionDetailAllowMultipleChoices = [];
-      for (int j = 0;
-      j < shopGetMeModel.value.optionList![i]['optionDetailList'].length;
-      j++) {
-        optionDetailTitleController.add(TextEditingController(
-            text: shopGetMeModel.value.optionList![i]['optionDetailList']
-            ['content']));
-        optionDetailPriceController.add(TextEditingController(
-            text: shopGetMeModel.value.optionList![i]['optionDetailList']
-            ['price']));
-        optionDetailCount.add(
-            shopGetMeModel.value.optionList![i]['optionDetailList']['count']);
-        optionDetailAllowMultipleChoices.add(shopGetMeModel.value.optionList![i]
-        ['optionDetailList']['allowMultipleChoices']);
-      }
+    print(shopGetMeModel.value.optionList);
 
-      mainOptionList!.add(ShopOptionModel(
-        title: shopGetMeModel.value.optionList![i]['title'],
-        optionTitleController: TextEditingController(
-            text: shopGetMeModel.value.optionList![i]['title']),
-        description: shopGetMeModel.value.optionList![i]['description'],
-        optionDescriptionController: TextEditingController(
-            text: shopGetMeModel.value.optionList![i]['description']),
-        price: shopGetMeModel.value.optionList![i]['price'],
-        optionPriceController: TextEditingController(
-            text: shopGetMeModel.value.optionList![i]['price']),
-        allowMultipleChoices: shopGetMeModel.value.optionList![i]
-        ['allowMultipleChoices'],
-        optionDetailList: shopGetMeModel.value.optionList![i]
-        ['optionDetailList'],
-        optionDetailTitleController: optionDetailTitleController,
-        optionDetailPriceController: optionDetailPriceController,
-        optionDetailCount: optionDetailCount,
-        optionDetailAllowMultipleChoices: optionDetailAllowMultipleChoices,
+    for (int i = 0; i < shopGetMeModel.value.optionList.length; i++) {
+      mainOptionList.add(ShopMainOptionModel(
+        mainOptionTitleController: TextEditingController(
+            text: shopGetMeModel.value.optionList[i]['title']),
+        mainOptionDescriptionController: TextEditingController(
+            text: shopGetMeModel.value.optionList[i]['description']),
+        mainOptionAllowMultipleChoices: shopGetMeModel.value.optionList[i]
+            ['allowMultipleChoices'],
+        shopDetailOption: <ShopDetailOptionModel>[],
       ));
+
+      for (int j = 0; j < shopGetMeModel.value.optionList.length; j++) {
+        mainOptionList[i].shopDetailOption!.add(ShopDetailOptionModel(
+            detailOptionContentController: TextEditingController(
+                text: shopGetMeModel.value.optionList[i]['optionDetailList'][j]
+                    ['content']),
+            detailOptionPriceController: TextEditingController(
+                text: shopGetMeModel
+                    .value.optionList[i]['optionDetailList'][j]['price']
+                    .toString()),
+            detailOptionCount: shopGetMeModel.value.optionList[i]
+                ['optionDetailList'][j]['count'],
+            detailOptionAllowMultipleChoices: shopGetMeModel.value.optionList[i]['optionDetailList'][j]
+                ['allowMultipleChoices']));
+      }
+      print(4);
     }
   }
 
-
   void onChangeShopMainImage() async {}
+
+  void allowMultipleChoicesChanged(int index) {
+    if (shopGetMeModel.value.optionList[index]['allowMultipleChoices'] ==
+        true) {
+      shopGetMeModel.update((val) {
+        val!.optionList[index]['allowMultipleChoices'] = false;
+      });
+    } else {
+      shopGetMeModel.update((val) {
+        val!.optionList[index]['allowMultipleChoices'] = true;
+      });
+    }
+  }
+
+  void allowDetailMultipleChoicesChanged(int index, int detailIndex) {
+    if (mainOptionList[index]
+            .shopDetailOption![detailIndex]
+            .detailOptionAllowMultipleChoices ==
+        true) {
+      mainOptionList[index]
+          .shopDetailOption![detailIndex]
+          .detailOptionAllowMultipleChoices = false;
+    } else {
+      mainOptionList[index]
+          .shopDetailOption![detailIndex]
+          .detailOptionAllowMultipleChoices = true;
+    }
+  }
+
+  void decreaseDetailOptionCount(int index, int detailIndex) {
+    if (shopGetMeModel.value.optionList[index]['optionDetailList'][detailIndex]
+            ['count'] >
+        1) {
+      shopGetMeModel.update((val) {
+        val!.optionList[index]['optionDetailList'][detailIndex]['count']--;
+      });
+    }
+  }
+
+  void increaseDetailOptionCount(int index, int detailIndex) {
+    shopGetMeModel.update((val) {
+      val!.optionList[index]['optionDetailList'][detailIndex]['count']++;
+    });
+  }
+
+  void onDetailOptionAdd(int index) {
+    /*shopGetMeModel.update((val) {
+      val!.optionList[index]['optionDetailList'].add({
+
+      });
+    });
+    mainOptionList[index]
+        .optionDetailTitleController!
+        .add(TextEditingController());
+    mainOptionList[index]
+        .optionDetailPriceController!
+        .add(TextEditingController());
+    mainOptionList[index].optionDetailCount!.add(1);
+    mainOptionList[index].optionDetailAllowMultipleChoices!.add(false);*/
+  }
+
+  void onMainOptionAdd(int index) {
+    /*mainOptionList.add(ShopOptionModel(
+      title: '',
+      optionTitleController: TextEditingController(),
+      description: '',
+      optionDescriptionController: TextEditingController(),
+      price: 0,
+      optionPriceController: TextEditingController(
+          text: shopGetMeModel.value.basePrice.toString()),
+      allowMultipleChoices: false,
+      optionDetailTitleController: [TextEditingController()],
+      optionDetailPriceController: [TextEditingController()],
+      optionDetailCount: [0],
+      optionDetailAllowMultipleChoices: optionDetailAllowMultipleChoices,
+    ));*/
+  }
 }
 
-class ShopOptionModel {
-  String? title;
-  TextEditingController? optionTitleController;
-  String? description;
-  TextEditingController? optionDescriptionController;
-  int? price;
-  TextEditingController? optionPriceController;
-  bool? allowMultipleChoices;
-  List<Map<String, dynamic>>? optionDetailList;
-  List<TextEditingController>? optionDetailTitleController;
-  List<TextEditingController>? optionDetailPriceController;
-  List<int>? optionDetailCount;
-  List<bool>? optionDetailAllowMultipleChoices;
+class ShopMainOptionModel {
+  TextEditingController? mainOptionTitleController;
+  TextEditingController? mainOptionDescriptionController;
+  bool? mainOptionAllowMultipleChoices;
+  List<ShopDetailOptionModel>? shopDetailOption = [];
 
-  ShopOptionModel(
-      {title,
-        optionTitleController,
-        description,
-        optionDescriptionController,
-        price,
-        optionPriceController,
-        allowMultipleChoices,
-        optionDetailList,
-        optionDetailTitleController,
-        optionDetailPriceController,
-        optionDetailCount,
-        optionDetailAllowMultipleChoices});
+  ShopMainOptionModel(
+      {this.mainOptionTitleController,
+      this.mainOptionDescriptionController,
+      this.mainOptionAllowMultipleChoices,
+      this.shopDetailOption});
+}
+
+class ShopDetailOptionModel {
+  TextEditingController? detailOptionContentController;
+  TextEditingController? detailOptionPriceController;
+  int? detailOptionCount;
+  bool? detailOptionAllowMultipleChoices;
+
+  ShopDetailOptionModel(
+      {this.detailOptionContentController,
+      this.detailOptionPriceController,
+      this.detailOptionCount,
+      this.detailOptionAllowMultipleChoices});
 }

@@ -1,3 +1,4 @@
+import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/app/data/model/token_model.dart';
 import 'package:damo/app/data/model/user_model.dart';
 import 'package:damo/app/data/provider/user/user_api.dart';
@@ -21,6 +22,8 @@ class TokenController extends GetxController {
 
   Future<void> fetchData() async {
     token = (await Token().loadToken()).obs; //기기에 저장되어있는 토큰을 불러온다.
+    print('access: ${token!['accessToken']}');
+    print('refresh: ${token!['refreshToken']}');
     if ((token!['accessToken'] == '' && token!['refreshToken'] == '') ||
         (token!['accessToken'] == 'null' && token!['refreshToken'] == 'null')) {
       // 아무 토큰이 없으니 로그인 화면으로 이동
@@ -29,7 +32,6 @@ class TokenController extends GetxController {
     } else {
       // 토큰이 있는 경우 유효성 검사
       print('토큰 있음');
-      print(token!['accessToken']);
       response = await UserNetwork().postUsersAccess();
       print(response);
       model = AccessTokenAvailableCheckModel.fromJson(response);
@@ -39,20 +41,17 @@ class TokenController extends GetxController {
         val.description = model.description;
         val.result = model.result;
       });
-      print(accessTokenAvailableCheckModel.value.code.runtimeType);
-      print(accessTokenAvailableCheckModel.value.code);
-      print(accessTokenAvailableCheckModel.value.result.runtimeType);
-      print(accessTokenAvailableCheckModel.value.result);
       if (accessTokenAvailableCheckModel.value.code == 1 &&
           accessTokenAvailableCheckModel.value.result == true) {
+        print('현재 기기의 accessToken 사용가능');
         isAutoLogin!.value = true;
       } else if (accessTokenAvailableCheckModel.value.code == 2 &&
           accessTokenAvailableCheckModel.value.result == false) {
         print('api 호출 중 오류');
         isAutoLogin!.value = false;
       } else {
-        print('토큰 만료');
-        reGetAccessToken();
+        print("현재 기기의 accessToken 만료, 재발급 필요");
+        await reGetAccessToken();
       }
     }
     //Token().removeToken();
@@ -69,15 +68,18 @@ class TokenController extends GetxController {
     });
     print(refreshAccessTokenModel.value.code);
     if (refreshAccessTokenModel.value.code == 3) {
-      print('토큰만료됨');
+      print('refreshToken 까지 만료됨, 로그인 다시해야함');
       isAutoLogin = false.obs;
       Token().removeToken();
-    } else {
+    } else if (refreshAccessTokenModel.value.code == 1){
       print('새 토큰 발급 완료');
       Token().saveToken(
           refreshAccessTokenModel.value.data!, token!['refreshToken']!);
       token!['accessToken'] = refreshAccessTokenModel.value.data!;
       isAutoLogin = true.obs;
+    } else{
+      print('accessToken 재발급 중 오류');
+      isAutoLogin = false.obs;
     }
   }
 

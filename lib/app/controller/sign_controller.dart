@@ -14,7 +14,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class SignController extends GetxController {
-  UserController? userController;
   Rx<AuthSignModel> authSignModel = AuthSignModel().obs;
   Rx<AuthLoginModel> authLoginModel = AuthLoginModel().obs;
   late NicknameDoubleCheckModel nicknameDoubleCheckModel;
@@ -91,8 +90,8 @@ class SignController extends GetxController {
 
     if (authLoginModel.value.code == 1 && authLoginModel.value.result == true) {
       if ((authLoginModel.value.isFirst == true &&
-              authLoginModel.value.accessToken == 'null' &&
-              authLoginModel.value.refreshToken == 'null') ||
+          authLoginModel.value.accessToken == 'null' &&
+          authLoginModel.value.refreshToken == 'null') ||
           (authLoginModel.value.isFirst == true &&
               authLoginModel.value.accessToken == '' &&
               authLoginModel.value.refreshToken == '')) {
@@ -104,12 +103,9 @@ class SignController extends GetxController {
         Token().saveToken(authLoginModel.value.accessToken!,
             authLoginModel.value.refreshToken!);
         tokenController.token!['accessToken'] =
-            authLoginModel.value.accessToken!;
+        authLoginModel.value.accessToken!;
         tokenController.token!['refreshToken'] =
-            authLoginModel.value.refreshToken!;
-        print(authLoginModel.value.accessToken);
-        authLoginModel.value.isFirst = false;
-        userController = await Get.put(UserController());
+        authLoginModel.value.refreshToken!;
         Get.to(() => HomeMain());
       }
     } else {
@@ -119,7 +115,7 @@ class SignController extends GetxController {
 
   void onPhoneNumberChanged() {
     if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
-            .hasMatch(phoneNumberController.value.value.text) ==
+        .hasMatch(phoneNumberController.value.value.text) ==
         false) {
       getAuthNumberButton.value = SvgPicture.asset(
         'assets/images_svg/btn_인증번호받기_off.svg',
@@ -141,7 +137,7 @@ class SignController extends GetxController {
     print(RegExp(r'^([0-9]{6})$')
         .hasMatch(smsAuthNumberController.value.value.text));
     if (RegExp(r'^([0-9]{6})$')
-            .hasMatch(smsAuthNumberController.value.value.text) ==
+        .hasMatch(smsAuthNumberController.value.value.text) ==
         false) {
       confirmAuthNumberButton.value = SvgPicture.asset(
         'assets/images_svg/btn_인증문자확인_off.svg',
@@ -178,13 +174,13 @@ class SignController extends GetxController {
 
   void doubleCheckClicked() async {
     if (RegExp(r'^([가-힣a-zA-Z0-9]){2,8}$')
-            .hasMatch(nicknameController.value.text) ==
+        .hasMatch(nicknameController.value.text) ==
         true) {
       Map<String, dynamic> input = {
         'nickname': nicknameController.value.value.text.toString()
       };
       nicknameDoubleCheckModel =
-          await UserNetwork().postUsersCheckNickname(input);
+      await UserNetwork().postUsersCheckNickname(input);
       if (nicknameDoubleCheckModel.data == true) {
         isNicknameCheck = true.obs;
         Get.snackbar('닉네임 중복확인', '사용가능한 닉네임 입니다.');
@@ -270,18 +266,18 @@ class SignController extends GetxController {
   }
 
   get getConfirmButton => (acceptList[1].value.check &&
-          acceptList[2].value.check &&
-          isNicknameCheck.value)
+      acceptList[2].value.check &&
+      isNicknameCheck.value)
       ? SvgPicture.asset(
-          'assets/images_svg/btn_확인_on.svg',
-          width: 375.w,
-          fit: BoxFit.fill,
-        ).obs
+    'assets/images_svg/btn_확인_on.svg',
+    width: 375.w,
+    fit: BoxFit.fill,
+  ).obs
       : SvgPicture.asset(
-          'assets/images_svg/btn_확인_off.svg',
-          width: 375.w,
-          fit: BoxFit.fill,
-        ).obs;
+    'assets/images_svg/btn_확인_off.svg',
+    width: 375.w,
+    fit: BoxFit.fill,
+  ).obs;
 
   void changeReadOnly() {
     readOnly = false.obs;
