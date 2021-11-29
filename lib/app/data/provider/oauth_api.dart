@@ -15,7 +15,6 @@ class OauthNetwork {
           ),
           headers: headers,
           body: sendData);
-      print(jsonDecode(utf8.decode(response.bodyBytes)));
       return jsonDecode(utf8.decode(response.bodyBytes));
     } catch (e) {
       print('postOauthKakaoLogin 예외발생');
@@ -31,7 +30,6 @@ class OauthNetwork {
           ),
           headers: headers,
           body: sendData);
-      print(jsonDecode(utf8.decode(response.bodyBytes)));
       return jsonDecode(utf8.decode(response.bodyBytes));
     } catch (e) {
       print(e);

@@ -12,7 +12,6 @@ class _ShopFAQModifyState extends State<ShopFAQModify> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     String faqTitle = 'FAQ 제목';

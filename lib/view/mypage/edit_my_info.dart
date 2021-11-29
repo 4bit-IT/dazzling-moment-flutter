@@ -1,5 +1,5 @@
 import 'package:damo/app/controller/user_controller.dart';
-import 'package:damo/app/data/provider/user/user_api.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -64,16 +64,83 @@ class _EditMyInfoState extends State<EditMyInfo> {
                   ),
                   Stack(
                     children: [
-                      Image.network(
-                        userController.getUserInfoModel.value.profileImage!,
-                        width: 75.w,
-                        height: 75.h,
+                      Obx(
+                        () => (ExtendedImage.network(
+                          userController.getUserInfoModel.value.profileImage!,
+                          width: 75.w,
+                          height: 75.h,
+                          fit: BoxFit.cover,
+                          cache: true,
+                          // border: Border.all(color: Colors.red, width: 1.0),
+                          shape: BoxShape.circle,
+                          // borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                        )),
                       ),
                       Positioned(
                         right: 0,
                         bottom: 0,
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Get.bottomSheet(
+                              Container(
+                                height: 150.h,
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      InkWell(
+                                        onTap: () async {
+                                          await userController
+                                              .onChangedProfileImage();
+                                          Get.back();
+                                        },
+                                        child: ListTile(
+                                          title: Center(
+                                            child: Text(
+                                              '앨범에서 사진 선택',
+                                              style: TextStyle(
+                                                  color: Color(0xff283137),
+                                                  fontFamily: 'NotoSansCJKKR',
+                                                  fontSize: 15.h,
+                                                  height: 1),
+                                            ),
+                                          ),
+                                          // trailing: Icon(Icons.access_alarms),
+                                        ),
+                                      ),
+                                      Container(
+                                        height: 1.h,
+                                        decoration: BoxDecoration(
+                                          color: Color(0xfff1f3f5),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () async {
+                                          await userController
+                                              .onChangedDefaultProfileImage();
+                                          Get.back();
+                                        },
+                                        child: ListTile(
+                                          title: Center(
+                                            child: Text(
+                                              "기본 이미지로 변경",
+                                              style: TextStyle(
+                                                  color: Color(0xff283137),
+                                                  fontFamily: 'NotoSansCJKKR',
+                                                  fontSize: 15.h,
+                                                  height: 1),
+                                            ),
+                                          ),
+                                          // trailing: Icon(Icons.ac_unit),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              backgroundColor: Colors.white,
+                            );
+                          },
                           child: SvgPicture.asset(
                             'assets/images_svg/ic_프로필변경.svg',
                             width: 30.w,
@@ -196,9 +263,11 @@ class _EditMyInfoState extends State<EditMyInfo> {
                                       width: 210.w,
                                       child: Obx(
                                         () => Text(
-                                          userController.getUserInfoModel.value.addr1! +
+                                          userController.getUserInfoModel.value
+                                                  .addr1! +
                                               ' ' +
-                                              userController.getUserInfoModel.value.addr2!,
+                                              userController.getUserInfoModel
+                                                  .value.addr2!,
                                           style: TextStyle(
                                               color: Color(0xff283137),
                                               fontFamily: 'NotoSansCJKKR',

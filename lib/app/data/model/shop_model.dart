@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'dart:io';
-
 class ShopRegistrationModel {
   int? code;
   String? description;
@@ -42,7 +40,7 @@ class ShopGetDetailModel {
   double? longitude;
   String? mainImage;
   String? name;
-  dynamic? options;
+  dynamic options;
   double? rating;
   int? reviewCount;
   String? shopProfileImage;
@@ -198,7 +196,6 @@ class ShopGetMeModel {
   }
 
   ShopGetMeModel.fromJson(Map<String, dynamic> json) {
-    print(json);
     code = json['code'];
     content = json['data']['content'];
     dataDescription = json['data']['description'];

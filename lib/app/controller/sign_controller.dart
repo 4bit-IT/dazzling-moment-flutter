@@ -1,4 +1,3 @@
-import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/app/data/model/oauth_model.dart';
 import 'package:damo/app/data/model/token_model.dart';
 import 'package:damo/app/data/model/user_model.dart';
@@ -36,22 +35,22 @@ class SignController extends GetxController {
     width: 375.w,
   ).obs;
 
-  Map<String, dynamic> input = {};
+  Map<String, dynamic> toJsonInput = {};
   String sendData = '';
-  var response;
+  var jsonResponse;
   var model;
 
   Future<void> signUpClicked() async {
-    input.clear();
-    input['marketing'] = acceptList[2].value.check;
-    input['pushNotification'] = acceptList[3].value.check;
-    input['fcmToken'] = 'fcm_token';
-    input['nickname'] = nicknameController.value.value.text;
-    input['oauthAccessToken'] = oauthAccessToken.value;
-    input['phoneNumber'] = '010-3874-0360';
-    sendData = AuthSignModel().toJson(input);
-    response = await OauthNetwork().postOauthKakao(sendData);
-    model = AuthSignModel.fromJson(response);
+    toJsonInput.clear();
+    toJsonInput['marketing'] = acceptList[2].value.check;
+    toJsonInput['pushNotification'] = acceptList[3].value.check;
+    toJsonInput['fcmToken'] = 'fcm_token';
+    toJsonInput['nickname'] = nicknameController.value.value.text;
+    toJsonInput['oauthAccessToken'] = oauthAccessToken.value;
+    toJsonInput['phoneNumber'] = '010-3874-0360';
+    jsonResponse = await OauthNetwork()
+        .postOauthKakao(AuthSignModel().toJson(toJsonInput));
+    model = AuthSignModel.fromJson(jsonResponse);
     authSignModel.update((val) {
       val!.code = model.code;
       val.accessToken = model.accessToken;
@@ -60,22 +59,20 @@ class SignController extends GetxController {
       val.isFirst = model.isFirst;
       val.result = model.result;
     });
-    Token().saveToken(
+    TokenModel().saveToken(
         authSignModel.value.accessToken!, authSignModel.value.refreshToken!);
     tokenController.token!['accessToken'] = authSignModel.value.accessToken!;
     tokenController.token!['refreshToken'] = authSignModel.value.refreshToken!;
   }
 
-  onKakaoLoginClicked() async {
+  void onKakaoLoginClicked() async {
     oauthAccessToken = (await Kakao().getKakaoToken()).obs;
+    toJsonInput.clear();
+    toJsonInput['oauthAccessToken'] = oauthAccessToken.value;
+    jsonResponse = await OauthNetwork()
+        .postOauthKakaoLogin(AuthLoginModel().toJson(toJsonInput));
+    model = AuthLoginModel.fromJson(jsonResponse);
 
-    input.clear();
-    input['oauthAccessToken'] = oauthAccessToken.value;
-    sendData = AuthLoginModel().toJson(input);
-    response = await OauthNetwork().postOauthKakaoLogin(sendData);
-    model = AuthLoginModel.fromJson(response);
-    print(model.code);
-    print(model.accessToken);
     authLoginModel.update((val) {
       val!.code = model.code;
       val.accessToken = model.accessToken;
@@ -85,37 +82,34 @@ class SignController extends GetxController {
       val.result = model.result;
     });
 
-    print(authLoginModel.value.code);
-    print(authLoginModel.value.isFirst);
-
-    if (authLoginModel.value.code == 1 && authLoginModel.value.result == true) {
-      if ((authLoginModel.value.isFirst == true &&
-          authLoginModel.value.accessToken == 'null' &&
-          authLoginModel.value.refreshToken == 'null') ||
-          (authLoginModel.value.isFirst == true &&
-              authLoginModel.value.accessToken == '' &&
-              authLoginModel.value.refreshToken == '')) {
-        print('첫 로그인');
+    if (authLoginModel.value.code == 1) {
+      if (authLoginModel.value.isFirst == true) {
+        print('첫 로그인이므로 회원가입 페이지로 이동합니다.');
         Get.to(() => GetUserInfo());
-      } else {
-        print('첫 로그인 아님');
-        print(authLoginModel.value.accessToken!);
-        Token().saveToken(authLoginModel.value.accessToken!,
+      }
+      if (authLoginModel.value.isFirst == false) {
+        print('이미 가입 된 유저이므로 토큰 저장 후, 메인페이지로 이동합니다.');
+        TokenModel().saveToken(authLoginModel.value.accessToken!,
             authLoginModel.value.refreshToken!);
         tokenController.token!['accessToken'] =
-        authLoginModel.value.accessToken!;
+            authLoginModel.value.accessToken!;
         tokenController.token!['refreshToken'] =
-        authLoginModel.value.refreshToken!;
+            authLoginModel.value.refreshToken!;
         Get.to(() => HomeMain());
       }
-    } else {
-      print('잘못된 카카오 토큰');
+    }
+    if (authLoginModel.value.code == 2) {
+      print('잘못된 카카오 토큰입니다.');
+    }
+    if (authLoginModel.value.code == 3) {
+      // 이 구문을 실행될 일이 없음
+      print('토큰이 만료되었습니다.');
     }
   }
 
   void onPhoneNumberChanged() {
     if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
-        .hasMatch(phoneNumberController.value.value.text) ==
+            .hasMatch(phoneNumberController.value.value.text) ==
         false) {
       getAuthNumberButton.value = SvgPicture.asset(
         'assets/images_svg/btn_인증번호받기_off.svg',
@@ -137,7 +131,7 @@ class SignController extends GetxController {
     print(RegExp(r'^([0-9]{6})$')
         .hasMatch(smsAuthNumberController.value.value.text));
     if (RegExp(r'^([0-9]{6})$')
-        .hasMatch(smsAuthNumberController.value.value.text) ==
+            .hasMatch(smsAuthNumberController.value.value.text) ==
         false) {
       confirmAuthNumberButton.value = SvgPicture.asset(
         'assets/images_svg/btn_인증문자확인_off.svg',
@@ -174,13 +168,13 @@ class SignController extends GetxController {
 
   void doubleCheckClicked() async {
     if (RegExp(r'^([가-힣a-zA-Z0-9]){2,8}$')
-        .hasMatch(nicknameController.value.text) ==
+            .hasMatch(nicknameController.value.text) ==
         true) {
-      Map<String, dynamic> input = {
+      Map<String, dynamic> toJsonInput = {
         'nickname': nicknameController.value.value.text.toString()
       };
       nicknameDoubleCheckModel =
-      await UserNetwork().postUsersCheckNickname(input);
+          await UserNetwork().postUsersCheckNickname(toJsonInput);
       if (nicknameDoubleCheckModel.data == true) {
         isNicknameCheck = true.obs;
         Get.snackbar('닉네임 중복확인', '사용가능한 닉네임 입니다.');
@@ -266,18 +260,18 @@ class SignController extends GetxController {
   }
 
   get getConfirmButton => (acceptList[1].value.check &&
-      acceptList[2].value.check &&
-      isNicknameCheck.value)
+          acceptList[2].value.check &&
+          isNicknameCheck.value)
       ? SvgPicture.asset(
-    'assets/images_svg/btn_확인_on.svg',
-    width: 375.w,
-    fit: BoxFit.fill,
-  ).obs
+          'assets/images_svg/btn_확인_on.svg',
+          width: 375.w,
+          fit: BoxFit.fill,
+        ).obs
       : SvgPicture.asset(
-    'assets/images_svg/btn_확인_off.svg',
-    width: 375.w,
-    fit: BoxFit.fill,
-  ).obs;
+          'assets/images_svg/btn_확인_off.svg',
+          width: 375.w,
+          fit: BoxFit.fill,
+        ).obs;
 
   void changeReadOnly() {
     readOnly = false.obs;

@@ -10,14 +10,10 @@ class Kakao {
     try {
       String authCode = await AuthCodeClient.instance.request(); //웹으로 열기
       // String authCode = await AuthCodeClient.instance.requestWithTalk() // Kakao app 으로 열기
-
       kakaoAccessToken = await AuthApi.instance.issueAccessToken(authCode);
       TokenManager.instance.setToken(kakaoAccessToken!);
-
       print('KakaoToken: ' + kakaoAccessToken!.accessToken);
-
       return kakaoAccessToken!.accessToken;
-
     } on KakaoAuthException {
       print("동의 취소");
       return '';

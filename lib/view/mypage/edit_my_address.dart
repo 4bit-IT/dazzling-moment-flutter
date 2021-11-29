@@ -20,7 +20,6 @@ class EditMyAddress extends StatelessWidget {
             userController.zipcode.value = result.postCode;
             userController.addr1.value = result.address;
             userController.addrEditCheck!.value = true;
-            // await UserNetwork().postUsersAddress();
           },
         ),
       ),

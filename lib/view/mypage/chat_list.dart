@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:damo/viewmodel/bar/app_bar.dart';
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 

@@ -1,9 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/view/mypage/edit_my_info.dart';
 import 'package:damo/view/mypage/purchase_history.dart';
 import 'package:damo/view/mypage/setting.dart';
-import 'package:damo/view/mypage/wish_list_page.dart';
 import 'package:damo/view/notification/notice_admin.dart';
 import 'package:damo/view/shop/shop_main.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
@@ -11,10 +9,12 @@ import 'package:damo/viewmodel/bar/back_button_clicked.dart';
 import 'package:damo/viewmodel/bar/bottom_navigaton.dart';
 import 'package:damo/viewmodel/bar/drawer.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
@@ -63,15 +63,17 @@ class _MyPageState extends State<MyPage> {
                     Row(
                       children: [
                         SizedBox(width: 150.w),
-                        CachedNetworkImage(
-                          imageUrl: userController
-                              .getUserInfoModel.value.profileImage!,
-                          width: 75.w,
-                          height: 75.h,
-                          fadeInDuration: Duration(milliseconds: 100),
-                          fadeOutDuration: Duration(milliseconds: 100),
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(),
+                        Obx(
+                          () => ExtendedImage.network(
+                            userController.getUserInfoModel.value.profileImage!,
+                            width: 75.w,
+                            height: 75.h,
+                            fit: BoxFit.cover,
+                            cache: true,
+                            // border: Border.all(color: Colors.red, width: 1.0),
+                            shape: BoxShape.circle,
+                            // borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                          ),
                         ),
                         SizedBox(width: 110.w),
                         Column(
@@ -116,7 +118,7 @@ class _MyPageState extends State<MyPage> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Get.to(() => WishListPage());
+                            // Get.to(() => WishListPage());
                           },
                           child: Container(
                             height: 79.h,

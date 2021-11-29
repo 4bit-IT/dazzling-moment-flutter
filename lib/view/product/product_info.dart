@@ -10,15 +10,7 @@ class ProductInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Center(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(0, 16.h, 0, 0),
-          child: Obx(
-            () => Text(
-              productController.productDescription[productController.index.value],
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
+        child: Container(),
       ),
     );
   }
