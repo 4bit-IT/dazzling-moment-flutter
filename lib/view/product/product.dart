@@ -1,4 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/view/product/product_info.dart';
 import 'package:damo/view/product/product_qa.dart';
 import 'package:damo/view/product/product_review.dart';
@@ -9,9 +10,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:simple_star_rating/simple_star_rating.dart';
 
-class Product extends StatelessWidget {
-  const Product({Key? key}) : super(key: key);
+ShopController shopController = Get.find();
 
+class Product extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +87,7 @@ class Product extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(17.0.w, 15.h, 10.w, 0),
                   child: Text(
-                    '이로아케이크',
+                    shopController.shopGetDetailModel.value.name!,
                     style: TextStyle(
                       color: Color(0xfff93f5b),
                       fontSize: 12.sp,

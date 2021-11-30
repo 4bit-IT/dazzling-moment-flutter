@@ -191,7 +191,7 @@ class UserController extends GetxController {
       source: ImageSource.gallery, //위치는 갤러리
       maxHeight: 75,
       maxWidth: 75,
-      imageQuality: 70, // 이미지 크기 압축을 위해 퀄리티를 70로 낮춤.
+      imageQuality: 100, // 이미지 퀄리티
     );
     if (selectImage != null) {
       await Get.defaultDialog(

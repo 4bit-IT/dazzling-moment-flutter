@@ -23,11 +23,13 @@ class TokenController extends GetxController {
     print('기기에 저장된 토큰을 불러옵니다.');
     print('accessToken: ${token!['accessToken']}');
     print('refreshToken: ${token!['refreshToken']}');
+
     if ((token!['accessToken'] == '' && token!['refreshToken'] == '')) {
       // 아무 토큰이 없으니 로그인 화면으로 이동
       print('기기에 저장된 토큰이 없으므로 로그인 화면으로 이동합니다.');
       isAutoLogin = false.obs;
-    } else {
+    }
+    if ((token!['accessToken'] != '' && token!['refreshToken'] != '')) {
       // 토큰이 있는 경우 유효성 검사
       print('기기에 저장된 토큰이 있으므로 유효한 토큰인지 검사합니다.');
       jsonResponse = await UserNetwork().postUsersAccess();
@@ -40,11 +42,14 @@ class TokenController extends GetxController {
       });
       if (accessTokenAvailableCheckModel.value.code == 1) {
         print('기기에 저장된 토큰이 유효합니다.');
+        await refreshGetAccessToken();
         isAutoLogin!.value = true;
+        print('메인 화면으로 이동합니다.');
       }
       if (accessTokenAvailableCheckModel.value.code == 2) {
         print('기기에 저장된 토큰이 유효하지 않습니다.');
         isAutoLogin!.value = false;
+        print('로그인 화면으로 이동합니다.');
       }
       if (accessTokenAvailableCheckModel.value.code == 3) {
         print("현재 기기에 저장된 토큰이 만료되었습니다.");
@@ -76,6 +81,7 @@ class TokenController extends GetxController {
       TokenModel().saveToken(
           refreshAccessTokenModel.value.data!, token!['refreshToken']!);
       token!['accessToken'] = refreshAccessTokenModel.value.data!;
+      tokenController.update();
       isAutoLogin = true.obs;
     }
   }

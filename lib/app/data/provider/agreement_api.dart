@@ -8,16 +8,14 @@ const baseUri = ('https://damoforyou.com/api/agreement');
 TokenController tokenController = Get.find();
 
 var headers = {
-  'token': tokenController.token!['refreshToken']!,
+  'token': tokenController.token!['accessToken']!,
 };
 
 class AgreementNetwork {
   Future<dynamic> patchAgreementMarketing() async {
     try {
       http.Response response = await http.patch(
-        Uri.parse(
-          baseUri + '/marketing',
-        ),
+        Uri.parse(baseUri + '/marketing'),
         headers: headers,
       );
       return jsonDecode(utf8.decode(response.bodyBytes));
@@ -29,9 +27,7 @@ class AgreementNetwork {
   Future<dynamic> patchAgreementPush() async {
     try {
       http.Response response = await http.patch(
-        Uri.parse(
-          baseUri + '/push',
-        ),
+        Uri.parse(baseUri + '/push'),
         headers: headers,
       );
       return jsonDecode(utf8.decode(response.bodyBytes));

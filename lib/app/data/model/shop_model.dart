@@ -31,21 +31,21 @@ class ShopRegistrationModel {
 }
 
 class ShopGetDetailModel {
-  int? code;
-  String? content;
-  String? dataDescription;
-  int? id;
-  List<String>? images;
-  double? latitude;
-  double? longitude;
-  String? mainImage;
-  String? name;
+  //업체 상세조회
+  int? code; //"성공은 1 or 실패는 2 or 토큰 만료는 3",
+  String? content; //"lorem ipsum blah blah",
+  String? dataDescription; //"서울에서 입소문난 수제 디저트 공방 ..."
+  int? id; //1
+  dynamic images; //["string"],
+  double? latitude; //0
+  double? longitude; //0
+  String? name; // "다모 베이커리"
   dynamic options;
-  double? rating;
-  int? reviewCount;
-  String? shopProfileImage;
-  String? description;
-  bool? result;
+  double? rating; //4.5
+  int? reviewCount; //123
+  String? shopProfileImage; //"https://damo-s3.exmaple.amazonaws.com/12345.png"
+  String? description; //"성공 or 에러 메세지 or 토큰이 만료되었습니다."
+  bool? result; //true
 
   ShopGetDetailModel(
       {code,
@@ -55,7 +55,6 @@ class ShopGetDetailModel {
       images,
       latitude,
       longitude,
-      mainImage,
       name,
       options,
       rating,
@@ -64,8 +63,8 @@ class ShopGetDetailModel {
       description,
       result});
 
-  String toJson(String id) {
-    return id;
+  String toJson(int id) {
+    return id.toString();
   }
 
   ShopGetDetailModel.fromJson(Map<String, dynamic> json) {
@@ -76,7 +75,6 @@ class ShopGetDetailModel {
     images = json['data']['images'];
     latitude = json['data']['location']['latitude'];
     longitude = json['data']['location']['longitude'];
-    mainImage = json['data']['name'];
     name = json['data']['name'];
     options = json['data']['options'];
     rating = json['data']['rating'];

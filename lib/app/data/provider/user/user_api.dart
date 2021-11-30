@@ -118,7 +118,7 @@ class UserNetwork {
       dio.options.contentType = 'multipart/form-data';
       dio.options.maxRedirects.isFinite;
 
-      dio.options.headers = {'token': tokenController.token!['refreshToken']!};
+      dio.options.headers = {'token': tokenController.token!['accessToken']!};
       var response = await dio.patch(
         baseUri + '/users/profileimage',
         data: input,
@@ -138,7 +138,7 @@ class UserNetwork {
         ),
         headers: {
           'Content-Type': 'application/json',
-          'token': tokenController.token!['refreshToken']!,
+          'token': tokenController.token!['accessToken']!,
         },
       );
       return jsonDecode(utf8.decode(response.bodyBytes));
