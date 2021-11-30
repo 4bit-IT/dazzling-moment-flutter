@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/data/model/user_model.dart';
 import 'package:damo/app/data/provider/user/user_api.dart';
@@ -45,6 +44,7 @@ class UserController extends GetxController {
 
   Future<void> getUserInfo() async {
     jsonResponse = await UserNetwork().getUsers();
+    print(jsonResponse);
     if (jsonResponse['code'] == 3) {
       print('토큰이 만료되었습니다.');
     }
@@ -53,7 +53,6 @@ class UserController extends GetxController {
     }
     if (jsonResponse['code'] == 1) {
       model = GetUserInfoModel.fromJson(jsonResponse);
-      print('유저 데이터를 성공적으로 불러왔습니다');
       getUserInfoModel.update((val) {
         val!.code = model.code;
         val.addr1 = model.addr1;

@@ -1,19 +1,16 @@
+import 'package:damo/app/controller/agreement_controller.dart';
+import 'package:damo/app/controller/user_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get.dart';
 
-class SettingApp extends StatefulWidget {
+UserController userController = Get.find();
+AgreementController agreementController = Get.put(AgreementController());
+
+class SettingApp extends StatelessWidget {
   const SettingApp({Key? key}) : super(key: key);
 
-  @override
-  _SettingAppState createState() => _SettingAppState();
-}
-
-class _SettingAppState extends State<SettingApp> {
-  bool isLocationSwitched = false;
-  bool isNoticeSwitched = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,21 +58,21 @@ class _SettingAppState extends State<SettingApp> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '위치 정보 접근 허용',
+                    '마케팅 수신 동의',
                     style: TextStyle(
                       color: Color(0xff283137),
                       fontFamily: 'NotoSansCJKKR',
                     ),
                   ),
-                  Switch(
-                    value: isLocationSwitched,
-                    onChanged: (value) {
-                      setState(() {
-                        isLocationSwitched = value;
-                      });
-                    },
-                    activeTrackColor: Colors.grey[300],
-                    activeColor: Color(0xfff93f5b),
+                  Obx(
+                    () => Switch(
+                      value: userController.getUserInfoModel.value.marketing!,
+                      onChanged: (value) async {
+                        await agreementController.onChangedAgreementMarketing();
+                      },
+                      activeTrackColor: Colors.grey[300],
+                      activeColor: Color(0xfff93f5b),
+                    ),
                   ),
                 ],
               ),
@@ -91,21 +88,22 @@ class _SettingAppState extends State<SettingApp> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '알림 설정',
+                    '푸쉬 알림 동의',
                     style: TextStyle(
                       color: Color(0xff283137),
                       fontFamily: 'NotoSansCJKKR',
                     ),
                   ),
-                  Switch(
-                    value: isNoticeSwitched,
-                    onChanged: (value) {
-                      setState(() {
-                        isNoticeSwitched = value;
-                      });
-                    },
-                    activeTrackColor: Colors.grey[300],
-                    activeColor: Color(0xfff93f5b),
+                  Obx(
+                    () => Switch(
+                      value: userController
+                          .getUserInfoModel.value.pushNotification!,
+                      onChanged: (value) async {
+                        await agreementController.onChangedAgreementPush();
+                      },
+                      activeTrackColor: Colors.grey[300],
+                      activeColor: Color(0xfff93f5b),
+                    ),
                   ),
                 ],
               ),
