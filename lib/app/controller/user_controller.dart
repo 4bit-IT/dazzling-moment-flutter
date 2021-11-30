@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/data/model/user_model.dart';
 import 'package:damo/app/data/provider/user/user_api.dart';
@@ -190,7 +192,7 @@ class UserController extends GetxController {
       source: ImageSource.gallery, //위치는 갤러리
       maxHeight: 75,
       maxWidth: 75,
-      imageQuality: 30, // 이미지 크기 압축을 위해 퀄리티를 30으로 낮춤.
+      imageQuality: 70, // 이미지 크기 압축을 위해 퀄리티를 70로 낮춤.
     );
     if (selectImage != null) {
       await Get.defaultDialog(
@@ -247,7 +249,9 @@ class UserController extends GetxController {
         model = ChangeProfileImageModel.fromJson(jsonResponse);
 
         if (model.code == 1) {
-          getUserInfoModel.value.profileImage = model.imageUrl;
+          String random = Random().nextInt(2147483890).toString();
+          getUserInfoModel.value.profileImage = model.imageUrl + "?v=$random";
+
           getUserInfoModel.refresh();
           print('프로필 사진을 변경했습니다.');
         }

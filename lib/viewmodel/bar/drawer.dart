@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:damo/app/controller/sign_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
@@ -97,7 +99,7 @@ class _DrawerButtonState extends State<DrawerButton> {
                         width: 55.w,
                         height: 55.h,
                         fit: BoxFit.fill,
-                        cache: true,
+                        cache: false,
                         // border: Border.all(color: Colors.red, width: 1.0),
                         shape: BoxShape.circle,
                         // borderRadius: BorderRadius.all(Radius.circular(30.0)),

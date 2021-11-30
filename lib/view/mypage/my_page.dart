@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/view/mypage/edit_my_info.dart';
 import 'package:damo/view/mypage/purchase_history.dart';
@@ -69,7 +71,8 @@ class _MyPageState extends State<MyPage> {
                             width: 75.w,
                             height: 75.h,
                             fit: BoxFit.cover,
-                            cache: true,
+
+                            cache: false,
                             // border: Border.all(color: Colors.red, width: 1.0),
                             shape: BoxShape.circle,
                             // borderRadius: BorderRadius.all(Radius.circular(30.0)),
