@@ -17,36 +17,36 @@ class ProductReview extends StatelessWidget {
         index: 0,
         label: "5.0",
         colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
-        jumlah: productController.reviewCount[productController.index.value]*1.0,
-        tooltip: "${(productController.reviewCount[productController.index.value]*0.6).round()}",
+        jumlah: 10,
+        tooltip: "10",
       ),
       VBarChartModel(
         index: 1,
         label: "4.0",
         colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
-        jumlah: productController.reviewCount[productController.index.value]*0.23,
-        tooltip: "${(productController.reviewCount[productController.index.value]*0.23).round()}",
+        jumlah: 20,
+        tooltip: "20",
       ),
       VBarChartModel(
         index: 2,
         label: "3.0",
         colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
-        jumlah: productController.reviewCount[productController.index.value]*0.13,
-        tooltip: "${(productController.reviewCount[productController.index.value]*0.13).round()}",
+        jumlah: 30,
+        tooltip: "30",
       ),
       VBarChartModel(
         index: 3,
         label: "2.0",
         colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
-        jumlah: productController.reviewCount[productController.index.value]*0.03,
-        tooltip: "${(productController.reviewCount[productController.index.value]*0.03).round()}",
+        jumlah: 40,
+        tooltip: "40",
       ),
       VBarChartModel(
         index: 4,
         label: "1.0",
         colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
-        jumlah: productController.reviewCount[productController.index.value]*0.01,
-        tooltip: "${(productController.reviewCount[productController.index.value]*0.01).round()}",
+        jumlah: 50,
+        tooltip: "50",
       ),
     ];
     return Padding(
@@ -66,7 +66,7 @@ class ProductReview extends StatelessWidget {
               ),
               SizedBox(width: 8.w),
               Text(
-                '총 ${productController.reviewCount[productController.index.value]}개 리뷰',
+                '총 150 개 리뷰',
                 style: TextStyle(
                   color: Color(0xff8e97a0),
                   fontFamily: 'NotoSansCJKKR',
@@ -91,7 +91,7 @@ class ProductReview extends StatelessWidget {
               ),
               SizedBox(width: 9.w),
               Text(
-                '${productController.rating[productController.index.value]}',
+                '4.5',
                 style: TextStyle(
                   color: Color(0xff283137),
                   fontSize: 30.sp,
@@ -224,7 +224,7 @@ class ProductReview extends StatelessWidget {
       background: Colors.transparent,
       labelColor: Color(0xff283137),
       tooltipColor: Color(0xff8e97a0),
-      maxX: productController.reviewCount[productController.index.value].roundToDouble(),
+      maxX: 150,
       data: bardata,
       barStyle: BarStyle.DEFAULT,
     );

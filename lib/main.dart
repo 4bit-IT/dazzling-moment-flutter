@@ -20,19 +20,16 @@ Future<void> main() async {
       .activate(webRecaptchaSiteKey: 'recaptcha-v3-site-key');
   await tokenController.fetchData();
   runApp(Damo());
-
 }
 
 class Damo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    print(6);
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       home: ScreenUtilInit(
         designSize: Size(375, 812),
         builder: () {
-          print(tokenController.isAutoLogin!.value);
           return tokenController.isAutoLogin!.value == true
               ? HomeMain()
               : Sign();

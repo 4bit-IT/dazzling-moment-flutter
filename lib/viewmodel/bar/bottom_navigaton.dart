@@ -1,4 +1,3 @@
-import 'package:damo/view/community/look_community.dart';
 import 'package:damo/view/location/look_location.dart';
 import 'package:damo/view/main/home_main.dart';
 import 'package:damo/view/mypage/chat.dart';

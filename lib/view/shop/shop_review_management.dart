@@ -192,7 +192,6 @@ class _ShopReviewManagementState extends State<ShopReviewManagement> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     for (int i = 0; i < reviewCount; i++) {
       reviewOption.add('옵션 + 옵션 + 옵션 + 옵션 + ...');

@@ -23,7 +23,6 @@ class ShopNetwork {
         headers: headers,
         body: body,
       );
-
       return jsonDecode(utf8.decode(response.bodyBytes));
     } catch (e) {
       print(e);
@@ -33,7 +32,7 @@ class ShopNetwork {
   Future<dynamic> getShopId(String id) async {
     try {
       http.Response response = await http.get(
-        Uri.parse(baseUri + '/shop?id=$id'),
+        Uri.parse(baseUri + '/shop/$id'),
         headers: headers,
       );
       return jsonDecode(utf8.decode(response.bodyBytes));

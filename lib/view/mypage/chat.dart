@@ -3,7 +3,6 @@ import 'package:damo/viewmodel/bar/bottom_navigaton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 
 class Chat extends StatelessWidget {
   const Chat({Key? key}) : super(key: key);
@@ -277,7 +276,7 @@ class Chat extends StatelessWidget {
                   fontFamily: 'NotoSansCJKKR',
                 ),
                 suffix: Container(
-                  padding: EdgeInsets.fromLTRB(0,0,8.w,0),
+                  padding: EdgeInsets.fromLTRB(0, 0, 8.w, 0),
                   child: SvgPicture.asset(
                     'assets/images_svg/보내기_off.svg',
                     width: 30.w,

@@ -1,30 +1,31 @@
 import 'dart:convert';
-import 'package:get/get.dart';
+import 'package:dio/dio.dart';
 
 class GetUserInfoModel {
-  int? code;
-  String? addr1;
-  String? addr2;
-  String? zipcode;
-  String? ageRange;
-  String? lastAgreeDateOfMarketing;
-  String? lastAgreeDateOfPushNotification;
-  String? lastAgreeDateOfServiceAndPersonalData;
-  bool? marketing;
-  bool? pushNotification;
-  bool? serviceAndPersonalData;
-  String? birth;
-  String? createdAt;
-  String? email;
-  int? id;
-  bool? isOwner;
-  String? name;
-  String? nickname;
-  String? phoneNumber;
-  String? profileImage;
-  String? sex;
-  String? description;
-  bool? result;
+  int? code; //example: 성공은 1 or 실패는 2 or 토큰 만료는 3
+  String? addr1; //example: 서울특별시 금천구 가산디지털1로 5
+  String? addr2; //example: 807호
+  String? zipcode; //example: 12345
+  String? ageRange; //example: 20~29
+  String? lastAgreeDateOfMarketing; //$date
+  String? lastAgreeDateOfPushNotification; //$date
+  String? lastAgreeDateOfServiceAndPersonalData; //date
+  bool? marketing; //example: true
+  bool? pushNotification; //example: true
+  bool? serviceAndPersonalData; //example: true
+  String? birth; //example: MMDD
+  String? createdAt; //example: 2021-10-28
+  String? email; //example: example@damo.com
+  int? id; //example: 1
+  bool? isOwner; //example: false
+  String? name; //example: 황진성
+  String? nickname; //example: jeeensong
+  String? phoneNumber; //example: 010-0000-0000
+  String?
+      profileImage; //example: https://damo-s3.s3.ap-northeast-2.amazonaws.com/~~~
+  String? sex; //example: MALE
+  String? description; //example: 성공 or 에러 메세지 or 토큰이 만료되었습니다.
+  bool? result; //example: true
 
   GetUserInfoModel(
       {code,
@@ -42,7 +43,7 @@ class GetUserInfoModel {
       createdAt,
       email,
       id,
-        isOwner,
+      isOwner,
       name,
       nickname,
       phoneNumber,
@@ -52,7 +53,6 @@ class GetUserInfoModel {
       result});
 
   GetUserInfoModel.fromJson(Map<String, dynamic> json) {
-    print(json);
     code = json['code'];
     addr1 = json['data']['address']['addr1'];
     addr2 = json['data']['address']['addr2'];
@@ -84,10 +84,10 @@ class GetUserInfoModel {
 }
 
 class AccessTokenAvailableCheckModel {
-  int? code;
-  bool? data;
-  String? description;
-  bool? result;
+  int? code; //example: 성공은 1 or 실패는 2 or 토큰 만료는 3
+  bool? data; //boolean
+  String? description; //example: 성공 or 에러 메세지 or 토큰이 만료되었습니다.
+  bool? result; //example: true
 
   AccessTokenAvailableCheckModel({code, data, description, result});
 
@@ -100,9 +100,9 @@ class AccessTokenAvailableCheckModel {
 }
 
 class ChangeAddressModel {
-  int? code;
-  String? description;
-  bool? result;
+  int? code; //example: 성공은 1 or 실패는 2 or 토큰 만료는 3
+  String? description; //example: 성공 or 에러 메세지 or 토큰이 만료되었습니다.
+  bool? result; //example: true
 
   ChangeAddressModel({code, description, result});
 
@@ -185,16 +185,21 @@ class UserPhoneNumberModel {
 }
 
 class ChangeProfileImageModel {
-  int? code;
-  String? imageUrl;
-  String? description;
-  bool? result;
+  int? code; //example: 성공은 1 or 실패는 2 or 토큰 만료는 3
+  String? imageUrl; //example: https://damo-s3.exmaple.amazonaws.com/12345.png
+  String? description; //example: 성공 or 에러 메세지 or 토큰이 만료되었습니다.
+  bool? result; //example: true
 
   ChangeProfileImageModel({code, imageUrl, description, result});
 
-  //String toJson
+  dynamic toJson(dynamic input) async {
+    var formData = FormData.fromMap(
+      {'image': await MultipartFile.fromFile(input)},
+    );
+    return formData;
+  }
 
-  ChangeProfileImageModel.fromJson(Map<String, dynamic> json) {
+  ChangeProfileImageModel.fromJson(dynamic json) {
     code = json['code'];
     imageUrl = json['data']['imageUrl'];
     description = json['description'];
@@ -210,7 +215,7 @@ class ChangeDefaultProfileImageModel {
 
   ChangeDefaultProfileImageModel({code, imageUrl, description, result});
 
-  ChangeDefaultProfileImageModel.fromJson(Map<String, dynamic> json) {
+  ChangeDefaultProfileImageModel.fromJson(var json) {
     code = json['code'];
     imageUrl = json['data']['imageUrl'];
     description = json['description'];
@@ -219,15 +224,14 @@ class ChangeDefaultProfileImageModel {
 }
 
 class RefreshAccessTokenModel {
-  int? code;
+  int? code; //example: 성공은 1 or 실패는 2 or 토큰 만료는
   String? data;
-  String? description;
-  bool? result;
+  String? description; //example: 성공 or 에러 메세지 or 토큰이 만료되었습니다.
+  bool? result; //example: true
 
   RefreshAccessTokenModel({code, data, description, result});
 
   RefreshAccessTokenModel.fromJson(Map<String, dynamic> json) {
-    print(json);
     code = json['code'];
     data = json['data'];
     description = json['description'];

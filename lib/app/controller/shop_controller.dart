@@ -73,7 +73,7 @@ class ShopController extends GetxController {
               .obs;
     }
 
-    print(shopGetMeModel.value.optionList);
+    // print(shopGetMeModel.value.optionList);
 
     for (int i = 0; i < shopGetMeModel.value.optionList.length; i++) {
       mainOptionList.add(ShopMainOptionModel(
@@ -97,10 +97,9 @@ class ShopController extends GetxController {
                     .toString()),
             detailOptionCount: shopGetMeModel.value.optionList[i]
                 ['optionDetailList'][j]['count'],
-            detailOptionAllowMultipleChoices: shopGetMeModel.value.optionList[i]['optionDetailList'][j]
-                ['allowMultipleChoices']));
+            detailOptionAllowMultipleChoices: shopGetMeModel.value.optionList[i]
+                ['optionDetailList'][j]['allowMultipleChoices']));
       }
-      print(4);
     }
   }
 
@@ -181,6 +180,31 @@ class ShopController extends GetxController {
       optionDetailCount: [0],
       optionDetailAllowMultipleChoices: optionDetailAllowMultipleChoices,
     ));*/
+  }
+  Future<void> loadShopDetail(int id) async {
+    var input = ShopGetDetailModel().toJson(id);
+    var jsonResponse = await ShopNetwork().getShopId(input);
+    var model = ShopGetDetailModel.fromJson(jsonResponse);
+    if (model.code == 1) {
+      shopGetDetailModel.update((val) {
+        val!.code = model.code;
+        val.content = model.content;
+        val.dataDescription = model.dataDescription;
+        val.description = model.description;
+        val.id = model.id;
+        val.images = model.images;
+        val.latitude = model.latitude;
+        val.longitude = model.longitude;
+        val.name = model.name;
+        val.options = model.options;
+        val.rating = model.rating;
+        val.result = model.result;
+        val.reviewCount = model.reviewCount;
+        val.shopProfileImage = model.shopProfileImage;
+      });
+    }
+    if (model.code == 2) {}
+    if (model.code == 3) {}
   }
 }
 

@@ -1,8 +1,6 @@
-import 'package:damo/app/controller/token_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:get/get.dart';
 
-class Token {
+class TokenModel {
   SharedPreferences? prefs;
 
   Future<Map<String, String>> loadToken() async {
@@ -17,10 +15,12 @@ class Token {
     prefs = await SharedPreferences.getInstance();
     prefs!.setString('accessToken', accessToken);
     prefs!.setString('refreshToken', refreshToken);
+    print('기기에 토큰을 저장했습니다.');
   }
 
   Future<void> removeToken() async {
     prefs = await SharedPreferences.getInstance();
     prefs!.clear();
+    print('기기에 저장된 토큰을 삭제했습니다.');
   }
 }

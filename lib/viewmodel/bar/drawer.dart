@@ -1,6 +1,7 @@
+import 'dart:math';
+
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:damo/app/controller/sign_controller.dart';
-import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/app/data/model/token_model.dart';
 import 'package:damo/view/mypage/edit_my_info.dart';
@@ -8,10 +9,12 @@ import 'package:damo/view/mypage/setting.dart';
 import 'package:damo/view/notification/notice_admin.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
 import 'package:damo/view/sign/sign.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
@@ -19,7 +22,6 @@ import 'package:get/route_manager.dart';
 import 'package:page_transition/page_transition.dart';
 
 UserController userController = Get.find();
-TokenController TokenData = Get.find();
 SignController signController = Get.find();
 
 class DrawerButton extends StatefulWidget {
@@ -52,7 +54,7 @@ class _DrawerButtonState extends State<DrawerButton> {
                   ),
                   onPressed: () {
                     print('로그아웃 합니다.');
-                    Token().removeToken();
+                    TokenModel().removeToken();
                     Get.offAll(
                       () => AnimatedSplashScreen(
                         duration: 500,
@@ -92,8 +94,17 @@ class _DrawerButtonState extends State<DrawerButton> {
               children: [
                 Container(
                   alignment: Alignment.topLeft,
-                  child: Image.network(userController.getUserInfoModel.value.profileImage!),
-                  height: 55,
+                  child: Obx(() => ExtendedImage.network(
+                        userController.getUserInfoModel.value.profileImage!,
+                        width: 55.w,
+                        height: 55.h,
+                        fit: BoxFit.fill,
+                        cache: false,
+                        // border: Border.all(color: Colors.red, width: 1.0),
+                        shape: BoxShape.circle,
+                        // borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                      )),
+                  height: 55.h,
                 ),
                 SizedBox(
                   width: 113.w,

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:kakao_flutter_sdk/all.dart';
 
 class AuthSignModel {
   int? code;
@@ -12,17 +11,17 @@ class AuthSignModel {
   AuthSignModel(
       {code, accessToken, isFirst, refreshToken, description, result});
 
-  String toJson(Map<String, dynamic> input) {
+  String toJson(Map<String, dynamic> toJsonInput) {
     String body;
     Map signUpData = {
       'agreements': {
-        'marketing': input['marketing'],
-        'pushNotification': input['pushNotification']
+        'marketing': toJsonInput['marketing'],
+        'pushNotification': toJsonInput['pushNotification']
       },
       'fcmToken': '',
-      'nickname': input['nickname'],
-      'oauthAccessToken': input['oauthAccessToken'],
-      'phoneNumber': input['phoneNumber']
+      'nickname': toJsonInput['nickname'],
+      'oauthAccessToken': toJsonInput['oauthAccessToken'],
+      'phoneNumber': toJsonInput['phoneNumber']
     };
     body = json.encode(signUpData);
     return body;
@@ -49,11 +48,11 @@ class AuthLoginModel {
   AuthLoginModel(
       {code, accessToken, isFirst, refreshToken, description, result});
 
-  String toJson(Map<String, dynamic> input) {
+  String toJson(Map<String, dynamic> toJsonInput) {
     String body;
     Map sendData = {
       'fcmToken': '',
-      'oauthAccessToken': input['oauthAccessToken'],
+      'oauthAccessToken': toJsonInput['oauthAccessToken'],
     };
     body = json.encode(sendData);
     return body;
