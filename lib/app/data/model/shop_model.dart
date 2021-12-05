@@ -162,7 +162,7 @@ class ShopGetMeModel {
   var longitude;
   String? name;
   int? basePrice;
-  List<Map<String, dynamic>> optionList = [];
+  List<dynamic> optionList = [];
   var rating;
   int? reviewCount;
   String? shopProfileImage;
@@ -194,6 +194,7 @@ class ShopGetMeModel {
   }
 
   ShopGetMeModel.fromJson(Map<String, dynamic> json) {
+    print(json);
     code = json['code'];
     content = json['data']['content'];
     dataDescription = json['data']['description'];
@@ -221,7 +222,10 @@ class ShopOptionRegistration {
 
   String toJson(Map<String, dynamic> input) {
     String body;
-    Map sendData = {};
+    Map sendData = {
+      "basePrice": input['basePrice'],
+      "optionList": input['optionList'],
+    };
     body = json.encode(sendData);
     return body;
   }

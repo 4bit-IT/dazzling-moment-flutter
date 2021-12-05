@@ -1,6 +1,7 @@
 import 'package:damo/app/controller/shop_controller.dart';
+import 'package:damo/app/controller/shop_faq_controller.dart';
 import 'package:damo/view/shop/shop_chat_management.dart';
-import 'package:damo/view/shop/shop_faq_management.dart';
+import 'package:damo/view/shop/shop_faq/shop_faq_management.dart';
 import 'package:damo/view/shop/shop_product_list.dart';
 import 'package:damo/view/shop/shop_review_management.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
@@ -17,6 +18,7 @@ class ShopMain extends StatefulWidget {
 
 class _ShopMainState extends State<ShopMain> {
   final shopController = Get.put(ShopController(), permanent: true);
+  ShopFAQController? shopFAQController;
 
   @override
   Widget build(BuildContext context) {
