@@ -5,35 +5,37 @@ import 'package:damo/app/data/provider/kakao.dart';
 import 'package:damo/app/data/provider/oauth_api.dart';
 import 'package:damo/app/data/provider/user/user_api.dart';
 import 'package:damo/view/main/home_main.dart';
+import 'package:damo/view/sign/get_user_name.dart';
 import 'package:damo/view/sign/get_user_number.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:timer_count_down/timer_controller.dart';
 
 class SignController extends GetxController {
   Rx<AuthSignModel> authSignModel = AuthSignModel().obs;
   Rx<AuthLoginModel> authLoginModel = AuthLoginModel().obs;
   late NicknameDoubleCheckModel nicknameDoubleCheckModel;
-
   late RxString oauthAccessToken;
   RxBool isNicknameCheck = false.obs;
-  RxBool readOnly = false.obs;
+  RxBool readOnlyPhoneNumber = false.obs;
+  Rx<FocusNode> nicknameFocusNode = FocusNode().obs;
+  Rx<FocusNode> phoneNumberFocusNode = FocusNode().obs;
   Rx<TextEditingController> nicknameController = TextEditingController().obs;
   Rx<TextEditingController> phoneNumberController = TextEditingController().obs;
-  Rx<TextEditingController> smsAuthNumberController =
-      TextEditingController().obs;
-  Rx<SvgPicture> getAuthNumberButton = SvgPicture.asset(
-    'assets/images_svg/btn_인증번호받기_off.svg',
-    width: 92.w,
-    height: 52.h,
-    fit: BoxFit.fill,
-  ).obs;
-  Rx<SvgPicture> confirmAuthNumberButton = SvgPicture.asset(
-    'assets/images_svg/btn_인증문자확인_off.svg',
-    width: 375.w,
-  ).obs;
+  Rx<TextEditingController> smsAuthNumberController = TextEditingController().obs;
+  Rx<Color> getAuthNumberButtonColor = Color(0xffd1d1d6).obs;
+  Rx<Color> confirmAuthNumberButtonColor = Color(0xffd1d1d6).obs;
+  Rx<CountdownController> countdownController = CountdownController(autoStart: true).obs;
+  RxBool countdownVisibility = false.obs;
+  RxString nicknameCheckString = '* 닉네임은 한글, 숫자, 영문으로 된 2~8자로 구성해주세요.'.obs;
+
+  String? verificationUserId;
+  FirebaseAuth auth = FirebaseAuth.instance;
+  PhoneAuthCredential? phoneAuthCredential;
 
   Map<String, dynamic> toJsonInput = {};
   String sendData = '';
@@ -48,8 +50,7 @@ class SignController extends GetxController {
     toJsonInput['nickname'] = nicknameController.value.value.text;
     toJsonInput['oauthAccessToken'] = oauthAccessToken.value;
     toJsonInput['phoneNumber'] = '010-3874-0360';
-    jsonResponse = await OauthNetwork()
-        .postOauthKakao(AuthSignModel().toJson(toJsonInput));
+    jsonResponse = await OauthNetwork().postOauthKakao(AuthSignModel().toJson(toJsonInput));
     model = AuthSignModel.fromJson(jsonResponse);
     authSignModel.update((val) {
       val!.code = model.code;
@@ -59,18 +60,17 @@ class SignController extends GetxController {
       val.isFirst = model.isFirst;
       val.result = model.result;
     });
-    TokenModel().saveToken(
-        authSignModel.value.accessToken!, authSignModel.value.refreshToken!);
+    TokenModel().saveToken(authSignModel.value.accessToken!, authSignModel.value.refreshToken!);
     tokenController.token!['accessToken'] = authSignModel.value.accessToken!;
     tokenController.token!['refreshToken'] = authSignModel.value.refreshToken!;
+    Get.offAll(() => HomeMain());
   }
 
   void onKakaoLoginClicked() async {
     oauthAccessToken = (await Kakao().getKakaoToken()).obs;
     toJsonInput.clear();
     toJsonInput['oauthAccessToken'] = oauthAccessToken.value;
-    jsonResponse = await OauthNetwork()
-        .postOauthKakaoLogin(AuthLoginModel().toJson(toJsonInput));
+    jsonResponse = await OauthNetwork().postOauthKakaoLogin(AuthLoginModel().toJson(toJsonInput));
     model = AuthLoginModel.fromJson(jsonResponse);
 
     authLoginModel.update((val) {
@@ -89,12 +89,9 @@ class SignController extends GetxController {
       }
       if (authLoginModel.value.isFirst == false) {
         print('이미 가입 된 유저이므로 토큰 저장 후, 메인페이지로 이동합니다.');
-        TokenModel().saveToken(authLoginModel.value.accessToken!,
-            authLoginModel.value.refreshToken!);
-        tokenController.token!['accessToken'] =
-            authLoginModel.value.accessToken!;
-        tokenController.token!['refreshToken'] =
-            authLoginModel.value.refreshToken!;
+        TokenModel().saveToken(authLoginModel.value.accessToken!, authLoginModel.value.refreshToken!);
+        tokenController.token!['accessToken'] = authLoginModel.value.accessToken!;
+        tokenController.token!['refreshToken'] = authLoginModel.value.refreshToken!;
         Get.to(() => HomeMain());
       }
     }
@@ -108,123 +105,52 @@ class SignController extends GetxController {
   }
 
   void onPhoneNumberChanged() {
-    if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
-            .hasMatch(phoneNumberController.value.value.text) ==
-        false) {
-      getAuthNumberButton.value = SvgPicture.asset(
-        'assets/images_svg/btn_인증번호받기_off.svg',
-        width: 92.w,
-        height: 52.h,
-        fit: BoxFit.fill,
-      );
+    if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$').hasMatch(phoneNumberController.value.value.text) ==
+        true) {
+      getAuthNumberButtonColor.value = Color(0xfff93f5b);
     } else {
-      getAuthNumberButton.value = SvgPicture.asset(
-        'assets/images_svg/btn_인증번호받기_on.svg',
-        width: 92.w,
-        height: 52.h,
-        fit: BoxFit.fill,
-      );
+      getAuthNumberButtonColor.value = Color(0xffd1d1d6);
     }
   }
 
   void onAuthNumberChanged() {
-    print(RegExp(r'^([0-9]{6})$')
-        .hasMatch(smsAuthNumberController.value.value.text));
-    if (RegExp(r'^([0-9]{6})$')
-            .hasMatch(smsAuthNumberController.value.value.text) ==
-        false) {
-      confirmAuthNumberButton.value = SvgPicture.asset(
-        'assets/images_svg/btn_인증문자확인_off.svg',
-        width: 375.w,
-        fit: BoxFit.fill,
-      );
+    if (RegExp(r'^([0-9]{6})$').hasMatch(smsAuthNumberController.value.value.text) == true) {
+      confirmAuthNumberButtonColor.value = Color(0xfff93f5b);
     } else {
-      confirmAuthNumberButton.value = SvgPicture.asset(
-        'assets/images_svg/btn_인증문자확인_on.svg',
-        width: 375.w,
-        height: 52.h,
-        fit: BoxFit.fill,
-      );
+      confirmAuthNumberButtonColor.value = Color(0xffd1d1d6);
     }
   }
 
   var acceptList = [
-    AcceptRadioModel(
-      '모두 동의',
-    ).obs,
-    AcceptRadioModel(
-      '서비스 이용약관 동의(필수)',
-    ).obs,
-    AcceptRadioModel(
-      '개인정보의 수집 및 이용 동의(필수)',
-    ).obs,
-    AcceptRadioModel(
-      '앱푸쉬 알림 동의(선택)',
-    ).obs,
-    AcceptRadioModel(
-      '마케팅 수신 동의(선택)',
-    ).obs,
+    AcceptRadioModel('모두 동의').obs,
+    AcceptRadioModel('서비스 이용약관 동의(필수)').obs,
+    AcceptRadioModel('개인정보의 수집 및 이용 동의(필수)').obs,
+    AcceptRadioModel('앱푸쉬 알림 동의(선택)').obs,
+    AcceptRadioModel('마케팅 수신 동의(선택)').obs,
   ].obs;
 
   void doubleCheckClicked() async {
-    if (RegExp(r'^([가-힣a-zA-Z0-9]){2,8}$')
-            .hasMatch(nicknameController.value.text) ==
-        true) {
-      Map<String, dynamic> toJsonInput = {
-        'nickname': nicknameController.value.value.text.toString()
-      };
-      nicknameDoubleCheckModel =
-          await UserNetwork().postUsersCheckNickname(toJsonInput);
+    nicknameFocusNode.value.unfocus();
+    if (RegExp(r'^([가-힣a-zA-Z0-9]){2,8}$').hasMatch(nicknameController.value.text) == true) {
+      Map<String, dynamic> input = {'nickname': nicknameController.value.value.text.toString()};
+      nicknameDoubleCheckModel = await UserNetwork().postUsersCheckNickname(input);
       if (nicknameDoubleCheckModel.data == true) {
-        isNicknameCheck = true.obs;
-        Get.snackbar('닉네임 중복확인', '사용가능한 닉네임 입니다.');
+        isNicknameCheck.value = true;
+        nicknameCheckString.value = '사용가능한 닉네임 입니다!';
       } else {
-        isNicknameCheck = false.obs;
-        Get.snackbar('닉네임 중복확인', '이미 존재하는 닉네임 입니다.');
+        isNicknameCheck.value = false;
+        nicknameCheckString.value = '이미 존재하는 닉네임 입니다.';
       }
-      isNicknameCheck = true.obs;
+      isNicknameCheck.value = true;
     } else {
-      Get.snackbar('닉네임', '알맞지 않은 닉네임 입력입니다.');
+      nicknameCheckString.value = '알맞지 않은 닉네임 입력입니다.\n* 한글, 숫자, 영문으로 된 2~8자로 구성해주세요.';
     }
   }
 
-  void acceptClicked(int index) {
+  void acceptOn(int index) {
     if (index == 0) {
-      if (acceptList[0].value.check == true) {
-        for (int i = 0; i < 5; i++) {
-          acceptList[i].update((val) {
-            val!.check = false;
-            val.ic = SvgPicture.asset(
-              'assets/images_svg/ic_radiobtn_off.svg',
-              width: 20.w,
-              height: 20.h,
-            );
-          });
-        }
-      } else {
-        for (int i = 0; i < 5; i++) {
-          acceptList[i].update((val) {
-            val!.check = true;
-            val.ic = SvgPicture.asset(
-              'assets/images_svg/ic_radiobtn_on.svg',
-              width: 20.w,
-              height: 20.h,
-            );
-          });
-        }
-      }
-    } else {
-      if (acceptList[index].value.check == true) {
-        acceptList[index].update((val) {
-          val!.check = false;
-          val.ic = SvgPicture.asset(
-            'assets/images_svg/ic_radiobtn_off.svg',
-            width: 20.w,
-            height: 20.h,
-          );
-        });
-      } else {
-        acceptList[index].update((val) {
+      for (int i = 0; i < 5; i++) {
+        acceptList[i].update((val) {
           val!.check = true;
           val.ic = SvgPicture.asset(
             'assets/images_svg/ic_radiobtn_on.svg',
@@ -233,48 +159,134 @@ class SignController extends GetxController {
           );
         });
       }
-      for (int i = 1; i < 5; i++) {
-        if (acceptList[i].value.check == false) {
-          acceptList[0].update((val) {
-            val!.check = false;
-            val.ic = SvgPicture.asset(
-              'assets/images_svg/ic_radiobtn_off.svg',
-              width: 20.w,
-              height: 20.h,
-            );
-          });
-          break;
-        }
-        if (i == 4) {
-          acceptList[0].update((val) {
-            val!.check = true;
-            val.ic = SvgPicture.asset(
-              'assets/images_svg/ic_radiobtn_on.svg',
-              width: 20.w,
-              height: 20.h,
-            );
-          });
-        }
+    } else {
+      acceptList[index].update((val) {
+        val!.check = true;
+        val.ic = SvgPicture.asset(
+          'assets/images_svg/ic_radiobtn_on.svg',
+          width: 20.w,
+          height: 20.h,
+        );
+      });
+      if (acceptList[1].value.check == true &&
+          acceptList[2].value.check == true &&
+          acceptList[3].value.check == true &&
+          acceptList[4].value.check == true) {
+        acceptList[0].update((val) {
+          val!.check = true;
+          val.ic = SvgPicture.asset(
+            'assets/images_svg/ic_radiobtn_on.svg',
+            width: 20.w,
+            height: 20.h,
+          );
+        });
+      } else {
+        acceptList[0].update((val) {
+          val!.check = false;
+          val.ic = SvgPicture.asset(
+            'assets/images_svg/ic_radiobtn_off.svg',
+            width: 20.w,
+            height: 20.h,
+          );
+        });
       }
     }
   }
 
-  get getConfirmButton => (acceptList[1].value.check &&
-          acceptList[2].value.check &&
-          isNicknameCheck.value)
-      ? SvgPicture.asset(
-          'assets/images_svg/btn_확인_on.svg',
-          width: 375.w,
-          fit: BoxFit.fill,
-        ).obs
-      : SvgPicture.asset(
-          'assets/images_svg/btn_확인_off.svg',
-          width: 375.w,
-          fit: BoxFit.fill,
-        ).obs;
+  void acceptOff(int index) {
+    if (index == 0) {
+      for (int i = 0; i < 5; i++) {
+        acceptList[i].update((val) {
+          val!.check = false;
+          val.ic = SvgPicture.asset(
+            'assets/images_svg/ic_radiobtn_off.svg',
+            width: 20.w,
+            height: 20.h,
+          );
+        });
+      }
+    } else {
+      acceptList[index].update((val) {
+        val!.check = false;
+        val.ic = SvgPicture.asset(
+          'assets/images_svg/ic_radiobtn_off.svg',
+          width: 20.w,
+          height: 20.h,
+        );
+      });
+      if (acceptList[1].value.check == true &&
+          acceptList[2].value.check == true &&
+          acceptList[3].value.check == true &&
+          acceptList[4].value.check == true) {
+        acceptList[0].update((val) {
+          val!.check = true;
+          val.ic = SvgPicture.asset(
+            'assets/images_svg/ic_radiobtn_on.svg',
+            width: 20.w,
+            height: 20.h,
+          );
+        });
+      } else {
+        acceptList[0].update((val) {
+          val!.check = false;
+          val.ic = SvgPicture.asset(
+            'assets/images_svg/ic_radiobtn_off.svg',
+            width: 20.w,
+            height: 20.h,
+          );
+        });
+      }
+    }
+  }
+
+  get confirmButtonColor => (acceptList[1].value.check && acceptList[2].value.check && isNicknameCheck.value)
+      ? Color(0xfff93f5b)
+      : Color(0xffd1d1d6);
 
   void changeReadOnly() {
-    readOnly = false.obs;
+    readOnlyPhoneNumber = false.obs;
+  }
+
+  void signInWithPhoneAuthCredential(PhoneAuthCredential phoneAuthCredential) async {
+    try {
+      await auth.signInWithCredential(phoneAuthCredential);
+      Get.to(() => GetUserNickname());
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
+  void verifyPhoneNumber() async {
+    phoneNumberFocusNode.value.unfocus();
+    getAuthNumberButtonColor = Color(0xffd1d1d6).obs;
+    String phoneNumber = '+82' +
+        phoneNumberController.value.value.text.split('-')[0][1] +
+        phoneNumberController.value.value.text.split('-')[0][2] +
+        phoneNumberController.value.value.text.split('-')[1] +
+        phoneNumberController.value.value.text.split('-')[2];
+
+    await auth.verifyPhoneNumber(
+      timeout: const Duration(seconds: 120),
+      codeAutoRetrievalTimeout: (String verificationId) {
+        // Auto-resolution timed out...
+      },
+      phoneNumber: phoneNumber,
+      verificationCompleted: (phoneAuthCredential) async {
+        print("otp 문자옴");
+      },
+      verificationFailed: (verificationFailed) async {
+        print(verificationFailed.code);
+        print(verificationFailed.message);
+        print(verificationFailed);
+        print("코드발송실패");
+      },
+      codeSent: (verificationId, resendToken) async {
+        print("코드보냄");
+        countdownVisibility.value = true;
+        readOnlyPhoneNumber.value = true;
+        verificationUserId = verificationId;
+      },
+    );
   }
 }
 

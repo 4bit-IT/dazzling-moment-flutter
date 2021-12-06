@@ -41,11 +41,9 @@ class ShopNetwork {
 
   void postShopImage(List<File> images) async {
     try {
-      var request =
-          http.MultipartRequest("POST", Uri.parse(baseUri + '/shop/image'));
+      var request = http.MultipartRequest("POST", Uri.parse(baseUri + '/shop/image'));
       for (var image in images) {
-        request.files
-            .add(await http.MultipartFile.fromPath('image', image.path));
+        request.files.add(await http.MultipartFile.fromPath('image', image.path));
       }
       http.StreamedResponse response = await request.send();
       //return jsonDecode(utf8.decode(response.stream));
@@ -58,10 +56,8 @@ class ShopNetwork {
 
   void postShopImageMain(File image) async {
     try {
-      var request = http.MultipartRequest(
-          "POST", Uri.parse(baseUri + '/shop/image/main'));
-      request.files
-          .add(await http.MultipartFile.fromPath('mainImage', image.path));
+      var request = http.MultipartRequest("POST", Uri.parse(baseUri + '/shop/image/main'));
+      request.files.add(await http.MultipartFile.fromPath('mainImage', image.path));
 
       http.StreamedResponse response = await request.send();
       //return
@@ -71,63 +67,27 @@ class ShopNetwork {
   }
 
   Future<dynamic> getShopMe() async {
-    /*try {
+    try {
       http.Response response = await http.get(
         Uri.parse(baseUri + '/shop/me'),
         headers: headers,
       );
-      if(response.statusCode == 200){
+      if (response.statusCode == 200) {
         return jsonDecode(utf8.decode(response.bodyBytes));
-      }
-      else{
+      } else {
         print('통신 오류');
       }
     } catch (e) {
       print(e);
-    }*/
-    return {
-      "code": 1,
-      "result": true,
-      "data": {
-        "id": 1,
-        "name": "test",
-        "description": "test",
-        "content": "test",
-        "options": {
-          "basePrice": 10000,
-          "optionList": [
-            {
-              "title": "1. 사이즈를 선택해주세요.",
-              "description": "반드시 1개 이상 선택해주세요.",
-              "allowMultipleChoices": true,
-              "optionDetailList": [
-                {
-                  "content": "오레오 토핑",
-                  "price": 1000,
-                  "count": 3,
-                  "allowMultipleChoices": true
-                }
-              ]
-            }
-          ]
-        },
-        "rating": 0,
-        "reviewCount": 0,
-        "location": {"latitude": 0, "longitude": 0},
-        "shopProfileImage": null,
-        "images": []
-      },
-      "description": "성공"
-    };
+    }
   }
 
-  void postShopOption(Map<String, dynamic> input) async {
+  Future<dynamic> postShopOption(String sendData) async {
     try {
-      body = ShopOptionRegistration().toJson(input);
       http.Response response = await http.post(
         Uri.parse(baseUri + '/shop/option'),
         headers: headers,
-        body: body,
+        body: sendData,
       );
 
       return jsonDecode(utf8.decode(response.bodyBytes));

@@ -1,3 +1,5 @@
+import 'package:damo/app/controller/shop_controller.dart';
+import 'package:damo/app/controller/shop_faq_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/view/mypage/edit_my_info.dart';
 import 'package:damo/view/mypage/purchase_history.dart';
@@ -20,6 +22,7 @@ import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 
 UserController userController = Get.find();
+ShopController shopController = Get.find();
 
 class MyPage extends StatefulWidget {
   MyPage({this.bottomNavigationIndex});
@@ -372,7 +375,9 @@ class _MyPageState extends State<MyPage> {
                           ),
                           SizedBox(height: 24.h),
                           TextButton(
-                            onPressed: () {
+                            onPressed: () async {
+                              await shopController.fetchShopData();
+                              ShopFAQBinding().dependencies();
                               Get.to(() => ShopMain());
                             },
                             child: Text(

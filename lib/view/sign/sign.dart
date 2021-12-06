@@ -1,7 +1,9 @@
 import 'package:damo/app/controller/sign_controller.dart';
+import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/get_user_name.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
+import 'package:damo/view/main/home_main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -87,7 +89,9 @@ class Sign extends StatelessWidget {
                           child: Column(
                             children: [
                               InkWell(
-                                onTap: () async {},
+                                onTap: () {
+                                  Get.to(() => GetUserInfo());
+                                },
                                 child: SvgPicture.asset(
                                     'assets/images_svg/ic_login_apple.svg'),
                               ),
@@ -141,8 +145,46 @@ class Sign extends StatelessWidget {
                       SizedBox(
                         height: 200,
                       ),
+                      MaterialButton(
+                        minWidth: double.infinity,
+                        height: 60,
+                        onPressed: () {
+                          Get.to(() => GetUserNickname());
+                        },
+                        color: Colors.blue,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Text(
+                          "페이스북으로 로그인",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                       SizedBox(
                         height: 7,
+                      ),
+                      MaterialButton(
+                        minWidth: double.infinity,
+                        height: 60,
+                        onPressed: () {
+                          Get.to(() => HomeMain());
+                        },
+                        color: Colors.green,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Text(
+                          "네이버로 로그인",
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 7,
