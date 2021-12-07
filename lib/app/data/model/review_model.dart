@@ -1,4 +1,4 @@
-class ProductReviewModel {
+class InsertReviewModel {
   int? code; //"성공은 1 or 실패는 2 or 토큰 만료는 3"
   String? content; //"여기 맛집 인정~"
   String? createdAt; //"2021-10-28"
@@ -11,7 +11,7 @@ class ProductReviewModel {
   String? description; //"성공 or 에러 메세지 or 토큰이 만료되었습니다."
   bool? result; //true
 
-  ProductReviewModel(
+  InsertReviewModel(
       {code,
       content,
       createdAt,
@@ -24,7 +24,7 @@ class ProductReviewModel {
       description,
       result});
 
-  ProductReviewModel.fromJson(Map<String, dynamic> json) {
+  InsertReviewModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     content = json['data']['reviewList']['content'];
     createdAt = json['data']['reviewList']['createdAt'];
@@ -39,4 +39,20 @@ class ProductReviewModel {
   }
 }
 
-class ProductOptionModel {}
+class LoadReviewModel {
+  int? code; //"성공은 1 or 실패는 2 or 토큰 만료는 3",
+  bool? hasNextPage; //true
+  dynamic reviewList;
+  String? description; //"성공 or 에러 메세지 or 토큰이 만료되었습니다.",
+  bool? result; //true
+
+  LoadReviewModel({code, hasNextPage, reviewList, description, result});
+
+  LoadReviewModel.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    hasNextPage = json['data']['hasNextPage'];
+    reviewList = json['data']['reviewList'];
+    description = json['description'];
+    result = json['result'];
+  }
+}

@@ -14,6 +14,13 @@ var formatter = NumberFormat('#,##,000');
 
 class ProductController extends GetxController {
   ShopController shopController = Get.find();
+
+  @override
+  void onInit() async {
+    super.onInit();
+    //await fetchShopData();
+  }
+
   Future<void> onClickedOptionSelect() async {
     Get.bottomSheet(
       Column(
