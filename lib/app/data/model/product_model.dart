@@ -38,3 +38,5 @@ class ProductReviewModel {
     result = json['result'];
   }
 }
+
+class ProductOptionModel {}

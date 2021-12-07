@@ -1,4 +1,3 @@
-import 'package:damo/app/controller/product_controller.dart';
 import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/view/product/product.dart';
@@ -13,7 +12,6 @@ import 'package:get/get.dart';
 
 class HomeMain extends StatelessWidget {
   UserController userController = Get.put(UserController(), permanent: true);
-  ProductController productController = Get.put(ProductController());
   ScrollController scrollController = ScrollController();
   ShopController shopController = Get.put(ShopController());
   DamoAppBar appBar = DamoAppBar();
@@ -304,7 +302,7 @@ class HomeMain extends StatelessWidget {
             //   ),
             // ),
             GridView.builder(
-              itemCount: 100,
+              itemCount: 3,
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
               physics: ScrollPhysics(),
@@ -317,8 +315,10 @@ class HomeMain extends StatelessWidget {
                 return CupertinoButton(
                   padding: EdgeInsets.all(0),
                   onPressed: () async {
-                    await shopController.loadShopDetail(2);
-                    Get.to(Product());
+                    print('shopId:$index 데이터 불러오는중..');
+                    await shopController.loadShopDetail(index + 1);
+                    print('shopId:$index 데이터 로딩 완료');
+                    Get.to(() => Product());
                   },
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

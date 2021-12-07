@@ -1,15 +1,15 @@
-import 'package:damo/app/controller/product_controller.dart';
+import 'package:damo/app/controller/shop_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:simple_star_rating/simple_star_rating.dart';
 import 'package:vertical_barchart/vertical-barchart.dart';
 import 'package:vertical_barchart/vertical-barchartmodel.dart';
-import 'package:get/get.dart';
+
+ShopController shopController = Get.find();
 
 class ProductReview extends StatelessWidget {
-  ProductController productController = Get.find();
-
   @override
   Widget build(BuildContext context) {
     List<VBarChartModel> bardata = [
@@ -66,7 +66,10 @@ class ProductReview extends StatelessWidget {
               ),
               SizedBox(width: 8.w),
               Text(
-                '총 150 개 리뷰',
+                '총' +
+                    shopController.shopGetDetailModel.value.reviewCount
+                        .toString() +
+                    '개 리뷰',
                 style: TextStyle(
                   color: Color(0xff8e97a0),
                   fontFamily: 'NotoSansCJKKR',
@@ -91,7 +94,7 @@ class ProductReview extends StatelessWidget {
               ),
               SizedBox(width: 9.w),
               Text(
-                '4.5',
+                shopController.shopGetDetailModel.value.rating!.toString(),
                 style: TextStyle(
                   color: Color(0xff283137),
                   fontSize: 30.sp,

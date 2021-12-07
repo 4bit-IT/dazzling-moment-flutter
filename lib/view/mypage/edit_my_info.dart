@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:damo/app/controller/user_controller.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';

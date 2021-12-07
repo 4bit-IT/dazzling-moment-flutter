@@ -1,16 +1,21 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:damo/app/controller/product_controller.dart';
 import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/view/product/product_info.dart';
 import 'package:damo/view/product/product_qa.dart';
 import 'package:damo/view/product/product_review.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:simple_star_rating/simple_star_rating.dart';
+import 'package:intl/intl.dart';
 
 ShopController shopController = Get.find();
+ProductController productController = Get.put(ProductController());
+var formatter = NumberFormat('#,##,000');
 
 class Product extends StatelessWidget {
   @override
@@ -57,7 +62,7 @@ class Product extends StatelessWidget {
                 ],
                 expandedHeight: 375.h,
                 flexibleSpace: FlexibleSpaceBar(
-                  background: Swiper.children(
+                  background: Swiper(
                     autoplay: false,
                     pagination: SwiperPagination(
                         margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 17.h),
@@ -66,26 +71,21 @@ class Product extends StatelessWidget {
                             activeColor: Colors.white,
                             size: 7.0,
                             activeSize: 7.0)),
-                    children: [
-                      Image.asset(
-                        "assets/images/상품사진1@3x.png",
+                    itemBuilder: (BuildContext context, int index) {
+                      return ExtendedImage.network(
+                        shopController.shopGetDetailModel.value.images[index],
                         fit: BoxFit.cover,
-                      ),
-                      Image.asset(
-                        "assets/images/상품사진2@3x.png",
-                        fit: BoxFit.cover,
-                      ),
-                      Image.asset(
-                        "assets/images/상품사진3@3x.png",
-                        fit: BoxFit.cover,
-                      )
-                    ],
+                        cache: false,
+                      );
+                    },
+                    itemCount:
+                        shopController.shopGetDetailModel.value.images.length,
                   ),
                 ),
               ),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(17.0.w, 15.h, 10.w, 0),
+                  padding: EdgeInsets.fromLTRB(17.0.w, 15.h, 10.w, 0.h),
                   child: Text(
                     shopController.shopGetDetailModel.value.name!,
                     style: TextStyle(
@@ -100,12 +100,12 @@ class Product extends StatelessWidget {
               ),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.fromLTRB(17.0.w, 9.h, 10.w, 0),
+                  padding: EdgeInsets.fromLTRB(17.0.w, 9.h, 10.w, 0.h),
                   child: Text(
-                    '플루트 딸기가득 케이크',
+                    shopController.shopGetDetailModel.value.content!,
                     style: TextStyle(
                       color: Color(0xff283137),
-                      fontSize: 20,
+                      fontSize: 20.sp,
                       fontFamily: 'NotoSansCJKKR',
                       fontWeight: FontWeight.w500,
                     ),
@@ -116,7 +116,7 @@ class Product extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(17.0.w, 10.h, 15.w, 20.h),
                   child: Text(
-                    '서울에서 입소문난 수제케이크 집입니다. 기념일용 아름다운 케이크와 함께 눈부신 순간을 축복하세요.  ',
+                    shopController.shopGetDetailModel.value.dataDescription!,
                     style: TextStyle(
                       color: Color(0xff283137),
                       fontFamily: 'NotoSansCJKKR',
@@ -128,50 +128,70 @@ class Product extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(17.0.w, 4.h, 0.w, 20.h),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SimpleStarRating(
-                        allowHalfRating: true,
-                        starCount: 5,
-                        rating: 3.0,
-                        size: 10.w,
-                        isReadOnly: true,
-                        spacing: 2.5.w,
-                      ),
-                      SizedBox(width: 5.0.w),
-                      Text(
-                        '4.9',
-                        style: TextStyle(
-                          color: Color(0xff283137),
-                          fontFamily: 'NotoSansCJKKR',
-                        ),
-                      ),
-                      SizedBox(width: 2.0.w),
-                      Text(
-                        '(1,234)',
-                        style: TextStyle(
-                          color: Color(0xff8e97a0),
-                          fontFamily: 'NotoSansCJKKR',
-                        ),
+                      Row(
+                        children: [
+                          SimpleStarRating(
+                            allowHalfRating: true,
+                            starCount: 5,
+                            rating:
+                                shopController.shopGetDetailModel.value.rating!,
+                            size: 10.w,
+                            isReadOnly: true,
+                            spacing: 2.5.w,
+                          ),
+                          SizedBox(width: 5.0.w),
+                          Text(
+                            shopController.shopGetDetailModel.value.rating!
+                                .toString(),
+                            style: TextStyle(
+                              color: Color(0xff283137),
+                              fontFamily: 'NotoSansCJKKR',
+                            ),
+                          ),
+                          SizedBox(width: 2.0.w),
+                          Text(
+                            '(' +
+                                shopController
+                                    .shopGetDetailModel.value.reviewCount!
+                                    .toString() +
+                                ')',
+                            style: TextStyle(
+                              color: Color(0xff8e97a0),
+                              fontFamily: 'NotoSansCJKKR',
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(width: 110.w),
-                      Text(
-                        '30%',
-                        style: TextStyle(
-                          color: Color(0xfff93f5b),
-                          fontSize: 16.sp,
-                          fontFamily: 'NotoSansCJKKR',
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      SizedBox(width: 5.0),
-                      Text(
-                        '29,500',
-                        style: TextStyle(
-                          color: Color(0xff283137),
-                          fontSize: 20.sp,
-                          fontFamily: 'NotoSansCJKKR',
-                          fontWeight: FontWeight.w700,
-                        ),
+                      Row(
+                        children: [
+                          // Text(
+                          //   '30%',
+                          //   style: TextStyle(
+                          //     color: Color(0xfff93f5b),
+                          //     fontSize: 16.sp,
+                          //     fontFamily: 'NotoSansCJKKR',
+                          //     fontWeight: FontWeight.w700,
+                          //   ),
+                          // ),
+                          SizedBox(width: 5.0),
+                          Text(
+                            formatter
+                                    .format(shopController
+                                        .shopGetDetailModel.value.basePrice!)
+                                    .toString() +
+                                '원',
+                            style: TextStyle(
+                              color: Color(0xff283137),
+                              fontSize: 20.sp,
+                              fontFamily: 'NotoSansCJKKR',
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          SizedBox(width: 10.w),
+                        ],
                       ),
                     ],
                   ),
@@ -230,22 +250,27 @@ class Product extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        child: Center(
-          child: Text(
-            '옵션선택',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16.sp,
-              fontFamily: 'NotoSansCJKKR',
-              fontWeight: FontWeight.w700,
+      bottomNavigationBar: InkWell(
+        onTap: () async {
+          await productController.onClickedOptionSelect();
+        },
+        child: Container(
+          child: Center(
+            child: Text(
+              '옵션선택',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16.sp,
+                fontFamily: 'NotoSansCJKKR',
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
-        ),
-        height: 90.h,
-        width: 375.w,
-        decoration: BoxDecoration(
-          color: Color(0xff283137),
+          height: 90.h,
+          width: 375.w,
+          decoration: BoxDecoration(
+            color: Color(0xff283137),
+          ),
         ),
       ),
     );
