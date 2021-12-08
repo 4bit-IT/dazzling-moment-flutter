@@ -21,6 +21,8 @@ class ShopController extends GetxController {
       TextEditingController().obs;
   Rx<TextEditingController> shopBasePriceController =
       TextEditingController().obs;
+  Rx<LoadShopMainPageModel> loadShopMainPageModel = LoadShopMainPageModel().obs;
+  List<dynamic> stroageMainPage = [].obs;
   Map<String, dynamic> toJsonInput = {};
   String sendData = '';
   var response;
@@ -30,7 +32,7 @@ class ShopController extends GetxController {
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
-    //await fetchShopData();
+    await loadShopMain(0, 'RATING');
   }
 
   Future<void> fetchShopData() async {
@@ -199,6 +201,29 @@ class ShopController extends GetxController {
         val.reviewCount = model.reviewCount;
         val.shopProfileImage = model.shopProfileImage;
       });
+    }
+    if (model.code == 2) {}
+    if (model.code == 3) {}
+  }
+
+  Future<void> loadShopMain(int pageNumber, String sortBy) async {
+    if (loadShopMainPageModel.value.hasNextPage == false) {
+      return;
+    }
+    var jsonResponse = await ShopNetwork().getShopMain(pageNumber, sortBy);
+    var model = LoadShopMainPageModel.fromJson(jsonResponse);
+
+    if (model.code == 1) {
+      loadShopMainPageModel.update((val) {
+        val!.code = model.code;
+        val.hasNextPage = model.hasNextPage;
+        val.snippetList = model.snippetList;
+        val.description = model.description;
+        val.result = model.result;
+      });
+      for (dynamic snippetList in loadShopMainPageModel.value.snippetList) {
+        stroageMainPage.add(snippetList);
+      }
     }
     if (model.code == 2) {}
     if (model.code == 3) {}

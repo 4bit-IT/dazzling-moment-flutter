@@ -20,7 +20,8 @@ class ProductReview extends StatelessWidget {
       RefreshController(initialRefresh: true);
   void _onLoading() async {
     await reviewController.loadReview(pageNumber);
-    pageNumber++;
+    if (reviewController.loadReviewModel.value.hasNextPage == true)
+      pageNumber++;
     _refreshController.loadComplete();
   }
 
@@ -190,6 +191,8 @@ class ProductReview extends StatelessWidget {
                   itemCount: reviewController.stroageReview.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
                           padding: EdgeInsets.fromLTRB(0.w, 0.h, 16.w, 0.h),
@@ -278,16 +281,24 @@ class ProductReview extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 16.h),
-                            Container(
-                              width: 250.w,
-                              height: 250.h,
-                              child: ExtendedImage.network(
-                                reviewController.stroageReview[index]
-                                    ['reviewImage'],
-                                width: 50.w,
-                                height: 50.h,
-                                fit: BoxFit.fill,
-                                cache: true,
+                            Visibility(
+                              visible: reviewController.stroageReview[index]
+                                              ['reviewImage']
+                                          .toString() ==
+                                      'null'
+                                  ? false
+                                  : true,
+                              child: Container(
+                                width: 250.w,
+                                height: 250.h,
+                                child: ExtendedImage.network(
+                                  reviewController.stroageReview[index]
+                                      ['reviewImage'],
+                                  width: 50.w,
+                                  height: 50.h,
+                                  fit: BoxFit.fill,
+                                  cache: true,
+                                ),
                               ),
                             ),
                           ],

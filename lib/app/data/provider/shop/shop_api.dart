@@ -113,4 +113,17 @@ class ShopNetwork {
       print(e);
     }
   }
+
+  Future<dynamic> getShopMain(int pageNumber, String sortBy) async {
+    try {
+      http.Response response = await http.get(
+        Uri.parse(baseUri + '/shop' + "?page=$pageNumber&sortBy=$sortBy"),
+        headers: headers,
+      );
+      print(jsonDecode(utf8.decode(response.bodyBytes)));
+      return jsonDecode(utf8.decode(response.bodyBytes));
+    } catch (e) {
+      print(e);
+    }
+  }
 }

@@ -242,3 +242,21 @@ class ShopOptionRegistration {
     result = json['result'];
   }
 }
+
+class LoadShopMainPageModel {
+  int? code;
+  bool? hasNextPage;
+  dynamic snippetList;
+  String? description;
+  bool? result;
+
+  LoadShopMainPageModel({code, hasNextPage, snippetList, description, result});
+
+  LoadShopMainPageModel.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    hasNextPage = json['data']['hasNextPage'];
+    snippetList = json['data']['snippetList'];
+    description = json['description'];
+    result = json['result'];
+  }
+}
