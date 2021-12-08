@@ -40,7 +40,8 @@ class ShopGetDetailModel {
   double? latitude; //0
   double? longitude; //0
   String? name; // "다모 베이커리"
-  dynamic options;
+  int? basePrice; // 10000
+  dynamic optionList;
   double? rating; //4.5
   int? reviewCount; //123
   String? shopProfileImage; //"https://damo-s3.exmaple.amazonaws.com/12345.png"
@@ -56,7 +57,8 @@ class ShopGetDetailModel {
       latitude,
       longitude,
       name,
-      options,
+      basePrice,
+      optionList,
       rating,
       reviewCount,
       shopProfileImage,
@@ -76,7 +78,8 @@ class ShopGetDetailModel {
     latitude = json['data']['location']['latitude'];
     longitude = json['data']['location']['longitude'];
     name = json['data']['name'];
-    options = json['data']['options'];
+    basePrice = json['data']['options']['basePrice'];
+    optionList = json['data']['options']['optionList'];
     rating = json['data']['rating'];
     reviewCount = json['data']['reviewCount'];
     shopProfileImage = json['data']['shopProfileImage'];

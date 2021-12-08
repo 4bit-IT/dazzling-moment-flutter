@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:damo/app/controller/user_controller.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -101,10 +99,11 @@ class _EditMyInfoState extends State<EditMyInfo> {
                                             child: Text(
                                               '앨범에서 사진 선택',
                                               style: TextStyle(
-                                                  color: Color(0xff283137),
-                                                  fontFamily: 'NotoSansCJKKR',
-                                                  fontSize: 15.h,
-                                                  height: 1),
+                                                color: Color(0xff283137),
+                                                fontSize: 15.sp,
+                                                fontFamily: 'NotoSansCJKKR',
+                                                fontWeight: FontWeight.w400,
+                                              ),
                                             ),
                                           ),
                                           // trailing: Icon(Icons.access_alarms),
@@ -127,10 +126,11 @@ class _EditMyInfoState extends State<EditMyInfo> {
                                             child: Text(
                                               "기본 이미지로 변경",
                                               style: TextStyle(
-                                                  color: Color(0xff283137),
-                                                  fontFamily: 'NotoSansCJKKR',
-                                                  fontSize: 15.h,
-                                                  height: 1),
+                                                color: Color(0xff283137),
+                                                fontSize: 15.sp,
+                                                fontFamily: 'NotoSansCJKKR',
+                                                fontWeight: FontWeight.w400,
+                                              ),
                                             ),
                                           ),
                                           // trailing: Icon(Icons.ac_unit),
