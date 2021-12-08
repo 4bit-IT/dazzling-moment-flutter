@@ -37,6 +37,7 @@ class ShopGetDetailModel {
   String? dataDescription; //"서울에서 입소문난 수제 디저트 공방 ..."
   int? id; //1
   dynamic images; //["string"],
+  bool? isFavorite; //true
   double? latitude; //0
   double? longitude; //0
   String? name; // "다모 베이커리"
@@ -54,6 +55,7 @@ class ShopGetDetailModel {
       dataDescription,
       id,
       images,
+      isFavorite,
       latitude,
       longitude,
       name,
@@ -75,6 +77,7 @@ class ShopGetDetailModel {
     dataDescription = json['data']['description'];
     id = json['data']['id'];
     images = json['data']['images'];
+    isFavorite = json['data']['isFavorite'];
     latitude = json['data']['location']['latitude'];
     longitude = json['data']['location']['longitude'];
     name = json['data']['name'];

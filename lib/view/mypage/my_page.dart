@@ -71,7 +71,7 @@ class _MyPageState extends State<MyPage> {
                             userController.getUserInfoModel.value.profileImage!,
                             width: 75.w,
                             height: 75.h,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fill,
                             cache: false,
                             // border: Border.all(color: Colors.red, width: 1.0),
                             shape: BoxShape.circle,

@@ -21,7 +21,6 @@ class ShopController extends GetxController {
       TextEditingController().obs;
   Rx<TextEditingController> shopBasePriceController =
       TextEditingController().obs;
-
   Map<String, dynamic> toJsonInput = {};
   String sendData = '';
   var response;
@@ -177,8 +176,8 @@ class ShopController extends GetxController {
     );
   }
 
-  Future<void> loadShopDetail(int id) async {
-    var input = ShopGetDetailModel().toJson(id);
+  Future<void> loadShopDetail(int shopId) async {
+    var input = ShopGetDetailModel().toJson(shopId);
     var jsonResponse = await ShopNetwork().getShopId(input);
     var model = ShopGetDetailModel.fromJson(jsonResponse);
     if (model.code == 1) {
@@ -189,6 +188,7 @@ class ShopController extends GetxController {
         val.description = model.description;
         val.id = model.id;
         val.images = model.images;
+        val.isFavorite = model.isFavorite;
         val.latitude = model.latitude;
         val.longitude = model.longitude;
         val.name = model.name;

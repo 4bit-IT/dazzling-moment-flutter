@@ -349,7 +349,7 @@ class HomeMain extends StatelessWidget {
                             child: InkWell(
                               onTap: () {},
                               child: SvgPicture.asset(
-                                'assets/images_svg/ic_wish_on.svg',
+                                'assets/images_svg/ic_wish_off.svg',
                                 width: 30.w,
                                 height: 30.h,
                               ),

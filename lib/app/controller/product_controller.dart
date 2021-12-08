@@ -18,7 +18,6 @@ class ProductController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    //await fetchShopData();
   }
 
   Future<void> onClickedOptionSelect() async {

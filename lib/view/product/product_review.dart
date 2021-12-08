@@ -1,6 +1,7 @@
 import 'package:damo/app/controller/review_controller.dart';
 import 'package:damo/app/controller/shop_controller.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,14 +11,14 @@ import 'package:simple_star_rating/simple_star_rating.dart';
 import 'package:vertical_barchart/vertical-barchart.dart';
 import 'package:vertical_barchart/vertical-barchartmodel.dart';
 
-ShopController shopController = Get.find();
-RefreshController _refreshController = RefreshController(initialRefresh: true);
-
 class ProductReview extends StatelessWidget {
   int pageNumber = 1;
   ReviewController reviewController = Get.put(ReviewController());
+  ShopController shopController = Get.find();
+
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: true);
   void _onLoading() async {
-    print("리뷰 데이터를 불러옵니다.");
     await reviewController.loadReview(pageNumber);
     pageNumber++;
     _refreshController.loadComplete();
@@ -30,42 +31,75 @@ class ProductReview extends StatelessWidget {
         index: 0,
         label: "5.0",
         colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
-        jumlah: 10,
-        tooltip: "(10)",
+        jumlah: reviewController.loadShopRatingListModel.value.fiveOrSo! * 1.0,
+        tooltip: '(' +
+            reviewController.loadShopRatingListModel.value.fiveOrSo!
+                .toString() +
+            ')',
       ),
       VBarChartModel(
         index: 1,
         label: "4.0",
         colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
-        jumlah: 20,
-        tooltip: "(20)",
+        jumlah: reviewController.loadShopRatingListModel.value.fourOrSo! * 1.0,
+        tooltip: '(' +
+            reviewController.loadShopRatingListModel.value.fourOrSo!
+                .toString() +
+            ')',
       ),
       VBarChartModel(
         index: 2,
         label: "3.0",
         colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
-        jumlah: 30,
-        tooltip: "(30)",
+        jumlah: reviewController.loadShopRatingListModel.value.threeOrSo! * 1.0,
+        tooltip: '(' +
+            reviewController.loadShopRatingListModel.value.threeOrSo!
+                .toString() +
+            ')',
       ),
       VBarChartModel(
         index: 3,
         label: "2.0",
         colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
-        jumlah: 40,
-        tooltip: "(40)",
+        jumlah: reviewController.loadShopRatingListModel.value.twoOrSo! * 1.0,
+        tooltip: '(' +
+            reviewController.loadShopRatingListModel.value.twoOrSo!.toString() +
+            ')',
       ),
       VBarChartModel(
         index: 4,
         label: "1.0",
         colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
-        jumlah: 50,
-        tooltip: "(50)",
+        jumlah: reviewController.loadShopRatingListModel.value.oneOrSo! * 1.0,
+        tooltip: '(' +
+            reviewController.loadShopRatingListModel.value.oneOrSo!.toString() +
+            ')',
       ),
     ];
     return SmartRefresher(
       enablePullDown: false,
       enablePullUp: true,
       controller: _refreshController,
+      footer: CustomFooter(
+        builder: (BuildContext context, LoadStatus? mode) {
+          Widget body;
+          if (mode == LoadStatus.idle) {
+            body = Text(' ');
+          } else if (mode == LoadStatus.loading) {
+            body = CupertinoActivityIndicator();
+          } else if (mode == LoadStatus.failed) {
+            body = Text(' ');
+          } else if (mode == LoadStatus.canLoading) {
+            body = Text(' ');
+          } else {
+            body = Text("더 이상의 리뷰가 없습니다.");
+          }
+          return Container(
+            height: 55.0,
+            child: Center(child: body),
+          );
+        },
+      ),
       onLoading: _onLoading,
       child: Padding(
         padding: EdgeInsets.fromLTRB(16.w, 20.h, 0.w, 0.h),
@@ -138,10 +172,13 @@ class ProductReview extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-              height: 1.5.h,
-              decoration: BoxDecoration(
-                color: Color(0xfff1f3f5),
+            Padding(
+              padding: EdgeInsets.fromLTRB(0, 0, 16.w, 0),
+              child: Container(
+                height: 1.5.h,
+                decoration: BoxDecoration(
+                  color: Color(0xfff1f3f5),
+                ),
               ),
             ),
             //여기서 부터 리뷰
@@ -163,7 +200,7 @@ class ProductReview extends StatelessWidget {
                                     ['profileImage'],
                                 width: 50.w,
                                 height: 50.h,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.fill,
                                 cache: true,
                                 shape: BoxShape.circle,
                               ),
@@ -249,7 +286,7 @@ class ProductReview extends StatelessWidget {
                                     ['reviewImage'],
                                 width: 50.w,
                                 height: 50.h,
-                                fit: BoxFit.cover,
+                                fit: BoxFit.fill,
                                 cache: true,
                               ),
                             ),
@@ -259,7 +296,7 @@ class ProductReview extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.fromLTRB(0, 0, 16.6.w, 0),
                           child: Container(
-                            height: 3.h,
+                            height: 1.5.h,
                             decoration: BoxDecoration(
                               color: Color(0xfff1f3f5),
                             ),
