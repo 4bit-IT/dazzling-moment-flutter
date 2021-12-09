@@ -61,6 +61,7 @@ dependencies:
   # image_crop: ^0.4.0
   dio: ^4.0.4
   timer_count_down: ^2.2.0
+  expandable: ^5.0.1
 
 
 # dependency_overrides:
