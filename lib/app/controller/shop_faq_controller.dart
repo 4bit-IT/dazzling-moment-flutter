@@ -1,6 +1,5 @@
 import 'package:damo/app/data/model/shop_faq_model.dart';
 import 'package:damo/app/data/provider/shop/shop_faq_api.dart';
-import 'package:damo/view/shop/shop_faq/shop_faq_management.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -438,7 +437,7 @@ class ShopFAQController extends GetxController {
 
 class ShopFAQBinding extends Bindings {
   @override
-  void dependencies() {
+  Future<void> dependencies() async {
     // TODO: implement dependencies
     Get.put<ShopFAQController>(ShopFAQController(), permanent: true);
   }
