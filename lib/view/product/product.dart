@@ -1,4 +1,5 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:damo/app/controller/favorite_controller.dart';
 import 'package:damo/app/controller/product_controller.dart';
 import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/view/product/product_info.dart';
@@ -13,11 +14,13 @@ import 'package:get/get.dart';
 import 'package:simple_star_rating/simple_star_rating.dart';
 import 'package:intl/intl.dart';
 
-ShopController shopController = Get.find();
-ProductController productController = Get.put(ProductController());
 var formatter = NumberFormat('#,##,000');
 
 class Product extends StatelessWidget {
+  ShopController shopController = Get.find();
+  ProductController productController = Get.put(ProductController());
+  FavoriteController favoriteController = Get.put(FavoriteController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,12 +53,14 @@ class Product extends StatelessWidget {
                               width: 30.w,
                               height: 30.h)),
                       SizedBox(width: 10.w),
-                      InkWell(
-                          onTap: () {},
-                          child: SvgPicture.asset(
-                              'assets/images_svg/ic_wish_on.svg',
-                              width: 30.w,
-                              height: 30.h)),
+                      Obx(
+                        () => InkWell(
+                            onTap: () async {
+                              await favoriteController.onClickedFavoriteButton(
+                                  shopController.shopGetDetailModel.value.id!);
+                            },
+                            child: favoriteController.wishIcon.value),
+                      ),
                       SizedBox(width: 10.w),
                     ],
                   ),
@@ -74,7 +79,7 @@ class Product extends StatelessWidget {
                     itemBuilder: (BuildContext context, int index) {
                       return ExtendedImage.network(
                         shopController.shopGetDetailModel.value.images[index],
-                        fit: BoxFit.cover,
+                        fit: BoxFit.fill,
                         cache: false,
                       );
                     },
@@ -91,9 +96,10 @@ class Product extends StatelessWidget {
                     style: TextStyle(
                       color: Color(0xfff93f5b),
                       fontSize: 12.sp,
-                      height: 1,
+                      height: 1.h,
                       fontFamily: 'NotoSansCJKKR',
                       fontWeight: FontWeight.w500,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
@@ -106,8 +112,10 @@ class Product extends StatelessWidget {
                     style: TextStyle(
                       color: Color(0xff283137),
                       fontSize: 20.sp,
+                      height: 1.h,
                       fontFamily: 'NotoSansCJKKR',
                       fontWeight: FontWeight.w500,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
@@ -119,7 +127,9 @@ class Product extends StatelessWidget {
                     shopController.shopGetDetailModel.value.dataDescription!,
                     style: TextStyle(
                       color: Color(0xff283137),
+                      height: 1.h,
                       fontFamily: 'NotoSansCJKKR',
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),
@@ -137,7 +147,7 @@ class Product extends StatelessWidget {
                             starCount: 5,
                             rating:
                                 shopController.shopGetDetailModel.value.rating!,
-                            size: 10.w,
+                            size: 16.w,
                             isReadOnly: true,
                             spacing: 2.5.w,
                           ),
@@ -182,7 +192,7 @@ class Product extends StatelessWidget {
                                     .format(shopController
                                         .shopGetDetailModel.value.basePrice!)
                                     .toString() +
-                                '원',
+                                '원 ',
                             style: TextStyle(
                               color: Color(0xff283137),
                               fontSize: 20.sp,
@@ -190,7 +200,6 @@ class Product extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          SizedBox(width: 10.w),
                         ],
                       ),
                     ],

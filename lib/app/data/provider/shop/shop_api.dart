@@ -41,9 +41,11 @@ class ShopNetwork {
 
   void postShopImage(List<File> images) async {
     try {
-      var request = http.MultipartRequest("POST", Uri.parse(baseUri + '/shop/image'));
+      var request =
+          http.MultipartRequest("POST", Uri.parse(baseUri + '/shop/image'));
       for (var image in images) {
-        request.files.add(await http.MultipartFile.fromPath('image', image.path));
+        request.files
+            .add(await http.MultipartFile.fromPath('image', image.path));
       }
       http.StreamedResponse response = await request.send();
       //return jsonDecode(utf8.decode(response.stream));
@@ -56,8 +58,10 @@ class ShopNetwork {
 
   void postShopImageMain(File image) async {
     try {
-      var request = http.MultipartRequest("POST", Uri.parse(baseUri + '/shop/image/main'));
-      request.files.add(await http.MultipartFile.fromPath('mainImage', image.path));
+      var request = http.MultipartRequest(
+          "POST", Uri.parse(baseUri + '/shop/image/main'));
+      request.files
+          .add(await http.MultipartFile.fromPath('mainImage', image.path));
 
       http.StreamedResponse response = await request.send();
       //return
@@ -90,6 +94,33 @@ class ShopNetwork {
         body: sendData,
       );
 
+      return jsonDecode(utf8.decode(response.bodyBytes));
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<dynamic> getShopRating(int shopId) async {
+    try {
+      String insertShopId = shopId.toString();
+      http.Response response = await http.get(
+        Uri.parse(baseUri + '/shop/rating' + "?shopId=$insertShopId"),
+        headers: headers,
+      );
+      print(jsonDecode(utf8.decode(response.bodyBytes)));
+      return jsonDecode(utf8.decode(response.bodyBytes));
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<dynamic> getShopMain(int pageNumber, String sortBy) async {
+    try {
+      http.Response response = await http.get(
+        Uri.parse(baseUri + '/shop' + "?page=$pageNumber&sortBy=$sortBy"),
+        headers: headers,
+      );
+      print(jsonDecode(utf8.decode(response.bodyBytes)));
       return jsonDecode(utf8.decode(response.bodyBytes));
     } catch (e) {
       print(e);

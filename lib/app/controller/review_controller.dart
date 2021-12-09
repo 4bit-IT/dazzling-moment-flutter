@@ -1,18 +1,27 @@
+import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/app/data/model/review_model.dart';
 import 'package:damo/app/data/provider/review_api.dart';
+import 'package:damo/app/data/provider/shop/shop_api.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class ReviewController extends GetxController {
   Rx<LoadReviewModel> loadReviewModel = LoadReviewModel().obs;
+  Rx<LoadShopRatingListModel> loadShopRatingListModel =
+      LoadShopRatingListModel().obs;
+  ShopController shopController = Get.find();
   List<dynamic> stroageReview = [].obs;
 
   var jsonResponse;
   var model;
 
   Future<void> loadReview(int pageNumber) async {
+    if (loadReviewModel.value.hasNextPage == false) {
+      return;
+    }
     jsonResponse = await ReviewNetwork().getReview(pageNumber);
     model = LoadReviewModel.fromJson(jsonResponse);
+
     if (model.code == 1) {
       loadReviewModel.update((val) {
         val!.code = model.code;
@@ -21,12 +30,27 @@ class ReviewController extends GetxController {
         val.description = model.description;
         val.result = model.result;
       });
-      for (int i = 0; i < loadReviewModel.value.reviewList.length; i++) {
-        stroageReview.add(loadReviewModel.value.reviewList[i]);
+      for (dynamic reviewList in loadReviewModel.value.reviewList) {
+        stroageReview.add(reviewList);
       }
     }
     if (model.code == 2) {}
     if (model.code == 3) {}
+  }
+
+  Future<void> loadShopRatingList(int shopId) async {
+    jsonResponse = await ShopNetwork().getShopRating(shopId);
+    model = LoadShopRatingListModel.fromJson(jsonResponse);
+
+    if (model.code == 1) {
+      loadShopRatingListModel.update((val) {
+        val!.oneOrSo = model.oneOrSo;
+        val.twoOrSo = model.twoOrSo;
+        val.threeOrSo = model.threeOrSo;
+        val.fourOrSo = model.fourOrSo;
+        val.fiveOrSo = model.fiveOrSo;
+      });
+    }
   }
 
   @override
@@ -38,6 +62,7 @@ class ReviewController extends GetxController {
   @override
   void onInit() async {
     await loadReview(0);
+    await loadShopRatingList(shopController.shopGetDetailModel.value.id!);
     // TODO: implement onInit
     super.onInit();
   }
