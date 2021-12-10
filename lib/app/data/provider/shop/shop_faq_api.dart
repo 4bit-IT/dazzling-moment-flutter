@@ -17,9 +17,11 @@ class ShopFAQNetwork {
   var body;
 
   Future<dynamic> getFAQ() async {
+    //
     try {
       http.Response response = await http.get(
-        Uri.parse(baseUri + '/faq?shopId=${shopController.shopGetMeModel.value.id}'),
+        Uri.parse(
+            baseUri + '/faq?shopId=${shopController.shopGetMeModel.value.id}'),
         headers: headers,
       );
       if (response.statusCode == 200) {
@@ -27,6 +29,19 @@ class ShopFAQNetwork {
       } else {
         print('통신 오류');
       }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<dynamic> getFAQtoUser(int shopId) async {
+    //유저가 상세 페이지에서 볼 때
+    try {
+      http.Response response = await http.get(
+        Uri.parse(baseUri + '/faq?shopId=$shopId'),
+        headers: headers,
+      );
+      return jsonDecode(utf8.decode(response.bodyBytes));
     } catch (e) {
       print(e);
     }
@@ -79,7 +94,8 @@ class ShopFAQNetwork {
 
   Future<dynamic> deleteFAQ() async {
     try {
-      print('${shopFAQController.shopGetFAQModel.value.faqList![shopFAQController.currentIndex.value]['faqId']}');
+      print(
+          '${shopFAQController.shopGetFAQModel.value.faqList![shopFAQController.currentIndex.value]['faqId']}');
       http.Response response = await http.delete(
         Uri.parse(baseUri +
             '/faq?faqId=${shopFAQController.shopGetFAQModel.value.faqList![shopFAQController.currentIndex.value]['faqId']}'),

@@ -3,7 +3,7 @@ import 'package:damo/app/controller/favorite_controller.dart';
 import 'package:damo/app/controller/product_controller.dart';
 import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/view/product/product_info.dart';
-import 'package:damo/view/product/product_qa.dart';
+import 'package:damo/view/product/product_faq.dart';
 import 'package:damo/view/product/product_review.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -257,7 +257,7 @@ class Product extends StatelessWidget {
                       ),
                       Tab(
                         child: Text(
-                          'F&Q',
+                          'FAQ',
                           style: TextStyle(
                             color: Color(0xff283137),
                             fontFamily: 'NotoSansCJKKR',
