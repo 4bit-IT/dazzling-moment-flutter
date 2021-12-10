@@ -293,7 +293,8 @@ class ProductReview extends StatelessWidget {
                                 height: 250.h,
                                 child: ExtendedImage.network(
                                   reviewController.stroageReview[index]
-                                      ['reviewImage'],
+                                          ['reviewImage']
+                                      .toString(),
                                   width: 50.w,
                                   height: 50.h,
                                   fit: BoxFit.fill,
@@ -329,7 +330,7 @@ class ProductReview extends StatelessWidget {
       background: Colors.transparent,
       labelColor: Color(0xff283137),
       tooltipColor: Color(0xff8e97a0),
-      maxX: 150,
+      maxX: shopController.shopGetDetailModel.value.reviewCount!.toDouble(),
       data: bardata,
       barStyle: BarStyle.DEFAULT,
     );

@@ -57,7 +57,8 @@ class Product extends StatelessWidget {
                         () => InkWell(
                             onTap: () async {
                               await favoriteController.onClickedFavoriteButton(
-                                  shopController.shopGetDetailModel.value.id!);
+                                  shopController.shopGetDetailModel.value.id!,
+                                  Get.arguments);
                             },
                             child: favoriteController.wishIcon.value),
                       ),
@@ -91,49 +92,70 @@ class Product extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(17.0.w, 15.h, 10.w, 0.h),
-                  child: Text(
-                    shopController.shopGetDetailModel.value.name!,
-                    style: TextStyle(
-                      color: Color(0xfff93f5b),
-                      fontSize: 12.sp,
-                      height: 1.h,
-                      fontFamily: 'NotoSansCJKKR',
-                      fontWeight: FontWeight.w500,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        shopController.shopGetDetailModel.value.name!,
+                        style: TextStyle(
+                          color: Color(0xfff93f5b),
+                          fontSize: 12.sp,
+                          height: 1.h,
+                          fontFamily: 'NotoSansCJKKR',
+                          fontWeight: FontWeight.w500,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Container(height: 14.h),
+                      Text(
+                        shopController
+                            .shopGetDetailModel.value.dataDescription!,
+                        style: TextStyle(
+                          color: Color(0xff283137),
+                          fontSize: 20.sp,
+                          height: 1.h,
+                          fontFamily: 'NotoSansCJKKR',
+                          fontWeight: FontWeight.w500,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(17.0.w, 9.h, 10.w, 0.h),
-                  child: Text(
-                    shopController.shopGetDetailModel.value.content!,
-                    style: TextStyle(
-                      color: Color(0xff283137),
-                      fontSize: 20.sp,
-                      height: 1.h,
-                      fontFamily: 'NotoSansCJKKR',
-                      fontWeight: FontWeight.w500,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(17.0.w, 10.h, 15.w, 20.h),
-                  child: Text(
-                    shopController.shopGetDetailModel.value.dataDescription!,
-                    style: TextStyle(
-                      color: Color(0xff283137),
-                      height: 1.h,
-                      fontFamily: 'NotoSansCJKKR',
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-              ),
+              // SliverToBoxAdapter(
+              //   child: Padding(
+              //     padding: EdgeInsets.fromLTRB(17.0.w, 9.h, 10.w, 0.h),
+              //     child: Text(
+              //       shopController.shopGetDetailModel.value.content!,
+              //       style: TextStyle(
+              //         color: Color(0xff283137),
+              //         fontSize: 20.sp,
+              //         height: 1.h,
+              //         fontFamily: 'NotoSansCJKKR',
+              //         fontWeight: FontWeight.w500,
+              //         overflow: TextOverflow.ellipsis,
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // SliverToBoxAdapter(
+              //   child: Padding(
+              //     padding: EdgeInsets.fromLTRB(17.0.w, 10.h, 15.w, 20.h),
+              //     child: Text(
+              //       shopController.shopGetDetailModel.value.dataDescription!,
+              //       style: TextStyle(
+              //         color: Color(0xff283137),
+              //         fontSize: 20.sp,
+              //         height: 1.h,
+              //         fontFamily: 'NotoSansCJKKR',
+              //         fontWeight: FontWeight.w500,
+              //         overflow: TextOverflow.ellipsis,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(17.0.w, 4.h, 0.w, 20.h),

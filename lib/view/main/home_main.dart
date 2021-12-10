@@ -25,6 +25,7 @@ class HomeMain extends StatelessWidget {
   DamoAppBar appBar = DamoAppBar();
 
   void _onLoading() async {
+    await Future.delayed(Duration(milliseconds: 500));
     await shopController.loadShopMain(pageNumber, 'RATING');
     if (shopController.loadShopMainPageModel.value.hasNextPage == true)
       pageNumber++;
@@ -357,8 +358,11 @@ class HomeMain extends StatelessWidget {
                   return CupertinoButton(
                     padding: EdgeInsets.all(0),
                     onPressed: () async {
-                      await shopController.loadShopDetail(index + 1);
-                      Get.to(() => Product());
+                      await shopController.loadShopDetail(shopController
+                          .loadShopMainPageModel
+                          .value
+                          .snippetList[index]['id']);
+                      Get.to(() => Product(), arguments: index);
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -385,16 +389,13 @@ class HomeMain extends StatelessWidget {
                             //     height: 20.h,
                             //   ),
                             // ),
-                            Positioned(
-                              right: 5.w,
-                              bottom: 5.h,
-                              child: InkWell(
-                                onTap: () {},
-                                child: SvgPicture.asset(
-                                  'assets/images_svg/ic_wish_off.svg',
-                                  width: 30.w,
-                                  height: 30.h,
-                                ),
+                            Obx(
+                              () => Positioned(
+                                right: 5.w,
+                                bottom: 5.h,
+                                child: shopController
+                                    .stroageMainPage[index]['isFavoriteButton']
+                                    .value,
                               ),
                             ),
                           ],
