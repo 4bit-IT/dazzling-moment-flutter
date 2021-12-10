@@ -25,7 +25,7 @@ class FavoriteController extends GetxController {
   var jsonResponse;
   var model;
 
-  Future<dynamic> onClickedFavoriteButton(int shopId) async {
+  Future<dynamic> onClickedFavoriteButton(int shopId, int shopIndex) async {
     if (shopController.shopGetDetailModel.value.isFavorite == false)
       jsonResponse = await FavoriteNetwork().postFavoritesOnce(shopId);
 
@@ -38,11 +38,16 @@ class FavoriteController extends GetxController {
         shopController.shopGetDetailModel.value.isFavorite = false;
         shopController.shopGetDetailModel.refresh();
         wishIcon.value = wishIconOff;
+        shopController.stroageMainPage[shopIndex]['isFavoriteButton'].value =
+            wishIconOff;
+
         print('찜목록에서 제거했습니다.');
       } else if (shopController.shopGetDetailModel.value.isFavorite == false) {
         shopController.shopGetDetailModel.value.isFavorite = true;
         shopController.shopGetDetailModel.refresh();
         wishIcon.value = wishIconOn;
+        shopController.stroageMainPage[shopIndex]['isFavoriteButton'].value =
+            wishIconOn;
         print('찜목록에 추가했습니다.');
       }
     }

@@ -1,5 +1,7 @@
 import 'package:damo/app/data/model/shop_model.dart';
 import 'package:damo/app/data/provider/shop/shop_api.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +26,16 @@ class ShopController extends GetxController {
   Rx<LoadShopMainPageModel> loadShopMainPageModel = LoadShopMainPageModel().obs;
   List<dynamic> stroageMainPage = [].obs;
   Map<String, dynamic> toJsonInput = {};
+  Widget wishIconOn = SvgPicture.asset(
+    'assets/images_svg/ic_wish_on.svg',
+    width: 30.w,
+    height: 30.h,
+  );
+  Widget wishIconOff = SvgPicture.asset(
+    'assets/images_svg/ic_wish_off.svg',
+    width: 30.w,
+    height: 30.h,
+  );
   String sendData = '';
   var response;
   var model;
@@ -222,6 +234,11 @@ class ShopController extends GetxController {
         val.result = model.result;
       });
       for (dynamic snippetList in loadShopMainPageModel.value.snippetList) {
+        if (snippetList['isFavorite'] == true) {
+          snippetList['isFavoriteButton'] = wishIconOn.obs;
+        } else if (snippetList['isFavorite'] == false) {
+          snippetList['isFavoriteButton'] = wishIconOff.obs;
+        }
         stroageMainPage.add(snippetList);
       }
     }
