@@ -293,7 +293,11 @@ class ProductReview extends StatelessWidget {
                                 height: 250.h,
                                 child: ExtendedImage.network(
                                   reviewController.stroageReview[index]
+<<<<<<< HEAD
                                   ['reviewImage']
+=======
+                                          ['reviewImage']
+>>>>>>> 355cef0a0b1b230c36d589ad519bfb7666ebb08a
                                       .toString(),
                                   width: 50.w,
                                   height: 50.h,

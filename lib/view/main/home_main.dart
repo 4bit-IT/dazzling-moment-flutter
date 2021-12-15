@@ -390,7 +390,11 @@ class HomeMain extends StatelessWidget {
                             //   ),
                             // ),
                             Obx(
+<<<<<<< HEAD
                                   () => Positioned(
+=======
+                              () => Positioned(
+>>>>>>> 355cef0a0b1b230c36d589ad519bfb7666ebb08a
                                 right: 5.w,
                                 bottom: 5.h,
                                 child: shopController

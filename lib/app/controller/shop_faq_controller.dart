@@ -12,11 +12,22 @@ class ShopFAQController extends GetxController {
   ShopController shopController = Get.find();
   Rx<ShopGetFAQModel> shopGetFAQModel = ShopGetFAQModel().obs;
   Rx<ShopGetFAQtoUserModel> shopGetFAQtoUserModel = ShopGetFAQtoUserModel().obs;
+<<<<<<< HEAD
   Rx<TextEditingController> shopFAQQuestionController = TextEditingController().obs;
   Rx<TextEditingController> shopFAQAnswerController = TextEditingController().obs;
   Rx<TextEditingController> shopFAQQuestionAddController = TextEditingController().obs;
   Rx<TextEditingController> shopFAQAnswerAddController = TextEditingController().obs;
   RxInt shopFAQCount = 0.obs;
+=======
+  Rx<TextEditingController> shopFAQQuestionController =
+      TextEditingController().obs;
+  Rx<TextEditingController> shopFAQAnswerController =
+      TextEditingController().obs;
+  Rx<TextEditingController> shopFAQQuestionAddController =
+      TextEditingController().obs;
+  Rx<TextEditingController> shopFAQAnswerAddController =
+      TextEditingController().obs;
+>>>>>>> 355cef0a0b1b230c36d589ad519bfb7666ebb08a
   RxInt currentIndex = 0.obs;
 
   Map<String, dynamic> toJsonInput = {};
@@ -28,7 +39,11 @@ class ShopFAQController extends GetxController {
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
+<<<<<<< HEAD
     //await fetchShopFAQData();
+=======
+    // await fetchShopFAQData();
+>>>>>>> 355cef0a0b1b230c36d589ad519bfb7666ebb08a
     await loadShopFAQ(shopController.shopGetDetailModel.value.id!);
   }
 
@@ -68,10 +83,13 @@ class ShopFAQController extends GetxController {
 
   void changeCurrentIndex(int index) {
     currentIndex = index.obs;
-    shopFAQQuestionController =
-        TextEditingController(text: shopGetFAQModel.value.faqList![currentIndex.value]['question']).obs;
-    shopFAQAnswerController =
-        TextEditingController(text: shopGetFAQModel.value.faqList![currentIndex.value]['answer']).obs;
+    shopFAQQuestionController = TextEditingController(
+            text: shopGetFAQModel.value.faqList![currentIndex.value]
+                ['question'])
+        .obs;
+    shopFAQAnswerController = TextEditingController(
+            text: shopGetFAQModel.value.faqList![currentIndex.value]['answer'])
+        .obs;
   }
 
   Future<void> faqModify() async {
@@ -154,7 +172,8 @@ class ShopFAQController extends GetxController {
   Future<void> faqQuestionModify() async {
     toJsonInput.clear();
     toJsonInput['question'] = shopFAQQuestionController.value.value.text;
-    toJsonInput['faqId'] = shopGetFAQModel.value.faqList![currentIndex.value]['faqId'];
+    toJsonInput['faqId'] =
+        shopGetFAQModel.value.faqList![currentIndex.value]['faqId'];
     sendData = ShopModifyFAQQuestionModel().toJson(toJsonInput);
     response = await ShopFAQNetwork().patchFAQQuestion(sendData);
     model = ShopModifyFAQQuestionModel.fromJson(response);
@@ -169,7 +188,8 @@ class ShopFAQController extends GetxController {
   Future<void> faqAnswerModify() async {
     toJsonInput.clear();
     toJsonInput['answer'] = shopFAQAnswerController.value.value.text;
-    toJsonInput['faqId'] = shopGetFAQModel.value.faqList![currentIndex.value]['faqId'];
+    toJsonInput['faqId'] =
+        shopGetFAQModel.value.faqList![currentIndex.value]['faqId'];
     sendData = ShopModifyFAQAnswerModel().toJson(toJsonInput);
     response = await ShopFAQNetwork().patchFAQAnswer(sendData);
     model = ShopModifyFAQAnswerModel.fromJson(response);
@@ -182,7 +202,8 @@ class ShopFAQController extends GetxController {
   }
 
   void onAddFAQClicked() async {
-    if (shopFAQAnswerAddController.value.value.text == '' || shopFAQQuestionAddController.value.value.text == '') {
+    if (shopFAQAnswerAddController.value.value.text == '' ||
+        shopFAQQuestionAddController.value.value.text == '') {
       Get.dialog(
         Dialog(
           child: Container(
@@ -375,7 +396,8 @@ class ShopFAQController extends GetxController {
   }
 
   Future<void> deleteFAQ() async {
-    int currentFAQId = shopGetFAQModel.value.faqList![shopFAQController.currentIndex.value]['faqId'];
+    int currentFAQId = shopGetFAQModel
+        .value.faqList![shopFAQController.currentIndex.value]['faqId'];
     response = await ShopFAQNetwork().deleteFAQ();
     model = ShopDeleteFAQModel.fromJson(response);
     print('pre: ${shopGetFAQModel.value.faqList}');

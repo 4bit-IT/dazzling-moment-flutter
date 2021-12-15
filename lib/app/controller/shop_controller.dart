@@ -3,8 +3,13 @@ import 'dart:math';
 
 import 'package:damo/app/data/model/shop_model.dart';
 import 'package:damo/app/data/provider/shop/shop_api.dart';
+<<<<<<< HEAD
 import 'package:damo/main.dart';
 import 'package:extended_image/extended_image.dart';
+=======
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+>>>>>>> 355cef0a0b1b230c36d589ad519bfb7666ebb08a
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -43,6 +48,16 @@ class ShopController extends GetxController {
     height: 30.h,
   );
   Map<String, dynamic> toJsonInput = {};
+  Widget wishIconOn = SvgPicture.asset(
+    'assets/images_svg/ic_wish_on.svg',
+    width: 30.w,
+    height: 30.h,
+  );
+  Widget wishIconOff = SvgPicture.asset(
+    'assets/images_svg/ic_wish_off.svg',
+    width: 30.w,
+    height: 30.h,
+  );
   String sendData = '';
   var jsonResponse;
   var model;

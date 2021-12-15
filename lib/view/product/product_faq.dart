@@ -39,7 +39,11 @@ class ProductQnA extends StatelessWidget {
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             itemCount:
+<<<<<<< HEAD
             shopFAQController.shopGetFAQtoUserModel.value.faqList.length,
+=======
+                shopFAQController.shopGetFAQtoUserModel.value.faqList.length,
+>>>>>>> 355cef0a0b1b230c36d589ad519bfb7666ebb08a
             itemBuilder: (BuildContext context, int index) {
               return Column(
                 children: [
@@ -77,7 +81,11 @@ class ProductQnA extends StatelessWidget {
                           color: Color(0xfff1f3f5),
                           child: Padding(
                             padding:
+<<<<<<< HEAD
                             EdgeInsets.fromLTRB(16.w, 16.w, 16.w, 26.h),
+=======
+                                EdgeInsets.fromLTRB(16.w, 16.w, 16.w, 26.h),
+>>>>>>> 355cef0a0b1b230c36d589ad519bfb7666ebb08a
                             child: Text(
                               shopFAQController.shopGetFAQtoUserModel.value
                                   .faqList[index]['answer'],
@@ -97,4 +105,8 @@ class ProductQnA extends StatelessWidget {
       ],
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 355cef0a0b1b230c36d589ad519bfb7666ebb08a
