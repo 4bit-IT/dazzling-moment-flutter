@@ -32,6 +32,19 @@ class ShopFAQNetwork {
     }
   }
 
+  Future<dynamic> getFAQtoUser(int shopId) async {
+    //유저가 상세 페이지에서 볼 때
+    try {
+      http.Response response = await http.get(
+        Uri.parse(baseUri + '/faq?shopId=$shopId'),
+        headers: headers,
+      );
+      return jsonDecode(utf8.decode(response.bodyBytes));
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<dynamic> patchFAQAnswer(String body) async {
     try {
       http.Response response = await http.patch(

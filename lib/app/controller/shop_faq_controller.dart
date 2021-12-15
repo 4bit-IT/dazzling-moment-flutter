@@ -1,16 +1,22 @@
+import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/app/data/model/shop_faq_model.dart';
 import 'package:damo/app/data/provider/shop/shop_faq_api.dart';
+import 'package:damo/view/shop/shop_faq/shop_faq_info.dart';
+import 'package:damo/view/shop/shop_faq/shop_faq_management.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ShopFAQController extends GetxController {
+  ShopController shopController = Get.find();
   Rx<ShopGetFAQModel> shopGetFAQModel = ShopGetFAQModel().obs;
+  Rx<ShopGetFAQtoUserModel> shopGetFAQtoUserModel = ShopGetFAQtoUserModel().obs;
   Rx<TextEditingController> shopFAQQuestionController = TextEditingController().obs;
   Rx<TextEditingController> shopFAQAnswerController = TextEditingController().obs;
   Rx<TextEditingController> shopFAQQuestionAddController = TextEditingController().obs;
   Rx<TextEditingController> shopFAQAnswerAddController = TextEditingController().obs;
+  RxInt shopFAQCount = 0.obs;
   RxInt currentIndex = 0.obs;
 
   Map<String, dynamic> toJsonInput = {};
@@ -22,7 +28,8 @@ class ShopFAQController extends GetxController {
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
-    await fetchShopFAQData();
+    //await fetchShopFAQData();
+    await loadShopFAQ(shopController.shopGetDetailModel.value.id!);
   }
 
   Future<void> fetchShopFAQData() async {
@@ -36,10 +43,27 @@ class ShopFAQController extends GetxController {
         val.description = model.description;
         val.result = model.result;
       });
+      shopFAQCount.value = shopGetFAQModel.value.faqList!.length;
     } else if (model.code == 2) {
     } else {
       //토큰만료
     }
+  }
+
+  Future<void> loadShopFAQ(int shopId) async {
+    response = await ShopFAQNetwork().getFAQtoUser(shopId);
+    model = ShopGetFAQtoUserModel.fromJson(response);
+
+    if (model.code == 1) {
+      shopGetFAQtoUserModel.update((val) {
+        val!.code = model.code;
+        val.faqList = model.faqList;
+        val.description = model.description;
+        val.result = model.result;
+      });
+    }
+    if (model.code == 2) {}
+    if (model.code == 3) {}
   }
 
   void changeCurrentIndex(int index) {
@@ -50,7 +74,7 @@ class ShopFAQController extends GetxController {
         TextEditingController(text: shopGetFAQModel.value.faqList![currentIndex.value]['answer']).obs;
   }
 
-  void onFAQQuestionModifyClicked() async {
+  Future<void> faqModify() async {
     Get.dialog(
       Dialog(
         child: Container(
@@ -65,7 +89,7 @@ class ShopFAQController extends GetxController {
               Container(
                 padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
                 child: Text(
-                  '해당 FAQ의 질문을 수정하시겠습니까?',
+                  '해당 FAQ를 수정하시겠습니까?',
                   style: TextStyle(
                       color: Color(0xff283137),
                       fontFamily: 'NotoSansCJKKR',
@@ -100,7 +124,10 @@ class ShopFAQController extends GetxController {
                   ),
                   InkWell(
                     onTap: () async {
+                      Get.back();
+                      Get.back();
                       await faqQuestionModify();
+                      await faqAnswerModify();
                     },
                     child: Container(
                       padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
@@ -137,80 +164,6 @@ class ShopFAQController extends GetxController {
         val!.faqList![currentIndex.value]['question'] = model.question;
       });
     }
-  }
-
-  void onFAQAnswerModifyClicked() async {
-    Get.dialog(
-      Dialog(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-          alignment: Alignment.center,
-          height: 190.h,
-          width: 130.w,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                child: Text(
-                  '해당 FAQ의 답변을 수정하시겠습니까?',
-                  style: TextStyle(
-                      color: Color(0xff283137),
-                      fontFamily: 'NotoSansCJKKR',
-                      fontSize: 22.sp,
-                      height: 1,
-                      fontWeight: FontWeight.w700),
-                ),
-              ),
-              SizedBox(
-                height: 32.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                      child: Text(
-                        '아니오',
-                        style: TextStyle(
-                            color: Color(0xff283137),
-                            fontFamily: 'NotoSansCJKKR',
-                            fontSize: 16.sp,
-                            height: 1,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () async {
-                      await faqAnswerModify();
-                    },
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                      child: Text(
-                        '예',
-                        style: TextStyle(
-                            color: Color(0xff283137),
-                            fontFamily: 'NotoSansCJKKR',
-                            fontSize: 16.sp,
-                            height: 1,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
   }
 
   Future<void> faqAnswerModify() async {
@@ -395,9 +348,9 @@ class ShopFAQController extends GetxController {
                   ),
                   InkWell(
                     onTap: () async {
+                      Get.back();
+                      Get.back();
                       await deleteFAQ();
-                      Get.back();
-                      Get.back();
                     },
                     child: Container(
                       padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
@@ -425,12 +378,13 @@ class ShopFAQController extends GetxController {
     int currentFAQId = shopGetFAQModel.value.faqList![shopFAQController.currentIndex.value]['faqId'];
     response = await ShopFAQNetwork().deleteFAQ();
     model = ShopDeleteFAQModel.fromJson(response);
-
+    print('pre: ${shopGetFAQModel.value.faqList}');
     if (model.code == 1) {
       shopGetFAQModel.update((val) {
         val!.faqList!.removeWhere((item) => item['faqId'] == currentFAQId);
       });
       print(shopGetFAQModel.value.faqList);
+      currentIndex.value--;
     }
   }
 }

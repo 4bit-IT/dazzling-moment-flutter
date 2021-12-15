@@ -26,6 +26,7 @@ class OwnerReviewController extends GetxController {
         });
         commentModel.add(CommentModel(
           commentController: TextEditingController(),
+          commentFocusNode: FocusNode(),
           isFetch: false,
         ));
       }
@@ -70,8 +71,9 @@ class OwnerReviewController extends GetxController {
 
 class CommentModel {
   TextEditingController? commentController;
+  FocusNode? commentFocusNode;
   bool? isFetch;
   int? reviewCommentId;
 
-  CommentModel({this.commentController, this.isFetch, this.reviewCommentId});
+  CommentModel({this.commentController, this.commentFocusNode, this.isFetch, this.reviewCommentId});
 }

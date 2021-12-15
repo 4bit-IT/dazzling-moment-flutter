@@ -3,7 +3,7 @@ import 'package:damo/app/controller/favorite_controller.dart';
 import 'package:damo/app/controller/product_controller.dart';
 import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/view/product/product_info.dart';
-import 'package:damo/view/product/product_qa.dart';
+import 'package:damo/view/product/product_faq.dart';
 import 'package:damo/view/product/product_review.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -54,10 +54,11 @@ class Product extends StatelessWidget {
                               height: 30.h)),
                       SizedBox(width: 10.w),
                       Obx(
-                        () => InkWell(
+                            () => InkWell(
                             onTap: () async {
                               await favoriteController.onClickedFavoriteButton(
-                                  shopController.shopGetDetailModel.value.id!);
+                                  shopController.shopGetDetailModel.value.id!,
+                                  Get.arguments);
                             },
                             child: favoriteController.wishIcon.value),
                       ),
@@ -84,56 +85,77 @@ class Product extends StatelessWidget {
                       );
                     },
                     itemCount:
-                        shopController.shopGetDetailModel.value.images.length,
+                    shopController.shopGetDetailModel.value.images.length,
                   ),
                 ),
               ),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(17.0.w, 15.h, 10.w, 0.h),
-                  child: Text(
-                    shopController.shopGetDetailModel.value.name!,
-                    style: TextStyle(
-                      color: Color(0xfff93f5b),
-                      fontSize: 12.sp,
-                      height: 1.h,
-                      fontFamily: 'NotoSansCJKKR',
-                      fontWeight: FontWeight.w500,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        shopController.shopGetDetailModel.value.name!,
+                        style: TextStyle(
+                          color: Color(0xfff93f5b),
+                          fontSize: 12.sp,
+                          height: 1.h,
+                          fontFamily: 'NotoSansCJKKR',
+                          fontWeight: FontWeight.w500,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Container(height: 14.h),
+                      Text(
+                        shopController
+                            .shopGetDetailModel.value.dataDescription!,
+                        style: TextStyle(
+                          color: Color(0xff283137),
+                          fontSize: 20.sp,
+                          height: 1.h,
+                          fontFamily: 'NotoSansCJKKR',
+                          fontWeight: FontWeight.w500,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(17.0.w, 9.h, 10.w, 0.h),
-                  child: Text(
-                    shopController.shopGetDetailModel.value.content!,
-                    style: TextStyle(
-                      color: Color(0xff283137),
-                      fontSize: 20.sp,
-                      height: 1.h,
-                      fontFamily: 'NotoSansCJKKR',
-                      fontWeight: FontWeight.w500,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(17.0.w, 10.h, 15.w, 20.h),
-                  child: Text(
-                    shopController.shopGetDetailModel.value.dataDescription!,
-                    style: TextStyle(
-                      color: Color(0xff283137),
-                      height: 1.h,
-                      fontFamily: 'NotoSansCJKKR',
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ),
-              ),
+              // SliverToBoxAdapter(
+              //   child: Padding(
+              //     padding: EdgeInsets.fromLTRB(17.0.w, 9.h, 10.w, 0.h),
+              //     child: Text(
+              //       shopController.shopGetDetailModel.value.content!,
+              //       style: TextStyle(
+              //         color: Color(0xff283137),
+              //         fontSize: 20.sp,
+              //         height: 1.h,
+              //         fontFamily: 'NotoSansCJKKR',
+              //         fontWeight: FontWeight.w500,
+              //         overflow: TextOverflow.ellipsis,
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // SliverToBoxAdapter(
+              //   child: Padding(
+              //     padding: EdgeInsets.fromLTRB(17.0.w, 10.h, 15.w, 20.h),
+              //     child: Text(
+              //       shopController.shopGetDetailModel.value.dataDescription!,
+              //       style: TextStyle(
+              //         color: Color(0xff283137),
+              //         fontSize: 20.sp,
+              //         height: 1.h,
+              //         fontFamily: 'NotoSansCJKKR',
+              //         fontWeight: FontWeight.w500,
+              //         overflow: TextOverflow.ellipsis,
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(17.0.w, 4.h, 0.w, 20.h),
@@ -146,7 +168,7 @@ class Product extends StatelessWidget {
                             allowHalfRating: true,
                             starCount: 5,
                             rating:
-                                shopController.shopGetDetailModel.value.rating!,
+                            shopController.shopGetDetailModel.value.rating!,
                             size: 16.w,
                             isReadOnly: true,
                             spacing: 2.5.w,
@@ -189,9 +211,9 @@ class Product extends StatelessWidget {
                           SizedBox(width: 5.0),
                           Text(
                             formatter
-                                    .format(shopController
-                                        .shopGetDetailModel.value.basePrice!)
-                                    .toString() +
+                                .format(shopController
+                                .shopGetDetailModel.value.basePrice!)
+                                .toString() +
                                 '원 ',
                             style: TextStyle(
                               color: Color(0xff283137),
@@ -235,7 +257,7 @@ class Product extends StatelessWidget {
                       ),
                       Tab(
                         child: Text(
-                          'F&Q',
+                          'FAQ',
                           style: TextStyle(
                             color: Color(0xff283137),
                             fontFamily: 'NotoSansCJKKR',
