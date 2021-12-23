@@ -1,176 +1,208 @@
+import 'package:damo/app/controller/owner/owner_order_controller.dart';
+import 'package:damo/app/data/provider/user/user_api.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
-class ShopOrderManagement extends StatefulWidget {
-  const ShopOrderManagement({Key? key}) : super(key: key);
-
-  @override
-  _ShopOrderManagementState createState() => _ShopOrderManagementState();
-}
-
-class _ShopOrderManagementState extends State<ShopOrderManagement> {
+class ShopOrderManagement extends StatelessWidget {
   ScrollController scrollController = ScrollController();
+  OwnerOrderController orderController = Get.find();
 
-  Future<dynamic> onOrderAccept() {
-    return showDialog(
-        barrierDismissible: false, //여백눌려도 안닫힘.
-        context: context,
-        builder: (context) => AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0)), //테두리 둥글기
-              title: Text(
-                "주문을 수락하시겠습니까?",
-              ),
-              actions: [
-                TextButton(
-                    child: Text(
-                      "예",
-                      style: TextStyle(
-                          fontFamily: 'NotoSans', color: Colors.red[400]),
-                    ),
-                    onPressed: () {}),
-                TextButton(
-                  child: Text(
-                    "취소",
-                    style: TextStyle(
-                        fontFamily: 'NotoSans', color: Colors.red[400]),
-                  ),
-                  onPressed: () => Navigator.pop(context, false),
-                ),
-              ],
-            ));
-  }
-
-  Future<dynamic> onOrderRefuse() {
-    return showDialog(
-        barrierDismissible: false, //여백눌려도 안닫힘.
-        context: context,
-        builder: (context) => AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0)), //테두리 둥글기
-              title: Text(
-                "주문을 거절하시겠습니까?",
-              ),
-              actions: [
-                TextButton(
-                    child: Text(
-                      "예",
-                      style: TextStyle(
-                          fontFamily: 'NotoSans', color: Colors.red[400]),
-                    ),
-                    onPressed: () {}),
-                TextButton(
-                  child: Text(
-                    "취소",
-                    style: TextStyle(
-                        fontFamily: 'NotoSans', color: Colors.red[400]),
-                  ),
-                  onPressed: () => Navigator.pop(context, false),
-                ),
-              ],
-            ));
-  }
+  Map orderStatus = <String, String>{
+    'PENDING': '판매자 확인 중',
+    'ALLOW': '주문 수락',
+    'REFUSE': '주문 거절',
+    'COMPLETE': '제작 완료',
+    'FINISHED': '거래 완료',
+  };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: DamoAppBar().shopAppBar(context),
-      body: GridView.builder(
+      appBar: DamoAppBar().textAppBar(context, '주문 관리'),
+      body: Obx(
+            () => ListView.separated(
           controller: scrollController,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 1,
-              mainAxisSpacing: 15.0,
-              mainAxisExtent: 300.0,
-              crossAxisSpacing: 6.0,
-              childAspectRatio: 1.0),
-          padding: const EdgeInsets.fromLTRB(5.5, 0.0, 5.5, 0.0),
-          itemCount: 3,
+          shrinkWrap: true,
+          scrollDirection: Axis.vertical,
+          itemCount: orderController.ownerGetOrderModel.value.orderList.length,
           itemBuilder: (BuildContext context, int index) {
-            return InkWell(
-              onTap: () {
-                setState(() {});
-              }, //클릭시 이동
-              child: Card(
-                shadowColor: Colors.black87,
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            return Container(
+              margin: EdgeInsets.fromLTRB(24.w, 16.h, 12.w, 16.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '주문 중',
-                        style: GoogleFonts.lato(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
+                        '${orderStatus[orderController.ownerGetOrderModel.value.orderList[index]['status']]}',
+                        style: TextStyle(
+                          color: Color(0xfff93f5b),
+                          fontSize: 12.sp,
+                          height: 1,
+                          fontFamily: 'NotoSansCJKKR',
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                      SizedBox(height: 10),
-                      Text(
-                        'id',
-                        style: GoogleFonts.lato(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      SizedBox(
+                        width: 8.w,
                       ),
-                      SizedBox(height: 10),
-                      Text(
-                        '옵션+옵션+옵션+옵션 ... ',
-                        style: GoogleFonts.lato(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        '예약 날짜: ',
-                        style: GoogleFonts.lato(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.black38),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: CupertinoButton(
-                            padding: EdgeInsets.all(0),
-                            child: Text(
-                              '주문 수락하기',
-                              style: GoogleFonts.lato(color: Colors.black),
+                      /*orderStatus[orderController.ownerGetOrderModel.value.orderList[index]['status']] == '주문 거절'||
+                          orderStatus[orderController.ownerGetOrderModel.value.orderList[index]['status']] == '거래 완료'
+                          ? Container()
+                          : */
+                      InkWell(
+                        onTap: () {
+                          if (!(orderController.ownerGetOrderModel.value.orderList[index]['status'] == 'REFUSE' ||
+                              orderController.ownerGetOrderModel.value.orderList[index]['status'] == 'FINISHED'))
+                            orderController.changeOrderStatusClicked(index);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Color(0xfff1f3f5),
+                              width: 1,
                             ),
-                            onPressed: () {
-                              onOrderAccept();
-                            }),
-                      ),
-                      SizedBox(height: 10),
-                      Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 1, color: Colors.black38),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: CupertinoButton(
-                            padding: EdgeInsets.all(0),
-                            child: Text(
-                              '주문 거절하기',
-                              style: GoogleFonts.lato(color: Colors.black),
+                            borderRadius: BorderRadius.circular(56.r),
+                          ),
+                          child: Text(
+                            '주문 상태 변경',
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              height: 1,
+                              decoration: orderController.ownerGetOrderModel.value.orderList[index]['status'] ==
+                                  'REFUSE' ||
+                                  orderController.ownerGetOrderModel.value.orderList[index]['status'] == 'FINISHED'
+                                  ? TextDecoration.lineThrough
+                                  : null,
+                              fontFamily: 'NotoSansCJKKR',
+                              fontWeight: FontWeight.w500,
                             ),
-                            onPressed: () {
-                              onOrderRefuse();
-                            }),
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                ),
+                  SizedBox(
+                    height: 8.h,
+                  ),
+                  Text(
+                    '주문 번호: ${orderController.ownerGetOrderModel.value.orderList[index]['orderNumber']}',
+                    style: TextStyle(
+                      color: Color(0xff8e97a0),
+                      fontSize: 12.sp,
+                      height: 1,
+                      fontFamily: 'NotoSansCJKKR',
+                    ),
+                  ),
+                  SizedBox(
+                    height: 8.h,
+                  ),
+                  Text(
+                    '주문자 닉네임: ${orderController.ownerGetOrderModel.value.orderList[index]['nickname']}',
+                    style: TextStyle(
+                      color: Color(0xff283137),
+                      fontSize: 14.sp,
+                      height: 1,
+                      fontFamily: 'NotoSansCJKKR',
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemCount: orderController.ownerGetOrderModel.value.orderList[index]['options']['optionList'].length,
+                    itemBuilder: (context, optionIndex) => Container(
+                      padding: EdgeInsets.fromLTRB(0, 0, 0, 8.h),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${orderController.ownerGetOrderModel.value.orderList[index]['options']['optionList'][optionIndex]['title']}',
+                            style: TextStyle(
+                              color: Color(0xff283137),
+                              fontSize: 14.sp,
+                              height: 1,
+                              fontFamily: 'NotoSansCJKKR',
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          Container(
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: orderController.ownerGetOrderModel.value
+                                  .orderList[index]['options']['optionList'][optionIndex]['optionDetailList'].length,
+                              itemBuilder: (context, optionDetailIndex) => Container(
+                                child: Text(
+                                  '- ${orderController.ownerGetOrderModel.value.orderList[index]['options']['optionList'][optionIndex]['optionDetailList'][optionDetailIndex]['content']}',
+                                  style: TextStyle(
+                                    color: Color(0xff283137),
+                                    fontSize: 13.sp,
+                                    height: 1,
+                                    fontFamily: 'NotoSansCJKKR',
+                                  ),
+                                ),
+                              ),
+                              separatorBuilder: (BuildContext context, int index) {
+                                return SizedBox(
+                                  height: 4.h,
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  Text(
+                    '픽업 예약 시간: ${orderController.ownerGetOrderModel.value.orderList[index]['pickUpReservation'].toString().split('T')[0]}  ${orderController.ownerGetOrderModel.value.orderList[index]['pickUpReservation'].toString().split('T')[1]}',
+                    style: TextStyle(
+                      color: Color(0xff283137),
+                      fontSize: 16.sp,
+                      height: 1,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'NotoSansCJKKR',
+                    ),
+                  ),
+                  SizedBox(
+                    height: 8.h,
+                  ),
+                  Text(
+                    '가격: ${orderController.ownerGetOrderModel.value.orderList[index]['price']}',
+                    style: TextStyle(
+                      color: Color(0xff283137),
+                      fontSize: 18.sp,
+                      fontFamily: 'NotoSansCJKKR',
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
               ),
             );
-          }),
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return Divider(
+              color: Color(0xfff1f3f5),
+              thickness: 1.h,
+              height: 0,
+            );
+          },
+        ),
+      ),
     );
   }
 }

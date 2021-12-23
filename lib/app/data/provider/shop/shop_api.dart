@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/data/model/shop_model.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
@@ -39,16 +40,19 @@ class ShopNetwork {
     } catch (e) {}
   }
 
-  void postShopImage(List<File> images) async {
+  Future<dynamic> postShopImage(dynamic input) async {
+    var dio = new Dio();
     try {
-      var request =
-          http.MultipartRequest("POST", Uri.parse(baseUri + '/shop/image'));
-      for (var image in images) {
-        request.files
-            .add(await http.MultipartFile.fromPath('image', image.path));
-      }
-      http.StreamedResponse response = await request.send();
-      //return jsonDecode(utf8.decode(response.stream));
+      dio.options.contentType = 'multipart/form-data';
+      dio.options.maxRedirects.isFinite;
+
+      dio.options.headers = {'token': tokenController.token!['accessToken']};
+      var response = await dio.post(
+        baseUri + '/shop/image',
+        data: input,
+      );
+      print('업체 이미지들 업로드 완료');
+      return response.data;
     } catch (e) {
       print(e);
     }
@@ -56,15 +60,19 @@ class ShopNetwork {
 
   void deleteShopImage() async {}
 
-  void postShopImageMain(File image) async {
+  Future<dynamic> postShopImageMain(dynamic input) async {
+    var dio = new Dio();
     try {
-      var request = http.MultipartRequest(
-          "POST", Uri.parse(baseUri + '/shop/image/main'));
-      request.files
-          .add(await http.MultipartFile.fromPath('mainImage', image.path));
+      dio.options.contentType = 'multipart/form-data';
+      dio.options.maxRedirects.isFinite;
 
-      http.StreamedResponse response = await request.send();
-      //return
+      dio.options.headers = {'token': tokenController.token!['accessToken']};
+      var response = await dio.post(
+        baseUri + '/shop/image/profile',
+        data: input,
+      );
+      print('업체 대표 이미지 업로드 완료');
+      return response.data;
     } catch (e) {
       print(e);
     }

@@ -1,7 +1,9 @@
+import 'package:damo/app/controller/owner/owner_order_controller.dart';
 import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/app/controller/shop_faq_controller.dart';
 import 'package:damo/view/shop/shop_chat_management.dart';
 import 'package:damo/view/shop/shop_faq/shop_faq_management.dart';
+import 'package:damo/view/shop/shop_order_management.dart';
 import 'package:damo/view/shop/shop_product_list.dart';
 import 'package:damo/view/shop/shop_review_management.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
@@ -19,6 +21,7 @@ class ShopMain extends StatefulWidget {
 class _ShopMainState extends State<ShopMain> {
   final shopController = Get.put(ShopController(), permanent: true);
   ShopFAQController? shopFAQController;
+  OwnerOrderController orderController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -86,45 +89,51 @@ class _ShopMainState extends State<ShopMain> {
                   ),
                 ),
                 SizedBox(width: 16.w),
-                Container(
-                  width: 163.w,
-                  height: 75.h,
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Color(0xfff1f3f5),
+                InkWell(
+                  onTap: () async {
+                    await orderController.fetchShopOrderData();
+                    Get.to(() => ShopOrderManagement());
+                  },
+                  child: Container(
+                    width: 163.w,
+                    height: 75.h,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Color(0xfff1f3f5),
+                      ),
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 14.h,
-                      ),
-                      Text(
-                        '21',
-                        style: TextStyle(
-                            color: Color(0xfff93f5b),
-                            fontSize: 20.sp,
-                            fontFamily: 'NotoSansCJKKR',
-                            fontWeight: FontWeight.w700,
-                            height: 1),
-                      ),
-                      SizedBox(
-                        height: 11.h,
-                      ),
-                      Text(
-                        '주문 관리',
-                        style: TextStyle(
-                            color: Color(0xff283137),
-                            fontSize: 14.sp,
-                            fontFamily: 'NotoSansCJKKR',
-                            height: 1),
-                      ),
-                      SizedBox(
-                        height: 13.h,
-                      ),
-                    ],
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 14.h,
+                        ),
+                        Text(
+                          '21',
+                          style: TextStyle(
+                              color: Color(0xfff93f5b),
+                              fontSize: 20.sp,
+                              fontFamily: 'NotoSansCJKKR',
+                              fontWeight: FontWeight.w700,
+                              height: 1),
+                        ),
+                        SizedBox(
+                          height: 11.h,
+                        ),
+                        Text(
+                          '주문 관리',
+                          style: TextStyle(
+                              color: Color(0xff283137),
+                              fontSize: 14.sp,
+                              fontFamily: 'NotoSansCJKKR',
+                              height: 1),
+                        ),
+                        SizedBox(
+                          height: 13.h,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],

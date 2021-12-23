@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
+
 class ShopRegistrationModel {
   int? code;
   String? description;
@@ -91,29 +93,6 @@ class ShopGetDetailModel {
   }
 }
 
-class ShopImageRegistrationModel {
-  int? code;
-  List<String>? imageUrlList;
-  String? description;
-  bool? result;
-
-  ShopImageRegistrationModel({code, imageUrlList, description, result});
-
-  String toJson(Map<String, dynamic> input) {
-    String body;
-    Map sendData = {};
-    body = json.encode(sendData);
-    return body;
-  }
-
-  ShopImageRegistrationModel.fromJson(Map<String, dynamic> json) {
-    code = json['code'];
-    imageUrlList = json['data']['imageUrlList'];
-    description = json['description'];
-    result = json['true'];
-  }
-}
-
 class ShopImageDeleteModel {
   int? code;
   String? description;
@@ -143,11 +122,11 @@ class ShopChangeMainImageModel {
 
   ShopChangeMainImageModel({code, imageUrl, description, result});
 
-  String toJson(Map<String, dynamic> input) {
-    String body;
-    Map sendData = {};
-    body = json.encode(sendData);
-    return body;
+  dynamic toJson(dynamic input) async {
+    var formData = FormData.fromMap(
+      {'image' : await MultipartFile.fromFile(input)},
+    );
+    return formData;
   }
 
   ShopChangeMainImageModel.fromJson(Map<String, dynamic> json) {
@@ -155,6 +134,34 @@ class ShopChangeMainImageModel {
     imageUrl = json['data']['imageUrl'];
     description = json['description'];
     result = json['result'];
+  }
+}
+
+class ShopImageRegistrationModel {
+  int? code;
+  List<dynamic> imageUrlList = [];
+  String? description;
+  bool? result;
+
+  ShopImageRegistrationModel({code, imageUrlList, description, result});
+
+  dynamic toJson(dynamic input) async {
+    var temp = [];
+    for(int i=0;i<input.length;i++){
+      temp.add(await MultipartFile.fromFile(input[i]));
+    }
+    var formData = FormData.fromMap(
+      {'images' : temp},
+    );
+    return formData;
+  }
+
+  ShopImageRegistrationModel.fromJson(Map<String, dynamic> json) {
+    print(json);
+    code = json['code'];
+    imageUrlList = json['data']['imageUrlList'];
+    description = json['description'];
+    result = json['true'];
   }
 }
 
@@ -201,6 +208,7 @@ class ShopGetMeModel {
 
   ShopGetMeModel.fromJson(Map<String, dynamic> json) {
     print(json);
+    print(json['data']['shopProfileImage']);
     code = json['code'];
     content = json['data']['content'];
     dataDescription = json['data']['description'];
@@ -221,6 +229,7 @@ class ShopGetMeModel {
 
 class ShopOptionRegistration {
   int? code;
+  String? imageUrl;
   String? description;
   bool? result;
 
@@ -238,6 +247,7 @@ class ShopOptionRegistration {
 
   ShopOptionRegistration.fromJson(Map<String, dynamic> json) {
     code = json['code'];
+    imageUrl = json['data']['imageUrl'];
     description = json['description'];
     result = json['result'];
   }

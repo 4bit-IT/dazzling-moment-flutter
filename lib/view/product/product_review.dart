@@ -17,7 +17,7 @@ class ProductReview extends StatelessWidget {
   ShopController shopController = Get.find();
 
   RefreshController _refreshController =
-      RefreshController(initialRefresh: true);
+  RefreshController(initialRefresh: true);
   void _onLoading() async {
     await reviewController.loadReview(pageNumber);
     if (reviewController.loadReviewModel.value.hasNextPage == true)
@@ -184,7 +184,7 @@ class ProductReview extends StatelessWidget {
             ),
             //여기서 부터 리뷰
             Obx(
-              () => ListView.builder(
+                  () => ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
@@ -200,7 +200,7 @@ class ProductReview extends StatelessWidget {
                             children: [
                               ExtendedImage.network(
                                 reviewController.stroageReview[index]
-                                    ['profileImage'],
+                                ['profileImage'],
                                 width: 50.w,
                                 height: 50.h,
                                 fit: BoxFit.fill,
@@ -213,7 +213,7 @@ class ProductReview extends StatelessWidget {
                                 children: [
                                   Text(
                                     reviewController.stroageReview[index]
-                                        ['nickname'],
+                                    ['nickname'],
                                     style: TextStyle(
                                       color: Color(0xff283137),
                                       fontSize: 16.sp,
@@ -223,7 +223,7 @@ class ProductReview extends StatelessWidget {
                                   ),
                                   Text(
                                     reviewController.stroageReview[index]
-                                        ['createdAt'],
+                                    ['createdAt'],
                                     style: TextStyle(
                                       color: Color(0xff8e97a0),
                                       fontSize: 12.sp,
@@ -239,7 +239,7 @@ class ProductReview extends StatelessWidget {
                                     allowHalfRating: true,
                                     starCount: 5,
                                     rating: reviewController
-                                            .stroageReview[index]['rating'] *
+                                        .stroageReview[index]['rating'] *
                                         1.0,
                                     size: 10.w,
                                     isReadOnly: true,
@@ -248,7 +248,7 @@ class ProductReview extends StatelessWidget {
                                   SizedBox(width: 5.0.w),
                                   Text(
                                     reviewController.stroageReview[index]
-                                            ['rating']
+                                    ['rating']
                                         .toString(),
                                     style: TextStyle(
                                       color: Colors.black,
@@ -283,9 +283,9 @@ class ProductReview extends StatelessWidget {
                             SizedBox(height: 16.h),
                             Visibility(
                               visible: reviewController.stroageReview[index]
-                                              ['reviewImage']
-                                          .toString() ==
-                                      'null'
+                              ['reviewImage']
+                                  .toString() ==
+                                  'null'
                                   ? false
                                   : true,
                               child: Container(
@@ -293,7 +293,11 @@ class ProductReview extends StatelessWidget {
                                 height: 250.h,
                                 child: ExtendedImage.network(
                                   reviewController.stroageReview[index]
+<<<<<<< HEAD
+                                  ['reviewImage']
+=======
                                           ['reviewImage']
+>>>>>>> 355cef0a0b1b230c36d589ad519bfb7666ebb08a
                                       .toString(),
                                   width: 50.w,
                                   height: 50.h,

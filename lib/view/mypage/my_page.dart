@@ -1,3 +1,4 @@
+import 'package:damo/app/controller/owner/owner_order_controller.dart';
 import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/app/controller/shop_faq_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
@@ -67,11 +68,11 @@ class _MyPageState extends State<MyPage> {
                       children: [
                         SizedBox(width: 150.w),
                         Obx(
-                          () => ExtendedImage.network(
+                              () => ExtendedImage.network(
                             userController.getUserInfoModel.value.profileImage!,
                             width: 75.w,
                             height: 75.h,
-                            fit: BoxFit.fill,
+                            fit: BoxFit.cover,
                             cache: false,
                             // border: Border.all(color: Colors.red, width: 1.0),
                             shape: BoxShape.circle,
@@ -226,7 +227,7 @@ class _MyPageState extends State<MyPage> {
                               },
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -264,7 +265,7 @@ class _MyPageState extends State<MyPage> {
                               onPressed: () {},
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -304,7 +305,7 @@ class _MyPageState extends State<MyPage> {
                               },
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -342,7 +343,7 @@ class _MyPageState extends State<MyPage> {
                               onPressed: () {},
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -376,7 +377,8 @@ class _MyPageState extends State<MyPage> {
                           TextButton(
                             onPressed: () async {
                               await shopController.fetchShopData();
-                              ShopFAQBinding().dependencies();
+                              await ShopFAQBinding().dependencies();
+                              await OrderBinding().dependencies();
                               Get.to(() => ShopMain());
                             },
                             child: Text(

@@ -39,14 +39,21 @@ class ShopFAQManagement extends StatelessWidget {
                         child: Container(
                           width: 375.w,
                           padding: EdgeInsets.fromLTRB(0, 16.h, 0, 16.h),
-                          child: Text(
-                            'Q: ${shopFAQController.shopGetFAQModel.value.faqList![index]['question']}',
-                            style: TextStyle(
-                                color: Color(0xff283137),
-                                fontFamily: 'NotoSansCJKKR',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18.sp,
-                                height: 1),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Q: ${shopFAQController.shopGetFAQModel.value.faqList![index]['question']}',
+                                  style: TextStyle(
+                                      color: Color(0xff283137),
+                                      fontFamily: 'NotoSansCJKKR',
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 18.sp,
+                                      height: 1),
+                                ),
+                              ),
+                              Icon(Icons.arrow_forward_ios, size: 20,),
+                            ],
                           ),
                         ),
                       );

@@ -1,361 +1,681 @@
+import 'package:damo/app/controller/owner/owner_review_comment_controller.dart';
+import 'package:damo/app/controller/owner/owner_review_controller.dart';
+import 'package:damo/app/controller/review_controller.dart';
+import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:expandable/expandable.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:simple_star_rating/simple_star_rating.dart';
+import 'package:vertical_barchart/vertical-barchart.dart';
+import 'package:vertical_barchart/vertical-barchartmodel.dart';
 
-class ShopReviewManagement extends StatefulWidget {
-  @override
-  _ShopReviewManagementState createState() => _ShopReviewManagementState();
-}
+ShopController shopController = Get.find();
+RefreshController _refreshController = RefreshController(initialRefresh: true);
 
-class _ShopReviewManagementState extends State<ShopReviewManagement> {
-  int reviewCount = 5; //리뷰 개수
-  List<String> reviewOption = []; //각 주문 옵션
-  List<double> reviewScore = []; // 각 리뷰 별점
-  List<String> reviewId = []; // 리뷰 단 사람 닉네임
-  List<String> reviewDate = []; // 리뷰 단 날짜
-  List<String> reviewContent = []; //리뷰 내용
-  List<Widget> reviewerProfileImage = []; //라뷰 단 사람의 프로필 이미지
-  List<Widget> reviewImage = []; //리뷰의 이미지
-  List<Widget> reviewReply = []; //리뷰 답글
-  List<int> selectedReviewIndex = [];
-  List<Widget> review = [];
-  List<CupertinoButton> reviewButton = [];
-  String shopName = '판매자 이름';
-  List<String> reviewReplyDate = []; //리뷰 최근 수정 날짜
-  List<TextEditingController> reviewDialogController = [];
+class ShopReviewManagement extends StatelessWidget {
+  int pageNumber = 1;
+  OwnerReviewController ownerReviewController = Get.put(OwnerReviewController());
+  OwnerReviewCommentController ownerReviewCommentController = Get.put(OwnerReviewCommentController());
 
-  List<String> receivedReplyData = [
-    '리뷰 답글 1',
-    '',
-    '리뷰 답글 2',
-    '',
-    '리뷰 답글 2',
-  ];
-
-  bool accept = true;
-
-  Future<dynamic> replyAlert(int index) {
-    String tempString = reviewDialogController[index].text.toString();
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: Text("리뷰의 답글을 달아주세요"),
-          content: SingleChildScrollView(
-            child: Container(
-              child: TextFormField(
-                maxLines: 10,
-                enableSuggestions: false,
-                controller: reviewDialogController[index],
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.red,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.redAccent,
-                      width: 2,
-                    ),
-                  ),
-                  prefixIcon: Icon(
-                    Icons.comment_sharp,
-                    color: Colors.blueAccent,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          actions: <Widget>[
-            CupertinoButton(
-                child: Text("확인"),
-                onPressed: () {
-                  setState(() {
-                    accept = true;
-                    receivedReplyData[index] =
-                        reviewDialogController[index].value.text;
-                    Get.back();
-                  });
-                }),
-            CupertinoButton(
-              child: Text("취소"),
-              onPressed: () {
-                setState(() {
-                  accept = false;
-                  reviewDialogController[index].text = tempString;
-                  Get.back();
-                });
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<dynamic> modifyAlert(int index) {
-    String tempString = reviewDialogController[index].text.toString();
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: Text("리뷰의 답글을 달아주세요"),
-          content: SingleChildScrollView(
-            child: Container(
-              child: TextFormField(
-                maxLines: 10,
-                enableSuggestions: false,
-                controller: reviewDialogController[index],
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.red,
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.redAccent,
-                      width: 2,
-                    ),
-                  ),
-                  prefixIcon: Icon(
-                    Icons.comment_sharp,
-                    color: Colors.blueAccent,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          actions: <Widget>[
-            CupertinoButton(
-                child: Text("확인"),
-                onPressed: () {
-                  setState(() {
-                    accept = true;
-                    receivedReplyData[index] =
-                        reviewDialogController[index].value.text;
-                    Get.back();
-                  });
-                }),
-            CupertinoButton(
-              child: Text("취소"),
-              onPressed: () {
-                setState(() {
-                  accept = false;
-                  reviewDialogController[index].text = tempString;
-                  Get.back();
-                });
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  onReplyButtonClicked(int index) async {
-    await replyAlert(index);
-    if (accept)
-      reviewReply[index] = Container(
-        padding: EdgeInsets.all(10),
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          border: Border.all(width: 1, color: Colors.black38),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Text(
-          receivedReplyData[index],
-        ),
-      );
-  }
-
-  onReplyModifyButtonClicked(int index) async {
-    await modifyAlert(index);
-    if (accept)
-      reviewReply[index] = Container(
-        padding: EdgeInsets.all(10),
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          border: Border.all(width: 1, color: Colors.black38),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Text(
-          receivedReplyData[index],
-        ),
-      );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    for (int i = 0; i < reviewCount; i++) {
-      reviewOption.add('옵션 + 옵션 + 옵션 + 옵션 + ...');
-      reviewScore.add(4.5);
-      reviewId.add('reviewId ${i + 1}');
-      reviewDate.add('2021-10-10');
-      reviewerProfileImage
-          .add(Image.network('https://picsum.photos/250?image=9'));
-      reviewContent.add('리뷰 내용임');
-      reviewImage.add(Image.asset('assets/images/DAMO_logo-01.png'));
-      selectedReviewIndex.add(i);
-
-      if (receivedReplyData[i] == '') {
-        reviewReply.add(Container());
-        reviewDialogController.add(TextEditingController());
-      } else {
-        reviewReply.add(
-          Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              border: Border.all(width: 1, color: Colors.black38),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Text(
-              receivedReplyData[i],
-            ),
-          ),
-        );
-        reviewDialogController
-            .add(TextEditingController(text: receivedReplyData[i]));
-      }
-    }
+  void _onLoading() async {
+    print("리뷰 데이터를 불러옵니다.");
+    await ownerReviewController.loadOwnerReview(pageNumber);
+    pageNumber++;
+    _refreshController.loadComplete();
   }
 
   @override
   Widget build(BuildContext context) {
+    List<VBarChartModel> bardata = [
+      VBarChartModel(
+        index: 0,
+        label: "5.0",
+        colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
+        jumlah: 10,
+        tooltip: "(10)",
+      ),
+      VBarChartModel(
+        index: 1,
+        label: "4.0",
+        colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
+        jumlah: 20,
+        tooltip: "(20)",
+      ),
+      VBarChartModel(
+        index: 2,
+        label: "3.0",
+        colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
+        jumlah: 30,
+        tooltip: "(30)",
+      ),
+      VBarChartModel(
+        index: 3,
+        label: "2.0",
+        colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
+        jumlah: 40,
+        tooltip: "(40)",
+      ),
+      VBarChartModel(
+        index: 4,
+        label: "1.0",
+        colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
+        jumlah: 50,
+        tooltip: "(50)",
+      ),
+    ];
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: DamoAppBar().shopAppBar(context),
-      body: ListView.builder(
-        padding: EdgeInsets.all(20),
-        itemCount: reviewCount,
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (BuildContext context, int index) {
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.white,
-                      child: reviewerProfileImage[index],
+      appBar: DamoAppBar().textAppBar(context, '리뷰 관리'),
+      body: SmartRefresher(
+        enablePullDown: false,
+        enablePullUp: true,
+        controller: _refreshController,
+        onLoading: _onLoading,
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(16.w, 20.h, 16.w, 0.h),
+          child: Wrap(
+            children: [
+              Row(
+                children: [
+                  Text(
+                    'Review',
+                    style: TextStyle(
+                      color: Color(0xff283137),
+                      fontSize: 18.sp,
+                      fontFamily: 'NotoSansCJKKR',
+                      fontWeight: FontWeight.w500,
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            reviewId[index],
-                            style: GoogleFonts.lato(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Icon(Icons.star),
-                              Text(
-                                reviewDate[index],
-                                style: GoogleFonts.lato(
-                                  fontSize: 15,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Text(
-                  reviewOption[index],
-                  style: GoogleFonts.lato(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
                   ),
-                ),
-                SizedBox(height: 10),
-                Container(
-                  child: reviewImage[index],
-                ),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        reviewContent[0],
-                        style: GoogleFonts.lato(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  SizedBox(width: 8.w),
+                  Obx(
+                        () => Text(
+                      '총 ${shopController.shopGetMeModel.value.reviewCount}개 리뷰',
+                      style: TextStyle(
+                        color: Color(0xff8e97a0),
+                        fontFamily: 'NotoSansCJKKR',
                       ),
                     ),
-                    receivedReplyData[index] == ''
-                        ? Container(
-                            decoration: BoxDecoration(
-                              border:
-                                  Border.all(width: 1, color: Colors.black38),
-                              borderRadius: BorderRadius.circular(10),
+                  ),
+                ],
+              ),
+              SizedBox(height: 25.5.h),
+              Container(
+                height: 0.5.h,
+                decoration: BoxDecoration(
+                  color: Color(0xfff1f3f5),
+                ),
+              ),
+              Row(
+                children: [
+                  SizedBox(width: 16.w),
+                  SvgPicture.asset(
+                    'assets/images_svg/ic_review_40.svg',
+                    width: 40.w,
+                    height: 40.h,
+                  ),
+                  SizedBox(width: 9.w),
+                  Obx(
+                        () => Text(
+                      '${shopController.shopGetMeModel.value.rating!}',
+                      style: TextStyle(
+                        color: Color(0xff283137),
+                        fontSize: 30.sp,
+                        fontFamily: 'NotoSansCJKKR',
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 3.w),
+                  Text(
+                    '/5',
+                    style: TextStyle(
+                      color: Color(0xff283137),
+                      fontFamily: 'NotoSansCJKKR',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14.sp,
+                      height: 1,
+                    ),
+                  ),
+                  SizedBox(width: 45.w),
+                  Flexible(
+                    child: Container(
+                      width: 260.w,
+                      child: _buildGrafik(bardata),
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                height: 1.5.h,
+                decoration: BoxDecoration(
+                  color: Color(0xfff1f3f5),
+                ),
+              ),
+              //여기서 부터 리뷰
+              Obx(
+                    () => ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: ownerReviewController.ownerReviewModel.value.reviewList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 20.h),
+                        Row(
+                          children: [
+                            ExtendedImage.network(
+                              ownerReviewController.ownerReviewModel.value.reviewList[index]['profileImage'],
+                              width: 50.w,
+                              height: 50.h,
+                              fit: BoxFit.cover,
+                              cache: true,
+                              shape: BoxShape.circle,
                             ),
-                            child: CupertinoButton(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                '등록하기',
-                                style: GoogleFonts.lato(
-                                  color: Colors.black,
+                            SizedBox(width: 10.w),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  ownerReviewController.ownerReviewModel.value.reviewList[index]['nickname'],
+                                  style: TextStyle(
+                                    color: Color(0xff283137),
+                                    fontSize: 16.sp,
+                                    fontFamily: 'NotoSansCJKKR',
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
-                              ),
-                              onPressed: () {
-                                onReplyButtonClicked(index);
-                              },
-                            ),
-                          )
-                        : Container(
-                            decoration: BoxDecoration(
-                              border:
-                                  Border.all(width: 1, color: Colors.black38),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: CupertinoButton(
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                '수정하기',
-                                style: GoogleFonts.lato(
-                                  color: Colors.black,
+                                Text(
+                                  ownerReviewController.ownerReviewModel.value.reviewList[index]['createdAt'],
+                                  style: TextStyle(
+                                    color: Color(0xff8e97a0),
+                                    fontSize: 12.sp,
+                                    fontFamily: 'NotoSansCJKKR',
+                                  ),
                                 ),
-                              ),
-                              onPressed: () {
-                                onReplyModifyButtonClicked(index);
-                              },
+                              ],
                             ),
+                            SizedBox(width: 140.w),
+                            Row(
+                              children: [
+                                SimpleStarRating(
+                                  allowHalfRating: true,
+                                  starCount: 5,
+                                  rating:
+                                  ownerReviewController.ownerReviewModel.value.reviewList[index]['rating'] * 1.0,
+                                  size: 10.w,
+                                  isReadOnly: true,
+                                  spacing: 2.w,
+                                ),
+                                SizedBox(width: 5.0.w),
+                                Text(
+                                  ownerReviewController.ownerReviewModel.value.reviewList[index]['rating'].toString(),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: 'NotoSansCJKKR',
+                                    fontSize: 14.sp,
+                                    height: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 20.h),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              ownerReviewController.ownerReviewModel.value.reviewList[index]['options'],
+                              style: TextStyle(
+                                color: Color(0xff283137),
+                                fontFamily: 'NotoSansCJKKR',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                            SizedBox(height: 10.h),
+                            Text(
+                              ownerReviewController.ownerReviewModel.value.reviewList[index]['content'],
+                              style: TextStyle(
+                                color: Color(0xff283137),
+                                fontFamily: 'NotoSansCJKKR',
+                                fontSize: 14.sp,
+                              ),
+                            ),
+                            SizedBox(height: 16.h),
+                            /* Visibility(
+                                visible: ownerReviewController.ownerReviewModel.value.reviewList[index]
+                                                ['reviewImage'].toString() ==
+                                            '' ||
+                                        ownerReviewController.ownerReviewModel.value.reviewList[index]['reviewImage'].toString() ==
+                                            'null' ||
+                                        ownerReviewController.ownerReviewModel.value.reviewList[index]['reviewImage'] ==
+                                            null
+                                    ? false
+                                    : true,
+                                child: Container(
+                                  width: 250.w,
+                                  height: 250.h,
+                                  child: ExtendedImage.network(
+                                    ownerReviewController.ownerReviewModel.value.reviewList[index]['reviewImage'],
+                                    width: 50.w,
+                                    height: 50.h,
+                                    fit: BoxFit.cover,
+                                    cache: true,
+                                  ),
+                                ),
+                              ),*/
+                          ],
+                        ),
+                        SizedBox(height: 15.5.h),
+                        Obx(
+                              () => ExpansionTile(
+                            title: Text(
+                              ownerReviewController.ownerReviewModel.value.reviewList[index]['hasComment']
+                                  ? '답글보기'
+                                  : '답글달기',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'NotoSansCJKKR',
+                                fontSize: 16.sp,
+                                height: 1,
+                              ),
+                            ),
+                            expandedAlignment: Alignment.centerLeft,
+                            children: [
+                              TextFormField(
+                                controller: ownerReviewController.commentModel[index].commentController,
+                                style: TextStyle(
+                                  fontFamily: 'NotoSansCJKKR',
+                                  fontSize: 20.sp,
+                                ),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: ownerReviewController.ownerReviewModel.value.reviewList[index]['hasComment']
+                                      ? null
+                                      : '리뷰의 답글을 작성해주세요(최대 100자)',
+                                  hintStyle: TextStyle(
+                                    color: Color(0xffd1d1d6),
+                                    fontFamily: 'NotoSansCJKKR',
+                                    fontSize: 20.sp,
+                                    height: 1,
+                                  ),
+                                ),
+                                maxLines: 6,
+                                maxLength: 100,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  InkWell(
+                                    onTap: () async {
+                                      if (ownerReviewController.ownerReviewModel.value.reviewList[index]
+                                      ['hasComment']) {
+                                        //수정
+                                        if (ownerReviewController.commentModel[index].commentController!.value.text ==
+                                            '') {
+                                          FocusScope.of(context).unfocus();
+                                          Get.dialog(
+                                            Dialog(
+                                              child: Container(
+                                                height: 100,
+                                                child: Center(
+                                                  child: Text(
+                                                    '리뷰의 수정할 답글을 작성해주세요.',
+                                                    style: TextStyle(
+                                                        color: Color(0xff283137),
+                                                        fontFamily: 'NotoSansCJKKR',
+                                                        fontSize: 20.sp,
+                                                        height: 1,
+                                                        fontWeight: FontWeight.w500),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          FocusScope.of(context).unfocus();
+                                          await Get.dialog(
+                                            Dialog(
+                                              child: Container(
+                                                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                                alignment: Alignment.center,
+                                                height: 190.h,
+                                                width: 130.w,
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                                      child: Text(
+                                                        '리뷰 답글을 수정하시겠습니까?',
+                                                        style: TextStyle(
+                                                            color: Color(0xff283137),
+                                                            fontFamily: 'NotoSansCJKKR',
+                                                            fontSize: 22.sp,
+                                                            height: 1,
+                                                            fontWeight: FontWeight.w700),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 32.h,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.end,
+                                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                                      children: [
+                                                        InkWell(
+                                                          onTap: () {
+                                                            Get.back();
+                                                          },
+                                                          child: Container(
+                                                            padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+                                                            child: Text(
+                                                              '아니오',
+                                                              style: TextStyle(
+                                                                  color: Color(0xff283137),
+                                                                  fontFamily: 'NotoSansCJKKR',
+                                                                  fontSize: 16.sp,
+                                                                  height: 1,
+                                                                  fontWeight: FontWeight.w500),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        InkWell(
+                                                          onTap: () async {
+                                                            await ownerReviewCommentController.updateReviewComment(
+                                                                index);
+                                                            Get.back();
+                                                          },
+                                                          child: Container(
+                                                            padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+                                                            child: Text(
+                                                              '예',
+                                                              style: TextStyle(
+                                                                  color: Color(0xff283137),
+                                                                  fontFamily: 'NotoSansCJKKR',
+                                                                  fontSize: 16.sp,
+                                                                  height: 1,
+                                                                  fontWeight: FontWeight.w500),
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      } else {
+                                        //작성
+                                        if (ownerReviewController.commentModel[index].commentController!.value.text ==
+                                            '') {
+                                          FocusScope.of(context).unfocus();
+                                          Get.dialog(
+                                            Dialog(
+                                              child: Container(
+                                                height: 100,
+                                                child: Center(
+                                                  child: Text(
+                                                    '리뷰의 답글을 작성해주세요.',
+                                                    style: TextStyle(
+                                                        color: Color(0xff283137),
+                                                        fontFamily: 'NotoSansCJKKR',
+                                                        fontSize: 20.sp,
+                                                        height: 1,
+                                                        fontWeight: FontWeight.w500),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          FocusScope.of(context).unfocus();
+                                          await Get.dialog(
+                                            Dialog(
+                                              child: Container(
+                                                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                                alignment: Alignment.center,
+                                                height: 190.h,
+                                                width: 130.w,
+                                                child: Column(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                                      child: Text(
+                                                        '리뷰 답글을 작성하시겠습니까?',
+                                                        style: TextStyle(
+                                                            color: Color(0xff283137),
+                                                            fontFamily: 'NotoSansCJKKR',
+                                                            fontSize: 22.sp,
+                                                            height: 1,
+                                                            fontWeight: FontWeight.w700),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 32.h,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.end,
+                                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                                      children: [
+                                                        InkWell(
+                                                          onTap: () {
+                                                            Get.back();
+                                                          },
+                                                          child: Container(
+                                                            padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+                                                            child: Text(
+                                                              '아니오',
+                                                              style: TextStyle(
+                                                                  color: Color(0xff283137),
+                                                                  fontFamily: 'NotoSansCJKKR',
+                                                                  fontSize: 16.sp,
+                                                                  height: 1,
+                                                                  fontWeight: FontWeight.w500),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        InkWell(
+                                                          onTap: () async {
+                                                            await ownerReviewCommentController.createReviewComment(index);
+                                                            Get.back();
+                                                          },
+                                                          child: Container(
+                                                            padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+                                                            child: Text(
+                                                              '예',
+                                                              style: TextStyle(
+                                                                  color: Color(0xff283137),
+                                                                  fontFamily: 'NotoSansCJKKR',
+                                                                  fontSize: 16.sp,
+                                                                  height: 1,
+                                                                  fontWeight: FontWeight.w500),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                      }
+
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                      margin: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                      decoration: BoxDecoration(border: Border.all(color: Colors.black45)),
+                                      child: Text(
+                                        ownerReviewController.ownerReviewModel.value.reviewList[index]['hasComment']
+                                            ? '수정'
+                                            : '작성',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontFamily: 'NotoSansCJKKR',
+                                          fontSize: 16.sp,
+                                          height: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 16.w,
+                                  ),
+                                  Visibility(
+                                    visible: ownerReviewController.ownerReviewModel.value.reviewList[index]
+                                    ['hasComment'],
+                                    child: InkWell(
+                                      onTap: () async {
+                                        FocusScope.of(context).unfocus();
+                                        await Get.dialog(
+                                          Dialog(
+                                            child: Container(
+                                              padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                              alignment: Alignment.center,
+                                              height: 190.h,
+                                              width: 130.w,
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                                    child: Text(
+                                                      '리뷰 답글을 삭제하시겠습니까?',
+                                                      style: TextStyle(
+                                                          color: Color(0xff283137),
+                                                          fontFamily: 'NotoSansCJKKR',
+                                                          fontSize: 22.sp,
+                                                          height: 1,
+                                                          fontWeight: FontWeight.w700),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 32.h,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          Get.back();
+                                                        },
+                                                        child: Container(
+                                                          padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+                                                          child: Text(
+                                                            '아니오',
+                                                            style: TextStyle(
+                                                                color: Color(0xff283137),
+                                                                fontFamily: 'NotoSansCJKKR',
+                                                                fontSize: 16.sp,
+                                                                height: 1,
+                                                                fontWeight: FontWeight.w500),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () async {
+                                                          await ownerReviewCommentController.deleteReviewComment(index);
+                                                          Get.back();
+                                                        },
+                                                        child: Container(
+                                                          padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+                                                          child: Text(
+                                                            '예',
+                                                            style: TextStyle(
+                                                                color: Color(0xff283137),
+                                                                fontFamily: 'NotoSansCJKKR',
+                                                                fontSize: 16.sp,
+                                                                height: 1,
+                                                                fontWeight: FontWeight.w500),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                        margin: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                        decoration: BoxDecoration(border: Border.all(color: Colors.black45)),
+                                        child: Text(
+                                          '삭제',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontFamily: 'NotoSansCJKKR',
+                                            fontSize: 16.sp,
+                                            height: 1,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                            onExpansionChanged: (bool expanded) async {
+                              if (ownerReviewController.ownerReviewModel.value.reviewList[index]['hasComment'] &&
+                                  expanded &&
+                                  ownerReviewController.commentModel[index].isFetch == false) {
+                                await ownerReviewCommentController.loadReviewComment(index);
+                                ownerReviewController.commentModel[index].commentController!.text =
+                                ownerReviewCommentController.getReviewCommentModel.value.comment!;
+                                ownerReviewController.commentModel[index].reviewCommentId =
+                                    ownerReviewCommentController.getReviewCommentModel.value.reviewCommentId;
+                                ownerReviewController.commentModel[index].isFetch = true;
+                              }
+                            },
+                            tilePadding: EdgeInsets.zero,
                           ),
-                  ],
+                        ),
+                        SizedBox(height: 15.5.h),
+                        Divider(
+                          thickness: 3.h,
+                          color: Color(0xfff1f3f5),
+                          height: 0,
+                        ),
+                      ],
+                    );
+                  },
                 ),
-                SizedBox(height: 10),
-                Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: reviewReply[index]),
-                Divider(
-                  thickness: 2,
-                ),
-                SizedBox(height: 10),
-              ],
-            ),
-          );
-        },
+              )
+            ],
+          ),
+        ),
       ),
+    );
+  }
+
+  Widget _buildGrafik(List<VBarChartModel> bardata) {
+    return VerticalBarchart(
+      background: Colors.transparent,
+      labelColor: Color(0xff283137),
+      tooltipColor: Color(0xff8e97a0),
+      maxX: 150,
+      data: bardata,
+      barStyle: BarStyle.DEFAULT,
     );
   }
 }

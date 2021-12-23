@@ -26,8 +26,10 @@ class ShopFAQInfo extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
                     child: Obx(
-                          () => Text(
-                        'Q: ${shopFAQController.shopGetFAQModel.value.faqList![shopFAQController.currentIndex.value]['question']}',
+                      () => Text(
+                        shopFAQController.currentIndex.value != -1
+                            ? 'Q: ${shopFAQController.shopGetFAQModel.value.faqList![shopFAQController.currentIndex.value]['question']}'
+                            : '',
                         style: TextStyle(
                             color: Color(0xff283137),
                             fontFamily: 'NotoSansCJKKR',
@@ -44,8 +46,10 @@ class ShopFAQInfo extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
                     child: Obx(
-                          () => Text(
-                        'A: ${shopFAQController.shopGetFAQModel.value.faqList![shopFAQController.currentIndex.value]['answer']}',
+                      () => Text(
+                        shopFAQController.currentIndex.value != -1
+                            ? 'A: ${shopFAQController.shopGetFAQModel.value.faqList![shopFAQController.currentIndex.value]['answer']}'
+                            : '',
                         style: TextStyle(
                           color: Color(0xff283137),
                           fontFamily: 'NotoSansCJKKR',
