@@ -1,9 +1,7 @@
 import 'package:damo/app/controller/owner/owner_review_comment_controller.dart';
 import 'package:damo/app/controller/owner/owner_review_controller.dart';
-import 'package:damo/app/controller/review_controller.dart';
 import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
-import 'package:expandable/expandable.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,8 +17,10 @@ RefreshController _refreshController = RefreshController(initialRefresh: true);
 
 class ShopReviewManagement extends StatelessWidget {
   int pageNumber = 1;
-  OwnerReviewController ownerReviewController = Get.put(OwnerReviewController());
-  OwnerReviewCommentController ownerReviewCommentController = Get.put(OwnerReviewCommentController());
+  OwnerReviewController ownerReviewController =
+      Get.put(OwnerReviewController());
+  OwnerReviewCommentController ownerReviewCommentController =
+      Get.put(OwnerReviewCommentController());
 
   void _onLoading() async {
     print("리뷰 데이터를 불러옵니다.");
@@ -93,7 +93,7 @@ class ShopReviewManagement extends StatelessWidget {
                   ),
                   SizedBox(width: 8.w),
                   Obx(
-                        () => Text(
+                    () => Text(
                       '총 ${shopController.shopGetMeModel.value.reviewCount}개 리뷰',
                       style: TextStyle(
                         color: Color(0xff8e97a0),
@@ -120,7 +120,7 @@ class ShopReviewManagement extends StatelessWidget {
                   ),
                   SizedBox(width: 9.w),
                   Obx(
-                        () => Text(
+                    () => Text(
                       '${shopController.shopGetMeModel.value.rating!}',
                       style: TextStyle(
                         color: Color(0xff283137),
@@ -158,11 +158,12 @@ class ShopReviewManagement extends StatelessWidget {
               ),
               //여기서 부터 리뷰
               Obx(
-                    () => ListView.builder(
+                () => ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  itemCount: ownerReviewController.ownerReviewModel.value.reviewList.length,
+                  itemCount: ownerReviewController
+                      .ownerReviewModel.value.reviewList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -171,7 +172,8 @@ class ShopReviewManagement extends StatelessWidget {
                         Row(
                           children: [
                             ExtendedImage.network(
-                              ownerReviewController.ownerReviewModel.value.reviewList[index]['profileImage'],
+                              ownerReviewController.ownerReviewModel.value
+                                  .reviewList[index]['profileImage'],
                               width: 50.w,
                               height: 50.h,
                               fit: BoxFit.cover,
@@ -183,7 +185,8 @@ class ShopReviewManagement extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  ownerReviewController.ownerReviewModel.value.reviewList[index]['nickname'],
+                                  ownerReviewController.ownerReviewModel.value
+                                      .reviewList[index]['nickname'],
                                   style: TextStyle(
                                     color: Color(0xff283137),
                                     fontSize: 16.sp,
@@ -192,7 +195,8 @@ class ShopReviewManagement extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  ownerReviewController.ownerReviewModel.value.reviewList[index]['createdAt'],
+                                  ownerReviewController.ownerReviewModel.value
+                                      .reviewList[index]['createdAt'],
                                   style: TextStyle(
                                     color: Color(0xff8e97a0),
                                     fontSize: 12.sp,
@@ -207,15 +211,18 @@ class ShopReviewManagement extends StatelessWidget {
                                 SimpleStarRating(
                                   allowHalfRating: true,
                                   starCount: 5,
-                                  rating:
-                                  ownerReviewController.ownerReviewModel.value.reviewList[index]['rating'] * 1.0,
+                                  rating: ownerReviewController.ownerReviewModel
+                                          .value.reviewList[index]['rating'] *
+                                      1.0,
                                   size: 10.w,
                                   isReadOnly: true,
                                   spacing: 2.w,
                                 ),
                                 SizedBox(width: 5.0.w),
                                 Text(
-                                  ownerReviewController.ownerReviewModel.value.reviewList[index]['rating'].toString(),
+                                  ownerReviewController.ownerReviewModel.value
+                                      .reviewList[index]['rating']
+                                      .toString(),
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'NotoSansCJKKR',
@@ -232,7 +239,8 @@ class ShopReviewManagement extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              ownerReviewController.ownerReviewModel.value.reviewList[index]['options'],
+                              ownerReviewController.ownerReviewModel.value
+                                  .reviewList[index]['options'],
                               style: TextStyle(
                                 color: Color(0xff283137),
                                 fontFamily: 'NotoSansCJKKR',
@@ -242,7 +250,8 @@ class ShopReviewManagement extends StatelessWidget {
                             ),
                             SizedBox(height: 10.h),
                             Text(
-                              ownerReviewController.ownerReviewModel.value.reviewList[index]['content'],
+                              ownerReviewController.ownerReviewModel.value
+                                  .reviewList[index]['content'],
                               style: TextStyle(
                                 color: Color(0xff283137),
                                 fontFamily: 'NotoSansCJKKR',
@@ -276,9 +285,10 @@ class ShopReviewManagement extends StatelessWidget {
                         ),
                         SizedBox(height: 15.5.h),
                         Obx(
-                              () => ExpansionTile(
+                          () => ExpansionTile(
                             title: Text(
-                              ownerReviewController.ownerReviewModel.value.reviewList[index]['hasComment']
+                              ownerReviewController.ownerReviewModel.value
+                                      .reviewList[index]['hasComment']
                                   ? '답글보기'
                                   : '답글달기',
                               style: TextStyle(
@@ -291,14 +301,18 @@ class ShopReviewManagement extends StatelessWidget {
                             expandedAlignment: Alignment.centerLeft,
                             children: [
                               TextFormField(
-                                controller: ownerReviewController.commentModel[index].commentController,
+                                controller: ownerReviewController
+                                    .commentModel[index].commentController,
                                 style: TextStyle(
                                   fontFamily: 'NotoSansCJKKR',
                                   fontSize: 20.sp,
                                 ),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: ownerReviewController.ownerReviewModel.value.reviewList[index]['hasComment']
+                                  hintText: ownerReviewController
+                                          .ownerReviewModel
+                                          .value
+                                          .reviewList[index]['hasComment']
                                       ? null
                                       : '리뷰의 답글을 작성해주세요(최대 100자)',
                                   hintStyle: TextStyle(
@@ -316,10 +330,16 @@ class ShopReviewManagement extends StatelessWidget {
                                 children: [
                                   InkWell(
                                     onTap: () async {
-                                      if (ownerReviewController.ownerReviewModel.value.reviewList[index]
-                                      ['hasComment']) {
+                                      if (ownerReviewController
+                                          .ownerReviewModel
+                                          .value
+                                          .reviewList[index]['hasComment']) {
                                         //수정
-                                        if (ownerReviewController.commentModel[index].commentController!.value.text ==
+                                        if (ownerReviewController
+                                                .commentModel[index]
+                                                .commentController!
+                                                .value
+                                                .text ==
                                             '') {
                                           FocusScope.of(context).unfocus();
                                           Get.dialog(
@@ -330,11 +350,14 @@ class ShopReviewManagement extends StatelessWidget {
                                                   child: Text(
                                                     '리뷰의 수정할 답글을 작성해주세요.',
                                                     style: TextStyle(
-                                                        color: Color(0xff283137),
-                                                        fontFamily: 'NotoSansCJKKR',
+                                                        color:
+                                                            Color(0xff283137),
+                                                        fontFamily:
+                                                            'NotoSansCJKKR',
                                                         fontSize: 20.sp,
                                                         height: 1,
-                                                        fontWeight: FontWeight.w500),
+                                                        fontWeight:
+                                                            FontWeight.w500),
                                                   ),
                                                 ),
                                               ),
@@ -345,66 +368,102 @@ class ShopReviewManagement extends StatelessWidget {
                                           await Get.dialog(
                                             Dialog(
                                               child: Container(
-                                                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                                padding: EdgeInsets.fromLTRB(
+                                                    16.w, 16.h, 16.w, 16.h),
                                                 alignment: Alignment.center,
                                                 height: 190.h,
                                                 width: 130.w,
                                                 child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
                                                   children: [
                                                     Container(
-                                                      padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              16.w,
+                                                              16.h,
+                                                              16.w,
+                                                              16.h),
                                                       child: Text(
                                                         '리뷰 답글을 수정하시겠습니까?',
                                                         style: TextStyle(
-                                                            color: Color(0xff283137),
-                                                            fontFamily: 'NotoSansCJKKR',
+                                                            color: Color(
+                                                                0xff283137),
+                                                            fontFamily:
+                                                                'NotoSansCJKKR',
                                                             fontSize: 22.sp,
                                                             height: 1,
-                                                            fontWeight: FontWeight.w700),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w700),
                                                       ),
                                                     ),
                                                     SizedBox(
                                                       height: 32.h,
                                                     ),
                                                     Row(
-                                                      mainAxisAlignment: MainAxisAlignment.end,
-                                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .end,
                                                       children: [
                                                         InkWell(
                                                           onTap: () {
                                                             Get.back();
                                                           },
                                                           child: Container(
-                                                            padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(
+                                                                    12.w,
+                                                                    12.h,
+                                                                    12.w,
+                                                                    12.h),
                                                             child: Text(
                                                               '아니오',
                                                               style: TextStyle(
-                                                                  color: Color(0xff283137),
-                                                                  fontFamily: 'NotoSansCJKKR',
-                                                                  fontSize: 16.sp,
+                                                                  color: Color(
+                                                                      0xff283137),
+                                                                  fontFamily:
+                                                                      'NotoSansCJKKR',
+                                                                  fontSize:
+                                                                      16.sp,
                                                                   height: 1,
-                                                                  fontWeight: FontWeight.w500),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
                                                             ),
                                                           ),
                                                         ),
                                                         InkWell(
                                                           onTap: () async {
-                                                            await ownerReviewCommentController.updateReviewComment(
-                                                                index);
+                                                            await ownerReviewCommentController
+                                                                .updateReviewComment(
+                                                                    index);
                                                             Get.back();
                                                           },
                                                           child: Container(
-                                                            padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(
+                                                                    12.w,
+                                                                    12.h,
+                                                                    12.w,
+                                                                    12.h),
                                                             child: Text(
                                                               '예',
                                                               style: TextStyle(
-                                                                  color: Color(0xff283137),
-                                                                  fontFamily: 'NotoSansCJKKR',
-                                                                  fontSize: 16.sp,
+                                                                  color: Color(
+                                                                      0xff283137),
+                                                                  fontFamily:
+                                                                      'NotoSansCJKKR',
+                                                                  fontSize:
+                                                                      16.sp,
                                                                   height: 1,
-                                                                  fontWeight: FontWeight.w500),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
                                                             ),
                                                           ),
                                                         )
@@ -418,7 +477,11 @@ class ShopReviewManagement extends StatelessWidget {
                                         }
                                       } else {
                                         //작성
-                                        if (ownerReviewController.commentModel[index].commentController!.value.text ==
+                                        if (ownerReviewController
+                                                .commentModel[index]
+                                                .commentController!
+                                                .value
+                                                .text ==
                                             '') {
                                           FocusScope.of(context).unfocus();
                                           Get.dialog(
@@ -429,11 +492,14 @@ class ShopReviewManagement extends StatelessWidget {
                                                   child: Text(
                                                     '리뷰의 답글을 작성해주세요.',
                                                     style: TextStyle(
-                                                        color: Color(0xff283137),
-                                                        fontFamily: 'NotoSansCJKKR',
+                                                        color:
+                                                            Color(0xff283137),
+                                                        fontFamily:
+                                                            'NotoSansCJKKR',
                                                         fontSize: 20.sp,
                                                         height: 1,
-                                                        fontWeight: FontWeight.w500),
+                                                        fontWeight:
+                                                            FontWeight.w500),
                                                   ),
                                                 ),
                                               ),
@@ -444,65 +510,102 @@ class ShopReviewManagement extends StatelessWidget {
                                           await Get.dialog(
                                             Dialog(
                                               child: Container(
-                                                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                                padding: EdgeInsets.fromLTRB(
+                                                    16.w, 16.h, 16.w, 16.h),
                                                 alignment: Alignment.center,
                                                 height: 190.h,
                                                 width: 130.w,
                                                 child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
                                                   children: [
                                                     Container(
-                                                      padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              16.w,
+                                                              16.h,
+                                                              16.w,
+                                                              16.h),
                                                       child: Text(
                                                         '리뷰 답글을 작성하시겠습니까?',
                                                         style: TextStyle(
-                                                            color: Color(0xff283137),
-                                                            fontFamily: 'NotoSansCJKKR',
+                                                            color: Color(
+                                                                0xff283137),
+                                                            fontFamily:
+                                                                'NotoSansCJKKR',
                                                             fontSize: 22.sp,
                                                             height: 1,
-                                                            fontWeight: FontWeight.w700),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w700),
                                                       ),
                                                     ),
                                                     SizedBox(
                                                       height: 32.h,
                                                     ),
                                                     Row(
-                                                      mainAxisAlignment: MainAxisAlignment.end,
-                                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .end,
                                                       children: [
                                                         InkWell(
                                                           onTap: () {
                                                             Get.back();
                                                           },
                                                           child: Container(
-                                                            padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(
+                                                                    12.w,
+                                                                    12.h,
+                                                                    12.w,
+                                                                    12.h),
                                                             child: Text(
                                                               '아니오',
                                                               style: TextStyle(
-                                                                  color: Color(0xff283137),
-                                                                  fontFamily: 'NotoSansCJKKR',
-                                                                  fontSize: 16.sp,
+                                                                  color: Color(
+                                                                      0xff283137),
+                                                                  fontFamily:
+                                                                      'NotoSansCJKKR',
+                                                                  fontSize:
+                                                                      16.sp,
                                                                   height: 1,
-                                                                  fontWeight: FontWeight.w500),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
                                                             ),
                                                           ),
                                                         ),
                                                         InkWell(
                                                           onTap: () async {
-                                                            await ownerReviewCommentController.createReviewComment(index);
+                                                            await ownerReviewCommentController
+                                                                .createReviewComment(
+                                                                    index);
                                                             Get.back();
                                                           },
                                                           child: Container(
-                                                            padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(
+                                                                    12.w,
+                                                                    12.h,
+                                                                    12.w,
+                                                                    12.h),
                                                             child: Text(
                                                               '예',
                                                               style: TextStyle(
-                                                                  color: Color(0xff283137),
-                                                                  fontFamily: 'NotoSansCJKKR',
-                                                                  fontSize: 16.sp,
+                                                                  color: Color(
+                                                                      0xff283137),
+                                                                  fontFamily:
+                                                                      'NotoSansCJKKR',
+                                                                  fontSize:
+                                                                      16.sp,
                                                                   height: 1,
-                                                                  fontWeight: FontWeight.w500),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
                                                             ),
                                                           ),
                                                         ),
@@ -515,14 +618,20 @@ class ShopReviewManagement extends StatelessWidget {
                                           );
                                         }
                                       }
-
                                     },
                                     child: Container(
-                                      padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                                      margin: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                                      decoration: BoxDecoration(border: Border.all(color: Colors.black45)),
+                                      padding: EdgeInsets.fromLTRB(
+                                          16.w, 16.h, 16.w, 16.h),
+                                      margin: EdgeInsets.fromLTRB(
+                                          16.w, 16.h, 16.w, 16.h),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.black45)),
                                       child: Text(
-                                        ownerReviewController.ownerReviewModel.value.reviewList[index]['hasComment']
+                                        ownerReviewController
+                                                .ownerReviewModel
+                                                .value
+                                                .reviewList[index]['hasComment']
                                             ? '수정'
                                             : '작성',
                                         style: TextStyle(
@@ -538,73 +647,108 @@ class ShopReviewManagement extends StatelessWidget {
                                     width: 16.w,
                                   ),
                                   Visibility(
-                                    visible: ownerReviewController.ownerReviewModel.value.reviewList[index]
-                                    ['hasComment'],
+                                    visible: ownerReviewController
+                                        .ownerReviewModel
+                                        .value
+                                        .reviewList[index]['hasComment'],
                                     child: InkWell(
                                       onTap: () async {
                                         FocusScope.of(context).unfocus();
                                         await Get.dialog(
                                           Dialog(
                                             child: Container(
-                                              padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                              padding: EdgeInsets.fromLTRB(
+                                                  16.w, 16.h, 16.w, 16.h),
                                               alignment: Alignment.center,
                                               height: 190.h,
                                               width: 130.w,
                                               child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
                                                 children: [
                                                   Container(
-                                                    padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            16.w,
+                                                            16.h,
+                                                            16.w,
+                                                            16.h),
                                                     child: Text(
                                                       '리뷰 답글을 삭제하시겠습니까?',
                                                       style: TextStyle(
-                                                          color: Color(0xff283137),
-                                                          fontFamily: 'NotoSansCJKKR',
+                                                          color:
+                                                              Color(0xff283137),
+                                                          fontFamily:
+                                                              'NotoSansCJKKR',
                                                           fontSize: 22.sp,
                                                           height: 1,
-                                                          fontWeight: FontWeight.w700),
+                                                          fontWeight:
+                                                              FontWeight.w700),
                                                     ),
                                                   ),
                                                   SizedBox(
                                                     height: 32.h,
                                                   ),
                                                   Row(
-                                                    mainAxisAlignment: MainAxisAlignment.end,
-                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
                                                     children: [
                                                       InkWell(
                                                         onTap: () {
                                                           Get.back();
                                                         },
                                                         child: Container(
-                                                          padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+                                                          padding: EdgeInsets
+                                                              .fromLTRB(
+                                                                  12.w,
+                                                                  12.h,
+                                                                  12.w,
+                                                                  12.h),
                                                           child: Text(
                                                             '아니오',
                                                             style: TextStyle(
-                                                                color: Color(0xff283137),
-                                                                fontFamily: 'NotoSansCJKKR',
+                                                                color: Color(
+                                                                    0xff283137),
+                                                                fontFamily:
+                                                                    'NotoSansCJKKR',
                                                                 fontSize: 16.sp,
                                                                 height: 1,
-                                                                fontWeight: FontWeight.w500),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
                                                           ),
                                                         ),
                                                       ),
                                                       InkWell(
                                                         onTap: () async {
-                                                          await ownerReviewCommentController.deleteReviewComment(index);
+                                                          await ownerReviewCommentController
+                                                              .deleteReviewComment(
+                                                                  index);
                                                           Get.back();
                                                         },
                                                         child: Container(
-                                                          padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+                                                          padding: EdgeInsets
+                                                              .fromLTRB(
+                                                                  12.w,
+                                                                  12.h,
+                                                                  12.w,
+                                                                  12.h),
                                                           child: Text(
                                                             '예',
                                                             style: TextStyle(
-                                                                color: Color(0xff283137),
-                                                                fontFamily: 'NotoSansCJKKR',
+                                                                color: Color(
+                                                                    0xff283137),
+                                                                fontFamily:
+                                                                    'NotoSansCJKKR',
                                                                 fontSize: 16.sp,
                                                                 height: 1,
-                                                                fontWeight: FontWeight.w500),
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
                                                           ),
                                                         ),
                                                       )
@@ -617,9 +761,13 @@ class ShopReviewManagement extends StatelessWidget {
                                         );
                                       },
                                       child: Container(
-                                        padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                                        margin: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                                        decoration: BoxDecoration(border: Border.all(color: Colors.black45)),
+                                        padding: EdgeInsets.fromLTRB(
+                                            16.w, 16.h, 16.w, 16.h),
+                                        margin: EdgeInsets.fromLTRB(
+                                            16.w, 16.h, 16.w, 16.h),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.black45)),
                                         child: Text(
                                           '삭제',
                                           style: TextStyle(
@@ -636,15 +784,26 @@ class ShopReviewManagement extends StatelessWidget {
                               )
                             ],
                             onExpansionChanged: (bool expanded) async {
-                              if (ownerReviewController.ownerReviewModel.value.reviewList[index]['hasComment'] &&
+                              if (ownerReviewController.ownerReviewModel.value
+                                      .reviewList[index]['hasComment'] &&
                                   expanded &&
-                                  ownerReviewController.commentModel[index].isFetch == false) {
-                                await ownerReviewCommentController.loadReviewComment(index);
-                                ownerReviewController.commentModel[index].commentController!.text =
-                                ownerReviewCommentController.getReviewCommentModel.value.comment!;
-                                ownerReviewController.commentModel[index].reviewCommentId =
-                                    ownerReviewCommentController.getReviewCommentModel.value.reviewCommentId;
-                                ownerReviewController.commentModel[index].isFetch = true;
+                                  ownerReviewController
+                                          .commentModel[index].isFetch ==
+                                      false) {
+                                await ownerReviewCommentController
+                                    .loadReviewComment(index);
+                                ownerReviewController.commentModel[index]
+                                        .commentController!.text =
+                                    ownerReviewCommentController
+                                        .getReviewCommentModel.value.comment!;
+                                ownerReviewController
+                                        .commentModel[index].reviewCommentId =
+                                    ownerReviewCommentController
+                                        .getReviewCommentModel
+                                        .value
+                                        .reviewCommentId;
+                                ownerReviewController
+                                    .commentModel[index].isFetch = true;
                               }
                             },
                             tilePadding: EdgeInsets.zero,

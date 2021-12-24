@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:damo/app/controller/shop_controller.dart';
-import 'package:damo/app/controller/shop_faq_controller.dart';
 import 'package:damo/view/shop/shop_product_modify.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:extended_image/extended_image.dart';
@@ -96,7 +95,11 @@ class ShopProductMain extends StatelessWidget {
                           controller: shopController.shopNameController.value,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: shopController.shopGetMeModel.value.name == 'null' ? '스토어 이름을 입력하세요' : null,
+                            hintText:
+                                shopController.shopGetMeModel.value.name ==
+                                        'null'
+                                    ? '스토어 이름을 입력하세요'
+                                    : null,
                             hintStyle: TextStyle(
                               color: Color(0xffd1d1d6),
                               fontFamily: 'NotoSansCJKKR',
@@ -134,12 +137,15 @@ class ShopProductMain extends StatelessWidget {
                         ),
                         child: TextFormField(
                           readOnly: true,
-                          controller: shopController.shopContentController.value,
+                          controller:
+                              shopController.shopContentController.value,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: shopController.shopGetMeModel.value.content == 'null'
-                                ? '메인페이지에 보일 간략한 설명을 적어주세요'
-                                : null,
+                            hintText:
+                                shopController.shopGetMeModel.value.content ==
+                                        'null'
+                                    ? '메인페이지에 보일 간략한 설명을 적어주세요'
+                                    : null,
                             hintStyle: TextStyle(
                               color: Color(0xffd1d1d6),
                               fontFamily: 'NotoSansCJKKR',
@@ -179,10 +185,13 @@ class ShopProductMain extends StatelessWidget {
                           readOnly: true,
                           maxLines: 23,
                           textAlign: TextAlign.center,
-                          controller: shopController.shopDescriptionController.value,
+                          controller:
+                              shopController.shopDescriptionController.value,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: shopController.shopGetMeModel.value.dataDescription == 'null'
+                            hintText: shopController
+                                        .shopGetMeModel.value.dataDescription ==
+                                    'null'
                                 ? '상세페이지에 적힐 스토어 설명을 적어주세요'
                                 : null,
                             hintStyle: TextStyle(
@@ -217,22 +226,29 @@ class ShopProductMain extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           itemCount: 10,
                           itemBuilder: (context, imageIndex) {
-                            return imageIndex >= shopController.shopGetMeModel.value.images.length
+                            return imageIndex >=
+                                    shopController
+                                        .shopGetMeModel.value.images.length
                                 ? Container(
                                     width: 100.w,
                                     height: 100.h,
                                     decoration: BoxDecoration(
-                                        border: Border.all(color: Colors.black12),
-                                        borderRadius: BorderRadius.circular(8.r)),
+                                        border:
+                                            Border.all(color: Colors.black12),
+                                        borderRadius:
+                                            BorderRadius.circular(8.r)),
                                   )
                                 : CachedNetworkImage(
-                                    imageUrl: '${shopController.shopGetMeModel.value.images[imageIndex]}',
+                                    imageUrl:
+                                        '${shopController.shopGetMeModel.value.images[imageIndex]}',
                                     width: 100.w,
                                     height: 100.h,
                                     fit: BoxFit.fill,
                                     fadeInDuration: Duration(milliseconds: 100),
-                                    fadeOutDuration: Duration(milliseconds: 100),
-                                    placeholder: (context, url) => CircularProgressIndicator(),
+                                    fadeOutDuration:
+                                        Duration(milliseconds: 100),
+                                    placeholder: (context, url) =>
+                                        CircularProgressIndicator(),
                                   );
                           },
                           separatorBuilder: (BuildContext context, int index) {
@@ -286,7 +302,8 @@ class ShopProductMain extends StatelessWidget {
                               ),
                               child: TextFormField(
                                 readOnly: true,
-                                controller: shopController.shopBasePriceController.value,
+                                controller: shopController
+                                    .shopBasePriceController.value,
                                 inputFormatters: [
                                   MaskTextInputFormatter(
                                     mask: '#######',
@@ -339,7 +356,8 @@ class ShopProductMain extends StatelessWidget {
                                   ),
                                   borderRadius: BorderRadius.circular(8.r)),
                               child: Container(
-                                margin: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
+                                margin:
+                                    EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -364,12 +382,15 @@ class ShopProductMain extends StatelessWidget {
                                           color: Color(0xffd1d1d6),
                                           width: 1.h,
                                         ),
-                                        borderRadius: BorderRadius.circular(8.r),
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
                                       ),
                                       child: TextFormField(
                                         readOnly: true,
                                         maxLines: 3,
-                                        controller: shopController.mainOptionList[index].mainOptionTitleController,
+                                        controller: shopController
+                                            .mainOptionList[index]
+                                            .mainOptionTitleController,
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.all(18.h),
                                           border: InputBorder.none,
@@ -406,13 +427,15 @@ class ShopProductMain extends StatelessWidget {
                                           color: Color(0xffd1d1d6),
                                           width: 1.h,
                                         ),
-                                        borderRadius: BorderRadius.circular(8.r),
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
                                       ),
                                       child: TextFormField(
                                         readOnly: true,
                                         maxLines: 5,
-                                        controller:
-                                            shopController.mainOptionList[index].mainOptionDescriptionController,
+                                        controller: shopController
+                                            .mainOptionList[index]
+                                            .mainOptionDescriptionController,
                                         decoration: InputDecoration(
                                           contentPadding: EdgeInsets.all(18.h),
                                           border: InputBorder.none,
@@ -429,7 +452,8 @@ class ShopProductMain extends StatelessWidget {
                                       height: 16.h,
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           '선택지의 중복 선택 가능유무',
@@ -442,7 +466,9 @@ class ShopProductMain extends StatelessWidget {
                                           ),
                                         ),
                                         Switch(
-                                          value: shopController.mainOptionList[index].mainOptionAllowMultipleChoices!,
+                                          value: shopController
+                                              .mainOptionList[index]
+                                              .mainOptionAllowMultipleChoices!,
                                           onChanged: (value) {
                                             //shopController.allowMultipleChoicesChanged(index);
                                           },
@@ -475,11 +501,16 @@ class ShopProductMain extends StatelessWidget {
                                         shrinkWrap: true,
                                         scrollDirection: Axis.vertical,
                                         physics: NeverScrollableScrollPhysics(),
-                                        itemCount: shopController.mainOptionList[index].shopDetailOptionList.length,
-                                        itemBuilder: (context, detailIndex) => Visibility(
+                                        itemCount: shopController
+                                            .mainOptionList[index]
+                                            .shopDetailOptionList
+                                            .length,
+                                        itemBuilder: (context, detailIndex) =>
+                                            Visibility(
                                           visible: true,
                                           child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               SizedBox(
                                                 height: 16.h,
@@ -498,9 +529,11 @@ class ShopProductMain extends StatelessWidget {
                                                 height: 8.h,
                                               ),
                                               Container(
-                                                padding: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
+                                                padding: EdgeInsets.fromLTRB(
+                                                    8.w, 8.h, 8.w, 8.h),
                                                 decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
                                                     8.r,
                                                   ),
                                                   border: Border.all(
@@ -514,13 +547,18 @@ class ShopProductMain extends StatelessWidget {
                                                       maxLines: 2,
                                                       controller: shopController
                                                           .mainOptionList[index]
-                                                          .shopDetailOptionList[detailIndex]
+                                                          .shopDetailOptionList[
+                                                              detailIndex]
                                                           .detailOptionContentController,
-                                                      decoration: InputDecoration(
-                                                        border: InputBorder.none,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        border:
+                                                            InputBorder.none,
                                                         hintText: shopController
-                                                                    .mainOptionList[index]
-                                                                    .shopDetailOptionList[detailIndex]
+                                                                    .mainOptionList[
+                                                                        index]
+                                                                    .shopDetailOptionList[
+                                                                        detailIndex]
                                                                     .detailOptionContentController!
                                                                     .value
                                                                     .text ==
@@ -528,8 +566,10 @@ class ShopProductMain extends StatelessWidget {
                                                             ? '해당 선택지의 내용을 입력해 주세요(ex. 오레오 토핑)'
                                                             : null,
                                                         hintStyle: TextStyle(
-                                                          color: Color(0xffd1d1d6),
-                                                          fontFamily: 'NotoSansCJKKR',
+                                                          color:
+                                                              Color(0xffd1d1d6),
+                                                          fontFamily:
+                                                              'NotoSansCJKKR',
                                                           fontSize: 14.sp,
                                                           height: 1,
                                                         ),
@@ -547,11 +587,14 @@ class ShopProductMain extends StatelessWidget {
                                                         Text(
                                                           '해당 선택지 기본금액',
                                                           style: TextStyle(
-                                                            color: Color(0xfff93f5b),
+                                                            color: Color(
+                                                                0xfff93f5b),
                                                             fontSize: 16.sp,
                                                             height: 1,
-                                                            fontFamily: 'NotoSansCJKKR',
-                                                            fontWeight: FontWeight.w500,
+                                                            fontFamily:
+                                                                'NotoSansCJKKR',
+                                                            fontWeight:
+                                                                FontWeight.w500,
                                                           ),
                                                         ),
                                                         SizedBox(
@@ -559,34 +602,57 @@ class ShopProductMain extends StatelessWidget {
                                                         ),
                                                         Expanded(
                                                           child: Container(
-                                                            decoration: BoxDecoration(
-                                                              color: Colors.white,
-                                                              border: Border.all(
-                                                                color: Color(0xffd1d1d6),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color:
+                                                                  Colors.white,
+                                                              border:
+                                                                  Border.all(
+                                                                color: Color(
+                                                                    0xffd1d1d6),
                                                                 width: 1.h,
                                                               ),
-                                                              borderRadius: BorderRadius.circular(8.r),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.r),
                                                             ),
-                                                            child: TextFormField(
+                                                            child:
+                                                                TextFormField(
                                                               readOnly: true,
                                                               inputFormatters: [
                                                                 MaskTextInputFormatter(
-                                                                  mask: '#######',
+                                                                  mask:
+                                                                      '#######',
                                                                 )
                                                               ],
-                                                              keyboardType: TextInputType.number,
+                                                              keyboardType:
+                                                                  TextInputType
+                                                                      .number,
                                                               maxLines: 1,
                                                               controller: shopController
-                                                                  .mainOptionList[index]
-                                                                  .shopDetailOptionList[detailIndex]
+                                                                  .mainOptionList[
+                                                                      index]
+                                                                  .shopDetailOptionList[
+                                                                      detailIndex]
                                                                   .detailOptionPriceController,
-                                                              decoration: InputDecoration(
-                                                                contentPadding: EdgeInsets.all(18.h),
-                                                                border: InputBorder.none,
-                                                                hintStyle: TextStyle(
-                                                                  color: Color(0xffd1d1d6),
-                                                                  fontFamily: 'NotoSansCJKKR',
-                                                                  fontSize: 14.sp,
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                contentPadding:
+                                                                    EdgeInsets
+                                                                        .all(18
+                                                                            .h),
+                                                                border:
+                                                                    InputBorder
+                                                                        .none,
+                                                                hintStyle:
+                                                                    TextStyle(
+                                                                  color: Color(
+                                                                      0xffd1d1d6),
+                                                                  fontFamily:
+                                                                      'NotoSansCJKKR',
+                                                                  fontSize:
+                                                                      14.sp,
                                                                   height: 1,
                                                                 ),
                                                               ),
@@ -607,36 +673,58 @@ class ShopProductMain extends StatelessWidget {
                                                           height: 8.h,
                                                         ),
                                                         Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
                                                           children: [
                                                             Text(
                                                               '  해당 선택지의 최대 선택 개수',
                                                               style: TextStyle(
-                                                                color: Color(0xff283137),
+                                                                color: Color(
+                                                                    0xff283137),
                                                                 fontSize: 16.sp,
                                                                 height: 1,
-                                                                fontFamily: 'NotoSansCJKKR',
-                                                                fontWeight: FontWeight.w500,
+                                                                fontFamily:
+                                                                    'NotoSansCJKKR',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
                                                               ),
                                                             ),
                                                             Row(
                                                               children: [
                                                                 Container(
                                                                   decoration: BoxDecoration(
-                                                                      border: Border.all(color: Color(0xffd1d1d6)),
-                                                                      borderRadius: BorderRadius.circular(20.r),
-                                                                      color: Colors.white),
-                                                                  child: Container(
-                                                                    padding:
-                                                                        EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
+                                                                      border: Border.all(
+                                                                          color: Color(
+                                                                              0xffd1d1d6)),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(20
+                                                                              .r),
+                                                                      color: Colors
+                                                                          .white),
+                                                                  child:
+                                                                      Container(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            10.w,
+                                                                            10.h,
+                                                                            10.w,
+                                                                            10.h),
                                                                     child: Text(
                                                                       '-',
-                                                                      style: TextStyle(
-                                                                        color: Color(0xff283137),
-                                                                        fontSize: 14.sp,
-                                                                        height: 1,
-                                                                        fontFamily: 'NotoSansCJKKR',
-                                                                        fontWeight: FontWeight.w700,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Color(
+                                                                            0xff283137),
+                                                                        fontSize:
+                                                                            14.sp,
+                                                                        height:
+                                                                            1,
+                                                                        fontFamily:
+                                                                            'NotoSansCJKKR',
+                                                                        fontWeight:
+                                                                            FontWeight.w700,
                                                                       ),
                                                                     ),
                                                                   ),
@@ -645,21 +733,37 @@ class ShopProductMain extends StatelessWidget {
                                                                   width: 10.w,
                                                                 ),
                                                                 Container(
-                                                                  decoration: BoxDecoration(
-                                                                    border: Border.all(color: Color(0xffd1d1d6)),
-                                                                    borderRadius: BorderRadius.circular(20.r),
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    border: Border.all(
+                                                                        color: Color(
+                                                                            0xffd1d1d6)),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            20.r),
                                                                   ),
-                                                                  child: Container(
-                                                                    padding:
-                                                                        EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
+                                                                  child:
+                                                                      Container(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            10.w,
+                                                                            10.h,
+                                                                            10.w,
+                                                                            10.h),
                                                                     child: Text(
                                                                       '${shopController.mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionCount}',
-                                                                      style: TextStyle(
-                                                                        color: Color(0xff283137),
-                                                                        fontSize: 14.sp,
-                                                                        height: 1,
-                                                                        fontFamily: 'NotoSansCJKKR',
-                                                                        fontWeight: FontWeight.w700,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Color(
+                                                                            0xff283137),
+                                                                        fontSize:
+                                                                            14.sp,
+                                                                        height:
+                                                                            1,
+                                                                        fontFamily:
+                                                                            'NotoSansCJKKR',
+                                                                        fontWeight:
+                                                                            FontWeight.w700,
                                                                       ),
                                                                     ),
                                                                   ),
@@ -668,21 +772,37 @@ class ShopProductMain extends StatelessWidget {
                                                                   width: 10.w,
                                                                 ),
                                                                 Container(
-                                                                  decoration: BoxDecoration(
-                                                                    border: Border.all(color: Color(0xffd1d1d6)),
-                                                                    borderRadius: BorderRadius.circular(20.r),
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    border: Border.all(
+                                                                        color: Color(
+                                                                            0xffd1d1d6)),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            20.r),
                                                                   ),
-                                                                  child: Container(
-                                                                    padding:
-                                                                        EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
+                                                                  child:
+                                                                      Container(
+                                                                    padding: EdgeInsets
+                                                                        .fromLTRB(
+                                                                            10.w,
+                                                                            10.h,
+                                                                            10.w,
+                                                                            10.h),
                                                                     child: Text(
                                                                       '+',
-                                                                      style: TextStyle(
-                                                                        color: Color(0xff283137),
-                                                                        fontSize: 14.sp,
-                                                                        height: 1,
-                                                                        fontFamily: 'NotoSansCJKKR',
-                                                                        fontWeight: FontWeight.w700,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        color: Color(
+                                                                            0xff283137),
+                                                                        fontSize:
+                                                                            14.sp,
+                                                                        height:
+                                                                            1,
+                                                                        fontFamily:
+                                                                            'NotoSansCJKKR',
+                                                                        fontWeight:
+                                                                            FontWeight.w700,
                                                                       ),
                                                                     ),
                                                                   ),

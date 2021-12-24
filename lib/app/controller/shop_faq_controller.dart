@@ -1,8 +1,6 @@
 import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/app/data/model/shop_faq_model.dart';
 import 'package:damo/app/data/provider/shop/shop_faq_api.dart';
-import 'package:damo/view/shop/shop_faq/shop_faq_info.dart';
-import 'package:damo/view/shop/shop_faq/shop_faq_management.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,13 +10,6 @@ class ShopFAQController extends GetxController {
   ShopController shopController = Get.find();
   Rx<ShopGetFAQModel> shopGetFAQModel = ShopGetFAQModel().obs;
   Rx<ShopGetFAQtoUserModel> shopGetFAQtoUserModel = ShopGetFAQtoUserModel().obs;
-<<<<<<< HEAD
-  Rx<TextEditingController> shopFAQQuestionController = TextEditingController().obs;
-  Rx<TextEditingController> shopFAQAnswerController = TextEditingController().obs;
-  Rx<TextEditingController> shopFAQQuestionAddController = TextEditingController().obs;
-  Rx<TextEditingController> shopFAQAnswerAddController = TextEditingController().obs;
-  RxInt shopFAQCount = 0.obs;
-=======
   Rx<TextEditingController> shopFAQQuestionController =
       TextEditingController().obs;
   Rx<TextEditingController> shopFAQAnswerController =
@@ -27,7 +18,7 @@ class ShopFAQController extends GetxController {
       TextEditingController().obs;
   Rx<TextEditingController> shopFAQAnswerAddController =
       TextEditingController().obs;
->>>>>>> 355cef0a0b1b230c36d589ad519bfb7666ebb08a
+  RxInt shopFAQCount = 0.obs;
   RxInt currentIndex = 0.obs;
 
   Map<String, dynamic> toJsonInput = {};
@@ -39,11 +30,9 @@ class ShopFAQController extends GetxController {
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
-<<<<<<< HEAD
-    //await fetchShopFAQData();
-=======
+
     // await fetchShopFAQData();
->>>>>>> 355cef0a0b1b230c36d589ad519bfb7666ebb08a
+
     await loadShopFAQ(shopController.shopGetDetailModel.value.id!);
   }
 

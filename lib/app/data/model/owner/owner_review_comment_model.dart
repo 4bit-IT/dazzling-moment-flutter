@@ -1,7 +1,4 @@
-
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 
 class GetReviewCommentModel {
   int? code;
@@ -12,7 +9,14 @@ class GetReviewCommentModel {
   String? description;
   bool? result;
 
-  GetReviewCommentModel({code, comment, createdAt, isUpdated, reviewCommentId, description, result});
+  GetReviewCommentModel(
+      {code,
+      comment,
+      createdAt,
+      isUpdated,
+      reviewCommentId,
+      description,
+      result});
 
   GetReviewCommentModel.fromJson(Map<String, dynamic> json) {
     print(json);
@@ -35,13 +39,20 @@ class CreateReviewCommentModel {
   String? description;
   bool? result;
 
-  CreateReviewCommentModel({code, comment, createdAt, isUpdated, reviewCommentId, description, result});
+  CreateReviewCommentModel(
+      {code,
+      comment,
+      createdAt,
+      isUpdated,
+      reviewCommentId,
+      description,
+      result});
 
   String toJson(Map<String, dynamic> toJsonInput) {
     String body;
     Map sendData = {
-      'comment' : toJsonInput['comment'],
-      'reviewId' : toJsonInput['reviewId'],
+      'comment': toJsonInput['comment'],
+      'reviewId': toJsonInput['reviewId'],
     };
     body = json.encode(sendData);
     return body;
@@ -68,13 +79,20 @@ class UpdateReviewCommentModel {
   String? description;
   bool? result;
 
-  UpdateReviewCommentModel({code, comment, createdAt, isUpdated, reviewCommentId, description, result});
+  UpdateReviewCommentModel(
+      {code,
+      comment,
+      createdAt,
+      isUpdated,
+      reviewCommentId,
+      description,
+      result});
 
   String toJson(Map<String, dynamic> toJsonInput) {
     String body;
     Map sendData = {
-      'comment' : toJsonInput['comment'],
-      'reviewCommentId' : toJsonInput['reviewCommentId'],
+      'comment': toJsonInput['comment'],
+      'reviewCommentId': toJsonInput['reviewCommentId'],
     };
     body = json.encode(sendData);
     return body;
@@ -102,7 +120,7 @@ class DeleteReviewCommentModel {
   String toJson(Map<String, dynamic> toJsonInput) {
     String body;
     Map sendData = {
-      'reviewCommentId' : toJsonInput['reviewCommentId'],
+      'reviewCommentId': toJsonInput['reviewCommentId'],
     };
     body = json.encode(sendData);
     return body;

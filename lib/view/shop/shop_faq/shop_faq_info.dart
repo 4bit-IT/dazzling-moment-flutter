@@ -1,5 +1,4 @@
 import 'package:damo/app/controller/shop_faq_controller.dart';
-import 'package:damo/view/shop/shop_faq/shop_faq_management.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/view/shop/shop_faq/shop_faq_modify.dart';
 import 'package:flutter/cupertino.dart';

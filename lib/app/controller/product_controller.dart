@@ -11,17 +11,14 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:intl/intl.dart';
 
 var formatter = NumberFormat('#,##,000');
+List<dynamic> selectCheckBoxList = [];
+List saveOptionDeatilCheckBoxIndex = List.filled(100, false, growable: false);
 
 class ProductController extends GetxController {
   ShopController shopController = Get.find();
 
-  @override
-  void onInit() async {
-    super.onInit();
-  }
-
   Future<void> onClickedOptionSelect() async {
-    Get.bottomSheet(
+    return Get.bottomSheet(
       Column(
         children: [
           Expanded(
@@ -32,7 +29,7 @@ class ProductController extends GetxController {
                 shrinkWrap: true,
                 itemCount:
                     shopController.shopGetDetailModel.value.optionList.length,
-                itemBuilder: (BuildContext context, int first) {
+                itemBuilder: (BuildContext context, int optionListIndex) {
                   return Column(
                     children: [
                       Padding(
@@ -40,7 +37,7 @@ class ProductController extends GetxController {
                         child: Center(
                           child: Text(
                             shopController.shopGetDetailModel.value
-                                .optionList[first]['title'],
+                                .optionList[optionListIndex]['title'],
                             style: TextStyle(
                               color: Color(0xff283137),
                               fontSize: 18.sp,
@@ -53,7 +50,7 @@ class ProductController extends GetxController {
                       ),
                       Text(
                         shopController.shopGetDetailModel.value
-                            .optionList[first]['description'],
+                            .optionList[optionListIndex]['description'],
                         style: TextStyle(
                           color: Color(0xfff93f5b),
                           fontSize: 12.sp,
@@ -75,14 +72,33 @@ class ProductController extends GetxController {
                             physics: const NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            itemCount: shopController.shopGetDetailModel.value
-                                .optionList[first]['optionDetailList'].length,
-                            itemBuilder: (BuildContext context, int second) {
+                            itemCount: shopController
+                                .shopGetDetailModel
+                                .value
+                                .optionList[optionListIndex]['optionDetailList']
+                                .length,
+                            itemBuilder: (BuildContext context,
+                                int optionDetailListIndex) {
+                              selectCheckBoxList = List.generate(
+                                  shopController.shopGetDetailModel.value
+                                      .optionList.length,
+                                  (i) => List.filled(
+                                      shopController
+                                          .shopGetDetailModel
+                                          .value
+                                          .optionList[optionListIndex]
+                                              ['optionDetailList']
+                                          .length,
+                                      false,
+                                      growable: false),
+                                  growable: false);
                               if (shopController.shopGetDetailModel.value
-                                          .optionList[first]['optionDetailList']
-                                      [second]['allowMultipleChoices'] ==
+                                                  .optionList[optionListIndex]
+                                              ['optionDetailList']
+                                          [optionDetailListIndex]
+                                      ['allowMultipleChoices'] ==
                                   true) {
-                                // 콘텐츠 다수 선택 가능할 때
+                                // 콘텐츠 다수 선택 가능할 때 (카운터 박스사용)
                                 return Padding(
                                   padding:
                                       EdgeInsets.fromLTRB(0, 10.h, 0, 10.h),
@@ -106,8 +122,9 @@ class ProductController extends GetxController {
                                             maxValue: int.parse(shopController
                                                 .shopGetDetailModel
                                                 .value
-                                                .optionList[first]
-                                                    ['optionDetailList'][second]
+                                                .optionList[optionListIndex]
+                                                    ['optionDetailList']
+                                                    [optionDetailListIndex]
                                                     ['count']
                                                 .toString()),
                                             minValue: 0,
@@ -116,8 +133,10 @@ class ProductController extends GetxController {
                                           ),
                                           Text(
                                             shopController.shopGetDetailModel
-                                                        .value.optionList[first]
-                                                    ['optionDetailList'][second]
+                                                                .value.optionList[
+                                                            optionListIndex]
+                                                        ['optionDetailList']
+                                                    [optionDetailListIndex]
                                                 ['content'],
                                             style: TextStyle(
                                               color: Color(0xff283137),
@@ -131,11 +150,13 @@ class ProductController extends GetxController {
                                         '+' +
                                             formatter
                                                 .format(shopController
-                                                            .shopGetDetailModel
-                                                            .value
-                                                            .optionList[first]
-                                                        ['optionDetailList']
-                                                    [second]['price'])
+                                                                    .shopGetDetailModel
+                                                                    .value
+                                                                    .optionList[
+                                                                optionListIndex]
+                                                            ['optionDetailList']
+                                                        [optionDetailListIndex]
+                                                    ['price'])
                                                 .toString() +
                                             '원  ',
                                         style: TextStyle(
@@ -149,65 +170,93 @@ class ProductController extends GetxController {
                                   ),
                                 );
                               } else {
-                                //콘텐츠 다수 선택 가능하지 않을 때
-                                return InkWell(
-                                  onTap: () {
-                                    print("checkbox Clicked");
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          SizedBox(width: 12.w),
-                                          CustomCheckBox(
-                                            value: false,
-                                            // shouldShowBorder: true,
-                                            borderColor: Color(0xff283137),
-                                            checkedFillColor: Color(0xfff93f5b),
-                                            borderRadius: 0,
-                                            borderWidth: 0,
-                                            checkBoxSize: 15.w,
-                                            onChanged: (val) {
-                                              print("checkbox Clicked");
-                                            },
-                                          ),
-                                          SizedBox(width: 11.w),
-                                          Text(
-                                            shopController.shopGetDetailModel
-                                                        .value.optionList[first]
-                                                    ['optionDetailList'][second]
-                                                ['content'],
-                                            style: TextStyle(
-                                              color: Color(0xff283137),
-                                              fontSize: 15.sp,
-                                              fontFamily: 'NotoSansCJKKR',
+                                //콘텐츠 다수 선택 가능하지 않을 때 (체크박스 사용)
+                                return StatefulBuilder(builder:
+                                    (BuildContext context,
+                                        StateSetter setState) {
+                                  return InkWell(
+                                    onTap: () {
+                                      // setState(
+                                      //   () {
+                                      //     isCheckedBoxAllowMultipleChoices(
+                                      //         optionListIndex,
+                                      //         optionDetailListIndex);
+                                      //     clickedCheckedBox(optionListIndex,
+                                      //         optionDetailListIndex);
+                                      //   },
+                                      // );
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            SizedBox(width: 12.w),
+                                            CustomCheckBox(
+                                              value: selectCheckBoxList[
+                                                      optionListIndex]
+                                                  [optionDetailListIndex],
+                                              // shouldShowBorder: true,
+                                              borderColor: Color(0xff283137),
+                                              checkedFillColor:
+                                                  Color(0xfff93f5b),
+                                              borderRadius: 0,
+                                              borderWidth: 0,
+                                              checkBoxSize: 15.w,
+
+                                              onChanged: (val) {
+                                                setState(
+                                                  () {
+                                                    isCheckedBoxAllowMultipleChoices(
+                                                        optionListIndex,
+                                                        optionDetailListIndex);
+                                                    clickedCheckedBox(
+                                                        optionListIndex,
+                                                        optionDetailListIndex);
+                                                  },
+                                                );
+                                              },
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                      Text(
-                                        '+' +
-                                            formatter
-                                                .format(shopController
-                                                            .shopGetDetailModel
-                                                            .value
-                                                            .optionList[first]
-                                                        ['optionDetailList']
-                                                    [second]['price'])
-                                                .toString() +
-                                            '원  ',
-                                        style: TextStyle(
-                                          color: Color(0xff283137),
-                                          fontSize: 15.sp,
-                                          fontFamily: 'NotoSansCJKKR',
-                                          fontWeight: FontWeight.w600,
+                                            SizedBox(width: 11.w),
+                                            Text(
+                                              shopController.shopGetDetailModel
+                                                                  .value.optionList[
+                                                              optionListIndex]
+                                                          ['optionDetailList']
+                                                      [optionDetailListIndex]
+                                                  ['content'],
+                                              style: TextStyle(
+                                                color: Color(0xff283137),
+                                                fontSize: 15.sp,
+                                                fontFamily: 'NotoSansCJKKR',
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                );
+                                        Text(
+                                          '+' +
+                                              formatter
+                                                  .format(shopController
+                                                                  .shopGetDetailModel
+                                                                  .value
+                                                                  .optionList[
+                                                              optionListIndex]
+                                                          ['optionDetailList'][
+                                                      optionDetailListIndex]['price'])
+                                                  .toString() +
+                                              '원  ',
+                                          style: TextStyle(
+                                            color: Color(0xff283137),
+                                            fontSize: 15.sp,
+                                            fontFamily: 'NotoSansCJKKR',
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                });
                               }
                             }),
                       ),
@@ -247,5 +296,35 @@ class ProductController extends GetxController {
       enableDrag: true,
       backgroundColor: Colors.white,
     );
+  }
+
+  Future<void> isCheckedBoxAllowMultipleChoices(
+      int optionListIndex, int optionDetailListIndex) async {
+    if (shopController.shopGetDetailModel.value.optionList[optionListIndex]
+            ['allowMultipleChoices'] ==
+        false) {
+      if (saveOptionDeatilCheckBoxIndex[optionListIndex] != null) {
+        for (int i = 0; i < saveOptionDeatilCheckBoxIndex.length; i++) {
+          if (saveOptionDeatilCheckBoxIndex[i] == true) print('이미 고ㅓ름');
+        }
+      }
+    }
+
+    print(selectCheckBoxList);
+  }
+
+  void clickedCheckedBox(int optionListIndex, int optionDetailListIndex) async {
+    if (selectCheckBoxList[optionListIndex][optionDetailListIndex] == true) {
+      selectCheckBoxList[optionListIndex][optionDetailListIndex] = false;
+      if (saveOptionDeatilCheckBoxIndex[optionListIndex] != null)
+        saveOptionDeatilCheckBoxIndex[optionListIndex] = false;
+    } else if (selectCheckBoxList[optionListIndex][optionDetailListIndex] ==
+        false) {
+      selectCheckBoxList[optionListIndex][optionDetailListIndex] = true;
+      if (saveOptionDeatilCheckBoxIndex[optionListIndex] != null)
+        saveOptionDeatilCheckBoxIndex[optionListIndex] = true;
+    }
+
+    print(selectCheckBoxList);
   }
 }

@@ -1,10 +1,8 @@
 import 'package:damo/app/controller/owner/owner_order_controller.dart';
-import 'package:damo/app/data/provider/user/user_api.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ShopOrderManagement extends StatelessWidget {
@@ -25,7 +23,7 @@ class ShopOrderManagement extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: DamoAppBar().textAppBar(context, '주문 관리'),
       body: Obx(
-            () => ListView.separated(
+        () => ListView.separated(
           controller: scrollController,
           shrinkWrap: true,
           scrollDirection: Axis.vertical,
@@ -58,8 +56,12 @@ class ShopOrderManagement extends StatelessWidget {
                           : */
                       InkWell(
                         onTap: () {
-                          if (!(orderController.ownerGetOrderModel.value.orderList[index]['status'] == 'REFUSE' ||
-                              orderController.ownerGetOrderModel.value.orderList[index]['status'] == 'FINISHED'))
+                          if (!(orderController.ownerGetOrderModel.value
+                                      .orderList[index]['status'] ==
+                                  'REFUSE' ||
+                              orderController.ownerGetOrderModel.value
+                                      .orderList[index]['status'] ==
+                                  'FINISHED'))
                             orderController.changeOrderStatusClicked(index);
                         },
                         child: Container(
@@ -76,9 +78,14 @@ class ShopOrderManagement extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 12.sp,
                               height: 1,
-                              decoration: orderController.ownerGetOrderModel.value.orderList[index]['status'] ==
-                                  'REFUSE' ||
-                                  orderController.ownerGetOrderModel.value.orderList[index]['status'] == 'FINISHED'
+                              decoration: orderController
+                                              .ownerGetOrderModel
+                                              .value
+                                              .orderList[index]['status'] ==
+                                          'REFUSE' ||
+                                      orderController.ownerGetOrderModel.value
+                                              .orderList[index]['status'] ==
+                                          'FINISHED'
                                   ? TextDecoration.lineThrough
                                   : null,
                               fontFamily: 'NotoSansCJKKR',
@@ -119,7 +126,8 @@ class ShopOrderManagement extends StatelessWidget {
                   ListView.builder(
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
-                    itemCount: orderController.ownerGetOrderModel.value.orderList[index]['options']['optionList'].length,
+                    itemCount: orderController.ownerGetOrderModel.value
+                        .orderList[index]['options']['optionList'].length,
                     itemBuilder: (context, optionIndex) => Container(
                       padding: EdgeInsets.fromLTRB(0, 0, 0, 8.h),
                       child: Column(
@@ -141,9 +149,14 @@ class ShopOrderManagement extends StatelessWidget {
                             child: ListView.separated(
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
-                              itemCount: orderController.ownerGetOrderModel.value
-                                  .orderList[index]['options']['optionList'][optionIndex]['optionDetailList'].length,
-                              itemBuilder: (context, optionDetailIndex) => Container(
+                              itemCount: orderController
+                                  .ownerGetOrderModel
+                                  .value
+                                  .orderList[index]['options']['optionList']
+                                      [optionIndex]['optionDetailList']
+                                  .length,
+                              itemBuilder: (context, optionDetailIndex) =>
+                                  Container(
                                 child: Text(
                                   '- ${orderController.ownerGetOrderModel.value.orderList[index]['options']['optionList'][optionIndex]['optionDetailList'][optionDetailIndex]['content']}',
                                   style: TextStyle(
@@ -154,7 +167,8 @@ class ShopOrderManagement extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              separatorBuilder: (BuildContext context, int index) {
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
                                 return SizedBox(
                                   height: 4.h,
                                 );
