@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:damo/app/controller/sign_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';

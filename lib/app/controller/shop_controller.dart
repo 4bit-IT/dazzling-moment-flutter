@@ -1,19 +1,12 @@
 import 'dart:io';
 import 'dart:math';
-
 import 'package:damo/app/data/model/shop_model.dart';
 import 'package:damo/app/data/provider/shop/shop_api.dart';
-<<<<<<< HEAD
-import 'package:damo/main.dart';
 import 'package:extended_image/extended_image.dart';
-=======
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
->>>>>>> 355cef0a0b1b230c36d589ad519bfb7666ebb08a
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
@@ -21,21 +14,27 @@ import 'package:http/http.dart' as http;
 class ShopController extends GetxController {
   Rx<ShopRegistrationModel> shopRegistrationModel = ShopRegistrationModel().obs;
   Rx<ShopGetDetailModel> shopGetDetailModel = ShopGetDetailModel().obs;
-  Rx<ShopImageRegistrationModel> shopImageRegistrationModel = ShopImageRegistrationModel().obs;
+  Rx<ShopImageRegistrationModel> shopImageRegistrationModel =
+      ShopImageRegistrationModel().obs;
   Rx<ShopImageDeleteModel> shopImageDeleteModel = ShopImageDeleteModel().obs;
-  Rx<ShopChangeMainImageModel> shopChangeMainImageModel = ShopChangeMainImageModel().obs;
+  Rx<ShopChangeMainImageModel> shopChangeMainImageModel =
+      ShopChangeMainImageModel().obs;
   Rx<ShopGetMeModel> shopGetMeModel = ShopGetMeModel().obs;
-  Rx<ShopOptionRegistration> shopOptionRegistration = ShopOptionRegistration().obs;
+  Rx<ShopOptionRegistration> shopOptionRegistration =
+      ShopOptionRegistration().obs;
   RxList<ShopMainOptionModel> mainOptionList = <ShopMainOptionModel>[].obs;
   Rx<TextEditingController> shopNameController = TextEditingController().obs;
   Rx<TextEditingController> shopContentController = TextEditingController().obs;
-  Rx<TextEditingController> shopDescriptionController = TextEditingController().obs;
-  Rx<TextEditingController> shopBasePriceController = TextEditingController().obs;
+  Rx<TextEditingController> shopDescriptionController =
+      TextEditingController().obs;
+  Rx<TextEditingController> shopBasePriceController =
+      TextEditingController().obs;
   Rx<LoadShopMainPageModel> loadShopMainPageModel = LoadShopMainPageModel().obs;
   List<dynamic> stroageMainPage = [].obs;
   int maxImagesSize = 10;
   Rx<FileImage>? selectMainImage = FileImage(File(XFile('').path)).obs;
-  List<dynamic>? selectImages = List.filled(10, FileImage(File(XFile('').path))).obs;
+  List<dynamic>? selectImages =
+      List.filled(10, FileImage(File(XFile('').path))).obs;
   RxInt imagesSize = 0.obs;
   Widget wishIconOn = SvgPicture.asset(
     'assets/images_svg/ic_wish_on.svg',
@@ -48,16 +47,7 @@ class ShopController extends GetxController {
     height: 30.h,
   );
   Map<String, dynamic> toJsonInput = {};
-  Widget wishIconOn = SvgPicture.asset(
-    'assets/images_svg/ic_wish_on.svg',
-    width: 30.w,
-    height: 30.h,
-  );
-  Widget wishIconOff = SvgPicture.asset(
-    'assets/images_svg/ic_wish_off.svg',
-    width: 30.w,
-    height: 30.h,
-  );
+
   String sendData = '';
   var jsonResponse;
   var model;
@@ -91,16 +81,21 @@ class ShopController extends GetxController {
     });
 
     if (shopGetMeModel.value.name != '') {
-      shopNameController = TextEditingController(text: shopGetMeModel.value.name).obs;
+      shopNameController =
+          TextEditingController(text: shopGetMeModel.value.name).obs;
     }
     if (shopGetMeModel.value.content != '') {
-      shopContentController = TextEditingController(text: shopGetMeModel.value.content).obs;
+      shopContentController =
+          TextEditingController(text: shopGetMeModel.value.content).obs;
     }
     if (shopGetMeModel.value.dataDescription != '') {
-      shopDescriptionController = TextEditingController(text: shopGetMeModel.value.dataDescription).obs;
+      shopDescriptionController =
+          TextEditingController(text: shopGetMeModel.value.dataDescription).obs;
     }
     if (shopGetMeModel.value.basePrice != null) {
-      shopBasePriceController = TextEditingController(text: shopGetMeModel.value.basePrice.toString()).obs;
+      shopBasePriceController =
+          TextEditingController(text: shopGetMeModel.value.basePrice.toString())
+              .obs;
     }
 
     // print(shopGetMeModel.value.optionList);
@@ -111,10 +106,14 @@ class ShopController extends GetxController {
       File file = File('$tempPath' +
           random +
           '.' +
-          shopGetMeModel.value.images[i][shopGetMeModel.value.images[i].length - 3] +
-          shopGetMeModel.value.images[i][shopGetMeModel.value.images[i].length - 2] +
-          shopGetMeModel.value.images[i][shopGetMeModel.value.images[i].length - 1]);
-      http.Response response = await http.get(Uri.parse(shopGetMeModel.value.images[i]));
+          shopGetMeModel.value.images[i]
+              [shopGetMeModel.value.images[i].length - 3] +
+          shopGetMeModel.value.images[i]
+              [shopGetMeModel.value.images[i].length - 2] +
+          shopGetMeModel.value.images[i]
+              [shopGetMeModel.value.images[i].length - 1]);
+      http.Response response =
+          await http.get(Uri.parse(shopGetMeModel.value.images[i]));
       await file.writeAsBytes(response.bodyBytes);
       selectImages![i] = FileImage(file);
     }
@@ -125,10 +124,14 @@ class ShopController extends GetxController {
       File file = File('$tempPath' +
           random +
           '.' +
-          shopGetMeModel.value.shopProfileImage![shopGetMeModel.value.shopProfileImage!.length - 3] +
-          shopGetMeModel.value.shopProfileImage![shopGetMeModel.value.images.length - 2] +
-          shopGetMeModel.value.shopProfileImage![shopGetMeModel.value.images.length - 1]);
-      http.Response response = await http.get(Uri.parse(shopGetMeModel.value.shopProfileImage!));
+          shopGetMeModel.value.shopProfileImage![
+              shopGetMeModel.value.shopProfileImage!.length - 3] +
+          shopGetMeModel
+              .value.shopProfileImage![shopGetMeModel.value.images.length - 2] +
+          shopGetMeModel
+              .value.shopProfileImage![shopGetMeModel.value.images.length - 1]);
+      http.Response response =
+          await http.get(Uri.parse(shopGetMeModel.value.shopProfileImage!));
       await file.writeAsBytes(response.bodyBytes);
       selectMainImage!.value = FileImage(file);
     }
@@ -139,19 +142,26 @@ class ShopController extends GetxController {
 
       for (int j = 0; j < shopGetMeModel.value.optionList.length; j++) {
         temp.add(ShopDetailOptionModel(
-          detailOptionContentController:
-              TextEditingController(text: shopGetMeModel.value.optionList[i]['optionDetailList'][j]['content']),
+          detailOptionContentController: TextEditingController(
+              text: shopGetMeModel.value.optionList[i]['optionDetailList'][j]
+                  ['content']),
           detailOptionPriceController: TextEditingController(
-              text: shopGetMeModel.value.optionList[i]['optionDetailList'][j]['price'].toString()),
-          detailOptionCount: shopGetMeModel.value.optionList[i]['optionDetailList'][j]['count'],
-          detailOptionAllowMultipleChoices: shopGetMeModel.value.optionList[i]['optionDetailList'][j]
-              ['allowMultipleChoices'],
+              text: shopGetMeModel
+                  .value.optionList[i]['optionDetailList'][j]['price']
+                  .toString()),
+          detailOptionCount: shopGetMeModel.value.optionList[i]
+              ['optionDetailList'][j]['count'],
+          detailOptionAllowMultipleChoices: shopGetMeModel.value.optionList[i]
+              ['optionDetailList'][j]['allowMultipleChoices'],
         ));
       }
       mainOptionList.add(ShopMainOptionModel(
-        mainOptionTitleController: TextEditingController(text: shopGetMeModel.value.optionList[i]['title']),
-        mainOptionDescriptionController: TextEditingController(text: shopGetMeModel.value.optionList[i]['description']),
-        mainOptionAllowMultipleChoices: shopGetMeModel.value.optionList[i]['allowMultipleChoices'],
+        mainOptionTitleController: TextEditingController(
+            text: shopGetMeModel.value.optionList[i]['title']),
+        mainOptionDescriptionController: TextEditingController(
+            text: shopGetMeModel.value.optionList[i]['description']),
+        mainOptionAllowMultipleChoices: shopGetMeModel.value.optionList[i]
+            ['allowMultipleChoices'],
         shopDetailOptionList: temp,
       ));
     }
@@ -201,7 +211,8 @@ class ShopController extends GetxController {
   Future<void> changeShopMainImage() async {
     var model;
     if (selectMainImage != null) {
-      dynamic sendData = await ShopChangeMainImageModel().toJson(selectMainImage!.value.file.path);
+      dynamic sendData = await ShopChangeMainImageModel()
+          .toJson(selectMainImage!.value.file.path);
       jsonResponse = await ShopNetwork().postShopImageMain(sendData);
       print(jsonResponse);
       model = ShopChangeMainImageModel.fromJson(jsonResponse);
@@ -232,7 +243,7 @@ class ShopController extends GetxController {
       model = ShopImageRegistrationModel.fromJson(jsonResponse);
 
       if (model.code == 1) {
-        for(int i=0;i<model.imageUrlList.length;i++){
+        for (int i = 0; i < model.imageUrlList.length; i++) {
           String random = Random().nextInt(2147483890).toString();
           shopGetMeModel.value.images[i] = '${model.imageUrlList[i]}?v=$random';
         }
@@ -264,10 +275,20 @@ class ShopController extends GetxController {
   }
 
   void decreaseDetailOptionCount(int index, int detailIndex) {
-    if (mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionCount > 1) {
-      mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionCount--;
-      if (mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionCount == 1) {
-        mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionAllowMultipleChoices = false;
+    if (mainOptionList[index]
+            .shopDetailOptionList[detailIndex]
+            .detailOptionCount >
+        1) {
+      mainOptionList[index]
+          .shopDetailOptionList[detailIndex]
+          .detailOptionCount--;
+      if (mainOptionList[index]
+              .shopDetailOptionList[detailIndex]
+              .detailOptionCount ==
+          1) {
+        mainOptionList[index]
+            .shopDetailOptionList[detailIndex]
+            .detailOptionAllowMultipleChoices = false;
       }
       mainOptionList.refresh();
     }
@@ -275,8 +296,13 @@ class ShopController extends GetxController {
 
   void increaseDetailOptionCount(int index, int detailIndex) {
     mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionCount++;
-    if (mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionCount > 1) {
-      mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionAllowMultipleChoices = true;
+    if (mainOptionList[index]
+            .shopDetailOptionList[detailIndex]
+            .detailOptionCount >
+        1) {
+      mainOptionList[index]
+          .shopDetailOptionList[detailIndex]
+          .detailOptionAllowMultipleChoices = true;
     }
     mainOptionList.refresh();
   }
@@ -383,27 +409,41 @@ class ShopController extends GetxController {
     for (int i = 0; i < mainOptionList.length; i++) {
       for (int j = 0; j < mainOptionList[i].shopDetailOptionList.length; j++) {
         optionDetailList.add({
-          'allowMultipleChoices': mainOptionList[i].shopDetailOptionList[j].detailOptionAllowMultipleChoices,
-          'content': mainOptionList[i].shopDetailOptionList[j].detailOptionContentController!.value.text,
+          'allowMultipleChoices': mainOptionList[i]
+              .shopDetailOptionList[j]
+              .detailOptionAllowMultipleChoices,
+          'content': mainOptionList[i]
+              .shopDetailOptionList[j]
+              .detailOptionContentController!
+              .value
+              .text,
           'count': mainOptionList[i].shopDetailOptionList[j].detailOptionCount,
-          'price': int.parse(mainOptionList[i].shopDetailOptionList[j].detailOptionPriceController!.value.text)
+          'price': int.parse(mainOptionList[i]
+              .shopDetailOptionList[j]
+              .detailOptionPriceController!
+              .value
+              .text)
         });
       }
       optionList.add({
-        'allowMultipleChoices': mainOptionList[i].mainOptionAllowMultipleChoices,
-        'description': mainOptionList[i].mainOptionDescriptionController!.value.text,
+        'allowMultipleChoices':
+            mainOptionList[i].mainOptionAllowMultipleChoices,
+        'description':
+            mainOptionList[i].mainOptionDescriptionController!.value.text,
         'title': mainOptionList[i].mainOptionTitleController!.value.text,
         'optionDetailList': optionDetailList,
       });
     }
-    toJsonInput['basePrice'] = int.parse(shopBasePriceController.value.value.text);
+    toJsonInput['basePrice'] =
+        int.parse(shopBasePriceController.value.value.text);
     toJsonInput['optionList'] = optionList;
     sendData = ShopOptionRegistration().toJson(toJsonInput);
     jsonResponse = await ShopNetwork().postShopOption(sendData);
   }
 
   Future<void> shopManagementModifyClicked(BuildContext context) async {
-    if (shopContentController.value.value.text == '' || shopDescriptionController.value.value.text == '') {
+    if (shopContentController.value.value.text == '' ||
+        shopDescriptionController.value.value.text == '') {
       FocusScope.of(context).unfocus();
       Get.dialog(
         Dialog(
@@ -486,7 +526,8 @@ class ShopController extends GetxController {
     } else {
       for (int i = 0; i < mainOptionList.length; i++) {
         if (mainOptionList[i].mainOptionTitleController!.value.text == '' ||
-            mainOptionList[i].mainOptionDescriptionController!.value.text == '') {
+            mainOptionList[i].mainOptionDescriptionController!.value.text ==
+                '') {
           FocusScope.of(context).unfocus();
           Get.dialog(
             Dialog(
@@ -508,9 +549,21 @@ class ShopController extends GetxController {
           );
           return;
         }
-        for (int j = 0; j < mainOptionList[i].shopDetailOptionList.length; j++) {
-          if (mainOptionList[i].shopDetailOptionList[j].detailOptionPriceController!.value.text == '' ||
-              mainOptionList[i].shopDetailOptionList[j].detailOptionContentController!.value.text == '') {
+        for (int j = 0;
+            j < mainOptionList[i].shopDetailOptionList.length;
+            j++) {
+          if (mainOptionList[i]
+                      .shopDetailOptionList[j]
+                      .detailOptionPriceController!
+                      .value
+                      .text ==
+                  '' ||
+              mainOptionList[i]
+                      .shopDetailOptionList[j]
+                      .detailOptionContentController!
+                      .value
+                      .text ==
+                  '') {
             FocusScope.of(context).unfocus();
             Get.dialog(
               Dialog(

@@ -4,7 +4,6 @@ import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/view/shop/shop_faq/shop_faq_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -25,11 +24,12 @@ class ShopFAQManagement extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0),
                 child: Obx(
-                      () => ListView.separated(
+                  () => ListView.separated(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
-                    itemCount: shopFAQController.shopGetFAQModel.value.faqList!.length,
+                    itemCount:
+                        shopFAQController.shopGetFAQModel.value.faqList!.length,
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
@@ -52,13 +52,17 @@ class ShopFAQManagement extends StatelessWidget {
                                       height: 1),
                                 ),
                               ),
-                              Icon(Icons.arrow_forward_ios, size: 20,),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: 20,
+                              ),
                             ],
                           ),
                         ),
                       );
                     },
-                    separatorBuilder: (BuildContext context, int index) => Divider(
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Divider(
                       color: Color(0xfff1f3f5),
                       thickness: 1.h,
                       height: 0,

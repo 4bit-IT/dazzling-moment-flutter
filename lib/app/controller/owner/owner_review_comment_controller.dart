@@ -1,7 +1,6 @@
 import 'package:damo/app/controller/owner/owner_review_controller.dart';
 import 'package:damo/app/data/model/owner/owner_review_comment_model.dart';
 import 'package:damo/app/data/provider/owner/owner_review_comment_api.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class OwnerReviewCommentController extends GetxController {
@@ -32,11 +31,14 @@ class OwnerReviewCommentController extends GetxController {
 
   Future<void> createReviewComment(int index) async {
     toJsonInput.clear();
-    toJsonInput['comment'] = ownerReviewController.commentModel[index].commentController!.value.text;
-    toJsonInput['reviewId'] = ownerReviewController.ownerReviewModel.value.reviewList[index]['id'];
+    toJsonInput['comment'] =
+        ownerReviewController.commentModel[index].commentController!.value.text;
+    toJsonInput['reviewId'] =
+        ownerReviewController.ownerReviewModel.value.reviewList[index]['id'];
     print(toJsonInput);
     sendData = CreateReviewCommentModel().toJson(toJsonInput);
-    jsonResponse = await OwnerReviewCommentNetwork().postReviewComment(sendData);
+    jsonResponse =
+        await OwnerReviewCommentNetwork().postReviewComment(sendData);
     model = CreateReviewCommentModel.fromJson(jsonResponse);
 
     if (model.code == 1) {
@@ -48,10 +50,12 @@ class OwnerReviewCommentController extends GetxController {
 
   Future<void> deleteReviewComment(int index) async {
     toJsonInput.clear();
-    toJsonInput['reviewCommentId'] = ownerReviewController.commentModel[index].reviewCommentId;
+    toJsonInput['reviewCommentId'] =
+        ownerReviewController.commentModel[index].reviewCommentId;
     print(toJsonInput);
     sendData = DeleteReviewCommentModel().toJson(toJsonInput);
-    jsonResponse = await OwnerReviewCommentNetwork().deleteReviewComment(sendData);
+    jsonResponse =
+        await OwnerReviewCommentNetwork().deleteReviewComment(sendData);
     model = DeleteReviewCommentModel.fromJson(jsonResponse);
 
     if (model.code == 1) {
@@ -64,11 +68,14 @@ class OwnerReviewCommentController extends GetxController {
 
   Future<void> updateReviewComment(int index) async {
     toJsonInput.clear();
-    toJsonInput['comment'] = ownerReviewController.commentModel[index].commentController!.value.text;
-    toJsonInput['reviewCommentId'] = ownerReviewController.commentModel[index].reviewCommentId;
+    toJsonInput['comment'] =
+        ownerReviewController.commentModel[index].commentController!.value.text;
+    toJsonInput['reviewCommentId'] =
+        ownerReviewController.commentModel[index].reviewCommentId;
     print(toJsonInput);
     sendData = UpdateReviewCommentModel().toJson(toJsonInput);
-    jsonResponse = await OwnerReviewCommentNetwork().patchReviewComment(sendData);
+    jsonResponse =
+        await OwnerReviewCommentNetwork().patchReviewComment(sendData);
     model = UpdateReviewCommentModel.fromJson(jsonResponse);
 
     if (model.code == 1) {

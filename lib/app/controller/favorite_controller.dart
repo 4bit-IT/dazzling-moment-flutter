@@ -38,13 +38,8 @@ class FavoriteController extends GetxController {
         shopController.shopGetDetailModel.value.isFavorite = false;
         shopController.shopGetDetailModel.refresh();
         wishIcon.value = wishIconOff;
-<<<<<<< HEAD
-        shopController.stroageMainPage[shopIndex]['isFavoriteButton'].value = wishIconOff;
-=======
         shopController.stroageMainPage[shopIndex]['isFavoriteButton'].value =
             wishIconOff;
->>>>>>> 355cef0a0b1b230c36d589ad519bfb7666ebb08a
-
         print('찜목록에서 제거했습니다.');
       } else if (shopController.shopGetDetailModel.value.isFavorite == false) {
         shopController.shopGetDetailModel.value.isFavorite = true;
@@ -60,9 +55,11 @@ class FavoriteController extends GetxController {
   }
 
   Future<void> initWishIcon() async {
-    if ((shopController.shopGetDetailModel.value.isFavorite == true)) wishIcon = wishIconOn.obs;
+    if ((shopController.shopGetDetailModel.value.isFavorite == true))
+      wishIcon = wishIconOn.obs;
 
-    if ((shopController.shopGetDetailModel.value.isFavorite == false)) wishIcon = wishIconOff.obs;
+    if ((shopController.shopGetDetailModel.value.isFavorite == false))
+      wishIcon = wishIconOff.obs;
   }
 
   @override
