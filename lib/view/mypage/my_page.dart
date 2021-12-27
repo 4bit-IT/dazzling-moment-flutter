@@ -1,6 +1,6 @@
 import 'package:damo/app/controller/owner/owner_order_controller.dart';
+import 'package:damo/app/controller/owner/owner_shop_controller.dart';
 import 'package:damo/app/controller/shop_controller.dart';
-import 'package:damo/app/controller/shop_faq_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/view/mypage/edit_my_info.dart';
 import 'package:damo/view/mypage/purchase_history.dart';
@@ -24,6 +24,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 
 UserController userController = Get.find();
 ShopController shopController = Get.find();
+OwnerShopController? ownerShopController;
 
 class MyPage extends StatefulWidget {
   MyPage({this.bottomNavigationIndex});
@@ -376,9 +377,8 @@ class _MyPageState extends State<MyPage> {
                           SizedBox(height: 24.h),
                           TextButton(
                             onPressed: () async {
-                              await shopController.fetchShopData();
-                              await ShopFAQBinding().dependencies();
-                              await OrderBinding().dependencies();
+                              await OwnerShopBinding().dependencies();
+                              await OwnerOrderBinding().dependencies();
                               Get.to(() => ShopMain());
                             },
                             child: Text(

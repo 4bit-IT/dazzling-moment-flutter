@@ -12,6 +12,14 @@ class OwnerOrderController extends GetxController {
   var jsonResponse;
   var model;
 
+  @override
+  void onInit() async {
+    // TODO: implement onInit
+    super.onInit();
+
+    await fetchShopOrderData();
+  }
+
   Future<void> fetchShopOrderData() async {
     jsonResponse = await OrderNetwork().getOrdersOwner();
     model = OwnerGetOrderModel.fromJson(jsonResponse);
@@ -506,7 +514,7 @@ class OwnerOrderController extends GetxController {
   }
 }
 
-class OrderBinding extends Bindings {
+class OwnerOrderBinding extends Bindings {
   @override
   Future<void> dependencies() async {
     // TODO: implement dependencies

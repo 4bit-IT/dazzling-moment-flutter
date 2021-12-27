@@ -147,13 +147,8 @@ class ShopImageRegistrationModel {
 
   dynamic toJson(dynamic input) async {
     var temp = [];
-    for(int i=0;i<input.length;i++){
-      temp.add(await MultipartFile.fromFile(input[i]));
-    }
-    var formData = FormData.fromMap(
-      {'images' : temp},
-    );
-    return formData;
+    temp = input.map((img) => MultipartFile.fromFileSync(img.path)).toList();
+    return temp;
   }
 
   ShopImageRegistrationModel.fromJson(Map<String, dynamic> json) {
@@ -208,7 +203,6 @@ class ShopGetMeModel {
 
   ShopGetMeModel.fromJson(Map<String, dynamic> json) {
     print(json);
-    print(json['data']['shopProfileImage']);
     code = json['code'];
     content = json['data']['content'];
     dataDescription = json['data']['description'];
@@ -221,7 +215,7 @@ class ShopGetMeModel {
     optionList = json['data']['options']['optionList'];
     rating = json['data']['rating'];
     reviewCount = json['data']['reviewCount'];
-    shopProfileImage = json['data']['shopProfileImage'].toString();
+    shopProfileImage = json['data']['shopProfileImage'];
     description = json['description'];
     result = json['result'];
   }

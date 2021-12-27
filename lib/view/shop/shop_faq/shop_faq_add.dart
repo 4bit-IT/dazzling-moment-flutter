@@ -1,3 +1,4 @@
+import 'package:damo/app/controller/owner/owner_shop_faq_controller.dart';
 import 'package:damo/app/controller/shop_faq_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ShopFAQAdd extends StatelessWidget {
-  ShopFAQController shopFAQController = Get.find();
+  OwnerShopFAQController ownerShopFAQController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +62,8 @@ class ShopFAQAdd extends StatelessWidget {
                         ),
                         InkWell(
                           onTap: () {
-                            shopFAQController.shopFAQQuestionAddController.value.clear();
-                            shopFAQController.shopFAQAnswerAddController.value.clear();
+                            ownerShopFAQController.shopFAQQuestionAddController.value.clear();
+                            ownerShopFAQController.shopFAQAnswerAddController.value.clear();
                             Get.back();
                             Get.back();
                           },
@@ -122,7 +123,7 @@ class ShopFAQAdd extends StatelessWidget {
                                   fontSize: 20.sp,
                                   height: 1,
                                 ),
-                                controller: shopFAQController.shopFAQQuestionAddController.value,
+                                controller: ownerShopFAQController.shopFAQQuestionAddController.value,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'FAQ의 제목을 입력해주세요.',
@@ -164,7 +165,7 @@ class ShopFAQAdd extends StatelessWidget {
                                   fontSize: 20.sp,
                                   height: 1,
                                 ),
-                                controller: shopFAQController.shopFAQAnswerAddController.value,
+                                controller: ownerShopFAQController.shopFAQAnswerAddController.value,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'FAQ의 답변을 입력해주세요.',
@@ -188,7 +189,7 @@ class ShopFAQAdd extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                shopFAQController.onAddFAQClicked();
+                ownerShopFAQController.onAddFAQClicked();
               },
               child: Container(
                 color: Color(0xfff93f5b),

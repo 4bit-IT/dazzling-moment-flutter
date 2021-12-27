@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class ShopProductList extends StatelessWidget {
-  const ShopProductList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
