@@ -1,5 +1,6 @@
 import 'package:damo/app/controller/owner/owner_review_comment_controller.dart';
 import 'package:damo/app/controller/owner/owner_review_controller.dart';
+import 'package:damo/app/controller/owner/owner_shop_controller.dart';
 import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:extended_image/extended_image.dart';
@@ -12,7 +13,7 @@ import 'package:simple_star_rating/simple_star_rating.dart';
 import 'package:vertical_barchart/vertical-barchart.dart';
 import 'package:vertical_barchart/vertical-barchartmodel.dart';
 
-ShopController shopController = Get.find();
+OwnerShopController ownerShopController = Get.find();
 RefreshController _refreshController = RefreshController(initialRefresh: true);
 
 class ShopReviewManagement extends StatelessWidget {
@@ -94,7 +95,7 @@ class ShopReviewManagement extends StatelessWidget {
                   SizedBox(width: 8.w),
                   Obx(
                     () => Text(
-                      '총 ${shopController.shopGetMeModel.value.reviewCount}개 리뷰',
+                      '총 ${ownerShopController.shopGetMeModel.value.reviewCount}개 리뷰',
                       style: TextStyle(
                         color: Color(0xff8e97a0),
                         fontFamily: 'NotoSansCJKKR',
@@ -121,7 +122,7 @@ class ShopReviewManagement extends StatelessWidget {
                   SizedBox(width: 9.w),
                   Obx(
                     () => Text(
-                      '${shopController.shopGetMeModel.value.rating!}',
+                      '${ownerShopController.shopGetMeModel.value.rating!}',
                       style: TextStyle(
                         color: Color(0xff283137),
                         fontSize: 30.sp,

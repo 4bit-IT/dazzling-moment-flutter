@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/data/model/shop_model.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:http/http.dart' as http;
-import 'package:get/get.dart';
 
 final TokenController tokenController = Get.find();
 final baseUri = ('https://www.damoforyou.com/api');
 
-class ShopNetwork {
+class OwnerShopNetwork {
   final headers = {
     'Content-Type': 'application/json',
     'token': tokenController.token!['accessToken']!,
@@ -29,26 +30,16 @@ class ShopNetwork {
     }
   }
 
-  Future<dynamic> getShopId(String id) async {
-    try {
-      http.Response response = await http.get(
-        Uri.parse(baseUri + '/shop/$id'),
-        headers: headers,
-      );
-      return jsonDecode(utf8.decode(response.bodyBytes));
-    } catch (e) {}
-  }
-
   Future<dynamic> postShopImage(dynamic input) async {
-    var dio = new Dio();
+    var dio = Dio();
     try {
       dio.options.contentType = 'multipart/form-data';
-      dio.options.maxRedirects.isFinite;
-
       dio.options.headers = {'token': tokenController.token!['accessToken']};
+      dio.options.maxRedirects.isFinite;
+      FormData formData = FormData.fromMap({'images': input});
       var response = await dio.post(
         baseUri + '/shop/image',
-        data: input,
+        data: formData,
       );
       print('업체 이미지들 업로드 완료');
       return response.data;

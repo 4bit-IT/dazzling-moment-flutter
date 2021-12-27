@@ -1,3 +1,4 @@
+import 'package:damo/app/controller/owner/owner_shop_faq_controller.dart';
 import 'package:damo/app/controller/shop_faq_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/view/shop/shop_faq/shop_faq_modify.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ShopFAQInfo extends StatelessWidget {
-  ShopFAQController shopFAQController = Get.find();
+  OwnerShopFAQController ownerShopFAQController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +27,8 @@ class ShopFAQInfo extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
                     child: Obx(
                       () => Text(
-                        shopFAQController.currentIndex.value != -1
-                            ? 'Q: ${shopFAQController.shopGetFAQModel.value.faqList![shopFAQController.currentIndex.value]['question']}'
+                        ownerShopFAQController.currentIndex.value != -1
+                            ? 'Q: ${ownerShopFAQController.ownerShopGetFAQModel.value.faqList![ownerShopFAQController.currentIndex.value]['question']}'
                             : '',
                         style: TextStyle(
                             color: Color(0xff283137),
@@ -46,8 +47,8 @@ class ShopFAQInfo extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
                     child: Obx(
                       () => Text(
-                        shopFAQController.currentIndex.value != -1
-                            ? 'A: ${shopFAQController.shopGetFAQModel.value.faqList![shopFAQController.currentIndex.value]['answer']}'
+                        ownerShopFAQController.currentIndex.value != -1
+                            ? 'A: ${ownerShopFAQController.ownerShopGetFAQModel.value.faqList![ownerShopFAQController.currentIndex.value]['answer']}'
                             : '',
                         style: TextStyle(
                           color: Color(0xff283137),
@@ -92,7 +93,7 @@ class ShopFAQInfo extends StatelessWidget {
                 flex: 1,
                 child: InkWell(
                   onTap: () {
-                    shopFAQController.onDeleteFAQClicked();
+                    ownerShopFAQController.onDeleteFAQClicked();
                   },
                   child: Container(
                     padding: EdgeInsets.fromLTRB(0, 16.h, 0, 16.h),

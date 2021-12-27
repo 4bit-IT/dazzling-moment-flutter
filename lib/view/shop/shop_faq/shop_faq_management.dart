@@ -1,3 +1,4 @@
+import 'package:damo/app/controller/owner/owner_shop_faq_controller.dart';
 import 'package:damo/app/controller/shop_faq_controller.dart';
 import 'package:damo/view/shop/shop_faq/shop_faq_add.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class ShopFAQManagement extends StatelessWidget {
   TextEditingController faqTitleController = TextEditingController();
   TextEditingController faqDocumentController = TextEditingController();
-  ShopFAQController shopFAQController = Get.find();
+  OwnerShopFAQController ownerShopFAQController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +30,15 @@ class ShopFAQManagement extends StatelessWidget {
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
                     itemCount:
-                        shopFAQController.shopGetFAQModel.value.faqList!.length,
+                        ownerShopFAQController.ownerShopGetFAQModel.value.faqList ==
+                                null
+                            ? 0
+                            : ownerShopFAQController
+                                .ownerShopGetFAQModel.value.faqList!.length,
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          shopFAQController.changeCurrentIndex(index);
+                          ownerShopFAQController.changeCurrentIndex(index);
                           Get.to(() => ShopFAQInfo());
                         },
                         child: Container(
@@ -43,7 +48,7 @@ class ShopFAQManagement extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Text(
-                                  'Q: ${shopFAQController.shopGetFAQModel.value.faqList![index]['question']}',
+                                  'Q: ${ownerShopFAQController.ownerShopGetFAQModel.value.faqList![index]['question']}',
                                   style: TextStyle(
                                       color: Color(0xff283137),
                                       fontFamily: 'NotoSansCJKKR',
@@ -74,8 +79,8 @@ class ShopFAQManagement extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              shopFAQController.shopFAQAnswerAddController.value.clear();
-              shopFAQController.shopFAQQuestionAddController.value.clear();
+              ownerShopFAQController.shopFAQAnswerAddController.value.clear();
+              ownerShopFAQController.shopFAQQuestionAddController.value.clear();
               Get.to(() => ShopFAQAdd());
             },
             child: Container(

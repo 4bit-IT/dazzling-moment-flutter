@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:damo/app/controller/shop_controller.dart';
+import 'package:damo/app/controller/owner/owner_shop_controller.dart';
 import 'package:damo/view/shop/shop_product_modify.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:extended_image/extended_image.dart';
@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class ShopProductMain extends StatelessWidget {
-  final ShopController shopController = Get.find();
+  final OwnerShopController ownerShopController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -54,15 +54,20 @@ class ShopProductMain extends StatelessWidget {
                           ),
                           borderRadius: BorderRadius.circular(8.r),
                         ),
-                        child: ExtendedImage.network(
-                          shopController.shopGetMeModel.value.shopProfileImage!,
-                          width: 100.w,
-                          height: 100.h,
-                          fit: BoxFit.cover,
-                          cache: false,
-                          // border: Border.all(color: Colors.red, width: 1.0),
-                          // borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                        ),
+                        child: ownerShopController
+                                    .shopGetMeModel.value.shopProfileImage ==
+                                null
+                            ? null
+                            : ExtendedImage.network(
+                                ownerShopController
+                                    .shopGetMeModel.value.shopProfileImage!,
+                                width: 100.w,
+                                height: 100.h,
+                                fit: BoxFit.cover,
+                                cache: false,
+                                // border: Border.all(color: Colors.red, width: 1.0),
+                                // borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                              ),
                       ),
                       SizedBox(
                         height: 24.h,
@@ -92,12 +97,13 @@ class ShopProductMain extends StatelessWidget {
                         ),
                         child: TextFormField(
                           readOnly: true,
-                          controller: shopController.shopNameController.value,
+                          controller:
+                              ownerShopController.shopNameController.value,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             hintText:
-                                shopController.shopGetMeModel.value.name ==
-                                        'null'
+                                ownerShopController.shopGetMeModel.value.name ==
+                                        null
                                     ? '스토어 이름을 입력하세요'
                                     : null,
                             hintStyle: TextStyle(
@@ -138,14 +144,14 @@ class ShopProductMain extends StatelessWidget {
                         child: TextFormField(
                           readOnly: true,
                           controller:
-                              shopController.shopContentController.value,
+                              ownerShopController.shopContentController.value,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText:
-                                shopController.shopGetMeModel.value.content ==
-                                        'null'
-                                    ? '메인페이지에 보일 간략한 설명을 적어주세요'
-                                    : null,
+                            hintText: ownerShopController
+                                        .shopGetMeModel.value.content ==
+                                    null
+                                ? '메인페이지에 보일 간략한 설명을 적어주세요'
+                                : null,
                             hintStyle: TextStyle(
                               color: Color(0xffd1d1d6),
                               fontFamily: 'NotoSansCJKKR',
@@ -185,13 +191,13 @@ class ShopProductMain extends StatelessWidget {
                           readOnly: true,
                           maxLines: 23,
                           textAlign: TextAlign.center,
-                          controller:
-                              shopController.shopDescriptionController.value,
+                          controller: ownerShopController
+                              .shopDescriptionController.value,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            hintText: shopController
+                            hintText: ownerShopController
                                         .shopGetMeModel.value.dataDescription ==
-                                    'null'
+                                    null
                                 ? '상세페이지에 적힐 스토어 설명을 적어주세요'
                                 : null,
                             hintStyle: TextStyle(
@@ -226,9 +232,8 @@ class ShopProductMain extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           itemCount: 10,
                           itemBuilder: (context, imageIndex) {
-                            return imageIndex >=
-                                    shopController
-                                        .shopGetMeModel.value.images.length
+                            return ownerShopController
+                                        .shopGetMeModel.value.images == null
                                 ? Container(
                                     width: 100.w,
                                     height: 100.h,
@@ -238,18 +243,31 @@ class ShopProductMain extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(8.r)),
                                   )
-                                : CachedNetworkImage(
-                                    imageUrl:
-                                        '${shopController.shopGetMeModel.value.images[imageIndex]}',
-                                    width: 100.w,
-                                    height: 100.h,
-                                    fit: BoxFit.fill,
-                                    fadeInDuration: Duration(milliseconds: 100),
-                                    fadeOutDuration:
-                                        Duration(milliseconds: 100),
-                                    placeholder: (context, url) =>
-                                        CircularProgressIndicator(),
-                                  );
+                                : imageIndex >=
+                                        ownerShopController
+                                            .shopGetMeModel.value.images.length
+                                    ? Container(
+                                        width: 100.w,
+                                        height: 100.h,
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.black12),
+                                            borderRadius:
+                                                BorderRadius.circular(8.r)),
+                                      )
+                                    : CachedNetworkImage(
+                                        imageUrl:
+                                            '${ownerShopController.shopGetMeModel.value.images[imageIndex]}',
+                                        width: 100.w,
+                                        height: 100.h,
+                                        fit: BoxFit.fill,
+                                        fadeInDuration:
+                                            Duration(milliseconds: 100),
+                                        fadeOutDuration:
+                                            Duration(milliseconds: 100),
+                                        placeholder: (context, url) =>
+                                            CircularProgressIndicator(),
+                                      );
                           },
                           separatorBuilder: (BuildContext context, int index) {
                             return SizedBox(
@@ -302,7 +320,7 @@ class ShopProductMain extends StatelessWidget {
                               ),
                               child: TextFormField(
                                 readOnly: true,
-                                controller: shopController
+                                controller: ownerShopController
                                     .shopBasePriceController.value,
                                 inputFormatters: [
                                   MaskTextInputFormatter(
@@ -330,7 +348,7 @@ class ShopProductMain extends StatelessWidget {
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: shopController.mainOptionList.length,
+                        itemCount: ownerShopController.mainOptionList.length,
                         itemBuilder: (context, index) => Column(
                           children: [
                             SizedBox(
@@ -388,7 +406,7 @@ class ShopProductMain extends StatelessWidget {
                                       child: TextFormField(
                                         readOnly: true,
                                         maxLines: 3,
-                                        controller: shopController
+                                        controller: ownerShopController
                                             .mainOptionList[index]
                                             .mainOptionTitleController,
                                         decoration: InputDecoration(
@@ -433,7 +451,7 @@ class ShopProductMain extends StatelessWidget {
                                       child: TextFormField(
                                         readOnly: true,
                                         maxLines: 5,
-                                        controller: shopController
+                                        controller: ownerShopController
                                             .mainOptionList[index]
                                             .mainOptionDescriptionController,
                                         decoration: InputDecoration(
@@ -466,11 +484,11 @@ class ShopProductMain extends StatelessWidget {
                                           ),
                                         ),
                                         Switch(
-                                          value: shopController
+                                          value: ownerShopController
                                               .mainOptionList[index]
                                               .mainOptionAllowMultipleChoices!,
                                           onChanged: (value) {
-                                            //shopController.allowMultipleChoicesChanged(index);
+                                            //ownerShopController.allowMultipleChoicesChanged(index);
                                           },
                                           activeColor: Color(0xfff93f5b),
                                         ),
@@ -501,7 +519,7 @@ class ShopProductMain extends StatelessWidget {
                                         shrinkWrap: true,
                                         scrollDirection: Axis.vertical,
                                         physics: NeverScrollableScrollPhysics(),
-                                        itemCount: shopController
+                                        itemCount: ownerShopController
                                             .mainOptionList[index]
                                             .shopDetailOptionList
                                             .length,
@@ -545,7 +563,7 @@ class ShopProductMain extends StatelessWidget {
                                                     TextFormField(
                                                       readOnly: true,
                                                       maxLines: 2,
-                                                      controller: shopController
+                                                      controller: ownerShopController
                                                           .mainOptionList[index]
                                                           .shopDetailOptionList[
                                                               detailIndex]
@@ -554,7 +572,7 @@ class ShopProductMain extends StatelessWidget {
                                                           InputDecoration(
                                                         border:
                                                             InputBorder.none,
-                                                        hintText: shopController
+                                                        hintText: ownerShopController
                                                                     .mainOptionList[
                                                                         index]
                                                                     .shopDetailOptionList[
@@ -630,7 +648,7 @@ class ShopProductMain extends StatelessWidget {
                                                                   TextInputType
                                                                       .number,
                                                               maxLines: 1,
-                                                              controller: shopController
+                                                              controller: ownerShopController
                                                                   .mainOptionList[
                                                                       index]
                                                                   .shopDetailOptionList[
@@ -751,7 +769,7 @@ class ShopProductMain extends StatelessWidget {
                                                                             10.w,
                                                                             10.h),
                                                                     child: Text(
-                                                                      '${shopController.mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionCount}',
+                                                                      '${ownerShopController.mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionCount}',
                                                                       style:
                                                                           TextStyle(
                                                                         color: Color(
@@ -834,6 +852,7 @@ class ShopProductMain extends StatelessWidget {
                           ],
                         ),
                       ),
+                      SizedBox(height: 24.h),
                     ],
                   ),
                 ),
@@ -842,6 +861,7 @@ class ShopProductMain extends StatelessWidget {
           ),
           InkWell(
             onTap: () async {
+              await ownerShopController.fetchModifyData();
               Get.to(() => ShopProductModify());
             },
             child: SvgPicture.asset(

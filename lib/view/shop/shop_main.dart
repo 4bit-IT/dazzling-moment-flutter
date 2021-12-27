@@ -1,6 +1,6 @@
 import 'package:damo/app/controller/owner/owner_order_controller.dart';
-import 'package:damo/app/controller/shop_controller.dart';
-import 'package:damo/app/controller/shop_faq_controller.dart';
+import 'package:damo/app/controller/owner/owner_shop_controller.dart';
+import 'package:damo/app/controller/owner/owner_shop_faq_controller.dart';
 import 'package:damo/view/shop/shop_chat_management.dart';
 import 'package:damo/view/shop/shop_faq/shop_faq_management.dart';
 import 'package:damo/view/shop/shop_order_management.dart';
@@ -13,15 +13,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class ShopMain extends StatefulWidget {
-  @override
-  _ShopMainState createState() => _ShopMainState();
-}
-
-class _ShopMainState extends State<ShopMain> {
-  final shopController = Get.put(ShopController(), permanent: true);
-  ShopFAQController? shopFAQController;
-  OwnerOrderController orderController = Get.find();
+class ShopMain extends StatelessWidget {
+  OwnerShopController ownerShopController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +84,7 @@ class _ShopMainState extends State<ShopMain> {
                 SizedBox(width: 16.w),
                 InkWell(
                   onTap: () async {
-                    await orderController.fetchShopOrderData();
+                    await OwnerOrderBinding().dependencies();
                     Get.to(() => ShopOrderManagement());
                   },
                   child: Container(
@@ -324,7 +317,8 @@ class _ShopMainState extends State<ShopMain> {
               height: 1.h,
             ),
             InkWell(
-              onTap: () {
+              onTap: () async {
+                await OwnerShopFAQBinding().dependencies();
                 Get.to(() => ShopFAQManagement());
               },
               child: Column(

@@ -1,3 +1,4 @@
+import 'package:damo/app/controller/owner/owner_shop_faq_controller.dart';
 import 'package:damo/app/controller/shop_faq_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ShopFAQModify extends StatelessWidget {
-  ShopFAQController shopFAQController = Get.find();
+  OwnerShopFAQController ownerShopFAQController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class ShopFAQModify extends StatelessWidget {
                               decoration: BoxDecoration(border: Border.all(color: Colors.black26)),
                               padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 0),
                               child: TextFormField(
-                                controller: shopFAQController.shopFAQQuestionController.value,
+                                controller: ownerShopFAQController.shopFAQQuestionController.value,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintStyle: TextStyle(
@@ -72,7 +73,7 @@ class ShopFAQModify extends StatelessWidget {
                               padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 0),
                               decoration: BoxDecoration(border: Border.all(color: Colors.black26)),
                               child: TextFormField(
-                                controller: shopFAQController.shopFAQAnswerController.value,
+                                controller: ownerShopFAQController.shopFAQAnswerController.value,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintStyle: TextStyle(
@@ -97,7 +98,7 @@ class ShopFAQModify extends StatelessWidget {
           ),
           InkWell(
             onTap: () async {
-              await shopFAQController.faqModify();
+              await ownerShopFAQController.faqModify();
             },
             child: Container(
               height: 60.h,

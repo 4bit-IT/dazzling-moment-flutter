@@ -22,7 +22,7 @@ class OrderNetwork {
       if (response.statusCode == 200) {
         return jsonDecode(utf8.decode(response.bodyBytes));
       } else {
-        print('통신 오류');
+        print('getOrdersOwner 통신 오류');
       }
     } catch (e) {
       print(e);
@@ -39,7 +39,7 @@ class OrderNetwork {
       if (response.statusCode == 200) {
         return jsonDecode(utf8.decode(response.bodyBytes));
       } else {
-        print('통신 오류');
+        print('postOrdersStatus 통신 오류');
       }
     } catch (e) {
       print(e);
