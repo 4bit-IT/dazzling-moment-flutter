@@ -26,11 +26,9 @@ class FavoriteController extends GetxController {
   var model;
 
   Future<dynamic> onClickedFavoriteButton(int shopId, int shopIndex) async {
-    if (shopController.shopGetDetailModel.value.isFavorite == false)
-      jsonResponse = await FavoriteNetwork().postFavoritesOnce(shopId);
-
-    if (shopController.shopGetDetailModel.value.isFavorite == true)
-      jsonResponse = await FavoriteNetwork().deleteFavoritesOnce(shopId);
+    shopController.shopGetDetailModel.value.isFavorite == false
+        ? jsonResponse = await FavoriteNetwork().postFavoritesOnce(shopId)
+        : jsonResponse = await FavoriteNetwork().deleteFavoritesOnce(shopId);
 
     model = FavoriteModel.fromJson(jsonResponse);
     if (model.code == 1) {
@@ -55,11 +53,9 @@ class FavoriteController extends GetxController {
   }
 
   Future<void> initWishIcon() async {
-    if ((shopController.shopGetDetailModel.value.isFavorite == true))
-      wishIcon = wishIconOn.obs;
-
-    if ((shopController.shopGetDetailModel.value.isFavorite == false))
-      wishIcon = wishIconOff.obs;
+    shopController.shopGetDetailModel.value.isFavorite == true
+        ? wishIcon = wishIconOn.obs
+        : wishIcon = wishIconOff.obs;
   }
 
   @override
