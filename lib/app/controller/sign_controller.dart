@@ -32,6 +32,7 @@ class SignController extends GetxController {
   Rx<CountdownController> countdownController = CountdownController(autoStart: true).obs;
   RxBool countdownVisibility = false.obs;
   RxString nicknameCheckString = '* 닉네임은 한글, 숫자, 영문으로 된 2~8자로 구성해주세요.'.obs;
+  RxBool enableGetAuthNumberButton = false.obs;
 
   String? verificationUserId;
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -49,7 +50,7 @@ class SignController extends GetxController {
     toJsonInput['fcmToken'] = 'fcm_token';
     toJsonInput['nickname'] = nicknameController.value.value.text;
     toJsonInput['oauthAccessToken'] = oauthAccessToken.value;
-    toJsonInput['phoneNumber'] = '010-3874-0360';
+    toJsonInput['phoneNumber'] = phoneNumberController.value.text;
     jsonResponse = await OauthNetwork().postOauthKakao(AuthSignModel().toJson(toJsonInput));
     model = AuthSignModel.fromJson(jsonResponse);
     authSignModel.update((val) {
@@ -108,8 +109,10 @@ class SignController extends GetxController {
     if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$').hasMatch(phoneNumberController.value.value.text) ==
         true) {
       getAuthNumberButtonColor.value = Color(0xfff93f5b);
+      enableGetAuthNumberButton.value = true;
     } else {
       getAuthNumberButtonColor.value = Color(0xffd1d1d6);
+      enableGetAuthNumberButton.value = false;
     }
   }
 
@@ -257,8 +260,8 @@ class SignController extends GetxController {
   }
 
   void verifyPhoneNumber() async {
+    print('verifyPhoneNumber');
     phoneNumberFocusNode.value.unfocus();
-    getAuthNumberButtonColor = Color(0xffd1d1d6).obs;
     String phoneNumber = '+82' +
         phoneNumberController.value.value.text.split('-')[0][1] +
         phoneNumberController.value.value.text.split('-')[0][2] +
@@ -284,6 +287,8 @@ class SignController extends GetxController {
         print("코드보냄");
         countdownVisibility.value = true;
         readOnlyPhoneNumber.value = true;
+        getAuthNumberButtonColor.value = Color(0xffd1d1d6);
+        enableGetAuthNumberButton.value = false;
         verificationUserId = verificationId;
       },
     );

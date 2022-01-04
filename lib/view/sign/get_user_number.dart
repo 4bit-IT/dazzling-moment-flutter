@@ -19,6 +19,8 @@ class GetUserInfo extends StatelessWidget {
           signController.phoneNumberController.value.clear();
           signController.smsAuthNumberController.value.clear();
           signController.countdownVisibility.value = false;
+          signController.getAuthNumberButtonColor.value = Color(0xffd1d1d6);
+          signController.readOnlyPhoneNumber.value = false;
           return true;
         });
       },
@@ -36,11 +38,11 @@ class GetUserInfo extends StatelessWidget {
                     Text(
                       '휴대폰 번호',
                       style: TextStyle(
-                          color: Color(0xff283137),
-                          fontFamily: 'NotoSansCJKKR',
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                          height: 1),
+                        color: Color(0xff283137),
+                        fontFamily: 'NotoSansCJKKR',
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     SizedBox(
                       height: 16.h,
@@ -61,12 +63,14 @@ class GetUserInfo extends StatelessWidget {
                             child: Container(
                               padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 0),
                               child: Obx(
-                                    () => TextFormField(
-                                  readOnly: signController.readOnlyPhoneNumber.value,
+                                () => TextFormField(
+                                  readOnly:
+                                      signController.readOnlyPhoneNumber.value,
                                   onChanged: (text) {
                                     signController.onPhoneNumberChanged();
                                   },
-                                  controller: signController.phoneNumberController.value,
+                                  controller: signController
+                                      .phoneNumberController.value,
                                   keyboardType: TextInputType.phone,
                                   inputFormatters: [
                                     MaskTextInputFormatter(
@@ -76,7 +80,6 @@ class GetUserInfo extends StatelessWidget {
                                   style: TextStyle(
                                     fontFamily: 'NotoSansCJKKR',
                                     fontSize: 18.sp,
-                                    height: 1,
                                   ),
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
@@ -85,30 +88,25 @@ class GetUserInfo extends StatelessWidget {
                                       color: Color(0xffd1d1d6),
                                       fontFamily: 'NotoSansCJKKR',
                                       fontSize: 16.sp,
-                                      height: 1,
                                     ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          InkWell(
-                            onTap: () {
-                              print(RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
-                                  .hasMatch(signController.phoneNumberController.value.text));
-                              if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
-                                  .hasMatch(signController.phoneNumberController.value.text) ==
-                                  true) {
-                                signController.verifyPhoneNumber();
-                              }
-                            },
-                            child: Obx(
-                                  () => Container(
+                          Obx(
+                            () => InkWell(
+                              onTap: () {
+                                if (signController.enableGetAuthNumberButton
+                                    .value) signController.verifyPhoneNumber();
+                              },
+                              child: Container(
                                 alignment: Alignment.center,
                                 width: 92.w,
                                 height: 52.h,
                                 decoration: BoxDecoration(
-                                  color: signController.getAuthNumberButtonColor.value,
+                                  color: signController
+                                      .getAuthNumberButtonColor.value,
                                   borderRadius: BorderRadius.only(
                                     topRight: Radius.circular(10.r),
                                     bottomRight: Radius.circular(10.r),
@@ -119,7 +117,6 @@ class GetUserInfo extends StatelessWidget {
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16.sp,
-                                    height: 1,
                                     fontFamily: 'NotoSansCJKKR',
                                     fontWeight: FontWeight.w700,
                                   ),
@@ -139,7 +136,6 @@ class GetUserInfo extends StatelessWidget {
                         color: Color(0xff283137),
                         fontFamily: 'NotoSansCJKKR',
                         fontSize: 16.sp,
-                        height: 1,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -165,7 +161,8 @@ class GetUserInfo extends StatelessWidget {
                               onChanged: (text) {
                                 signController.onAuthNumberChanged();
                               },
-                              controller: signController.smsAuthNumberController.value,
+                              controller:
+                                  signController.smsAuthNumberController.value,
                               keyboardType: TextInputType.phone,
                               inputFormatters: [
                                 MaskTextInputFormatter(
@@ -176,7 +173,6 @@ class GetUserInfo extends StatelessWidget {
                               style: TextStyle(
                                 fontFamily: 'NotoSansCJKKR',
                                 fontSize: 18.sp,
-                                height: 1,
                               ),
                               decoration: InputDecoration(
                                 border: InputBorder.none,
@@ -185,16 +181,16 @@ class GetUserInfo extends StatelessWidget {
                                   color: Color(0xffd1d1d6),
                                   fontFamily: 'NotoSansCJKKR',
                                   fontSize: 16.sp,
-                                  height: 1,
                                 ),
                               ),
                             ),
                           ),
                           Obx(
-                                () => Expanded(
+                            () => Expanded(
                               flex: 1,
                               child: Visibility(
-                                visible: signController.countdownVisibility.value,
+                                visible:
+                                    signController.countdownVisibility.value,
                                 child: Countdown(
                                   seconds: 120,
                                   build: (BuildContext context, double time) {
@@ -203,7 +199,6 @@ class GetUserInfo extends StatelessWidget {
                                       style: TextStyle(
                                         color: Color(0xfff93f5b),
                                         fontSize: 16.sp,
-                                        height: 1,
                                         fontFamily: 'NotoSansCJKKR',
                                         fontWeight: FontWeight.w700,
                                       ),
@@ -220,11 +215,10 @@ class GetUserInfo extends StatelessWidget {
                       height: 16.h,
                     ),
                     Text(
-                      '많은 인증문자 요청 시 제한될 수 있습니다',
+                      '많은 인증 번호 요청 시 사용이 제한될 수 있습니다',
                       style: TextStyle(
                         fontFamily: 'NotoSansCJKKR',
                         fontSize: 14.sp,
-                        height: 1,
                       ),
                     ),
                   ],
@@ -233,13 +227,16 @@ class GetUserInfo extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                signController.phoneAuthCredential = PhoneAuthProvider.credential(
-                    verificationId: signController.verificationUserId!,
-                    smsCode: signController.smsAuthNumberController.value.text);
-                signController.signInWithPhoneAuthCredential(signController.phoneAuthCredential!);
+                signController.phoneAuthCredential =
+                    PhoneAuthProvider.credential(
+                        verificationId: signController.verificationUserId!,
+                        smsCode:
+                            signController.smsAuthNumberController.value.text);
+                signController.signInWithPhoneAuthCredential(
+                    signController.phoneAuthCredential!);
               },
               child: Obx(
-                    () => Container(
+                () => Container(
                   alignment: Alignment.center,
                   height: 52.h,
                   width: 375.w,
@@ -249,7 +246,6 @@ class GetUserInfo extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16.sp,
-                      height: 1,
                       fontFamily: 'NotoSansCJKKR',
                       fontWeight: FontWeight.w700,
                     ),

@@ -74,9 +74,10 @@ class OwnerShopFAQController extends GetxController {
           alignment: Alignment.center,
           height: 190.h,
           width: 130.w,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            /*mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,*/
             children: [
               Container(
                 padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
@@ -86,7 +87,6 @@ class OwnerShopFAQController extends GetxController {
                       color: Color(0xff283137),
                       fontFamily: 'NotoSansCJKKR',
                       fontSize: 22.sp,
-                      height: 1,
                       fontWeight: FontWeight.w700),
                 ),
               ),
@@ -109,7 +109,6 @@ class OwnerShopFAQController extends GetxController {
                             color: Color(0xff283137),
                             fontFamily: 'NotoSansCJKKR',
                             fontSize: 16.sp,
-                            height: 1,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
@@ -129,7 +128,6 @@ class OwnerShopFAQController extends GetxController {
                             color: Color(0xff283137),
                             fontFamily: 'NotoSansCJKKR',
                             fontSize: 16.sp,
-                            height: 1,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
