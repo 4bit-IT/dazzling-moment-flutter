@@ -33,6 +33,21 @@ class ProductQnA extends StatelessWidget {
             borderRadius: BorderRadius.circular(25),
           ),
         ),
+        if (shopFAQController.shopGetFAQtoUserModel.value.faqList.length == 0)
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 100.h, 0, 0),
+            child: Center(
+              child: Text(
+                '아직 등록된 F&Q가 없습니다.',
+                style: TextStyle(
+                  color: Color(0xff283137),
+                  fontFamily: 'NotoSansCJKKR',
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ),
         ListView.builder(
             padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),

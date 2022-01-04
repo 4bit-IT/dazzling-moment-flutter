@@ -18,7 +18,6 @@ var formatter = NumberFormat('#,##,000');
 
 class Product extends StatelessWidget {
   ShopController shopController = Get.find();
-  ProductController productController = Get.put(ProductController());
   FavoriteController favoriteController = Get.put(FavoriteController());
 
   @override
@@ -54,7 +53,7 @@ class Product extends StatelessWidget {
                               height: 30.h)),
                       SizedBox(width: 10.w),
                       Obx(
-                            () => InkWell(
+                        () => InkWell(
                             onTap: () async {
                               await favoriteController.onClickedFavoriteButton(
                                   shopController.shopGetDetailModel.value.id!,
@@ -85,7 +84,7 @@ class Product extends StatelessWidget {
                       );
                     },
                     itemCount:
-                    shopController.shopGetDetailModel.value.images.length,
+                        shopController.shopGetDetailModel.value.images.length,
                   ),
                 ),
               ),
@@ -168,7 +167,7 @@ class Product extends StatelessWidget {
                             allowHalfRating: true,
                             starCount: 5,
                             rating:
-                            shopController.shopGetDetailModel.value.rating!,
+                                shopController.shopGetDetailModel.value.rating!,
                             size: 16.w,
                             isReadOnly: true,
                             spacing: 2.5.w,
@@ -211,9 +210,9 @@ class Product extends StatelessWidget {
                           SizedBox(width: 5.0),
                           Text(
                             formatter
-                                .format(shopController
-                                .shopGetDetailModel.value.basePrice!)
-                                .toString() +
+                                    .format(shopController
+                                        .shopGetDetailModel.value.basePrice!)
+                                    .toString() +
                                 '원 ',
                             style: TextStyle(
                               color: Color(0xff283137),
@@ -283,6 +282,7 @@ class Product extends StatelessWidget {
       ),
       bottomNavigationBar: InkWell(
         onTap: () async {
+          ProductController productController = Get.put(ProductController());
           await productController.onClickedOptionSelect();
         },
         child: Container(

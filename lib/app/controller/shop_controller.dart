@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class ShopController extends GetxController {
   Rx<ShopGetDetailModel> shopGetDetailModel = ShopGetDetailModel().obs;
   Rx<LoadShopMainPageModel> loadShopMainPageModel = LoadShopMainPageModel().obs;
-  List<dynamic> stroageMainPage = [].obs;
+  RxList<dynamic> stroageMainPage = [].obs;
   Widget wishIconOn = SvgPicture.asset(
     'assets/images_svg/ic_wish_on.svg',
     width: 30.w,
@@ -19,6 +19,8 @@ class ShopController extends GetxController {
     width: 30.w,
     height: 30.h,
   );
+  List sortValueName = ['RATING', 'REVIEW', 'PRICE', 'NEWEST', 'OLDEST'];
+
   Map<String, dynamic> toJsonInput = {};
 
   String sendData = '';
@@ -61,12 +63,10 @@ class ShopController extends GetxController {
   }
 
   Future<void> loadShopMain(int pageNumber, String sortBy) async {
-    if (loadShopMainPageModel.value.hasNextPage == false) {
-      return;
-    }
+    if (loadShopMainPageModel.value.hasNextPage == false) return;
+
     var jsonResponse = await ShopNetwork().getShopMain(pageNumber, sortBy);
     var model = LoadShopMainPageModel.fromJson(jsonResponse);
-
     if (model.code == 1) {
       loadShopMainPageModel.update((val) {
         val!.code = model.code;
@@ -75,6 +75,7 @@ class ShopController extends GetxController {
         val.description = model.description;
         val.result = model.result;
       });
+      stroageMainPage.clear();
       for (dynamic snippetList in loadShopMainPageModel.value.snippetList) {
         if (snippetList['isFavorite'] == true) {
           snippetList['isFavoriteButton'] = wishIconOn.obs;
@@ -86,5 +87,12 @@ class ShopController extends GetxController {
     }
     if (model.code == 2) {}
     if (model.code == 3) {}
+  }
+
+  Future<void> sortMainPage(int sortIndex) async {
+    await Future.delayed(Duration(milliseconds: 300));
+    String sortValue = sortValueName[sortIndex];
+    loadShopMainPageModel.value.hasNextPage = true;
+    await loadShopMain(0, sortValue);
   }
 }

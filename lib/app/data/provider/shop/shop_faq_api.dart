@@ -1,7 +1,6 @@
 import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/app/controller/token_controller.dart';
-import 'package:damo/app/data/model/shop_faq_model.dart';
-import 'package:damo/app/data/provider/owner/owner_shop_faq_api.dart';
+
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -29,5 +28,4 @@ class ShopFAQNetwork {
       print(e);
     }
   }
-
 }

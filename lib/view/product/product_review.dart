@@ -93,7 +93,7 @@ class ProductReview extends StatelessWidget {
           } else if (mode == LoadStatus.canLoading) {
             body = Text(' ');
           } else {
-            body = Text("더 이상의 리뷰가 없습니다.");
+            body = Text(' ');
           }
           return Container(
             height: 55.0,
@@ -183,6 +183,22 @@ class ProductReview extends StatelessWidget {
               ),
             ),
             //여기서 부터 리뷰
+            if (shopController.shopGetDetailModel.value.reviewCount == 0)
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 100.h, 0, 0),
+                child: Center(
+                  child: Text(
+                    '아직 등록된 리뷰가 없습니다.',
+                    style: TextStyle(
+                      color: Color(0xff283137),
+                      fontFamily: 'NotoSansCJKKR',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+
             Obx(
               () => ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
