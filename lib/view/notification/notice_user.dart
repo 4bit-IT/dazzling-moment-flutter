@@ -1,3 +1,4 @@
+import 'package:damo/app/controller/notification/notofication_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +12,7 @@ class NotificationUser extends StatefulWidget {
 
 class _NotificationUserState extends State<NotificationUser> {
   DamoAppBar appBar = DamoAppBar();
+  final NotificationController notificationController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -236,6 +238,59 @@ class _NotificationUserState extends State<NotificationUser> {
                     ),
                   ),
                   SizedBox(height: 21.h),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 25, 16, 0),
+                    child: InkWell(
+                      onTap: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/images_svg/ic_alarmlist_on.svg',
+                                width: 30.w,
+                                height: 30.h,
+                              ),
+                              SizedBox(width: 16.w),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    notificationController.message.value!.notification!.title??'title',
+                                    style: TextStyle(
+                                      color: Color(0xff283137),
+                                      fontSize: 12,
+                                      fontFamily: 'NotoSansCJKKR',
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  SizedBox(height: 10.h),
+                                  Text(
+                                    notificationController.message.value!.notification!.body??'body',
+                                    style: TextStyle(
+                                      color: Color(0xff283137),
+                                      fontFamily: 'NotoSansCJKKR',
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          Text(
+                            '21/10/5',
+                            style: TextStyle(
+                              color: Color(0xff8e97a0),
+                              fontSize: 12,
+                              fontFamily: 'NotoSansCJKKR',
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   Container(
                     height: 1,
                     margin: EdgeInsets.only(

@@ -1,7 +1,8 @@
+import 'dart:io';
+
 import 'package:damo/app/data/model/owner/owner_shop_faq_model.dart';
-import 'package:damo/app/data/model/shop_faq_model.dart';
 import 'package:damo/app/data/provider/owner/owner_shop_faq_api.dart';
-import 'package:damo/app/data/provider/shop/shop_faq_api.dart';
+import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -66,79 +67,13 @@ class OwnerShopFAQController extends GetxController {
         .obs;
   }
 
-  Future<void> faqModify() async {
-    Get.dialog(
-      Dialog(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-          alignment: Alignment.center,
-          height: 190.h,
-          width: 130.w,
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            /*mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,*/
-            children: [
-              Container(
-                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                child: Text(
-                  '해당 FAQ를 수정하시겠습니까?',
-                  style: TextStyle(
-                      color: Color(0xff283137),
-                      fontFamily: 'NotoSansCJKKR',
-                      fontSize: 22.sp,
-                      fontWeight: FontWeight.w700),
-                ),
-              ),
-              SizedBox(
-                height: 32.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                      child: Text(
-                        '아니오',
-                        style: TextStyle(
-                            color: Color(0xff283137),
-                            fontFamily: 'NotoSansCJKKR',
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () async {
-                      Get.back();
-                      Get.back();
-                      await faqQuestionModify();
-                      await faqAnswerModify();
-                    },
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                      child: Text(
-                        '예',
-                        style: TextStyle(
-                            color: Color(0xff283137),
-                            fontFamily: 'NotoSansCJKKR',
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+  Future<void> faqModifyClicked() async {
+    GetDialog().alternativeDialog('해당 FAQ를 수정하시겠습니까?', () => modifyFAQ());
+  }
+
+  void modifyFAQ() async {
+    await faqQuestionModify();
+    await faqAnswerModify();
   }
 
   Future<void> faqQuestionModify() async {
@@ -170,104 +105,17 @@ class OwnerShopFAQController extends GetxController {
       ownerShopGetFAQModel.update((val) {
         val!.faqList![currentIndex.value]['answer'] = model.answer;
       });
+      Get.back();
+      Get.back();
     }
   }
 
   void onAddFAQClicked() async {
     if (shopFAQAnswerAddController.value.value.text == '' ||
         shopFAQQuestionAddController.value.value.text == '') {
-      Get.dialog(
-        Dialog(
-          child: Container(
-            height: 100,
-            child: Center(
-              child: Text(
-                '질문과 답변 모두 작성해주세요.',
-                style: TextStyle(
-                    color: Color(0xff283137),
-                    fontFamily: 'NotoSansCJKKR',
-                    fontSize: 20.sp,
-                    height: 1,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-          ),
-        ),
-      );
+      GetDialog().simpleDialog('질문과 답변 모두 작성해주세요.');
     } else {
-      Get.dialog(
-        Dialog(
-          child: Container(
-            padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-            alignment: Alignment.center,
-            height: 190.h,
-            width: 120.w,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                  child: Text(
-                    '해당 FAQ를 등록하시겠습니까?',
-                    style: TextStyle(
-                        color: Color(0xff283137),
-                        fontFamily: 'NotoSansCJKKR',
-                        fontSize: 22.sp,
-                        height: 1,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                SizedBox(
-                  height: 32.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                        child: Text(
-                          '아니오',
-                          style: TextStyle(
-                              color: Color(0xff283137),
-                              fontFamily: 'NotoSansCJKKR',
-                              fontSize: 16.sp,
-                              height: 1,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        await addFAQ();
-                        Get.back();
-                        Get.back();
-                      },
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                        child: Text(
-                          '예',
-                          style: TextStyle(
-                              color: Color(0xff283137),
-                              fontFamily: 'NotoSansCJKKR',
-                              fontSize: 16.sp,
-                              height: 1,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
-      );
+      GetDialog().alternativeDialog('해당 FAQ를 등록하시겠습니까?', () async => await addFAQ());
     }
   }
 
@@ -287,84 +135,12 @@ class OwnerShopFAQController extends GetxController {
           'question': model.question,
         });
       });
-      print(ownerShopGetFAQModel.value.faqList);
+      Get.back();
     }
   }
 
   void onDeleteFAQClicked() async {
-    Get.dialog(
-      Dialog(
-        child: Container(
-          padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-          alignment: Alignment.center,
-          height: 190.h,
-          width: 120.w,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                child: Text(
-                  '해당 FAQ를 삭제하시겠습니까?',
-                  style: TextStyle(
-                      color: Color(0xff283137),
-                      fontFamily: 'NotoSansCJKKR',
-                      fontSize: 22.sp,
-                      height: 1,
-                      fontWeight: FontWeight.w700),
-                ),
-              ),
-              SizedBox(
-                height: 32.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                      child: Text(
-                        '아니오',
-                        style: TextStyle(
-                            color: Color(0xff283137),
-                            fontFamily: 'NotoSansCJKKR',
-                            fontSize: 16.sp,
-                            height: 1,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () async {
-                      Get.back();
-                      Get.back();
-                      await deleteFAQ();
-                    },
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                      child: Text(
-                        '예',
-                        style: TextStyle(
-                            color: Color(0xff283137),
-                            fontFamily: 'NotoSansCJKKR',
-                            fontSize: 16.sp,
-                            height: 1,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+    GetDialog().alternativeDialog('해당 FAQ를 삭제하시겠습니까?', () async => await deleteFAQ());
   }
 
   Future<void> deleteFAQ() async {
@@ -379,7 +155,15 @@ class OwnerShopFAQController extends GetxController {
       });
       print(ownerShopGetFAQModel.value.faqList);
       currentIndex.value--;
+      Get.back();
     }
+  }
+
+  void cancelFAQRegistration() {
+    shopFAQQuestionAddController.value.clear();
+    shopFAQAnswerAddController.value.clear();
+    Get.back();
+    Get.back();
   }
 }
 

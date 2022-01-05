@@ -9,6 +9,7 @@ class ShopController extends GetxController {
   Rx<ShopGetDetailModel> shopGetDetailModel = ShopGetDetailModel().obs;
   Rx<LoadShopMainPageModel> loadShopMainPageModel = LoadShopMainPageModel().obs;
   RxList<dynamic> stroageMainPage = [].obs;
+  RxInt currentSortIndex = 0.obs;
   Widget wishIconOn = SvgPicture.asset(
     'assets/images_svg/ic_wish_on.svg',
     width: 30.w,
