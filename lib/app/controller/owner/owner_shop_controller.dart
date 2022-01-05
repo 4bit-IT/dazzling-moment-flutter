@@ -38,6 +38,8 @@ class OwnerShopController extends GetxController {
   List<String> deleteImages = [];
   RxInt slidingIndex = 0.obs;
   RxInt imagesSize = 0.obs;
+  RxBool isLoadingModifyData = false.obs;
+  RxBool isLoadingFetchData = false.obs;
   Widget wishIconOn = SvgPicture.asset(
     'assets/images_svg/ic_wish_on.svg',
     width: 30.w,
@@ -62,6 +64,7 @@ class OwnerShopController extends GetxController {
   }
 
   Future<void> fetchShopData() async {
+    isLoadingFetchData.value = true;
     jsonResponse = await OwnerShopNetwork().getShopMe();
     model = ShopGetMeModel.fromJson(jsonResponse);
     shopGetMeModel.update((val) {
@@ -101,9 +104,11 @@ class OwnerShopController extends GetxController {
     }
 
     // print(shopGetMeModel.value.optionList);
+    isLoadingFetchData.value = false;
   }
 
-  Future<void> fetchModifyData() async {
+  void fetchModifyData() async {
+    isLoadingModifyData.value = true;
     selectMainImage!.value = FileImage(File(XFile('').path));
     shopContentController.value =
         TextEditingController(text: shopGetMeModel.value.content);
@@ -174,6 +179,7 @@ class OwnerShopController extends GetxController {
         shopDetailOptionList: temp,
       ));
     }
+    isLoadingModifyData.value = false;
   }
 
   Future<void> selectShopMainImage() async {
@@ -209,8 +215,6 @@ class OwnerShopController extends GetxController {
   Future<void> deleteShopImages(int index) async {
     deleteImages.add(selectImagesUrl[index]);
     selectImagesUrl.removeAt(index);
-    print(deleteImages);
-    print(selectImagesUrl);
     for (int i = index; i < imagesSize.value; i++) {
       if (i == maxImagesSize - 1) {
         selectImages![i] = FileImage(File(''));
@@ -219,6 +223,7 @@ class OwnerShopController extends GetxController {
       }
     }
     imagesSize.value--;
+    print(deleteImages);
   }
 
   Future<void> changeShopMainImage() async {

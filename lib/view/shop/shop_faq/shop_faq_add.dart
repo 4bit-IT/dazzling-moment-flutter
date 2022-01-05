@@ -1,18 +1,18 @@
 import 'package:damo/app/controller/owner/owner_shop_faq_controller.dart';
-import 'package:damo/app/controller/shop_faq_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ShopFAQAdd extends StatelessWidget {
-  OwnerShopFAQController ownerShopFAQController = Get.find();
+  final OwnerShopFAQController ownerShopFAQController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
         return Future(() {
+          FocusScope.of(context).unfocus();
           Get.dialog(
             Dialog(
               child: Container(
@@ -20,19 +20,17 @@ class ShopFAQAdd extends StatelessWidget {
                 alignment: Alignment.center,
                 height: 190.h,
                 width: 130.w,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                child: Wrap(
+                  alignment: WrapAlignment.center,
                   children: [
                     Container(
                       padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
                       child: Text(
-                        'FAQ 등록을 중지하시겠습니까?',
+                        'FAQ 등록을 취소하시겠습니까?',
                         style: TextStyle(
                             color: Color(0xff283137),
                             fontFamily: 'NotoSansCJKKR',
                             fontSize: 22.sp,
-                            height: 1,
                             fontWeight: FontWeight.w700),
                       ),
                     ),
@@ -55,7 +53,6 @@ class ShopFAQAdd extends StatelessWidget {
                                   color: Color(0xff283137),
                                   fontFamily: 'NotoSansCJKKR',
                                   fontSize: 16.sp,
-                                  height: 1,
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
@@ -75,7 +72,6 @@ class ShopFAQAdd extends StatelessWidget {
                                   color: Color(0xff283137),
                                   fontFamily: 'NotoSansCJKKR',
                                   fontSize: 16.sp,
-                                  height: 1,
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
@@ -109,7 +105,6 @@ class ShopFAQAdd extends StatelessWidget {
                               color: Color(0xff283137),
                               fontFamily: 'NotoSansCJKKR',
                               fontSize: 22.sp,
-                              height: 1,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -121,7 +116,6 @@ class ShopFAQAdd extends StatelessWidget {
                                 style: TextStyle(
                                   fontFamily: 'NotoSansCJKKR',
                                   fontSize: 20.sp,
-                                  height: 1,
                                 ),
                                 controller: ownerShopFAQController.shopFAQQuestionAddController.value,
                                 decoration: InputDecoration(
@@ -131,7 +125,6 @@ class ShopFAQAdd extends StatelessWidget {
                                     color: Color(0xffd1d1d6),
                                     fontFamily: 'NotoSansCJKKR',
                                     fontSize: 20.sp,
-                                    height: 1,
                                   ),
                                 ),
                                 maxLines: 2,
@@ -151,7 +144,6 @@ class ShopFAQAdd extends StatelessWidget {
                               color: Color(0xff283137),
                               fontFamily: 'NotoSansCJKKR',
                               fontSize: 22.sp,
-                              height: 1,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -163,7 +155,6 @@ class ShopFAQAdd extends StatelessWidget {
                                 style: TextStyle(
                                   fontFamily: 'NotoSansCJKKR',
                                   fontSize: 20.sp,
-                                  height: 1,
                                 ),
                                 controller: ownerShopFAQController.shopFAQAnswerAddController.value,
                                 decoration: InputDecoration(
@@ -173,7 +164,6 @@ class ShopFAQAdd extends StatelessWidget {
                                     color: Color(0xffd1d1d6),
                                     fontFamily: 'NotoSansCJKKR',
                                     fontSize: 20.sp,
-                                    height: 1,
                                   ),
                                 ),
                                 maxLines: 20,
@@ -201,7 +191,6 @@ class ShopFAQAdd extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20.sp,
-                    height: 1,
                     fontFamily: 'NotoSansCJKKR',
                     fontWeight: FontWeight.w700,
                   ),

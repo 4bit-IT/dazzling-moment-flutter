@@ -64,6 +64,8 @@ dependencies:
   dio: ^4.0.4
   timer_count_down: ^2.2.0
   expandable: ^5.0.1
+  flutter_chat_ui: ^1.5.3
+  sqflite: ^2.0.1
 
 
 #dependency_overrides:

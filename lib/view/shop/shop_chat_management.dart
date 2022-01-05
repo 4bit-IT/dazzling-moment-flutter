@@ -1,14 +1,9 @@
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 
-class ShopChatManagement extends StatefulWidget {
-  const ShopChatManagement({Key? key}) : super(key: key);
+class ShopChatManagement extends StatelessWidget {
 
-  @override
-  _ShopChatManagementState createState() => _ShopChatManagementState();
-}
-
-class _ShopChatManagementState extends State<ShopChatManagement> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +67,7 @@ class _ShopChatManagementState extends State<ShopChatManagement> {
                     ),
                   ],
                 ),
+              Text('hi'),
             ],
           ),
         ),
