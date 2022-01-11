@@ -1,3 +1,4 @@
+import 'package:damo/app/controller/notification/notofication_controller.dart';
 import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/view/product/product.dart';
@@ -16,6 +17,8 @@ import 'package:intl/intl.dart';
 var formatter = NumberFormat('#,##,000');
 
 class HomeMain extends StatelessWidget {
+  final NotificationController notificationController =
+      Get.put(NotificationController());
   int pageNumber = 1;
   String sortValue = 'RATING';
   List sortValueName = ['별점순', '리뷰많은순', '가격순', '최신순', '오래된순'];
@@ -324,7 +327,7 @@ class HomeMain extends StatelessWidget {
             Padding(
               padding: EdgeInsets.fromLTRB(0, 10.h, 0, 0),
               child: Container(
-                  height: 20.h,
+                  height: 40.h,
                   child: ListView.builder(
                       itemCount: sortValueName.length,
                       shrinkWrap: true,
@@ -336,23 +339,31 @@ class HomeMain extends StatelessWidget {
                               onTap: () async {
                                 pageNumber = 1;
                                 sortValue = shopController.sortValueName[index];
-
                                 await shopController.sortMainPage(index);
+                                shopController.currentSortIndex.value = index;
                               },
                               child: Container(
-                                height: 26.h,
+                                height: 40.h,
                                 width: 74.w,
                                 decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Color(0xfff1f3f5), width: 1.h),
-                                  color: Color(0xfff1f3f5),
+                                  color: index ==
+                                          shopController.currentSortIndex.value
+                                      ? Color(0x4fc9c7c7)
+                                      : null,
                                   borderRadius: BorderRadius.circular(13.r),
                                 ),
                                 child: Center(
                                   child: Text(
                                     sortValueName[index],
                                     style: TextStyle(
-                                      color: Color(0xff283137),
+                                      color: shopController
+                                                  .currentSortIndex.value ==
+                                              index
+                                          ? Color(0xfff93f5b)
+                                          : Color(0xff283137),
+                                      fontWeight: shopController
+                                          .currentSortIndex.value ==
+                                          index?FontWeight.w700:null,
                                       fontSize: 12,
                                       fontFamily: 'NotoSansCJKKR',
                                     ),
@@ -391,8 +402,10 @@ class HomeMain extends StatelessWidget {
             ),
             Expanded(
               child: SmartRefresher(
-                enablePullDown: false, //refresh 비활성화
-                enablePullUp: true, //loading 활성화
+                enablePullDown: false,
+                //refresh 비활성화
+                enablePullUp: true,
+                //loading 활성화
                 controller: _refreshController,
                 footer: CustomFooter(
                   builder: (BuildContext context, LoadStatus? mode) {

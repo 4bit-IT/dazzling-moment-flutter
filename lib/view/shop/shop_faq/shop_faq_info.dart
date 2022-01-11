@@ -90,6 +90,7 @@ class ShopFAQInfo extends StatelessWidget {
                 flex: 1,
                 child: InkWell(
                   onTap: () {
+                    FocusScope.of(context).unfocus();
                     ownerShopFAQController.onDeleteFAQClicked();
                   },
                   child: Container(

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:damo/app/data/model/shop_model.dart';
 import 'package:damo/app/data/provider/owner/owner_shop_api.dart';
-import 'package:damo/app/data/provider/shop/shop_api.dart';
+import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -103,7 +103,6 @@ class OwnerShopController extends GetxController {
               .obs;
     }
 
-    // print(shopGetMeModel.value.optionList);
     isLoadingFetchData.value = false;
   }
 
@@ -117,6 +116,7 @@ class OwnerShopController extends GetxController {
     selectImages = List.filled(10, FileImage(File(XFile('').path))).obs;
     shopBasePriceController.value.clear();
     imagesSize.value = 0;
+    mainOptionList.clear();
 
     for (int i = 0; i < shopGetMeModel.value.images.length; i++) {
       String random = Random().nextInt(2147483890).toString();
@@ -143,7 +143,6 @@ class OwnerShopController extends GetxController {
       String tempPath = tempDir.path;
       File file = File(
           '$tempPath$random.${shopGetMeModel.value.shopProfileImage![shopGetMeModel.value.shopProfileImage!.length - 3]}${shopGetMeModel.value.shopProfileImage![shopGetMeModel.value.shopProfileImage!.length - 2]}${shopGetMeModel.value.shopProfileImage![shopGetMeModel.value.shopProfileImage!.length - 1]}');
-      print(file.path);
       http.Response response =
           await http.get(Uri.parse(shopGetMeModel.value.shopProfileImage!));
       await file.writeAsBytes(response.bodyBytes);
@@ -184,7 +183,6 @@ class OwnerShopController extends GetxController {
 
   Future<void> selectShopMainImage() async {
     final ImagePicker _picker = ImagePicker();
-    print('프로필 사진을 선택합니다.');
     var image = (await _picker.pickImage(
       //이미지를 선택
       source: ImageSource.gallery, //위치는 갤러리
@@ -223,7 +221,6 @@ class OwnerShopController extends GetxController {
       }
     }
     imagesSize.value--;
-    print(deleteImages);
   }
 
   Future<void> changeShopMainImage() async {
@@ -232,16 +229,13 @@ class OwnerShopController extends GetxController {
       dynamic sendData = await ShopChangeMainImageModel()
           .toJson(selectMainImage!.value.file.path);
       jsonResponse = await OwnerShopNetwork().postShopImageMain(sendData);
-      print(jsonResponse);
       model = ShopChangeMainImageModel.fromJson(jsonResponse);
 
       if (model.code == 1) {
-        print(model.imageUrl);
         String random = Random().nextInt(2147483890).toString();
         shopGetMeModel.value.shopProfileImage = '${model.imageUrl}?v=$random';
 
         shopGetMeModel.refresh();
-        print('프로필 사진을 변경했습니다.');
       }
       if (model.code == 2) {}
       if (model.code == 3) {}
@@ -255,7 +249,6 @@ class OwnerShopController extends GetxController {
       for (int i = 0; i < imagesSize.value; i++) {
         temp.add(selectImages![i].file.path);
       }
-      print(temp);
       dynamic sendData = await ShopImageRegistrationModel().toJson(temp);
       jsonResponse = await OwnerShopNetwork().postShopImage(sendData);
       model = ShopImageRegistrationModel.fromJson(jsonResponse);
@@ -266,7 +259,6 @@ class OwnerShopController extends GetxController {
           shopGetMeModel.value.images[i] = '${model.imageUrlList[i]}?v=$random';
         }
         shopGetMeModel.refresh();
-        print('프로필 사진을 변경했습니다.');
       }
       if (model.code == 2) {}
       if (model.code == 3) {}
@@ -337,11 +329,11 @@ class OwnerShopController extends GetxController {
   Future<void> onMainOptionDelete(int index) async {
     mainOptionList[index].shopDetailOptionList.clear();
     mainOptionList.removeAt(index);
-    print(mainOptionList);
   }
 
   Future<void> onDetailOptionDelete(int index, int detailIndex) async {
     mainOptionList[index].shopDetailOptionList.removeAt(detailIndex);
+    mainOptionList.refresh();
   }
 
   void onDetailOptionAdd(int index) {
@@ -398,108 +390,23 @@ class OwnerShopController extends GetxController {
     if (shopContentController.value.value.text == '' ||
         shopDescriptionController.value.value.text == '') {
       FocusScope.of(context).unfocus();
-      Get.dialog(
-        Dialog(
-          child: Container(
-            height: 100,
-            child: Center(
-              child: Text(
-                '스토어 설명과 상세 설명을 모두 작성해주세요.',
-                style: TextStyle(
-                    color: Color(0xff283137),
-                    fontFamily: 'NotoSansCJKKR',
-                    fontSize: 20.sp,
-                    height: 1,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-          ),
-        ),
-      );
+      GetDialog().simpleDialog('스토어 설명과 상세 설명을 모두 작성해주세요.');
     } else if (selectMainImage!.value.file.path == '') {
       FocusScope.of(context).unfocus();
-      Get.dialog(
-        Dialog(
-          child: Container(
-            height: 100,
-            child: Center(
-              child: Text(
-                '업체 대표 이미지를 선택해주세요.',
-                style: TextStyle(
-                    color: Color(0xff283137),
-                    fontFamily: 'NotoSansCJKKR',
-                    fontSize: 20.sp,
-                    height: 1,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-          ),
-        ),
-      );
+      GetDialog().simpleDialog('업체 대표 이미지를 선택해주세요.');
     } else if (imagesSize.value == 0) {
       FocusScope.of(context).unfocus();
-      Get.dialog(
-        Dialog(
-          child: Container(
-            height: 100,
-            child: Center(
-              child: Text(
-                '상품 이미지는 최소 1개 첨부해주세요.',
-                style: TextStyle(
-                    color: Color(0xff283137),
-                    fontFamily: 'NotoSansCJKKR',
-                    fontSize: 20.sp,
-                    height: 1,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-          ),
-        ),
-      );
+      GetDialog().simpleDialog('상품 이미지는 최소 1개 첨부해주세요.');
     } else if (shopBasePriceController.value.value.text == '') {
       FocusScope.of(context).unfocus();
-      Get.dialog(
-        Dialog(
-          child: Container(
-            height: 100,
-            child: Center(
-              child: Text(
-                '상품 기본금액을 설정해주세요.',
-                style: TextStyle(
-                    color: Color(0xff283137),
-                    fontFamily: 'NotoSansCJKKR',
-                    fontSize: 20.sp,
-                    height: 1,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-          ),
-        ),
-      );
+      GetDialog().simpleDialog('상품 기본 금액을 설정해주세요.');
     } else {
       for (int i = 0; i < mainOptionList.length; i++) {
         if (mainOptionList[i].mainOptionTitleController!.value.text == '' ||
             mainOptionList[i].mainOptionDescriptionController!.value.text ==
                 '') {
           FocusScope.of(context).unfocus();
-          Get.dialog(
-            Dialog(
-              child: Container(
-                height: 100,
-                child: Center(
-                  child: Text(
-                    '옵션 제목과 옵션 설명 모두 작성해주세요.',
-                    style: TextStyle(
-                        color: Color(0xff283137),
-                        fontFamily: 'NotoSansCJKKR',
-                        fontSize: 20.sp,
-                        height: 1,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ),
-            ),
-          );
+          GetDialog().simpleDialog('옵션 제목과 옵션 설명 모두 작성해주세요.');
           return;
         }
         for (int j = 0;
@@ -518,103 +425,20 @@ class OwnerShopController extends GetxController {
                       .text ==
                   '') {
             FocusScope.of(context).unfocus();
-            Get.dialog(
-              Dialog(
-                child: Container(
-                  height: 100,
-                  child: Center(
-                    child: Text(
-                      '선택지의 제목과 금액을 모두 작성해주세요.',
-                      style: TextStyle(
-                          color: Color(0xff283137),
-                          fontFamily: 'NotoSansCJKKR',
-                          fontSize: 20.sp,
-                          height: 1,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
-              ),
-            );
+            GetDialog().simpleDialog('선택지의 제목과 금액을 모두 작성해주세요.');
             return;
           }
         }
       }
-      await Get.dialog(
-        Dialog(
-          child: Container(
-            padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-            alignment: Alignment.center,
-            height: 190.h,
-            width: 130.w,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                  child: Text(
-                    '수정을 완료하시겠습니까?',
-                    style: TextStyle(
-                        color: Color(0xff283137),
-                        fontFamily: 'NotoSansCJKKR',
-                        fontSize: 22.sp,
-                        height: 1,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                SizedBox(
-                  height: 32.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                        child: Text(
-                          '아니오',
-                          style: TextStyle(
-                              color: Color(0xff283137),
-                              fontFamily: 'NotoSansCJKKR',
-                              fontSize: 16.sp,
-                              height: 1,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () async {
-                        await optionRegistrationModify();
-                        await changeShopMainImage();
-                        await changeShopImages();
-                        Get.back();
-                      },
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                        child: Text(
-                          '예',
-                          style: TextStyle(
-                              color: Color(0xff283137),
-                              fontFamily: 'NotoSansCJKKR',
-                              fontSize: 16.sp,
-                              height: 1,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
-      );
+      FocusScope.of(context).unfocus();
+      GetDialog().alternativeDialog('수정을 완료하시겠습니까?', () => finishModify());
     }
+  }
+
+  void finishModify() async {
+    await optionRegistrationModify();
+    await changeShopMainImage();
+    await changeShopImages();
   }
 }
 

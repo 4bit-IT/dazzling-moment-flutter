@@ -1,5 +1,4 @@
 import 'package:damo/app/controller/owner/owner_shop_faq_controller.dart';
-import 'package:damo/app/controller/shop_faq_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -102,7 +101,8 @@ class ShopFAQModify extends StatelessWidget {
           ),
           InkWell(
             onTap: () async {
-              await ownerShopFAQController.faqModify();
+              FocusScope.of(context).unfocus();
+              await ownerShopFAQController.faqModifyClicked();
             },
             child: Container(
               height: 60.h,

@@ -1,5 +1,6 @@
 import 'package:damo/app/controller/owner/owner_shop_faq_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
+import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,76 +14,8 @@ class ShopFAQAdd extends StatelessWidget {
       onWillPop: () {
         return Future(() {
           FocusScope.of(context).unfocus();
-          Get.dialog(
-            Dialog(
-              child: Container(
-                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                alignment: Alignment.center,
-                height: 190.h,
-                width: 130.w,
-                child: Wrap(
-                  alignment: WrapAlignment.center,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                      child: Text(
-                        'FAQ 등록을 취소하시겠습니까?',
-                        style: TextStyle(
-                            color: Color(0xff283137),
-                            fontFamily: 'NotoSansCJKKR',
-                            fontSize: 22.sp,
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 32.h,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Get.back();
-                          },
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                            child: Text(
-                              '아니오',
-                              style: TextStyle(
-                                  color: Color(0xff283137),
-                                  fontFamily: 'NotoSansCJKKR',
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            ownerShopFAQController.shopFAQQuestionAddController.value.clear();
-                            ownerShopFAQController.shopFAQAnswerAddController.value.clear();
-                            Get.back();
-                            Get.back();
-                          },
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                            child: Text(
-                              '예',
-                              style: TextStyle(
-                                  color: Color(0xff283137),
-                                  fontFamily: 'NotoSansCJKKR',
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          );
+          GetDialog().alternativeDialog('FAQ 등록을 취소하시겠습니까?',
+              () => ownerShopFAQController.cancelFAQRegistration());
           return true;
         });
       },
@@ -110,14 +43,16 @@ class ShopFAQAdd extends StatelessWidget {
                           ),
                           Expanded(
                             child: Container(
-                              decoration: BoxDecoration(border: Border.all(color: Colors.black26)),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black26)),
                               padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 0),
                               child: TextFormField(
                                 style: TextStyle(
                                   fontFamily: 'NotoSansCJKKR',
                                   fontSize: 20.sp,
                                 ),
-                                controller: ownerShopFAQController.shopFAQQuestionAddController.value,
+                                controller: ownerShopFAQController
+                                    .shopFAQQuestionAddController.value,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'FAQ의 제목을 입력해주세요.',
@@ -150,13 +85,15 @@ class ShopFAQAdd extends StatelessWidget {
                           Expanded(
                             child: Container(
                               padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 0),
-                              decoration: BoxDecoration(border: Border.all(color: Colors.black26)),
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black26)),
                               child: TextFormField(
                                 style: TextStyle(
                                   fontFamily: 'NotoSansCJKKR',
                                   fontSize: 20.sp,
                                 ),
-                                controller: ownerShopFAQController.shopFAQAnswerAddController.value,
+                                controller: ownerShopFAQController
+                                    .shopFAQAnswerAddController.value,
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'FAQ의 답변을 입력해주세요.',
@@ -179,6 +116,7 @@ class ShopFAQAdd extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
+                FocusScope.of(context).unfocus();
                 ownerShopFAQController.onAddFAQClicked();
               },
               child: Container(

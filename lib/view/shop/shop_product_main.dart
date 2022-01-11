@@ -103,14 +103,13 @@ class ShopProductMain extends StatelessWidget {
                               ),
                               child: TextFormField(
                                 readOnly: true,
-                                controller: ownerShopController
-                                    .shopNameController.value,
+                                controller: TextEditingController(text: ownerShopController.shopGetMeModel.value.name),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: ownerShopController
                                               .shopGetMeModel.value.name ==
                                           null
-                                      ? '스토어 이름을 입력하세요'
+                                      ? '스토어 이름'
                                       : null,
                                   hintStyle: TextStyle(
                                     color: Color(0xffd1d1d6),
@@ -149,14 +148,13 @@ class ShopProductMain extends StatelessWidget {
                               ),
                               child: TextFormField(
                                 readOnly: true,
-                                controller: ownerShopController
-                                    .shopContentController.value,
+                                controller: TextEditingController(text: ownerShopController.shopGetMeModel.value.content),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: ownerShopController
                                               .shopGetMeModel.value.content ==
                                           null
-                                      ? '메인페이지에 보일 간략한 설명을 적어주세요'
+                                      ? '스토어 설명'
                                       : null,
                                   hintStyle: TextStyle(
                                     color: Color(0xffd1d1d6),
@@ -197,14 +195,13 @@ class ShopProductMain extends StatelessWidget {
                                 readOnly: true,
                                 maxLines: 23,
                                 textAlign: TextAlign.center,
-                                controller: ownerShopController
-                                    .shopDescriptionController.value,
+                                controller: TextEditingController(text: ownerShopController.shopGetMeModel.value.dataDescription),
                                 decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: ownerShopController.shopGetMeModel
                                               .value.dataDescription ==
                                           null
-                                      ? '상세페이지에 적힐 스토어 설명을 적어주세요'
+                                      ? '스토어 상세 설명'
                                       : null,
                                   hintStyle: TextStyle(
                                     color: Color(0xffd1d1d6),

@@ -1,5 +1,8 @@
 import 'package:damo/app/controller/owner/owner_shop_controller.dart';
+import 'package:damo/app/data/model/owner/owner_shop_faq_model.dart';
+import 'package:damo/view/shop/shop_image_detail.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
+import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +18,7 @@ class ShopProductModify extends StatelessWidget {
     return WillPopScope(
       onWillPop: () {
         return Future(() {
+          GetDialog().alternativeDialog('상품 관리를 종료하시겠습니까?', () => Get.back());
           return true;
         });
       },
@@ -24,10 +28,10 @@ class ShopProductModify extends StatelessWidget {
         body: Obx(
           () => shopController.isLoadingModifyData.value
               ? Center(
-                child: CircularProgressIndicator(
+                  child: CircularProgressIndicator(
                     color: Color(0xfff93f5b),
                   ),
-              )
+                )
               : Column(
                   children: [
                     Expanded(
@@ -57,24 +61,30 @@ class ShopProductModify extends StatelessWidget {
                                 onTap: () {
                                   Get.bottomSheet(
                                     Container(
-                                      height: 130.h,
-                                      child: Column(
+                                      child: Wrap(
                                         children: [
-                                          SizedBox(
-                                            height: 6.h,
-                                          ),
-                                          Container(
-                                            height: 4.h,
-                                            width: 39.w,
-                                            decoration: BoxDecoration(
-                                              color: Color(0xffc7c7cc),
-                                              borderRadius:
-                                                  BorderRadius.circular(5.r),
+                                          InkWell(
+                                            onTap: () async {
+                                              Get.back();
+                                              Get.to(() => ShopImageDetail(),
+                                                  arguments: -1);
+                                            },
+                                            child: Container(
+                                              width: double.infinity,
+                                              height: 70.h,
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                '이미지 확대',
+                                                style: TextStyle(
+                                                  fontSize: 16.sp,
+                                                  height: 1,
+                                                  fontFamily: 'NotoSansCJKKR',
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
                                             ),
                                           ),
-                                          SizedBox(
-                                            height: 29.h,
-                                          ),
+                                          Divider(),
                                           InkWell(
                                             onTap: () async {
                                               await shopController
@@ -83,7 +93,7 @@ class ShopProductModify extends StatelessWidget {
                                             },
                                             child: Container(
                                               width: double.infinity,
-                                              height: 60.h,
+                                              height: 70.h,
                                               alignment: Alignment.center,
                                               child: Text(
                                                 '이미지 변경',
@@ -96,9 +106,6 @@ class ShopProductModify extends StatelessWidget {
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: 28.h,
                                           ),
                                         ],
                                       ),
@@ -120,8 +127,8 @@ class ShopProductModify extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(8.r),
                                         ),
-                                        child: shopController.shopGetMeModel.value
-                                                    .shopProfileImage !=
+                                        child: shopController.shopGetMeModel
+                                                    .value.shopProfileImage !=
                                                 null
                                             ? Image(
                                                 image: shopController
@@ -183,9 +190,9 @@ class ShopProductModify extends StatelessWidget {
                                 child: TextFormField(
                                   controller:
                                       shopController.shopNameController.value,
-                                  readOnly:
-                                      shopController.shopGetMeModel.value.name !=
-                                          null,
+                                  readOnly: shopController
+                                          .shopGetMeModel.value.name !=
+                                      null,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: shopController
@@ -229,8 +236,8 @@ class ShopProductModify extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(8.r),
                                 ),
                                 child: TextFormField(
-                                  controller:
-                                      shopController.shopContentController.value,
+                                  controller: shopController
+                                      .shopContentController.value,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: shopController
@@ -280,8 +287,8 @@ class ShopProductModify extends StatelessWidget {
                                       .shopDescriptionController.value,
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: shopController.shopGetMeModel.value
-                                                .dataDescription ==
+                                    hintText: shopController.shopGetMeModel
+                                                .value.dataDescription ==
                                             'null'
                                         ? '상세페이지에 적힐 스토어 설명을 적어주세요'
                                         : null,
@@ -323,10 +330,49 @@ class ShopProductModify extends StatelessWidget {
                                           Get.bottomSheet(
                                             Wrap(
                                               children: [
+                                                index <
+                                                            shopController
+                                                                .imagesSize
+                                                                .value ||
+                                                        index ==
+                                                            shopController
+                                                                    .imagesSize
+                                                                    .value -
+                                                                1
+                                                    ? InkWell(
+                                                        onTap: () async {
+                                                          Get.back();
+                                                          Get.to(
+                                                              () =>
+                                                                  ShopImageDetail(),
+                                                              arguments: index);
+                                                        },
+                                                        child: Container(
+                                                          width:
+                                                              double.infinity,
+                                                          height: 60.h,
+                                                          alignment:
+                                                              Alignment.center,
+                                                          child: Text(
+                                                            '이미지 확대',
+                                                            style: TextStyle(
+                                                              fontSize: 16.sp,
+                                                              height: 1,
+                                                              fontFamily:
+                                                                  'NotoSansCJKKR',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : Container(),
                                                 InkWell(
                                                   onTap: () async {
                                                     await shopController
-                                                        .selectShopImages(index);
+                                                        .selectShopImages(
+                                                            index);
                                                     Get.back();
                                                   },
                                                   child: Container(
@@ -346,7 +392,8 @@ class ShopProductModify extends StatelessWidget {
                                                           ? '이미지 변경'
                                                           : '이미지 추가',
                                                       style: TextStyle(
-                                                        color: Color(0xfff93f5b),
+                                                        color:
+                                                            Color(0xfff93f5b),
                                                         fontSize: 16.sp,
                                                         height: 1,
                                                         fontFamily:
@@ -360,7 +407,8 @@ class ShopProductModify extends StatelessWidget {
                                                 Visibility(
                                                   visible: index <
                                                           shopController
-                                                              .imagesSize.value ||
+                                                              .imagesSize
+                                                              .value ||
                                                       index ==
                                                           shopController
                                                                   .imagesSize
@@ -370,133 +418,19 @@ class ShopProductModify extends StatelessWidget {
                                                     onTap: () async {
                                                       FocusScope.of(context)
                                                           .unfocus();
-                                                      await Get.dialog(
-                                                        Dialog(
-                                                          child: Container(
-                                                            padding: EdgeInsets
-                                                                .fromLTRB(
-                                                                    16.w,
-                                                                    16.h,
-                                                                    16.w,
-                                                                    16.h),
-                                                            alignment:
-                                                                Alignment.center,
-                                                            height: 190.h,
-                                                            width: 130.w,
-                                                            child: Column(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Container(
-                                                                  padding: EdgeInsets
-                                                                      .fromLTRB(
-                                                                          16.w,
-                                                                          16.h,
-                                                                          16.w,
-                                                                          16.h),
-                                                                  child: Text(
-                                                                    '해당 사진을 삭제하시겠습니까?',
-                                                                    style: TextStyle(
-                                                                        color: Color(
-                                                                            0xff283137),
-                                                                        fontFamily:
-                                                                            'NotoSansCJKKR',
-                                                                        fontSize:
-                                                                            22.sp,
-                                                                        height: 1,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w700),
-                                                                  ),
-                                                                ),
-                                                                SizedBox(
-                                                                  height: 32.h,
-                                                                ),
-                                                                Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .end,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .end,
-                                                                  children: [
-                                                                    InkWell(
-                                                                      onTap: () {
-                                                                        Get.back();
-                                                                      },
-                                                                      child:
-                                                                          Container(
-                                                                        padding: EdgeInsets.fromLTRB(
-                                                                            12.w,
-                                                                            12.h,
-                                                                            12.w,
-                                                                            12.h),
-                                                                        child:
-                                                                            Text(
-                                                                          '아니오',
-                                                                          style: TextStyle(
-                                                                              color: Color(
-                                                                                  0xff283137),
-                                                                              fontFamily:
-                                                                                  'NotoSansCJKKR',
-                                                                              fontSize: 16
-                                                                                  .sp,
-                                                                              height:
-                                                                                  1,
-                                                                              fontWeight:
-                                                                                  FontWeight.w500),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    InkWell(
-                                                                      onTap:
-                                                                          () async {
-                                                                        await shopController
-                                                                            .deleteShopImages(
-                                                                                index);
-                                                                        Get.back();
-                                                                      },
-                                                                      child:
-                                                                          Container(
-                                                                        padding: EdgeInsets.fromLTRB(
-                                                                            12.w,
-                                                                            12.h,
-                                                                            12.w,
-                                                                            12.h),
-                                                                        child:
-                                                                            Text(
-                                                                          '예',
-                                                                          style: TextStyle(
-                                                                              color: Color(
-                                                                                  0xff283137),
-                                                                              fontFamily:
-                                                                                  'NotoSansCJKKR',
-                                                                              fontSize: 16
-                                                                                  .sp,
-                                                                              height:
-                                                                                  1,
-                                                                              fontWeight:
-                                                                                  FontWeight.w500),
-                                                                        ),
-                                                                      ),
-                                                                    )
-                                                                  ],
-                                                                )
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
+                                                      GetDialog().alternativeDialog(
+                                                          '해당 사진을 삭제하시겠습니까?',
+                                                          () async =>
+                                                              await shopController
+                                                                  .deleteShopImages(
+                                                                      index));
                                                       Get.back();
                                                     },
                                                     child: Container(
                                                       width: double.infinity,
                                                       height: 60.h,
-                                                      alignment: Alignment.center,
+                                                      alignment:
+                                                          Alignment.center,
                                                       child: Text(
                                                         '이미지 삭제',
                                                         style: TextStyle(
@@ -526,7 +460,8 @@ class ShopProductModify extends StatelessWidget {
                                                   children: [
                                                     index ==
                                                             shopController
-                                                                .imagesSize.value
+                                                                .imagesSize
+                                                                .value
                                                         ? Container(
                                                             width: 100.w,
                                                             height: 100.h,
@@ -599,14 +534,16 @@ class ShopProductModify extends StatelessWidget {
                               ),
                               SizedBox(height: 32.h),
                               Container(
-                                padding: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
+                                padding:
+                                    EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
                                 color: Colors.black12,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('* 옵션은 옵션 제목, 옵션 설명, 선택지로 구성되어 있습니다.\n'),
                                     Text(
-                                        '* 옵션의 선택지는 최소 1개 선택이 가능하도록 되어있습니다. 그러므로 고객이 옵션의 선택지를 선택할 필요가 없는 경우, \'선택지\' 란에 반드시 \'선택 안함\' 등과 같은 선택지를 추가해 주세요.')
+                                        '* 옵션은 옵션 제목, 옵션 설명, 선택지로 구성되어 있습니다.\n'),
+                                    Text(
+                                        '* 옵션의 선택지는 1개만 선택이 가능하도록 되어있습니다. 그러므로 고객이 옵션의 선택지를 선택할 필요가 없는 경우, \'선택지\' 란에 반드시 \'선택 안함\' 등과 같은 선택지를 추가해 주세요.')
                                   ],
                                 ),
                               ),
@@ -636,7 +573,8 @@ class ShopProductModify extends StatelessWidget {
                                           color: Color(0xffd1d1d6),
                                           width: 1.h,
                                         ),
-                                        borderRadius: BorderRadius.circular(8.r),
+                                        borderRadius:
+                                            BorderRadius.circular(8.r),
                                       ),
                                       child: TextFormField(
                                         controller: shopController
@@ -668,584 +606,457 @@ class ShopProductModify extends StatelessWidget {
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
                                   physics: NeverScrollableScrollPhysics(),
-                                  itemCount: shopController.mainOptionList.length,
+                                  itemCount:
+                                      shopController.mainOptionList.length,
                                   itemBuilder: (context, index) {
                                     if (shopController.mainOptionList.length >
                                             index ||
-                                        shopController.mainOptionList.length != 0)
-                                      return Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 16.h,
+                                        shopController.mainOptionList.length !=
+                                            0)
+                                      return Theme(
+                                        data: ThemeData().copyWith(
+                                            dividerColor: Colors.transparent),
+                                        child: ExpansionTile(
+                                          title: Text(
+                                            '옵션 ${index + 1}',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontFamily: 'NotoSansCJKKR',
+                                              fontSize: 20.sp,
+                                              fontWeight: FontWeight.w700,
+                                            ),
                                           ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                '옵션 ${index + 1}',
-                                                style: TextStyle(
-                                                  color: Color(0xff283137),
-                                                  fontSize: 24.sp,
-                                                  height: 1,
-                                                  fontFamily: 'NotoSansCJKKR',
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 8.w,
-                                              ),
-                                              InkWell(
-                                                onTap: () async {
-                                                  FocusScope.of(context)
-                                                      .unfocus();
-                                                  await Get.dialog(
-                                                    Dialog(
-                                                      child: Container(
-                                                        padding:
-                                                            EdgeInsets.fromLTRB(
-                                                                16.w,
-                                                                16.h,
-                                                                16.w,
-                                                                16.h),
-                                                        alignment:
-                                                            Alignment.center,
-                                                        height: 190.h,
-                                                        width: 130.w,
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Container(
-                                                              padding: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      16.w,
-                                                                      16.h,
-                                                                      16.w,
-                                                                      16.h),
-                                                              child: Text(
-                                                                '해당 옵션을 삭제하시겠습니까?',
-                                                                style: TextStyle(
-                                                                    color: Color(
-                                                                        0xff283137),
-                                                                    fontFamily:
-                                                                        'NotoSansCJKKR',
-                                                                    fontSize:
-                                                                        22.sp,
-                                                                    height: 1,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w700),
-                                                              ),
+                                          children: [
+                                            SizedBox(
+                                              height: 16.h,
+                                            ),
+                                            InkWell(
+                                              onTap: () async {
+                                                FocusScope.of(context)
+                                                    .unfocus();
+                                                await Get.dialog(
+                                                  Dialog(
+                                                    child: Container(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              16.w,
+                                                              16.h,
+                                                              16.w,
+                                                              16.h),
+                                                      alignment:
+                                                          Alignment.center,
+                                                      height: 190.h,
+                                                      width: 130.w,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Container(
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(
+                                                                    16.w,
+                                                                    16.h,
+                                                                    16.w,
+                                                                    16.h),
+                                                            child: Text(
+                                                              '해당 옵션을 삭제하시겠습니까?',
+                                                              style: TextStyle(
+                                                                  color: Color(
+                                                                      0xff283137),
+                                                                  fontFamily:
+                                                                      'NotoSansCJKKR',
+                                                                  fontSize:
+                                                                      22.sp,
+                                                                  height: 1,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700),
                                                             ),
-                                                            SizedBox(
-                                                              height: 32.h,
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .end,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .end,
-                                                              children: [
-                                                                InkWell(
-                                                                  onTap: () {
-                                                                    Get.back();
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    padding: EdgeInsets
-                                                                        .fromLTRB(
-                                                                            12.w,
-                                                                            12.h,
-                                                                            12.w,
-                                                                            12.h),
-                                                                    child: Text(
-                                                                      '아니오',
-                                                                      style: TextStyle(
-                                                                          color: Color(
-                                                                              0xff283137),
-                                                                          fontFamily:
-                                                                              'NotoSansCJKKR',
-                                                                          fontSize: 16
-                                                                              .sp,
-                                                                          height:
-                                                                              1,
-                                                                          fontWeight:
-                                                                              FontWeight.w500),
-                                                                    ),
+                                                          ),
+                                                          SizedBox(
+                                                            height: 32.h,
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .end,
+                                                            children: [
+                                                              InkWell(
+                                                                onTap: () {
+                                                                  Get.back();
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  padding: EdgeInsets
+                                                                      .fromLTRB(
+                                                                          12.w,
+                                                                          12.h,
+                                                                          12.w,
+                                                                          12.h),
+                                                                  child: Text(
+                                                                    '아니오',
+                                                                    style: TextStyle(
+                                                                        color: Color(
+                                                                            0xff283137),
+                                                                        fontFamily:
+                                                                            'NotoSansCJKKR',
+                                                                        fontSize: 16
+                                                                            .sp,
+                                                                        height:
+                                                                            1,
+                                                                        fontWeight:
+                                                                            FontWeight.w500),
                                                                   ),
                                                                 ),
-                                                                InkWell(
-                                                                  onTap:
-                                                                      () async {
-                                                                    await shopController
-                                                                        .onMainOptionDelete(
-                                                                            index);
-                                                                    Get.back();
-                                                                  },
-                                                                  child:
-                                                                      Container(
-                                                                    padding: EdgeInsets
-                                                                        .fromLTRB(
-                                                                            12.w,
-                                                                            12.h,
-                                                                            12.w,
-                                                                            12.h),
-                                                                    child: Text(
-                                                                      '예',
-                                                                      style: TextStyle(
-                                                                          color: Color(
-                                                                              0xff283137),
-                                                                          fontFamily:
-                                                                              'NotoSansCJKKR',
-                                                                          fontSize: 16
-                                                                              .sp,
-                                                                          height:
-                                                                              1,
-                                                                          fontWeight:
-                                                                              FontWeight.w500),
-                                                                    ),
+                                                              ),
+                                                              InkWell(
+                                                                onTap:
+                                                                    () async {
+                                                                  await shopController
+                                                                      .onMainOptionDelete(
+                                                                          index);
+                                                                  Get.back();
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  padding: EdgeInsets
+                                                                      .fromLTRB(
+                                                                          12.w,
+                                                                          12.h,
+                                                                          12.w,
+                                                                          12.h),
+                                                                  child: Text(
+                                                                    '예',
+                                                                    style: TextStyle(
+                                                                        color: Color(
+                                                                            0xff283137),
+                                                                        fontFamily:
+                                                                            'NotoSansCJKKR',
+                                                                        fontSize: 16
+                                                                            .sp,
+                                                                        height:
+                                                                            1,
+                                                                        fontWeight:
+                                                                            FontWeight.w500),
                                                                   ),
-                                                                )
-                                                              ],
-                                                            )
-                                                          ],
-                                                        ),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          )
+                                                        ],
                                                       ),
                                                     ),
-                                                  );
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      8.w, 8.h, 8.w, 8.h),
-                                                  alignment:
-                                                      Alignment.centerRight,
-                                                  child: Text(
-                                                    '옵션 삭제',
-                                                    style: TextStyle(
-                                                      color: Color(0xfff93f5b),
-                                                      fontSize: 16.sp,
-                                                      height: 1,
-                                                      fontFamily: 'NotoSansCJKKR',
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              child: Container(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                padding: EdgeInsets.fromLTRB(
+                                                    8.w, 8.h, 8.w, 8.h),
+                                                child: Text(
+                                                  '옵션 삭제',
+                                                  style: TextStyle(
+                                                    color: Color(0xfff93f5b),
+                                                    fontSize: 16.sp,
+                                                    height: 1,
+                                                    fontFamily: 'NotoSansCJKKR',
+                                                    fontWeight: FontWeight.w500,
                                                   ),
                                                 ),
-                                              )
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 8.h,
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: Color(0xffd1d1d6),
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.r)),
-                                            child: Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  10.w, 10.h, 10.w, 10.h),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    '옵션 제목',
-                                                    style: TextStyle(
-                                                      color: Color(0xfff93f5b),
-                                                      fontSize: 16.sp,
-                                                      height: 1,
-                                                      fontFamily: 'NotoSansCJKKR',
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 8.h,
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Color(0xffd1d1d6),
                                                   ),
-                                                  SizedBox(
-                                                    height: 8.h,
-                                                  ),
-                                                  Container(
-                                                    height: 110.h,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border.all(
-                                                        color: Color(0xffd1d1d6),
-                                                        width: 1.h,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.r),
-                                                    ),
-                                                    child: TextFormField(
-                                                      maxLines: 3,
-                                                      controller: shopController
-                                                          .mainOptionList[index]
-                                                          .mainOptionTitleController,
-                                                      decoration: InputDecoration(
-                                                        contentPadding:
-                                                            EdgeInsets.all(18.h),
-                                                        border: InputBorder.none,
-                                                        hintText: shopController
-                                                                    .mainOptionList[
-                                                                        index]
-                                                                    .mainOptionTitleController!
-                                                                    .value
-                                                                    .text ==
-                                                                ''
-                                                            ? '1. 케이크 맛'
-                                                            : null,
-                                                        hintStyle: TextStyle(
-                                                          color:
-                                                              Color(0xffd1d1d6),
-                                                          fontFamily:
-                                                              'NotoSansCJKKR',
-                                                          fontSize: 14.sp,
-                                                          height: 1,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 16.h,
-                                                  ),
-                                                  Text(
-                                                    '옵션 설명',
-                                                    style: TextStyle(
-                                                      color: Color(0xfff93f5b),
-                                                      fontSize: 16.sp,
-                                                      height: 1,
-                                                      fontFamily: 'NotoSansCJKKR',
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 8.h,
-                                                  ),
-                                                  Container(
-                                                    height: 150.h,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border.all(
-                                                        color: Color(0xffd1d1d6),
-                                                        width: 1.h,
-                                                      ),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.r),
-                                                    ),
-                                                    child: TextFormField(
-                                                      maxLines: 5,
-                                                      controller: shopController
-                                                          .mainOptionList[index]
-                                                          .mainOptionDescriptionController,
-                                                      decoration: InputDecoration(
-                                                        contentPadding:
-                                                            EdgeInsets.all(18.h),
-                                                        border: InputBorder.none,
-                                                        hintText: shopController
-                                                                    .mainOptionList[
-                                                                        index]
-                                                                    .mainOptionDescriptionController!
-                                                                    .value
-                                                                    .text ==
-                                                                ''
-                                                            ? '케이크 맛을 고르는 옵션입니다. 반드시 하나 이상 선택해 주세요.'
-                                                            : null,
-                                                        hintStyle: TextStyle(
-                                                          color:
-                                                              Color(0xffd1d1d6),
-                                                          fontFamily:
-                                                              'NotoSansCJKKR',
-                                                          fontSize: 14.sp,
-                                                          height: 1,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 16.h,
-                                                  ),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        '선택지의 중복 선택 가능유무',
-                                                        style: TextStyle(
-                                                          color:
-                                                              Color(0xfff93f5b),
-                                                          fontSize: 16.sp,
-                                                          height: 1,
-                                                          fontFamily:
-                                                              'NotoSansCJKKR',
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                        ),
-                                                      ),
-                                                      Switch(
-                                                        value: shopController
-                                                            .mainOptionList[index]
-                                                            .mainOptionAllowMultipleChoices!,
-                                                        onChanged: (value) {
-                                                          shopController
-                                                              .allowMultipleChoicesChanged(
-                                                                  index);
-                                                        },
-                                                        activeColor:
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.r)),
+                                              child: Container(
+                                                margin: EdgeInsets.fromLTRB(
+                                                    10.w, 10.h, 10.w, 10.h),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      '옵션 제목',
+                                                      style: TextStyle(
+                                                        color:
                                                             Color(0xfff93f5b),
+                                                        fontSize: 16.sp,
+                                                        height: 1,
+                                                        fontFamily:
+                                                            'NotoSansCJKKR',
+                                                        fontWeight:
+                                                            FontWeight.w500,
                                                       ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 8.h,
-                                                  ),
-                                                  Divider(
-                                                    thickness: 15.h,
-                                                    color: Colors.black12,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 8.h,
-                                                  ),
-                                                  Text(
-                                                    '옵션의 선택지를 설정해주세요',
-                                                    style: TextStyle(
-                                                      color: Color(0xff283137),
-                                                      fontSize: 16.sp,
-                                                      height: 1,
-                                                      fontFamily: 'NotoSansCJKKR',
-                                                      fontWeight: FontWeight.w500,
                                                     ),
-                                                  ),
-                                                  Obx(() {
-                                                    if (shopController
-                                                                .mainOptionList
-                                                                .length >
-                                                            index ||
-                                                        shopController
+                                                    SizedBox(
+                                                      height: 8.h,
+                                                    ),
+                                                    Container(
+                                                      height: 110.h,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        border: Border.all(
+                                                          color:
+                                                              Color(0xffd1d1d6),
+                                                          width: 1.h,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.r),
+                                                      ),
+                                                      child: TextFormField(
+                                                        maxLines: 3,
+                                                        controller: shopController
+                                                            .mainOptionList[
+                                                                index]
+                                                            .mainOptionTitleController,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          contentPadding:
+                                                              EdgeInsets.all(
+                                                                  18.h),
+                                                          border:
+                                                              InputBorder.none,
+                                                          hintText: shopController
+                                                                      .mainOptionList[
+                                                                          index]
+                                                                      .mainOptionTitleController!
+                                                                      .value
+                                                                      .text ==
+                                                                  ''
+                                                              ? '1. 케이크 맛'
+                                                              : null,
+                                                          hintStyle: TextStyle(
+                                                            color: Color(
+                                                                0xffd1d1d6),
+                                                            fontFamily:
+                                                                'NotoSansCJKKR',
+                                                            fontSize: 14.sp,
+                                                            height: 1,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 16.h,
+                                                    ),
+                                                    Text(
+                                                      '옵션 설명',
+                                                      style: TextStyle(
+                                                        color:
+                                                            Color(0xfff93f5b),
+                                                        fontSize: 16.sp,
+                                                        height: 1,
+                                                        fontFamily:
+                                                            'NotoSansCJKKR',
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 8.h,
+                                                    ),
+                                                    Container(
+                                                      height: 150.h,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        border: Border.all(
+                                                          color:
+                                                              Color(0xffd1d1d6),
+                                                          width: 1.h,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.r),
+                                                      ),
+                                                      child: TextFormField(
+                                                        maxLines: 5,
+                                                        controller: shopController
+                                                            .mainOptionList[
+                                                                index]
+                                                            .mainOptionDescriptionController,
+                                                        decoration:
+                                                            InputDecoration(
+                                                          contentPadding:
+                                                              EdgeInsets.all(
+                                                                  18.h),
+                                                          border:
+                                                              InputBorder.none,
+                                                          hintText: shopController
+                                                                      .mainOptionList[
+                                                                          index]
+                                                                      .mainOptionDescriptionController!
+                                                                      .value
+                                                                      .text ==
+                                                                  ''
+                                                              ? '케이크 맛을 고르는 옵션입니다. 반드시 하나 이상 선택해 주세요.'
+                                                              : null,
+                                                          hintStyle: TextStyle(
+                                                            color: Color(
+                                                                0xffd1d1d6),
+                                                            fontFamily:
+                                                                'NotoSansCJKKR',
+                                                            fontSize: 14.sp,
+                                                            height: 1,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 16.h,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          '선택지의 중복 선택 가능유무',
+                                                          style: TextStyle(
+                                                            color: Color(
+                                                                0xfff93f5b),
+                                                            fontSize: 16.sp,
+                                                            height: 1,
+                                                            fontFamily:
+                                                                'NotoSansCJKKR',
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                          ),
+                                                        ),
+                                                        Switch(
+                                                          value: shopController
+                                                              .mainOptionList[
+                                                                  index]
+                                                              .mainOptionAllowMultipleChoices!,
+                                                          onChanged: (value) {
+                                                            shopController
+                                                                .allowMultipleChoicesChanged(
+                                                                    index);
+                                                          },
+                                                          activeColor:
+                                                              Color(0xfff93f5b),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 8.h,
+                                                    ),
+                                                    Divider(
+                                                      thickness: 15.h,
+                                                      color: Colors.black12,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 8.h,
+                                                    ),
+                                                    Text(
+                                                      '옵션의 선택지를 설정해주세요',
+                                                      style: TextStyle(
+                                                        color:
+                                                            Color(0xff283137),
+                                                        fontSize: 16.sp,
+                                                        height: 1,
+                                                        fontFamily:
+                                                            'NotoSansCJKKR',
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                    Obx(() {
+                                                      if (shopController
+                                                                  .mainOptionList
+                                                                  .length >
+                                                              index ||
+                                                          shopController
+                                                                  .mainOptionList[
+                                                                      index]
+                                                                  .shopDetailOptionList
+                                                                  .length !=
+                                                              0)
+                                                        return ListView.builder(
+                                                            shrinkWrap: true,
+                                                            scrollDirection:
+                                                                Axis.vertical,
+                                                            physics:
+                                                                NeverScrollableScrollPhysics(),
+                                                            itemCount: shopController
                                                                 .mainOptionList[
                                                                     index]
                                                                 .shopDetailOptionList
-                                                                .length !=
-                                                            0)
-                                                      return ListView.builder(
-                                                          shrinkWrap: true,
-                                                          scrollDirection:
-                                                              Axis.vertical,
-                                                          physics:
-                                                              NeverScrollableScrollPhysics(),
-                                                          itemCount: shopController
-                                                              .mainOptionList[
-                                                                  index]
-                                                              .shopDetailOptionList
-                                                              .length,
-                                                          itemBuilder: (context,
-                                                              detailIndex) {
-                                                            return Visibility(
-                                                              visible: true,
-                                                              child: Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  SizedBox(
-                                                                    height: 16.h,
-                                                                  ),
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      Text(
-                                                                        '선택지 ${detailIndex + 1}',
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color: Color(
-                                                                              0xff283137),
-                                                                          fontSize:
-                                                                              16.sp,
-                                                                          height:
-                                                                              1,
-                                                                          fontFamily:
-                                                                              'NotoSansCJKKR',
-                                                                          fontWeight:
-                                                                              FontWeight.w700,
-                                                                        ),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        width:
-                                                                            8.w,
-                                                                      ),
-                                                                      InkWell(
-                                                                        onTap:
-                                                                            () async {
-                                                                          FocusScope.of(context)
-                                                                              .unfocus();
-                                                                          await Get
-                                                                              .dialog(
-                                                                            Dialog(
-                                                                              child:
-                                                                                  Container(
-                                                                                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                                                                                alignment: Alignment.center,
-                                                                                height: 190.h,
-                                                                                width: 130.w,
-                                                                                child: Column(
-                                                                                  mainAxisAlignment: MainAxisAlignment.center,
-                                                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                                                  children: [
-                                                                                    Container(
-                                                                                      padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                                                                                      child: Text(
-                                                                                        '해당 선택지를 삭제하시겠습니까?',
-                                                                                        style: TextStyle(color: Color(0xff283137), fontFamily: 'NotoSansCJKKR', fontSize: 22.sp, height: 1, fontWeight: FontWeight.w700),
-                                                                                      ),
-                                                                                    ),
-                                                                                    SizedBox(
-                                                                                      height: 32.h,
-                                                                                    ),
-                                                                                    Row(
-                                                                                      mainAxisAlignment: MainAxisAlignment.end,
-                                                                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                                                                      children: [
-                                                                                        InkWell(
-                                                                                          onTap: () {
-                                                                                            Get.back();
-                                                                                          },
-                                                                                          child: Container(
-                                                                                            padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                                                                                            child: Text(
-                                                                                              '아니오',
-                                                                                              style: TextStyle(color: Color(0xff283137), fontFamily: 'NotoSansCJKKR', fontSize: 16.sp, height: 1, fontWeight: FontWeight.w500),
-                                                                                            ),
-                                                                                          ),
-                                                                                        ),
-                                                                                        InkWell(
-                                                                                          onTap: () async {
-                                                                                            await shopController.onDetailOptionDelete(index, detailIndex);
-                                                                                            Get.back();
-                                                                                          },
-                                                                                          child: Container(
-                                                                                            padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                                                                                            child: Text(
-                                                                                              '예',
-                                                                                              style: TextStyle(color: Color(0xff283137), fontFamily: 'NotoSansCJKKR', fontSize: 16.sp, height: 1, fontWeight: FontWeight.w500),
-                                                                                            ),
-                                                                                          ),
-                                                                                        )
-                                                                                      ],
-                                                                                    )
-                                                                                  ],
-                                                                                ),
-                                                                              ),
-                                                                            ),
-                                                                          );
-                                                                        },
-                                                                        child:
-                                                                            Container(
-                                                                          padding: EdgeInsets.fromLTRB(
-                                                                              8.w,
-                                                                              8.h,
-                                                                              8.w,
-                                                                              8.h),
-                                                                          alignment:
-                                                                              Alignment.centerRight,
-                                                                          child:
-                                                                              Text(
-                                                                            '선택지 삭제',
-                                                                            style:
-                                                                                TextStyle(
-                                                                              color:
-                                                                                  Color(0xfff93f5b),
-                                                                              fontSize:
-                                                                                  16.sp,
-                                                                              height:
-                                                                                  1,
-                                                                              fontFamily:
-                                                                                  'NotoSansCJKKR',
-                                                                              fontWeight:
-                                                                                  FontWeight.w500,
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      )
-                                                                    ],
-                                                                  ),
-                                                                  SizedBox(
-                                                                    height: 8.h,
-                                                                  ),
-                                                                  Container(
-                                                                    padding: EdgeInsets
-                                                                        .fromLTRB(
-                                                                            8.w,
-                                                                            8.h,
-                                                                            8.w,
-                                                                            8.h),
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      borderRadius:
-                                                                          BorderRadius
-                                                                              .circular(
-                                                                        8.r,
-                                                                      ),
-                                                                      border:
-                                                                          Border
-                                                                              .all(
-                                                                        color: Color(
-                                                                            0xffd1d1d6),
-                                                                      ),
+                                                                .length,
+                                                            itemBuilder: (context,
+                                                                detailIndex) {
+                                                              return Visibility(
+                                                                visible: true,
+                                                                child: Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    SizedBox(
+                                                                      height:
+                                                                          16.h,
                                                                     ),
-                                                                    child: Column(
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
                                                                       children: [
-                                                                        TextFormField(
-                                                                          maxLines:
-                                                                              2,
-                                                                          controller: shopController
-                                                                              .mainOptionList[index]
-                                                                              .shopDetailOptionList[detailIndex]
-                                                                              .detailOptionContentController,
-                                                                          decoration:
-                                                                              InputDecoration(
-                                                                            border:
-                                                                                InputBorder.none,
-                                                                            hintText: shopController.mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionContentController!.value.text == ''
-                                                                                ? '해당 선택지의 내용을 입력해 주세요(ex. 오레오 토핑)'
-                                                                                : null,
-                                                                            hintStyle:
-                                                                                TextStyle(
-                                                                              color:
-                                                                                  Color(0xffd1d1d6),
-                                                                              fontFamily:
-                                                                                  'NotoSansCJKKR',
-                                                                              fontSize:
-                                                                                  14.sp,
-                                                                              height:
-                                                                                  1,
-                                                                            ),
+                                                                        Text(
+                                                                          '선택지 ${detailIndex + 1}',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            color:
+                                                                                Color(0xff283137),
+                                                                            fontSize:
+                                                                                16.sp,
+                                                                            height:
+                                                                                1,
+                                                                            fontFamily:
+                                                                                'NotoSansCJKKR',
+                                                                            fontWeight:
+                                                                                FontWeight.w700,
                                                                           ),
-                                                                        ),
-                                                                        Divider(
-                                                                          height:
-                                                                              1.h,
-                                                                          color: Colors
-                                                                              .black,
                                                                         ),
                                                                         SizedBox(
-                                                                          height:
-                                                                              8.h,
+                                                                          width:
+                                                                              8.w,
                                                                         ),
-                                                                        Row(
-                                                                          children: [
-                                                                            Text(
-                                                                              '해당 선택지 금액',
-                                                                              style:
-                                                                                  TextStyle(
+                                                                        InkWell(
+                                                                          onTap:
+                                                                              () async {
+                                                                            FocusScope.of(context).unfocus();
+                                                                            GetDialog().alternativeDialog('해당 선택지를 삭제하시겠습니까?',
+                                                                                () async => await shopController.onDetailOptionDelete(index, detailIndex));
+                                                                          },
+                                                                          child:
+                                                                              Container(
+                                                                            padding: EdgeInsets.fromLTRB(
+                                                                                8.w,
+                                                                                8.h,
+                                                                                8.w,
+                                                                                8.h),
+                                                                            alignment:
+                                                                                Alignment.centerRight,
+                                                                            child:
+                                                                                Text(
+                                                                              '선택지 삭제',
+                                                                              style: TextStyle(
                                                                                 color: Color(0xfff93f5b),
                                                                                 fontSize: 16.sp,
                                                                                 height: 1,
@@ -1253,126 +1064,163 @@ class ShopProductModify extends StatelessWidget {
                                                                                 fontWeight: FontWeight.w500,
                                                                               ),
                                                                             ),
-                                                                            SizedBox(
-                                                                              width:
-                                                                                  70.w,
+                                                                          ),
+                                                                        )
+                                                                      ],
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height:
+                                                                          8.h,
+                                                                    ),
+                                                                    Container(
+                                                                      padding: EdgeInsets.fromLTRB(
+                                                                          8.w,
+                                                                          8.h,
+                                                                          8.w,
+                                                                          0),
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                          8.r,
+                                                                        ),
+                                                                        border:
+                                                                            Border.all(
+                                                                          color:
+                                                                              Color(0xffd1d1d6),
+                                                                        ),
+                                                                      ),
+                                                                      child:
+                                                                          Column(
+                                                                        children: [
+                                                                          TextFormField(
+                                                                            maxLines:
+                                                                                2,
+                                                                            controller:
+                                                                                shopController.mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionContentController,
+                                                                            decoration:
+                                                                                InputDecoration(
+                                                                              border: InputBorder.none,
+                                                                              hintText: shopController.mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionContentController!.value.text == '' ? '해당 선택지의 내용을 입력해 주세요(ex. 오레오 토핑)' : null,
+                                                                              hintStyle: TextStyle(
+                                                                                color: Color(0xffd1d1d6),
+                                                                                fontFamily: 'NotoSansCJKKR',
+                                                                                fontSize: 14.sp,
+                                                                                height: 1,
+                                                                              ),
                                                                             ),
-                                                                            Expanded(
-                                                                              child:
-                                                                                  Container(
-                                                                                decoration: BoxDecoration(
-                                                                                  color: Colors.white,
-                                                                                  border: Border.all(
-                                                                                    color: Color(0xffd1d1d6),
-                                                                                    width: 1.h,
-                                                                                  ),
-                                                                                  borderRadius: BorderRadius.circular(8.r),
+                                                                          ),
+                                                                          Divider(
+                                                                            height:
+                                                                                1.h,
+                                                                            color:
+                                                                                Colors.black,
+                                                                          ),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                8.h,
+                                                                          ),
+                                                                          Row(
+                                                                            children: [
+                                                                              Text(
+                                                                                '해당 선택지 금액',
+                                                                                style: TextStyle(
+                                                                                  color: Color(0xfff93f5b),
+                                                                                  fontSize: 16.sp,
+                                                                                  height: 1,
+                                                                                  fontFamily: 'NotoSansCJKKR',
+                                                                                  fontWeight: FontWeight.w500,
                                                                                 ),
-                                                                                child: TextFormField(
-                                                                                  inputFormatters: [
-                                                                                    MaskTextInputFormatter(
-                                                                                      mask: '#######',
-                                                                                    )
-                                                                                  ],
-                                                                                  keyboardType: TextInputType.number,
-                                                                                  maxLines: 1,
-                                                                                  controller: shopController.mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionPriceController,
-                                                                                  decoration: InputDecoration(
-                                                                                    contentPadding: EdgeInsets.all(18.h),
-                                                                                    border: InputBorder.none,
-                                                                                    hintStyle: TextStyle(
+                                                                              ),
+                                                                              SizedBox(
+                                                                                width: 70.w,
+                                                                              ),
+                                                                              Expanded(
+                                                                                child: Container(
+                                                                                  decoration: BoxDecoration(
+                                                                                    color: Colors.white,
+                                                                                    border: Border.all(
                                                                                       color: Color(0xffd1d1d6),
-                                                                                      fontFamily: 'NotoSansCJKKR',
-                                                                                      fontSize: 14.sp,
-                                                                                      height: 1,
+                                                                                      width: 1.h,
+                                                                                    ),
+                                                                                    borderRadius: BorderRadius.circular(8.r),
+                                                                                  ),
+                                                                                  child: TextFormField(
+                                                                                    inputFormatters: [
+                                                                                      MaskTextInputFormatter(
+                                                                                        mask: '#######',
+                                                                                      )
+                                                                                    ],
+                                                                                    keyboardType: TextInputType.number,
+                                                                                    maxLines: 1,
+                                                                                    controller: shopController.mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionPriceController,
+                                                                                    decoration: InputDecoration(
+                                                                                      contentPadding: EdgeInsets.all(18.h),
+                                                                                      border: InputBorder.none,
+                                                                                      hintStyle: TextStyle(
+                                                                                        color: Color(0xffd1d1d6),
+                                                                                        fontFamily: 'NotoSansCJKKR',
+                                                                                        fontSize: 14.sp,
+                                                                                        height: 1,
+                                                                                      ),
                                                                                     ),
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        SizedBox(
-                                                                          height:
-                                                                              8.h,
-                                                                        ),
-                                                                        Column(
-                                                                          children: [
-                                                                            Divider(
-                                                                              color:
-                                                                                  Colors.black,
-                                                                            ),
-                                                                            SizedBox(
-                                                                              height:
-                                                                                  8.h,
-                                                                            ),
-                                                                            Row(
-                                                                              mainAxisAlignment:
-                                                                                  MainAxisAlignment.spaceBetween,
-                                                                              children: [
-                                                                                Text(
-                                                                                  '  해당 선택지의 최대 선택 개수',
-                                                                                  style: TextStyle(
-                                                                                    color: Color(0xff283137),
-                                                                                    fontSize: 16.sp,
-                                                                                    height: 1,
-                                                                                    fontFamily: 'NotoSansCJKKR',
-                                                                                    fontWeight: FontWeight.w500,
+                                                                            ],
+                                                                          ),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                8.h,
+                                                                          ),
+                                                                          /*Column(
+                                                                            children: [
+                                                                              Divider(
+                                                                                color: Colors.black,
+                                                                              ),
+                                                                              SizedBox(
+                                                                                height: 8.h,
+                                                                              ),
+                                                                              Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                children: [
+                                                                                  Text(
+                                                                                    '  해당 선택지의 최대 선택 개수',
+                                                                                    style: TextStyle(
+                                                                                      color: Color(0xff283137),
+                                                                                      fontSize: 16.sp,
+                                                                                      height: 1,
+                                                                                      fontFamily: 'NotoSansCJKKR',
+                                                                                      fontWeight: FontWeight.w500,
+                                                                                    ),
                                                                                   ),
-                                                                                ),
-                                                                                Row(
-                                                                                  children: [
-                                                                                    InkWell(
-                                                                                      onTap: () {
-                                                                                        shopController.decreaseDetailOptionCount(index, detailIndex);
-                                                                                      },
-                                                                                      child: Container(
-                                                                                        decoration: BoxDecoration(border: Border.all(color: Color(0xffd1d1d6)), borderRadius: BorderRadius.circular(20.r), color: Colors.white),
+                                                                                  Row(
+                                                                                    children: [
+                                                                                      InkWell(
+                                                                                        onTap: () {
+                                                                                          shopController.decreaseDetailOptionCount(index, detailIndex);
+                                                                                        },
                                                                                         child: Container(
-                                                                                          padding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
-                                                                                          child: Text(
-                                                                                            '-',
-                                                                                            style: TextStyle(
-                                                                                              color: Color(0xff283137),
-                                                                                              fontSize: 14.sp,
-                                                                                              height: 1,
-                                                                                              fontFamily: 'NotoSansCJKKR',
-                                                                                              fontWeight: FontWeight.w700,
+                                                                                          decoration: BoxDecoration(border: Border.all(color: Color(0xffd1d1d6)), borderRadius: BorderRadius.circular(20.r), color: Colors.white),
+                                                                                          child: Container(
+                                                                                            padding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
+                                                                                            child: Text(
+                                                                                              '-',
+                                                                                              style: TextStyle(
+                                                                                                color: Color(0xff283137),
+                                                                                                fontSize: 14.sp,
+                                                                                                height: 1,
+                                                                                                fontFamily: 'NotoSansCJKKR',
+                                                                                                fontWeight: FontWeight.w700,
+                                                                                              ),
                                                                                             ),
                                                                                           ),
                                                                                         ),
                                                                                       ),
-                                                                                    ),
-                                                                                    SizedBox(
-                                                                                      width: 10.w,
-                                                                                    ),
-                                                                                    Container(
-                                                                                      decoration: BoxDecoration(
-                                                                                        border: Border.all(color: Color(0xffd1d1d6)),
-                                                                                        borderRadius: BorderRadius.circular(20.r),
+                                                                                      SizedBox(
+                                                                                        width: 10.w,
                                                                                       ),
-                                                                                      child: Container(
-                                                                                        padding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
-                                                                                        child: Text(
-                                                                                          '${shopController.mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionCount}',
-                                                                                          style: TextStyle(
-                                                                                            color: Color(0xff283137),
-                                                                                            fontSize: 14.sp,
-                                                                                            height: 1,
-                                                                                            fontFamily: 'NotoSansCJKKR',
-                                                                                            fontWeight: FontWeight.w700,
-                                                                                          ),
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
-                                                                                    SizedBox(
-                                                                                      width: 10.w,
-                                                                                    ),
-                                                                                    InkWell(
-                                                                                      onTap: () {
-                                                                                        shopController.increaseDetailOptionCount(index, detailIndex);
-                                                                                      },
-                                                                                      child: Container(
+                                                                                      Container(
                                                                                         decoration: BoxDecoration(
                                                                                           border: Border.all(color: Color(0xffd1d1d6)),
                                                                                           borderRadius: BorderRadius.circular(20.r),
@@ -1380,7 +1228,7 @@ class ShopProductModify extends StatelessWidget {
                                                                                         child: Container(
                                                                                           padding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
                                                                                           child: Text(
-                                                                                            '+',
+                                                                                            '${shopController.mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionCount}',
                                                                                             style: TextStyle(
                                                                                               color: Color(0xff283137),
                                                                                               fontSize: 14.sp,
@@ -1391,97 +1239,128 @@ class ShopProductModify extends StatelessWidget {
                                                                                           ),
                                                                                         ),
                                                                                       ),
-                                                                                    ),
-                                                                                  ],
-                                                                                )
-                                                                              ],
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                        SizedBox(
-                                                                          height:
-                                                                              8.h,
-                                                                        ),
-                                                                      ],
+                                                                                      SizedBox(
+                                                                                        width: 10.w,
+                                                                                      ),
+                                                                                      InkWell(
+                                                                                        onTap: () {
+                                                                                          shopController.increaseDetailOptionCount(index, detailIndex);
+                                                                                        },
+                                                                                        child: Container(
+                                                                                          decoration: BoxDecoration(
+                                                                                            border: Border.all(color: Color(0xffd1d1d6)),
+                                                                                            borderRadius: BorderRadius.circular(20.r),
+                                                                                          ),
+                                                                                          child: Container(
+                                                                                            padding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
+                                                                                            child: Text(
+                                                                                              '+',
+                                                                                              style: TextStyle(
+                                                                                                color: Color(0xff283137),
+                                                                                                fontSize: 14.sp,
+                                                                                                height: 1,
+                                                                                                fontFamily: 'NotoSansCJKKR',
+                                                                                                fontWeight: FontWeight.w700,
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ],
+                                                                                  )
+                                                                                ],
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                8.h,
+                                                                          ),*/
+                                                                        ],
+                                                                      ),
                                                                     ),
+                                                                  ],
+                                                                ),
+                                                              );
+                                                            });
+                                                      else
+                                                        return Container();
+                                                    }),
+                                                    SizedBox(
+                                                      height: 16.h,
+                                                    ),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        shopController
+                                                            .onDetailOptionAdd(
+                                                                index);
+                                                      },
+                                                      child: Center(
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20.r),
+                                                            border: Border.all(
+                                                              color: Color(
+                                                                  0xffd1d1d6),
+                                                            ),
+                                                          ),
+                                                          child: Container(
+                                                            padding: EdgeInsets
+                                                                .fromLTRB(
+                                                                    10.w,
+                                                                    10.h,
+                                                                    10.w,
+                                                                    10.h),
+                                                            child: Visibility(
+                                                              visible: true,
+                                                              child: Wrap(
+                                                                alignment:
+                                                                    WrapAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Text(
+                                                                    '선택지 추가',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      color: Color(
+                                                                          0xff283137),
+                                                                      fontSize:
+                                                                          20.sp,
+                                                                      height: 1,
+                                                                      fontFamily:
+                                                                          'NotoSansCJKKR',
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 10.w,
+                                                                  ),
+                                                                  SvgPicture
+                                                                      .asset(
+                                                                    'assets/images_svg/ic_상품이미지추가.svg',
+                                                                    height:
+                                                                        20.h,
+                                                                    width: 20.w,
                                                                   ),
                                                                 ],
                                                               ),
-                                                            );
-                                                          });
-                                                    else
-                                                      return Container();
-                                                  }),
-                                                  SizedBox(
-                                                    height: 16.h,
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      shopController
-                                                          .onDetailOptionAdd(
-                                                              index);
-                                                    },
-                                                    child: Center(
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(20.r),
-                                                          border: Border.all(
-                                                            color:
-                                                                Color(0xffd1d1d6),
-                                                          ),
-                                                        ),
-                                                        child: Container(
-                                                          padding:
-                                                              EdgeInsets.fromLTRB(
-                                                                  10.w,
-                                                                  10.h,
-                                                                  10.w,
-                                                                  10.h),
-                                                          child: Visibility(
-                                                            visible: true,
-                                                            child: Wrap(
-                                                              alignment:
-                                                                  WrapAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  '선택지 추가',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    color: Color(
-                                                                        0xff283137),
-                                                                    fontSize:
-                                                                        20.sp,
-                                                                    height: 1,
-                                                                    fontFamily:
-                                                                        'NotoSansCJKKR',
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w500,
-                                                                  ),
-                                                                ),
-                                                                SizedBox(
-                                                                  width: 10.w,
-                                                                ),
-                                                                SvgPicture.asset(
-                                                                  'assets/images_svg/ic_상품이미지추가.svg',
-                                                                  height: 20.h,
-                                                                  width: 20.w,
-                                                                ),
-                                                              ],
                                                             ),
                                                           ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       );
                                     else
                                       return Container();
@@ -1494,93 +1373,9 @@ class ShopProductModify extends StatelessWidget {
                               InkWell(
                                 onTap: () {
                                   FocusScope.of(context).unfocus();
-                                  Get.dialog(
-                                    Dialog(
-                                      child: Container(
-                                        padding: EdgeInsets.fromLTRB(
-                                            16.w, 16.h, 16.w, 16.h),
-                                        alignment: Alignment.center,
-                                        height: 190.h,
-                                        width: 130.w,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  16.w, 16.h, 16.w, 16.h),
-                                              child: Text(
-                                                '옵션을 추가 하시겠습니까?',
-                                                style: TextStyle(
-                                                    color: Color(0xff283137),
-                                                    fontFamily: 'NotoSansCJKKR',
-                                                    fontSize: 22.sp,
-                                                    height: 1,
-                                                    fontWeight: FontWeight.w700),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 32.h,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                InkWell(
-                                                  onTap: () {
-                                                    Get.back();
-                                                  },
-                                                  child: Container(
-                                                    padding: EdgeInsets.fromLTRB(
-                                                        12.w, 12.h, 12.w, 12.h),
-                                                    child: Text(
-                                                      '아니오',
-                                                      style: TextStyle(
-                                                          color:
-                                                              Color(0xff283137),
-                                                          fontFamily:
-                                                              'NotoSansCJKKR',
-                                                          fontSize: 16.sp,
-                                                          height: 1,
-                                                          fontWeight:
-                                                              FontWeight.w500),
-                                                    ),
-                                                  ),
-                                                ),
-                                                InkWell(
-                                                  onTap: () {
-                                                    shopController
-                                                        .onMainOptionAdd();
-                                                    Get.back();
-                                                  },
-                                                  child: Container(
-                                                    padding: EdgeInsets.fromLTRB(
-                                                        12.w, 12.h, 12.w, 12.h),
-                                                    child: Text(
-                                                      '예',
-                                                      style: TextStyle(
-                                                          color:
-                                                              Color(0xff283137),
-                                                          fontFamily:
-                                                              'NotoSansCJKKR',
-                                                          fontSize: 16.sp,
-                                                          height: 1,
-                                                          fontWeight:
-                                                              FontWeight.w500),
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  );
+                                  GetDialog().alternativeDialog(
+                                      '옵션을 추가 하시겠습니까?',
+                                      () => shopController.onMainOptionAdd());
                                 },
                                 child: Container(
                                   alignment: Alignment.centerRight,
@@ -1613,7 +1408,8 @@ class ShopProductModify extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () async {
-                        await shopController.shopManagementModifyClicked(context);
+                        await shopController
+                            .shopManagementModifyClicked(context);
                       },
                       child: Container(
                         alignment: Alignment.center,

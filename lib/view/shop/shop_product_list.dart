@@ -1,4 +1,6 @@
+import 'package:damo/app/controller/owner/owner_shop_controller.dart';
 import 'package:damo/view/shop/shop_product_main.dart';
+import 'package:damo/view/shop/shop_product_modify.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,7 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class ShopProductList extends StatelessWidget {
-
+  final OwnerShopController ownerShopController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +25,8 @@ class ShopProductList extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                Get.to(()=>ShopProductMain());
+                ownerShopController.fetchModifyData();
+                Get.to(() => ShopProductModify());
               },
               child: Column(
                 children: [
@@ -44,10 +47,20 @@ class ShopProductList extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SvgPicture.asset(
-                        'assets/images_svg/ic_바로가기.svg',
-                        width: 20.w,
-                        height: 20.h,
+                      Row(
+                        children: [
+                          Text(
+                            '수정하기',
+                            style: TextStyle(
+                              fontFamily: 'NotoSansCJKKR',
+                            ),
+                          ),
+                          SvgPicture.asset(
+                            'assets/images_svg/ic_바로가기.svg',
+                            width: 20.w,
+                            height: 20.h,
+                          ),
+                        ],
                       ),
                     ],
                   ),
