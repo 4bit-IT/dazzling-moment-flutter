@@ -257,7 +257,7 @@ class _NotificationUserState extends State<NotificationUser> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    notificationController.message.value!.notification!.title??'title',
+                                    'title',
                                     style: TextStyle(
                                       color: Color(0xff283137),
                                       fontSize: 12,
@@ -267,7 +267,7 @@ class _NotificationUserState extends State<NotificationUser> {
                                   ),
                                   SizedBox(height: 10.h),
                                   Text(
-                                    notificationController.message.value!.notification!.body??'body',
+                                    'body',
                                     style: TextStyle(
                                       color: Color(0xff283137),
                                       fontFamily: 'NotoSansCJKKR',

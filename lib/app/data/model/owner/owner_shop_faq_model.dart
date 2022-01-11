@@ -44,7 +44,6 @@ class OwnerShopModifyFAQAnswerModel {
   }
 
   OwnerShopModifyFAQAnswerModel.fromJson(Map<String, dynamic> json) {
-    print(json);
     code = json['code'];
     answer = json['data']['answer'];
     faqId = json['data']['faqId'];
@@ -76,7 +75,6 @@ class OwnerShopModifyFAQQuestionModel {
   }
 
   OwnerShopModifyFAQQuestionModel.fromJson(Map<String, dynamic> json) {
-    print(json);
     code = json['code'];
     answer = json['data']['answer'];
     faqId = json['data']['faqId'];

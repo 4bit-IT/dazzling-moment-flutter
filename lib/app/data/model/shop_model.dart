@@ -169,7 +169,7 @@ class ShopGetMeModel {
   var latitude;
   var longitude;
   String? name;
-  int? basePrice;
+  String? basePrice;
   List<dynamic> optionList = [];
   var rating;
   int? reviewCount;
@@ -211,12 +211,37 @@ class ShopGetMeModel {
     latitude = json['data']['location']['latitude'];
     longitude = json['data']['location']['longitude'];
     name = json['data']['name'];
-    basePrice = json['data']['options']['basePrice'];
+    basePrice = json['data']['options']['basePrice'].toString();
     optionList = json['data']['options']['optionList'];
     rating = json['data']['rating'];
     reviewCount = json['data']['reviewCount'];
     shopProfileImage = json['data']['shopProfileImage'];
     description = json['description'];
+    result = json['result'];
+  }
+}
+
+class ShopIntroModel {
+  int? code;
+  String? content;
+  String? description;
+  bool? result;
+
+  ShopIntroModel({content, description});
+
+  String toJson(Map<String, dynamic> input) {
+    String body;
+    Map sendData = {
+      'content' : input['content'],
+      'description' : input['description']
+    };
+    body = jsonEncode(sendData);
+    return body;
+  }
+
+  ShopIntroModel.fromJson(Map<String, dynamic> json) {
+    print(json);
+    code = json['code'];
     result = json['result'];
   }
 }

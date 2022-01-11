@@ -4,45 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-class NotificationAdmin extends StatefulWidget {
-  @override
-  _NotificationAdminState createState() => _NotificationAdminState();
-}
-
-class _NotificationAdminState extends State<NotificationAdmin> {
+class NotificationAdmin extends StatelessWidget {
   DamoAppBar appBar = DamoAppBar();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 0.0,
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          title: Text(
-            '공지사항',
-            style: TextStyle(
-              color: Color(0xff283137),
-              fontSize: 16,
-              fontFamily: 'NotoSansCJKKR',
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          leading: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              child: InkWell(
-                onTap: Get.back,
-                child: SvgPicture.asset(
-                  'assets/images_svg/ic_back.svg',
-                  width: 30.w,
-                  height: 30.h,
-                ),
-              ),
-            ),
-          ),
-        ),
+        appBar: DamoAppBar().textAppBar(context, '공지사항'),
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

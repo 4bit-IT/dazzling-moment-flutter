@@ -2,6 +2,7 @@ import 'package:damo/app/controller/owner/owner_review_comment_controller.dart';
 import 'package:damo/app/controller/owner/owner_review_controller.dart';
 import 'package:damo/app/controller/owner/owner_shop_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
+import 'package:damo/viewmodel/custom_textfield.dart';
 import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -301,31 +302,21 @@ class ShopReviewManagement extends StatelessWidget {
                             ),
                             expandedAlignment: Alignment.centerLeft,
                             children: [
-                              TextFormField(
-                                controller: ownerReviewController
-                                    .commentModel[index].commentController,
-                                style: TextStyle(
-                                  fontFamily: 'NotoSansCJKKR',
-                                  fontSize: 20.sp,
-                                ),
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: ownerReviewController
-                                          .ownerReviewModel
-                                          .value
+                              CustomTextField().simpleTextField(
+                                  ownerReviewController
+                                      .commentModel[index].commentController!,
+                                  false,
+                                  TextInputType.text,
+                                  TextAlign.start,
+                                  ownerReviewController.ownerReviewModel.value
                                           .reviewList[index]['hasComment']
                                       ? null
                                       : '리뷰의 답글을 작성해주세요(최대 100자)',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xffd1d1d6),
-                                    fontFamily: 'NotoSansCJKKR',
-                                    fontSize: 20.sp,
-                                    height: 1,
-                                  ),
-                                ),
-                                maxLines: 6,
-                                maxLength: 100,
-                              ),
+                                  6,
+                                  6,
+                                  100,
+                                  null,
+                                  []),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -466,12 +457,6 @@ class ShopReviewManagement extends StatelessWidget {
                             },
                             tilePadding: EdgeInsets.zero,
                           ),
-                        ),
-                        SizedBox(height: 15.5.h),
-                        Divider(
-                          thickness: 3.h,
-                          color: Color(0xfff1f3f5),
-                          height: 0,
                         ),
                       ],
                     );

@@ -4,13 +4,9 @@ import 'package:damo/app/data/model/shop_model.dart';
 import 'package:damo/app/data/provider/owner/owner_shop_api.dart';
 import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:extended_image/extended_image.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:http/http.dart' as http;
 
 class OwnerShopController extends GetxController {
   Rx<ShopRegistrationModel> shopRegistrationModel = ShopRegistrationModel().obs;
@@ -31,27 +27,13 @@ class OwnerShopController extends GetxController {
       TextEditingController().obs;
   Rx<LoadShopMainPageModel> loadShopMainPageModel = LoadShopMainPageModel().obs;
   int maxImagesSize = 10;
-  Rx<FileImage>? selectMainImage = FileImage(File(XFile('').path)).obs;
-  List<dynamic>? selectImages =
-      List.filled(10, FileImage(File(XFile('').path))).obs;
-  List<String> selectImagesUrl = [];
+  Rx<ShopImageModel>? selectMainImage = ShopImageModel().obs;
+  RxList<ShopImageModel>? selectImages = <ShopImageModel>[].obs;
   List<String> deleteImages = [];
-  RxInt slidingIndex = 0.obs;
   RxInt imagesSize = 0.obs;
   RxBool isLoadingModifyData = false.obs;
-  RxBool isLoadingFetchData = false.obs;
-  Widget wishIconOn = SvgPicture.asset(
-    'assets/images_svg/ic_wish_on.svg',
-    width: 30.w,
-    height: 30.h,
-  );
-  Widget wishIconOff = SvgPicture.asset(
-    'assets/images_svg/ic_wish_off.svg',
-    width: 30.w,
-    height: 30.h,
-  );
-  Map<String, dynamic> toJsonInput = {};
 
+  Map<String, dynamic> toJsonInput = {};
   String sendData = '';
   var jsonResponse;
   var model;
@@ -60,11 +42,11 @@ class OwnerShopController extends GetxController {
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
-    await fetchShopData();
+    await fetchModifyData();
   }
 
-  Future<void> fetchShopData() async {
-    isLoadingFetchData.value = true;
+  Future<void> fetchModifyData() async {
+    isLoadingModifyData.value = true;
     jsonResponse = await OwnerShopNetwork().getShopMe();
     model = ShopGetMeModel.fromJson(jsonResponse);
     shopGetMeModel.update((val) {
@@ -97,56 +79,42 @@ class OwnerShopController extends GetxController {
       shopDescriptionController =
           TextEditingController(text: shopGetMeModel.value.dataDescription).obs;
     }
-    if (shopGetMeModel.value.basePrice != null) {
+    if (shopGetMeModel.value.basePrice != '') {
       shopBasePriceController =
-          TextEditingController(text: shopGetMeModel.value.basePrice.toString())
-              .obs;
+          TextEditingController(text: shopGetMeModel.value.basePrice).obs;
     }
-
-    isLoadingFetchData.value = false;
-  }
-
-  void fetchModifyData() async {
-    isLoadingModifyData.value = true;
-    selectMainImage!.value = FileImage(File(XFile('').path));
+    selectMainImage!.value = ShopImageModel();
     shopContentController.value =
         TextEditingController(text: shopGetMeModel.value.content);
     shopDescriptionController.value =
         TextEditingController(text: shopGetMeModel.value.dataDescription);
-    selectImages = List.filled(10, FileImage(File(XFile('').path))).obs;
-    shopBasePriceController.value.clear();
+    selectImages = <ShopImageModel>[].obs;
     imagesSize.value = 0;
     mainOptionList.clear();
 
-    for (int i = 0; i < shopGetMeModel.value.images.length; i++) {
-      String random = Random().nextInt(2147483890).toString();
-      Directory tempDir = await getTemporaryDirectory();
-      String tempPath = tempDir.path;
-      File file = File('$tempPath' +
-          random +
-          '.' +
-          shopGetMeModel.value.images[i]
-              [shopGetMeModel.value.images[i].length - 3] +
-          shopGetMeModel.value.images[i]
-              [shopGetMeModel.value.images[i].length - 2] +
-          shopGetMeModel.value.images[i]
-              [shopGetMeModel.value.images[i].length - 1]);
-      http.Response response =
-          await http.get(Uri.parse(shopGetMeModel.value.images[i]));
-      await file.writeAsBytes(response.bodyBytes);
-      selectImages![i] = FileImage(file);
-      selectImagesUrl.add(shopGetMeModel.value.images[i]);
-    }
+    if (shopGetMeModel.value.images != null)
+      for (int i = 0; i < shopGetMeModel.value.images.length; i++) {
+/*        String random = Random().nextInt(2147483890).toString();
+        Directory tempDir = await getTemporaryDirectory();
+        String tempPath = tempDir.path;
+        File file = File('$tempPath' +
+            random +
+            '.' +
+            shopGetMeModel.value.images[i]
+                [shopGetMeModel.value.images[i].length - 3] +
+            shopGetMeModel.value.images[i]
+                [shopGetMeModel.value.images[i].length - 2] +
+            shopGetMeModel.value.images[i]
+                [shopGetMeModel.value.images[i].length - 1]);
+        http.Response response =
+            await http.get(Uri.parse(shopGetMeModel.value.images[i]));
+        await file.writeAsBytes(response.bodyBytes);
+        selectImages![i] = FileImage(file);*/
+        selectImages!
+            .add(ShopImageModel(imageUrl: shopGetMeModel.value.images[i]));
+      }
     if (shopGetMeModel.value.shopProfileImage != null) {
-      String random = Random().nextInt(2147483890).toString();
-      Directory tempDir = await getTemporaryDirectory();
-      String tempPath = tempDir.path;
-      File file = File(
-          '$tempPath$random.${shopGetMeModel.value.shopProfileImage![shopGetMeModel.value.shopProfileImage!.length - 3]}${shopGetMeModel.value.shopProfileImage![shopGetMeModel.value.shopProfileImage!.length - 2]}${shopGetMeModel.value.shopProfileImage![shopGetMeModel.value.shopProfileImage!.length - 1]}');
-      http.Response response =
-          await http.get(Uri.parse(shopGetMeModel.value.shopProfileImage!));
-      await file.writeAsBytes(response.bodyBytes);
-      selectMainImage!.value = FileImage(file);
+      selectMainImage!.value.imageUrl = shopGetMeModel.value.shopProfileImage;
     }
     imagesSize.value = shopGetMeModel.value.images.length;
 
@@ -191,7 +159,8 @@ class OwnerShopController extends GetxController {
       imageQuality: 100, // 이미지 퀄리티
     ));
     if (image != null) {
-      selectMainImage!.value = FileImage(File(image.path));
+      selectMainImage!.value.imageUrl = null;
+      selectMainImage!.value.image = FileImage(File(image.path));
     }
   }
 
@@ -205,29 +174,32 @@ class OwnerShopController extends GetxController {
       imageQuality: 100, // 이미지 퀄리티
     ));
     if (image != null) {
-      selectImages![index] = FileImage(File(image.path));
-      if (index == imagesSize.value) imagesSize.value++;
+      if (index == imagesSize.value) {
+        selectImages!.add(ShopImageModel());
+        imagesSize.value++;
+      }
+      selectImages![index].imageUrl = null;
+      selectImages![index].image = FileImage(File(image.path));
+      selectImages!.refresh();
     }
   }
 
   Future<void> deleteShopImages(int index) async {
-    deleteImages.add(selectImagesUrl[index]);
-    selectImagesUrl.removeAt(index);
-    for (int i = index; i < imagesSize.value; i++) {
-      if (i == maxImagesSize - 1) {
-        selectImages![i] = FileImage(File(''));
-      } else {
-        selectImages![i] = selectImages![i + 1];
-      }
-    }
+    if (selectImages![index].imageUrl != null)
+      deleteImages.add(selectImages![index].imageUrl!);
+    selectImages!.removeAt(index);
+    /*for (int i = index; i < imagesSize.value - 1; i++) {
+      selectImages![i] = selectImages![i + 1];
+    }*/
     imagesSize.value--;
+    Get.back();
   }
 
   Future<void> changeShopMainImage() async {
     var model;
     if (selectMainImage != null) {
       dynamic sendData = await ShopChangeMainImageModel()
-          .toJson(selectMainImage!.value.file.path);
+          .toJson(selectMainImage!.value.image.file.path);
       jsonResponse = await OwnerShopNetwork().postShopImageMain(sendData);
       model = ShopChangeMainImageModel.fromJson(jsonResponse);
 
@@ -247,8 +219,10 @@ class OwnerShopController extends GetxController {
     if (selectImages != null) {
       List<dynamic> temp = [];
       for (int i = 0; i < imagesSize.value; i++) {
-        temp.add(selectImages![i].file.path);
+        if (selectImages![i].image != null)
+          temp.add(selectImages![i].image.file.path);
       }
+      print(temp);
       dynamic sendData = await ShopImageRegistrationModel().toJson(temp);
       jsonResponse = await OwnerShopNetwork().postShopImage(sendData);
       model = ShopImageRegistrationModel.fromJson(jsonResponse);
@@ -391,7 +365,7 @@ class OwnerShopController extends GetxController {
         shopDescriptionController.value.value.text == '') {
       FocusScope.of(context).unfocus();
       GetDialog().simpleDialog('스토어 설명과 상세 설명을 모두 작성해주세요.');
-    } else if (selectMainImage!.value.file.path == '') {
+    } else if (selectMainImage!.value.image==null && selectMainImage!.value.imageUrl == null) {
       FocusScope.of(context).unfocus();
       GetDialog().simpleDialog('업체 대표 이미지를 선택해주세요.');
     } else if (imagesSize.value == 0) {
@@ -435,8 +409,21 @@ class OwnerShopController extends GetxController {
     }
   }
 
+  Future<void> introModify() async {
+    toJsonInput.clear();
+    toJsonInput['content'] = shopContentController.value.value.text;
+    toJsonInput['description'] = shopDescriptionController.value.value.text;
+    sendData = ShopIntroModel().toJson(toJsonInput);
+    jsonResponse = await OwnerShopNetwork().patchShopIntro(sendData);
+    model = ShopIntroModel.fromJson(jsonResponse);
+    if (model.code == 1) {
+    } else if (model.code == 2) {
+    } else {}
+  }
+
   void finishModify() async {
     await optionRegistrationModify();
+    await introModify();
     await changeShopMainImage();
     await changeShopImages();
   }
@@ -467,6 +454,14 @@ class ShopDetailOptionModel {
       this.detailOptionPriceController,
       required this.detailOptionCount,
       this.detailOptionAllowMultipleChoices});
+}
+
+class ShopImageModel {
+  String? imageUrl;
+  dynamic image;
+  int? index;
+
+  ShopImageModel({this.imageUrl, this.image, this.index});
 }
 
 class OwnerShopBinding extends Bindings {

@@ -8,7 +8,7 @@ class ShopChatManagement extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: DamoAppBar().shopAppBar(context),
+      appBar: DamoAppBar().textAppBar(context, '채팅'),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.all(15),
@@ -67,7 +67,6 @@ class ShopChatManagement extends StatelessWidget {
                     ),
                   ],
                 ),
-              Text('hi'),
             ],
           ),
         ),
