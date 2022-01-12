@@ -44,6 +44,7 @@ class OwnerReviewCommentController extends GetxController {
     if (model.code == 1) {
       ownerReviewController.fetchReviewComment(index, model);
       ownerReviewController.commentModel[index].commentFocusNode!.unfocus();
+      ownerReviewController.commentModel.refresh();
     } else if (model.code == 2) {
     } else {}
   }

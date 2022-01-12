@@ -1,5 +1,6 @@
 import 'package:damo/app/controller/owner/owner_shop_faq_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
+import 'package:damo/viewmodel/custom_textfield.dart';
 import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,29 +43,18 @@ class ShopFAQAdd extends StatelessWidget {
                             ),
                           ),
                           Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black26)),
-                              padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 0),
-                              child: TextFormField(
-                                style: TextStyle(
-                                  fontFamily: 'NotoSansCJKKR',
-                                  fontSize: 20.sp,
-                                ),
-                                controller: ownerShopFAQController
+                            child: CustomTextField().simpleTextField(
+                                ownerShopFAQController
                                     .shopFAQQuestionAddController.value,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'FAQ의 제목을 입력해주세요.',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xffd1d1d6),
-                                    fontFamily: 'NotoSansCJKKR',
-                                    fontSize: 20.sp,
-                                  ),
-                                ),
-                                maxLines: 2,
-                              ),
-                            ),
+                                false,
+                                TextInputType.text,
+                                TextAlign.start,
+                                'FAQ의 제목을 입력해주세요',
+                                2,
+                                2,
+                                100,
+                                null,
+                                []),
                           ),
                         ],
                       ),
@@ -83,29 +73,18 @@ class ShopFAQAdd extends StatelessWidget {
                             ),
                           ),
                           Expanded(
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 0),
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black26)),
-                              child: TextFormField(
-                                style: TextStyle(
-                                  fontFamily: 'NotoSansCJKKR',
-                                  fontSize: 20.sp,
-                                ),
-                                controller: ownerShopFAQController
+                            child: CustomTextField().simpleTextField(
+                                ownerShopFAQController
                                     .shopFAQAnswerAddController.value,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'FAQ의 답변을 입력해주세요.',
-                                  hintStyle: TextStyle(
-                                    color: Color(0xffd1d1d6),
-                                    fontFamily: 'NotoSansCJKKR',
-                                    fontSize: 20.sp,
-                                  ),
-                                ),
-                                maxLines: 20,
-                              ),
-                            ),
+                                false,
+                                TextInputType.text,
+                                TextAlign.center,
+                                'FAQ의 답변을 입력해주세요',
+                                20,
+                                20,
+                                1000,
+                                null,
+                                []),
                           ),
                         ],
                       ),

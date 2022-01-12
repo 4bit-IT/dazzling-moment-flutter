@@ -1,5 +1,6 @@
 import 'package:damo/app/controller/owner/owner_shop_faq_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
+import 'package:damo/viewmodel/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -33,30 +34,24 @@ class ShopFAQModify extends StatelessWidget {
                             ),
                           ),
                           Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(border: Border.all(color: Colors.black26)),
-                              padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 0),
-                              child: TextFormField(
-                                controller: ownerShopFAQController.shopFAQQuestionController.value,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintStyle: TextStyle(
-                                    color: Color(0xffd1d1d6),
-                                    fontFamily: 'NotoSansCJKKR',
-                                    fontSize: 14.sp,
-                                  ),
-                                ),
-                                style: TextStyle(
-                                  fontFamily: 'NotoSansCJKKR',
-                                  fontSize: 20.sp,
-                                ),
-                                maxLines: 2,
-                              ),
-                            ),
+                            child: CustomTextField().simpleTextField(
+                                ownerShopFAQController
+                                    .shopFAQQuestionController.value,
+                                false,
+                                TextInputType.text,
+                                TextAlign.start,
+                                null,
+                                2,
+                                2,
+                                100,
+                                null,
+                                []),
                           ),
                         ],
                       ),
-                      SizedBox(height: 20.h,),
+                      SizedBox(
+                        height: 20.h,
+                      ),
                       Row(
                         children: [
                           Text(
@@ -69,30 +64,24 @@ class ShopFAQModify extends StatelessWidget {
                             ),
                           ),
                           Expanded(
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(4.w, 0, 4.w, 0),
-                              decoration: BoxDecoration(border: Border.all(color: Colors.black26)),
-                              child: TextFormField(
-                                controller: ownerShopFAQController.shopFAQAnswerController.value,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintStyle: TextStyle(
-                                    color: Color(0xffd1d1d6),
-                                    fontFamily: 'NotoSansCJKKR',
-                                    fontSize: 14.sp,
-                                  ),
-                                ),
-                                style: TextStyle(
-                                  fontFamily: 'NotoSansCJKKR',
-                                  fontSize: 20.sp,
-                                ),
-                                maxLines: 20,
-                              ),
-                            ),
+                            child: CustomTextField().simpleTextField(
+                                ownerShopFAQController
+                                    .shopFAQAnswerController.value,
+                                false,
+                                TextInputType.text,
+                                TextAlign.start,
+                                null,
+                                20,
+                                20,
+                                1000,
+                                null,
+                                []),
                           ),
                         ],
                       ),
-                      SizedBox(height: 20.h,),
+                      SizedBox(
+                        height: 20.h,
+                      ),
                     ],
                   ),
                 ),

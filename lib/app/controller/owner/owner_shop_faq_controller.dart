@@ -163,7 +163,6 @@ class OwnerShopFAQController extends GetxController {
     shopFAQQuestionAddController.value.clear();
     shopFAQAnswerAddController.value.clear();
     Get.back();
-    Get.back();
   }
 }
 

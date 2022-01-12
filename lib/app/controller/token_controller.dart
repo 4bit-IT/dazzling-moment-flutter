@@ -5,13 +5,14 @@ import 'package:get/get.dart';
 
 class TokenController extends GetxController {
   RxMap<String, String>? token; // cache로 저장되어있는 token을 return받기 위한 테이블
-  RxBool? isAutoLogin = false.obs; // 자동로그인이 가능한지 여부를 판별해주는 변수
+  RxBool isAutoLogin = false.obs; // 자동로그인이 가능한지 여부를 판별해주는 변수
   Rx<AccessTokenAvailableCheckModel> accessTokenAvailableCheckModel =
       AccessTokenAvailableCheckModel().obs;
   Rx<RefreshAccessTokenModel> refreshAccessTokenModel =
       RefreshAccessTokenModel().obs;
   var jsonResponse;
   var model;
+  RxBool isTokenCheck = false.obs;
 
   @override
   Future<void> onInit() async {
@@ -27,7 +28,7 @@ class TokenController extends GetxController {
     if ((token!['accessToken'] == '' && token!['refreshToken'] == '')) {
       // 아무 토큰이 없으니 로그인 화면으로 이동
       print('기기에 저장된 토큰이 없으므로 로그인 화면으로 이동합니다.');
-      isAutoLogin = false.obs;
+      isAutoLogin.value = false;
     }
     if ((token!['accessToken'] != '' && token!['refreshToken'] != '')) {
       // 토큰이 있는 경우 유효성 검사
@@ -43,12 +44,12 @@ class TokenController extends GetxController {
       if (accessTokenAvailableCheckModel.value.code == 1) {
         print('기기에 저장된 토큰이 유효합니다.');
         await refreshGetAccessToken();
-        isAutoLogin!.value = true;
+        isAutoLogin.value = true;
         print('메인 화면으로 이동합니다.');
       }
       if (accessTokenAvailableCheckModel.value.code == 2) {
         print('기기에 저장된 토큰이 유효하지 않습니다.');
-        isAutoLogin!.value = false;
+        isAutoLogin.value = false;
         print('로그인 화면으로 이동합니다.');
       }
       if (accessTokenAvailableCheckModel.value.code == 3) {
@@ -56,6 +57,7 @@ class TokenController extends GetxController {
         await refreshGetAccessToken();
       }
     }
+    isTokenCheck.value = true;
   }
 
   Future<void> refreshGetAccessToken() async {
@@ -69,20 +71,20 @@ class TokenController extends GetxController {
     });
     if (refreshAccessTokenModel.value.code == 3) {
       print('Refresh토큰이 만료되었으므로, 재 로그인이 필요합니다.');
-      isAutoLogin = false.obs;
+      isAutoLogin.value = false;
       TokenModel().removeToken();
     }
     if (refreshAccessTokenModel.value.code == 2) {
       print('Refresh토큰 재발급에 실패했습니다.');
-      isAutoLogin = false.obs;
+      isAutoLogin.value = false;
     }
     if (refreshAccessTokenModel.value.code == 1) {
       print('새로운 토큰이 발급되었습니다.');
-      TokenModel().saveToken(
+      await TokenModel().saveToken(
           refreshAccessTokenModel.value.data!, token!['refreshToken']!);
       token!['accessToken'] = refreshAccessTokenModel.value.data!;
       tokenController.update();
-      isAutoLogin = true.obs;
+      isAutoLogin.value = true;
     }
   }
 }

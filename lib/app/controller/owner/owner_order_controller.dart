@@ -1,5 +1,6 @@
 import 'package:damo/app/data/model/owner/owner_order_model.dart';
 import 'package:damo/app/data/provider/order_api.dart';
+import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -68,78 +69,9 @@ class OwnerOrderController extends GetxController {
               ),
               InkWell(
                 onTap: () async {
-                  await Get.dialog(
-                    Dialog(
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                        alignment: Alignment.center,
-                        height: 210.h,
-                        width: 130.w,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                              child: Text(
-                                '해당 주문의 주문상태를 \'주문수락\'으로 변경하시겠습니까?',
-                                style: TextStyle(
-                                    color: Color(0xff283137),
-                                    fontFamily: 'NotoSansCJKKR',
-                                    fontSize: 22.sp,
-                                    height: 1,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 32.h,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                                    child: Text(
-                                      '아니오',
-                                      style: TextStyle(
-                                          color: Color(0xff283137),
-                                          fontFamily: 'NotoSansCJKKR',
-                                          fontSize: 16.sp,
-                                          height: 1,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () async {
-                                    await changeOrderStatus(index, 'ALLOW');
-                                    Get.back();
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                                    child: Text(
-                                      '예',
-                                      style: TextStyle(
-                                          color: Color(0xff283137),
-                                          fontFamily: 'NotoSansCJKKR',
-                                          fontSize: 16.sp,
-                                          height: 1,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                  GetDialog().alternativeDialog(
+                      '해당 주문의 주문상태를 \n\'주문수락\'으로 변경하시겠습니까?',
+                      () async => await changeOrderStatus(index, 'ALLOW'));
                 },
                 child: Container(
                   width: double.infinity,
@@ -162,75 +94,9 @@ class OwnerOrderController extends GetxController {
               ),
               InkWell(
                 onTap: () async {
-                  await Get.dialog(
-                    Dialog(
-                      child: Container(
-                        height: 210.h,
-                        padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                        alignment: Alignment.center,
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                              child: Text(
-                                '해당 주문의 주문상태를 \n주문거절\n로 변경하시겠습니까?',
-                                style: TextStyle(
-                                    color: Color(0xff283137),
-                                    fontFamily: 'NotoSansCJKKR',
-                                    fontSize: 22.sp,
-                                    height: 1,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 32.h,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                                    child: Text(
-                                      '아니오',
-                                      style: TextStyle(
-                                          color: Color(0xff283137),
-                                          fontFamily: 'NotoSansCJKKR',
-                                          fontSize: 16.sp,
-                                          height: 1,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () async {
-                                    await changeOrderStatus(index, 'REFUSE');
-                                    Get.back();
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                                    child: Text(
-                                      '예',
-                                      style: TextStyle(
-                                          color: Color(0xff283137),
-                                          fontFamily: 'NotoSansCJKKR',
-                                          fontSize: 16.sp,
-                                          height: 1,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                  GetDialog().alternativeDialog(
+                      '해당 주문의 주문상태를 \n\'주문거절\'로 변경하시겠습니까?',
+                      () async => await changeOrderStatus(index, 'REFUSE'));
                 },
                 child: Container(
                   width: double.infinity,
@@ -280,78 +146,9 @@ class OwnerOrderController extends GetxController {
               ),
               InkWell(
                 onTap: () async {
-                  await Get.dialog(
-                    Dialog(
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                        alignment: Alignment.center,
-                        height: 210.h,
-                        width: 130.w,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                              child: Text(
-                                '해당 주문의 주문상태를 \'제작완료\'로 변경하시겠습니까?',
-                                style: TextStyle(
-                                    color: Color(0xff283137),
-                                    fontFamily: 'NotoSansCJKKR',
-                                    fontSize: 22.sp,
-                                    height: 1,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 32.h,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                                    child: Text(
-                                      '아니오',
-                                      style: TextStyle(
-                                          color: Color(0xff283137),
-                                          fontFamily: 'NotoSansCJKKR',
-                                          fontSize: 16.sp,
-                                          height: 1,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () async {
-                                    await changeOrderStatus(index, 'COMPLETE');
-                                    Get.back();
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                                    child: Text(
-                                      '예',
-                                      style: TextStyle(
-                                          color: Color(0xff283137),
-                                          fontFamily: 'NotoSansCJKKR',
-                                          fontSize: 16.sp,
-                                          height: 1,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                  GetDialog().alternativeDialog(
+                      '해당 주문의 주문상태를 \n\'제작완료\'로 변경하시겠습니까?',
+                      () async => await changeOrderStatus(index, 'COMPLETE'));
                 },
                 child: Container(
                   width: double.infinity,
@@ -413,7 +210,8 @@ class OwnerOrderController extends GetxController {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
-                              padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                              padding:
+                                  EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
                               child: Text(
                                 '해당 주문의 주문상태를 \'거래완료\'로 변경하시겠습니까?',
                                 style: TextStyle(
@@ -436,7 +234,8 @@ class OwnerOrderController extends GetxController {
                                     Get.back();
                                   },
                                   child: Container(
-                                    padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+                                    padding: EdgeInsets.fromLTRB(
+                                        12.w, 12.h, 12.w, 12.h),
                                     child: Text(
                                       '아니오',
                                       style: TextStyle(
@@ -454,7 +253,8 @@ class OwnerOrderController extends GetxController {
                                     Get.back();
                                   },
                                   child: Container(
-                                    padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
+                                    padding: EdgeInsets.fromLTRB(
+                                        12.w, 12.h, 12.w, 12.h),
                                     child: Text(
                                       '예',
                                       style: TextStyle(
@@ -499,13 +299,14 @@ class OwnerOrderController extends GetxController {
 
   Future<void> changeOrderStatus(int index, String status) async {
     toJsonInput.clear();
-    toJsonInput['orderNumber'] = ownerGetOrderModel.value.orderList[index]['orderNumber'];
+    toJsonInput['orderNumber'] =
+        ownerGetOrderModel.value.orderList[index]['orderNumber'];
     toJsonInput['orderStatus'] = status;
     sendData = OwnerChangeOrderStatusModel().toJson(toJsonInput);
     jsonResponse = await OrderNetwork().postOrdersStatus(sendData);
     model = OwnerChangeOrderStatusModel.fromJson(jsonResponse);
 
-    if(model.code == 1) {
+    if (model.code == 1) {
       ownerGetOrderModel.update((val) {
         val!.orderList[index]['status'] = status;
       });
@@ -518,6 +319,6 @@ class OwnerOrderBinding extends Bindings {
   @override
   Future<void> dependencies() async {
     // TODO: implement dependencies
-    Get.put<OwnerOrderController>(OwnerOrderController(), permanent: true);
+    Get.put<OwnerOrderController>(OwnerOrderController());
   }
 }

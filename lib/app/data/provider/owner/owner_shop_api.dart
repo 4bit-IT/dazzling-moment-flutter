@@ -48,7 +48,29 @@ class OwnerShopNetwork {
     }
   }
 
-  void deleteShopImage() async {}
+  Future<dynamic> patchShopIntro(String sendData) async {
+    try {
+      http.Response response = await http.patch(
+          Uri.parse(baseUri + '/shop/intro'),
+          headers: headers,
+          body: sendData);
+      return jsonDecode(utf8.decode(response.bodyBytes));
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> deleteShopImage(String sendData) async {
+    try {
+      http.Response response = await http.delete(
+          Uri.parse(baseUri + '/shop/image'),
+          headers: headers,
+          body: sendData);
+      return jsonDecode(utf8.decode(response.bodyBytes));
+    } catch (e) {
+      print(e);
+    }
+  }
 
   Future<dynamic> postShopImageMain(dynamic input) async {
     var dio = new Dio();

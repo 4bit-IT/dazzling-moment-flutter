@@ -21,10 +21,13 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/extension_instance.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:share_plus/share_plus.dart';
 
 UserController userController = Get.find();
 ShopController shopController = Get.find();
 OwnerShopController? ownerShopController;
+FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
 class MyPage extends StatefulWidget {
   MyPage({this.bottomNavigationIndex});
@@ -46,7 +49,7 @@ class _MyPageState extends State<MyPage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         drawer: DrawerButton(),
-        appBar: appBar.noSearchBar(context),
+        appBar: appBar.textAppBar(context, '내 정보'),
         bottomNavigationBar: BottomNavigation(
           selectedBottomNavigationBarIndex: 3,
           scrollController: scrollController,
@@ -54,6 +57,7 @@ class _MyPageState extends State<MyPage> {
         body: ScrollConfiguration(
           behavior: NoGlowScrollBehavior(),
           child: SingleChildScrollView(
+            controller: scrollController,
             child: Column(
               children: [
                 Container(
@@ -69,7 +73,7 @@ class _MyPageState extends State<MyPage> {
                       children: [
                         SizedBox(width: 150.w),
                         Obx(
-                              () => ExtendedImage.network(
+                          () => ExtendedImage.network(
                             userController.getUserInfoModel.value.profileImage!,
                             width: 75.w,
                             height: 75.h,
@@ -228,7 +232,7 @@ class _MyPageState extends State<MyPage> {
                               },
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -266,7 +270,7 @@ class _MyPageState extends State<MyPage> {
                               onPressed: () {},
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -306,7 +310,7 @@ class _MyPageState extends State<MyPage> {
                               },
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -344,7 +348,7 @@ class _MyPageState extends State<MyPage> {
                               onPressed: () {},
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -374,12 +378,71 @@ class _MyPageState extends State<MyPage> {
                               color: Color(0xfff1f3f5),
                             ),
                           ),
+                          Container(
+                            height: 60.h,
+                            child: CupertinoButton(
+                              minSize: 0,
+                              padding: EdgeInsets.zero,
+                              onPressed: () async {
+                                /// Dynamic Links 에서 만든 URL Prefix
+                                String url = "https://damoforyou.page.link";
+
+                                /// Dynamic Links 소스를 이용해 만들기
+                                final DynamicLinkParameters parameters =
+                                    DynamicLinkParameters(
+                                  uriPrefix: url,
+
+                                  /// 딥링크 사용을 위한 특정 게시판-게시글ID 구성
+                                  link: Uri.parse('$url/main'),
+
+                                  /// 안드로이드의 경우 packageName 추가
+                                  androidParameters: AndroidParameters(
+                                    packageName: "com.damoforyou.damo",
+                                  ),
+
+                                  /// iOS의 경우 bundleId 추가 (appStoreId와 TeamID가 필요)
+                                  iosParameters: const IOSParameters(
+                                    bundleId: "com.damoforyou.damo",
+                                    minimumVersion: '2',
+                                  ),
+                                );
+                                final ShortDynamicLink dynamicUrl =
+                                    await FirebaseDynamicLinks.instance
+                                        .buildShortLink(parameters);
+                                var uri = dynamicUrl.shortUrl;
+                                print(uri);
+                                await Share.share('$uri');
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                          'assets/images_svg/ic_my_Q&A.svg'),
+                                      SizedBox(width: 16.w),
+                                      Text(
+                                        '공유하기',
+                                        style: TextStyle(
+                                          color: Color(0xff283137),
+                                          fontFamily: 'NotoSansCJKKR',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SvgPicture.asset(
+                                      'assets/images_svg/ic_바로가기.svg',
+                                      width: 20.w,
+                                      height: 20.h),
+                                ],
+                              ),
+                            ),
+                          ),
                           SizedBox(height: 24.h),
                           TextButton(
                             onPressed: () async {
-                              await OwnerShopBinding().dependencies();
-                              await OwnerOrderBinding().dependencies();
-                              Get.to(() => ShopMain());
+                              Get.to(() => ShopMain(), binding: OwnerShopBinding());
                             },
                             child: Text(
                               '판매자 신청하기',

@@ -18,7 +18,7 @@ class ShopProductMain extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: DamoAppBar().textAppBar(context, '내 상품 관리'),
-      body: ownerShopController.isLoadingFetchData.value
+      body: ownerShopController.isLoadingModifyData.value
           ? CircularProgressIndicator(
               color: Color(
                 0xfff93f5b,

@@ -1,5 +1,4 @@
 import 'package:damo/app/controller/owner/owner_shop_controller.dart';
-import 'package:damo/view/shop/shop_product_main.dart';
 import 'package:damo/view/shop/shop_product_modify.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +49,7 @@ class ShopProductList extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            '수정하기',
+                            '관리하기',
                             style: TextStyle(
                               fontFamily: 'NotoSansCJKKR',
                             ),
