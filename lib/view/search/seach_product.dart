@@ -36,7 +36,7 @@ class _SearchPageState extends State<SearchPage> {
                 child: TextFormField(
                   minLines: 1,
                   maxLength: 10,
-                  keyboardType: TextInputType.text,
+                  keyboardType: null,
                   decoration: InputDecoration(
                     counterText: '',
                     focusedBorder: OutlineInputBorder(

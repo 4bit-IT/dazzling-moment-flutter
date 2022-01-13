@@ -3,15 +3,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextField {
+  ScrollController scrollController = ScrollController();
   TextFormField simpleTextField(
       TextEditingController controller,
       bool readOnly,
-      TextInputType textInputType,
+      TextInputType? textInputType,
       TextAlign textAlign,
       dynamic hintText,
       int maxLines,
       int minLines,
-      int maxLength,
       dynamic onChanged,
       List<TextInputFormatter> inputFormatters) {
     return TextFormField(
@@ -19,23 +19,23 @@ class CustomTextField {
       textAlign: textAlign,
       maxLines: maxLines,
       minLines: minLines,
-      maxLength: maxLength,
       onChanged: (text) => onChanged,
       inputFormatters: inputFormatters,
       controller: controller,
       readOnly: readOnly,
       style: TextStyle(
         color: Color(0xff283137),
-        fontSize: 20.sp,
+        fontSize: 16.sp,
         fontFamily: 'NotoSansCJKKR',
         fontWeight: FontWeight.w500,
       ),
       decoration: InputDecoration(
+        counterText: '',
           hintText: hintText,
           hintStyle: TextStyle(
             color: Color(0xffd1d1d6),
             fontFamily: 'NotoSansCJKKR',
-            fontSize: 16.sp,
+            fontSize: 14.sp,
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),

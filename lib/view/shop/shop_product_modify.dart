@@ -7,7 +7,6 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -29,375 +28,253 @@ class ShopProductModify extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: DamoAppBar().textAppBar(context, '내 상품 관리'),
-        body: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 30.h),
-                      Text('스토어 대표 사진',
-                          style: TextStyle(
-                              color: Color(0xff283137),
-                              fontSize: 16.sp,
-                              fontFamily: 'NotoSansCJKKR',
-                              fontWeight: FontWeight.w500,
-                              height: 1)),
-                      SizedBox(height: 16.h),
-                      InkWell(
-                        onTap: () {
-                          Get.bottomSheet(
-                            Wrap(
-                              children: [
-                                InkWell(
+        body: GestureDetector(
+          onPanDown: (_){
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus &&
+                currentFocus.focusedChild != null) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            }
+          },
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 30.h),
+                        Text('스토어 대표 사진',
+                            style: TextStyle(
+                                color: Color(0xff283137),
+                                fontSize: 16.sp,
+                                fontFamily: 'NotoSansCJKKR',
+                                fontWeight: FontWeight.w500)),
+                        SizedBox(height: 16.h),
+                        InkWell(
+                          onTap: () {
+                            Get.bottomSheet(
+                              Wrap(
+                                children: [
+                                  InkWell(
+                                      onTap: () async {
+                                        Get.back();
+                                        Get.to(() => ShopImageDetail(),
+                                            arguments: -1);
+                                      },
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: 70.h,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          '이미지 확대',
+                                          style: TextStyle(
+                                              fontSize: 16.sp,
+                                              fontFamily: 'NotoSansCJKKR',
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      )),
+                                  Divider(),
+                                  InkWell(
                                     onTap: () async {
+                                      await shopController.selectShopMainImage();
                                       Get.back();
-                                      Get.to(() => ShopImageDetail(),
-                                          arguments: -1);
                                     },
                                     child: Container(
                                       width: double.infinity,
                                       height: 70.h,
                                       alignment: Alignment.center,
-                                      child: Text(
-                                        '이미지 확대',
-                                        style: TextStyle(
-                                            fontSize: 16.sp,
-                                            height: 1,
-                                            fontFamily: 'NotoSansCJKKR',
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    )),
-                                Divider(),
-                                InkWell(
-                                  onTap: () async {
-                                    await shopController.selectShopMainImage();
-                                    Get.back();
-                                  },
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 70.h,
-                                    alignment: Alignment.center,
-                                    child: Text('이미지 변경',
-                                        style: TextStyle(
-                                            color: Color(0xfff93f5b),
-                                            fontSize: 16.sp,
-                                            height: 1,
-                                            fontFamily: 'NotoSansCJKKR',
-                                            fontWeight: FontWeight.w500)),
+                                      child: Text('이미지 변경',
+                                          style: TextStyle(
+                                              color: Color(0xfff93f5b),
+                                              fontSize: 16.sp,
+                                              fontFamily: 'NotoSansCJKKR',
+                                              fontWeight: FontWeight.w500)),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            backgroundColor: Colors.white,
-                          );
-                        },
-                        child: Stack(
-                          children: [
-                            Obx(
-                              () => Container(
-                                height: 100.h,
-                                width: 100.w,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Color(0xffd1d1d6),
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.r),
-                                ),
-                                child: shopController.shopGetMeModel.value
-                                            .shopProfileImage ==
-                                        null
-                                    ? Container()
-                                    : shopController.selectMainImage!.value
-                                                .imageUrl !=
-                                            null
-                                        ? ExtendedImage.network(
-                                            shopController.selectMainImage!
-                                                .value.imageUrl!,
-                                            cache: true,
-                                            fit: BoxFit.fill)
-                                        : Image(
-                                            image: shopController
-                                                .selectMainImage!.value.image,
-                                            fit: BoxFit.fill),
+                                ],
                               ),
-                            ),
-                            Positioned(
-                              left: 35.w,
-                              top: 35.h,
-                              child: SvgPicture.asset(
-                                  'assets/images_svg/ic_상품이미지교체.svg',
-                                  height: 30.h,
-                                  width: 30.w),
-                            ),
-                          ],
+                              backgroundColor: Colors.white,
+                            );
+                          },
+                          child: Stack(
+                            children: [
+                              Obx(
+                                () => Container(
+                                  height: 100.h,
+                                  width: 100.w,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Color(0xffd1d1d6),
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(8.r),
+                                  ),
+                                  child: shopController.shopGetMeModel.value
+                                              .shopProfileImage ==
+                                          null
+                                      ? Container()
+                                      : shopController.selectMainImage!.value
+                                                  .imageUrl !=
+                                              null
+                                          ? ExtendedImage.network(
+                                              shopController.selectMainImage!
+                                                  .value.imageUrl!,
+                                              cache: true,
+                                              fit: BoxFit.fitHeight)
+                                          : Image(
+                                              image: shopController
+                                                  .selectMainImage!.value.image,
+                                              fit: BoxFit.fitHeight,),
+                                ),
+                              ),
+                              Positioned(
+                                left: 35.w,
+                                top: 35.h,
+                                child: SvgPicture.asset(
+                                    'assets/images_svg/ic_상품이미지교체.svg',
+                                    height: 30.h,
+                                    width: 30.w),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 24.h),
-                      Text('스토어명',
+                        SizedBox(height: 24.h),
+                        Text('스토어명',
+                            style: TextStyle(
+                              color: Color(0xff283137),
+                              fontSize: 16.sp,
+                              fontFamily: 'NotoSansCJKKR',
+                              fontWeight: FontWeight.w500,
+                            )),
+                        SizedBox(height: 16.h),
+                        CustomTextField().simpleTextField(
+                            shopController.shopNameController.value,
+                            true,
+                            null,
+                            TextAlign.start,
+                            null,
+                            1,
+                            1,
+                            null, []),
+                        SizedBox(height: 24.h),
+                        Text(
+                          '스토어 설명',
                           style: TextStyle(
                             color: Color(0xff283137),
                             fontSize: 16.sp,
-                            height: 1,
                             fontFamily: 'NotoSansCJKKR',
                             fontWeight: FontWeight.w500,
-                          )),
-                      SizedBox(height: 16.h),
-                      CustomTextField().simpleTextField(
-                          shopController.shopNameController.value,
-                          true,
-                          TextInputType.text,
-                          TextAlign.start,
-                          null,
-                          1,
-                          1,
-                          20,
-                          null, []),
-                      SizedBox(
-                        height: 24.h,
-                      ),
-                      Text(
-                        '스토어 설명',
-                        style: TextStyle(
-                          color: Color(0xff283137),
-                          fontSize: 16.sp,
-                          height: 1,
-                          fontFamily: 'NotoSansCJKKR',
-                          fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 16.h,
-                      ),
-                      CustomTextField().simpleTextField(
-                          shopController.shopContentController.value,
-                          false,
-                          TextInputType.text,
-                          TextAlign.start,
-                          shopController
-                                      .shopContentController.value.value.text ==
-                                  ''
-                              ? '메인페이지에 보일 간략한 스토어 설명을 입력해주세요'
-                              : null,
-                          1,
-                          1,
-                          50,
-                          null,
-                          []),
-                      SizedBox(height: 24.h),
-                      Text(
-                        '스토어 상세 설명',
-                        style: TextStyle(
-                          color: Color(0xff283137),
-                          fontSize: 16.sp,
-                          height: 1,
-                          fontFamily: 'NotoSansCJKKR',
-                          fontWeight: FontWeight.w500,
+                        SizedBox(height: 16.h),
+                        CustomTextField().simpleTextField(
+                            shopController.shopContentController.value,
+                            false,
+                            null,
+                            TextAlign.start,
+                            shopController
+                                        .shopContentController.value.value.text ==
+                                    ''
+                                ? '메인페이지에 보일 간략한 스토어 설명을 입력해주세요'
+                                : null,
+                            2,
+                            1,
+                            null,
+                            []),
+                        SizedBox(height: 24.h),
+                        Text(
+                          '스토어 상세 설명',
+                          style: TextStyle(
+                            color: Color(0xff283137),
+                            fontSize: 16.sp,
+                            fontFamily: 'NotoSansCJKKR',
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 16.h),
-                      CustomTextField().simpleTextField(
-                          shopController.shopDescriptionController.value,
-                          false,
-                          TextInputType.text,
-                          TextAlign.center,
-                          shopController.shopDescriptionController.value.value
-                                      .text ==
-                                  ''
-                              ? '스토어 상세설명을 입력해주세요'
-                              : null,
-                          30,
-                          20,
-                          10000,
-                          null,
-                          []),
-                      SizedBox(
-                        height: 24.h,
-                      ),
-                      Text(
-                        '상품 이미지(최대 10개)',
-                        style: TextStyle(
-                          color: Color(0xff283137),
-                          fontSize: 16.sp,
-                          height: 1,
-                          fontFamily: 'NotoSansCJKKR',
-                          fontWeight: FontWeight.w500,
+                        SizedBox(height: 16.h),
+                        CustomTextField().simpleTextField(
+                            shopController.shopDescriptionController.value,
+                            false,
+                            null,
+                            TextAlign.center,
+                            shopController.shopDescriptionController.value.value
+                                        .text ==
+                                    ''
+                                ? '스토어 상세설명을 입력해주세요'
+                                : null,
+                            20,
+                            20,
+                            null,
+                            []),
+                        SizedBox(height: 24.h),
+                        Text(
+                          '상품 이미지(최대 10개)',
+                          style: TextStyle(
+                            color: Color(0xff283137),
+                            fontSize: 16.sp,
+                            fontFamily: 'NotoSansCJKKR',
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 16.h,
-                      ),
-                      Container(
-                        height: 100.h,
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: shopController.maxImagesSize,
-                          itemBuilder: (context, index) {
-                            return Obx(
-                              () => InkWell(
-                                onTap: () {
-                                  Get.bottomSheet(
-                                    Wrap(
-                                      children: [
-                                        index <
-                                                    shopController
-                                                        .imagesSize.value ||
-                                                index ==
-                                                    shopController
-                                                            .imagesSize.value -
-                                                        1
-                                            ? InkWell(
-                                                onTap: () async {
-                                                  Get.back();
-                                                  Get.to(
-                                                      () => ShopImageDetail(),
-                                                      arguments: index);
-                                                },
-                                                child: Container(
-                                                  width: double.infinity,
-                                                  height: 60.h,
-                                                  alignment: Alignment.center,
-                                                  child: Text(
-                                                    '이미지 확대',
-                                                    style: TextStyle(
-                                                      fontSize: 16.sp,
-                                                      height: 1,
-                                                      fontFamily:
-                                                          'NotoSansCJKKR',
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                        SizedBox(height: 16.h),
+                        Container(
+                          height: 100.h,
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: shopController.maxImagesSize,
+                            itemBuilder: (context, index) {
+                              return Obx(
+                                () => InkWell(
+                                  onTap: () {
+                                    Get.bottomSheet(
+                                      Wrap(
+                                        children: [
+                                          index <
+                                                      shopController
+                                                          .imagesSize.value ||
+                                                  index ==
+                                                      shopController
+                                                              .imagesSize.value -
+                                                          1
+                                              ? InkWell(
+                                                  onTap: () async {
+                                                    Get.back();
+                                                    Get.to(
+                                                        () => ShopImageDetail(),
+                                                        arguments: index);
+                                                  },
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    height: 60.h,
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                      '이미지 확대',
+                                                      style: TextStyle(
+                                                        fontSize: 16.sp,
+                                                        fontFamily:
+                                                            'NotoSansCJKKR',
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              )
-                                            : Container(),
-                                        InkWell(
-                                          onTap: () async {
-                                            await shopController
-                                                .selectShopImages(index);
-                                            Get.back();
-                                          },
-                                          child: Container(
-                                            width: double.infinity,
-                                            height: 60.h,
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              index <
-                                                          shopController
-                                                              .imagesSize
-                                                              .value ||
-                                                      index ==
-                                                          shopController
-                                                                  .imagesSize
-                                                                  .value -
-                                                              1
-                                                  ? '이미지 변경'
-                                                  : '이미지 추가',
-                                              style: TextStyle(
-                                                color: Color(0xfff93f5b),
-                                                fontSize: 16.sp,
-                                                height: 1,
-                                                fontFamily: 'NotoSansCJKKR',
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Visibility(
-                                          visible: index <
-                                                  shopController
-                                                      .imagesSize.value ||
-                                              index ==
-                                                  shopController
-                                                          .imagesSize.value -
-                                                      1,
-                                          child: InkWell(
+                                                )
+                                              : Container(),
+                                          InkWell(
                                             onTap: () async {
-                                              FocusScope.of(context).unfocus();
-                                              GetDialog().alternativeDialog(
-                                                  '해당 사진을 삭제하시겠습니까?',
-                                                  () async =>
-                                                      await shopController
-                                                          .deleteShopImages(
-                                                              index));
+                                              await shopController
+                                                  .selectShopImages(index);
+                                              Get.back();
                                             },
                                             child: Container(
                                               width: double.infinity,
                                               height: 60.h,
                                               alignment: Alignment.center,
                                               child: Text(
-                                                '이미지 삭제',
-                                                style: TextStyle(
-                                                  color: Color(0xff283137),
-                                                  fontSize: 16.sp,
-                                                  height: 1,
-                                                  fontFamily: 'NotoSansCJKKR',
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    backgroundColor: Colors.white,
-                                  );
-                                },
-                                child: index <= shopController.imagesSize.value
-                                    ? Container(
-                                        height: 100.h,
-                                        child: Stack(
-                                          children: [
-                                            index ==
-                                                    shopController
-                                                        .imagesSize.value
-                                                ? Container(
-                                                    width: 100.w,
-                                                    height: 100.h,
-                                                    decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color:
-                                                                Colors.black12),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.r)),
-                                                  )
-                                                : shopController
-                                                            .selectImages![
-                                                                index]
-                                                            .imageUrl ==
-                                                        null
-                                                    ? Container(
-                                                        width: 100.w,
-                                                        height: 100.h,
-                                                        child: Image(
-                                                          image: shopController
-                                                              .selectMainImage!
-                                                              .value
-                                                              .image,
-                                                          /*width: 100.w,
-                                                                  height: 100.h,*/
-                                                          fit: BoxFit.fill,
-                                                        ),
-                                                      )
-                                                    : ExtendedImage.network(
-                                                        shopController
-                                                            .selectImages![
-                                                                index]
-                                                            .imageUrl!,
-                                                        width: 100.w,
-                                                        height: 100.h,
-                                                        fit: BoxFit.fill,
-                                                      ),
-                                            Positioned(
-                                              left: 35.w,
-                                              top: 35.h,
-                                              child: SvgPicture.asset(
                                                 index <
                                                             shopController
                                                                 .imagesSize
@@ -407,203 +284,268 @@ class ShopProductModify extends StatelessWidget {
                                                                     .imagesSize
                                                                     .value -
                                                                 1
-                                                    ? 'assets/images_svg/ic_상품이미지교체.svg'
-                                                    : 'assets/images_svg/ic_상품이미지추가.svg',
-                                                height: 30.h,
-                                                width: 30.w,
+                                                    ? '이미지 변경'
+                                                    : '이미지 추가',
+                                                style: TextStyle(
+                                                  color: Color(0xfff93f5b),
+                                                  fontSize: 16.sp,
+                                                  fontFamily: 'NotoSansCJKKR',
+                                                  fontWeight: FontWeight.w500,
+                                                ),
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      )
-                                    : Container(
-                                        height: 100.h,
+                                          ),
+                                          Visibility(
+                                            visible: index <
+                                                    shopController
+                                                        .imagesSize.value ||
+                                                index ==
+                                                    shopController
+                                                            .imagesSize.value -
+                                                        1,
+                                            child: InkWell(
+                                              onTap: () async {
+                                                FocusScope.of(context).unfocus();
+                                                GetDialog().alternativeDialog(
+                                                    '해당 사진을 삭제하시겠습니까?',
+                                                    () async =>
+                                                        await shopController
+                                                            .deleteShopImages(
+                                                                index));
+                                              },
+                                              child: Container(
+                                                width: double.infinity,
+                                                height: 60.h,
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  '이미지 삭제',
+                                                  style: TextStyle(
+                                                    color: Color(0xff283137),
+                                                    fontSize: 16.sp,
+                                                    fontFamily: 'NotoSansCJKKR',
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                              ),
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return SizedBox(
-                              width: 8.w,
-                              height: 100.h,
-                            );
-                          },
+                                      backgroundColor: Colors.white,
+                                    );
+                                  },
+                                  child: index <= shopController.imagesSize.value
+                                      ? Container(
+                                          height: 100.h,
+                                          child: Stack(
+                                            children: [
+                                              index ==
+                                                      shopController
+                                                          .imagesSize.value
+                                                  ? Container(
+                                                      width: 100.w,
+                                                      height: 100.h,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                              color:
+                                                                  Colors.black12),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8.r)),
+                                                    )
+                                                  : shopController
+                                                              .selectImages![
+                                                                  index]
+                                                              .imageUrl ==
+                                                          null
+                                                      ? Container(
+                                                          width: 100.w,
+                                                          height: 100.h,
+                                                          child: Image(
+                                                            image: shopController
+                                                                .selectImages![index]
+                                                                .image,
+                                                            /*width: 100.w,
+                                                                    height: 100.h,*/
+                                                            fit: BoxFit.fitHeight,
+                                                          ),
+                                                        )
+                                                      : ExtendedImage.network(
+                                                          shopController
+                                                              .selectImages![
+                                                                  index]
+                                                              .imageUrl!,
+                                                          width: 100.w,
+                                                          height: 100.h,
+                                                          fit: BoxFit.fitHeight,
+                                                        ),
+                                              Positioned(
+                                                left: 35.w,
+                                                top: 35.h,
+                                                child: SvgPicture.asset(
+                                                  index <
+                                                              shopController
+                                                                  .imagesSize
+                                                                  .value ||
+                                                          index ==
+                                                              shopController
+                                                                      .imagesSize
+                                                                      .value -
+                                                                  1
+                                                      ? 'assets/images_svg/ic_상품이미지교체.svg'
+                                                      : 'assets/images_svg/ic_상품이미지추가.svg',
+                                                  height: 30.h,
+                                                  width: 30.w,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        )
+                                      : Container(
+                                          height: 100.h,
+                                        ),
+                                ),
+                              );
+                            },
+                            separatorBuilder: (BuildContext context, int index) {
+                              return SizedBox(
+                                width: 8.w,
+                                height: 100.h,
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 24.h,
-                      ),
-                      Text(
-                        '상품 옵션',
-                        style: TextStyle(
-                          color: Color(0xff283137),
-                          fontSize: 16.sp,
-                          height: 1,
-                          fontFamily: 'NotoSansCJKKR',
-                          fontWeight: FontWeight.w500,
+                        SizedBox(height: 24.h),
+                        Text(
+                          '상품 옵션',
+                          style: TextStyle(
+                            color: Color(0xff283137),
+                            fontSize: 16.sp,
+                            fontFamily: 'NotoSansCJKKR',
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 32.h),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
-                        color: Colors.black12,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        SizedBox(height: 32.h),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
+                          color: Colors.black12,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('* 옵션은 옵션 제목, 옵션 설명, 선택지로 구성되어 있습니다.\n'),
+                              Text(
+                                  '* 옵션의 선택지는 1개만 선택이 가능하도록 되어있습니다. 그러므로 고객이 옵션의 선택지를 선택할 필요가 없는 경우, \'선택지\' 란에 반드시 \'선택 안함\' 등과 같은 선택지를 추가해 주세요.')
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 32.h),
+                        Row(
                           children: [
-                            Text('* 옵션은 옵션 제목, 옵션 설명, 선택지로 구성되어 있습니다.\n'),
                             Text(
-                                '* 옵션의 선택지는 1개만 선택이 가능하도록 되어있습니다. 그러므로 고객이 옵션의 선택지를 선택할 필요가 없는 경우, \'선택지\' 란에 반드시 \'선택 안함\' 등과 같은 선택지를 추가해 주세요.')
+                              '상품 기본금액',
+                              style: TextStyle(
+                                color: Color(0xfff93f5b),
+                                fontSize: 16.sp,
+                                fontFamily: 'NotoSansCJKKR',
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(width: 100.w),
+                            Expanded(
+                              child: CustomTextField().simpleTextField(
+                                  shopController.shopBasePriceController.value,
+                                  false,
+                                  TextInputType.number,
+                                  TextAlign.start,
+                                  '',
+                                  1,
+                                  1,
+                                  null, [
+                                MaskTextInputFormatter(mask: '#######'),
+                              ]),
+                            ),
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        height: 32.h,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            '상품 기본금액',
-                            style: TextStyle(
-                              color: Color(0xfff93f5b),
-                              fontSize: 16.sp,
-                              height: 1,
-                              fontFamily: 'NotoSansCJKKR',
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 100.w,
-                          ),
-                          Expanded(
-                            child: Container(
-                              padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 0),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(
-                                  color: Color(0xffd1d1d6),
-                                  width: 1.h,
-                                ),
-                                borderRadius: BorderRadius.circular(8.r),
-                              ),
-                              child: TextFormField(
-                                controller: shopController
-                                    .shopBasePriceController.value,
-                                inputFormatters: [
-                                  MaskTextInputFormatter(
-                                    mask: '#######',
-                                  ),
-                                ],
-                                keyboardType: TextInputType.number,
-                                maxLines: 1,
-                                decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Obx(
-                        () => ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: shopController.mainOptionList.length,
-                          itemBuilder: (context, index) {
-                            if (shopController.mainOptionList.length > index ||
-                                shopController.mainOptionList.length != 0)
-                              return Theme(
-                                data: ThemeData()
-                                    .copyWith(dividerColor: Colors.transparent),
-                                child: ExpansionTile(
-                                  title: Text(
-                                    '옵션 ${index + 1}',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: 'NotoSansCJKKR',
-                                      fontSize: 20.sp,
-                                      fontWeight: FontWeight.w700,
+                        Obx(
+                          () => ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: shopController.mainOptionList.length,
+                            itemBuilder: (context, index) {
+                              if (shopController.mainOptionList.length > index ||
+                                  shopController.mainOptionList.length != 0)
+                                return Theme(
+                                  data: ThemeData()
+                                      .copyWith(dividerColor: Colors.transparent),
+                                  child: ExpansionTile(
+                                    title: Text(
+                                      '옵션 ${index + 1}',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: 'NotoSansCJKKR',
+                                        fontSize: 20.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
-                                  ),
-                                  children: [
-                                    SizedBox(
-                                      height: 16.h,
-                                    ),
-                                    InkWell(
-                                      onTap: () async {
-                                        FocusScope.of(context).unfocus();
-                                        GetDialog().alternativeDialog(
-                                            '해당 옵션을 삭제하시겠습니까?',
-                                            () async => await shopController
-                                                .onMainOptionDelete(index));
-                                      },
-                                      child: Container(
-                                        alignment: Alignment.centerRight,
-                                        padding: EdgeInsets.fromLTRB(
-                                            8.w, 8.h, 8.w, 8.h),
-                                        child: Text(
-                                          '옵션 삭제',
-                                          style: TextStyle(
-                                            color: Color(0xfff93f5b),
-                                            fontSize: 16.sp,
-                                            height: 1,
-                                            fontFamily: 'NotoSansCJKKR',
-                                            fontWeight: FontWeight.w500,
+                                    children: [
+                                      SizedBox(height: 16.h),
+                                      InkWell(
+                                        onTap: () async {
+                                          FocusScope.of(context).unfocus();
+                                          GetDialog().alternativeDialog(
+                                              '해당 옵션을 삭제하시겠습니까?',
+                                              () async => await shopController
+                                                  .onMainOptionDelete(index));
+                                        },
+                                        child: Container(
+                                          alignment: Alignment.centerRight,
+                                          padding: EdgeInsets.fromLTRB(
+                                              8.w, 8.h, 8.w, 8.h),
+                                          child: Text(
+                                            '옵션 삭제',
+                                            style: TextStyle(
+                                              color: Color(0xfff93f5b),
+                                              fontSize: 16.sp,
+                                              fontFamily: 'NotoSansCJKKR',
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 8.h,
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xffd1d1d6),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.r)),
-                                      child: Container(
-                                        margin: EdgeInsets.fromLTRB(
-                                            10.w, 10.h, 10.w, 10.h),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              '옵션 제목',
-                                              style: TextStyle(
-                                                color: Color(0xfff93f5b),
-                                                fontSize: 16.sp,
-                                                height: 1,
-                                                fontFamily: 'NotoSansCJKKR',
-                                                fontWeight: FontWeight.w500,
-                                              ),
+                                      SizedBox(height: 8.h),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Color(0xffd1d1d6),
                                             ),
-                                            SizedBox(
-                                              height: 8.h,
-                                            ),
-                                            Container(
-                                              height: 110.h,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                border: Border.all(
-                                                  color: Color(0xffd1d1d6),
-                                                  width: 1.h,
+                                            borderRadius:
+                                                BorderRadius.circular(8.r)),
+                                        child: Container(
+                                          margin: EdgeInsets.fromLTRB(
+                                              10.w, 10.h, 10.w, 10.h),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                '옵션 제목',
+                                                style: TextStyle(
+                                                  color: Color(0xfff93f5b),
+                                                  fontSize: 16.sp,
+                                                  fontFamily: 'NotoSansCJKKR',
+                                                  fontWeight: FontWeight.w500,
                                                 ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.r),
                                               ),
-                                              child: TextFormField(
-                                                maxLines: 3,
-                                                controller: shopController
-                                                    .mainOptionList[index]
-                                                    .mainOptionTitleController,
-                                                decoration: InputDecoration(
-                                                  contentPadding:
-                                                      EdgeInsets.all(18.h),
-                                                  border: InputBorder.none,
-                                                  hintText: shopController
+                                              SizedBox(height: 8.h),
+                                              CustomTextField().simpleTextField(
+                                                  shopController
+                                                      .mainOptionList[index]
+                                                      .mainOptionTitleController!,
+                                                  false,
+                                                  null,
+                                                  TextAlign.start,
+                                                  shopController
                                                               .mainOptionList[
                                                                   index]
                                                               .mainOptionTitleController!
@@ -612,52 +554,29 @@ class ShopProductModify extends StatelessWidget {
                                                           ''
                                                       ? '1. 케이크 맛'
                                                       : null,
-                                                  hintStyle: TextStyle(
-                                                    color: Color(0xffd1d1d6),
-                                                    fontFamily: 'NotoSansCJKKR',
-                                                    fontSize: 14.sp,
-                                                    height: 1,
-                                                  ),
+                                                  1,
+                                                  1,
+                                                  null,
+                                                  []),
+                                              SizedBox(height: 16.h),
+                                              Text(
+                                                '옵션 설명',
+                                                style: TextStyle(
+                                                  color: Color(0xfff93f5b),
+                                                  fontSize: 16.sp,
+                                                  fontFamily: 'NotoSansCJKKR',
+                                                  fontWeight: FontWeight.w500,
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: 16.h,
-                                            ),
-                                            Text(
-                                              '옵션 설명',
-                                              style: TextStyle(
-                                                color: Color(0xfff93f5b),
-                                                fontSize: 16.sp,
-                                                height: 1,
-                                                fontFamily: 'NotoSansCJKKR',
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 8.h,
-                                            ),
-                                            Container(
-                                              height: 150.h,
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                border: Border.all(
-                                                  color: Color(0xffd1d1d6),
-                                                  width: 1.h,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.r),
-                                              ),
-                                              child: TextFormField(
-                                                maxLines: 5,
-                                                controller: shopController
-                                                    .mainOptionList[index]
-                                                    .mainOptionDescriptionController,
-                                                decoration: InputDecoration(
-                                                  contentPadding:
-                                                      EdgeInsets.all(18.h),
-                                                  border: InputBorder.none,
-                                                  hintText: shopController
+                                              SizedBox(height: 8.h),
+                                              CustomTextField().simpleTextField(
+                                                  shopController
+                                                      .mainOptionList[index]
+                                                      .mainOptionDescriptionController!,
+                                                  false,
+                                                  null,
+                                                  TextAlign.start,
+                                                  shopController
                                                               .mainOptionList[
                                                                   index]
                                                               .mainOptionDescriptionController!
@@ -666,98 +585,82 @@ class ShopProductModify extends StatelessWidget {
                                                           ''
                                                       ? '케이크 맛을 고르는 옵션입니다. 반드시 하나 이상 선택해 주세요.'
                                                       : null,
-                                                  hintStyle: TextStyle(
-                                                    color: Color(0xffd1d1d6),
-                                                    fontFamily: 'NotoSansCJKKR',
-                                                    fontSize: 14.sp,
-                                                    height: 1,
+                                                  1,
+                                                  1,
+                                                  null,
+                                                  []),
+                                              SizedBox(height: 16.h),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    '선택지의 중복 선택 가능유무',
+                                                    style: TextStyle(
+                                                      color: Color(0xfff93f5b),
+                                                      fontSize: 16.sp,
+                                                      fontFamily: 'NotoSansCJKKR',
+                                                      fontWeight: FontWeight.w500,
+                                                    ),
                                                   ),
+                                                  Switch(
+                                                    value: shopController
+                                                        .mainOptionList[index]
+                                                        .mainOptionAllowMultipleChoices!,
+                                                    onChanged: (value) {
+                                                      shopController
+                                                          .allowMultipleChoicesChanged(
+                                                              index);
+                                                    },
+                                                    activeColor:
+                                                        Color(0xfff93f5b),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 8.h),
+                                              Divider(
+                                                thickness: 15.h,
+                                                color: Colors.black12,
+                                              ),
+                                              SizedBox(height: 8.h),
+                                              Text(
+                                                '옵션의 선택지를 설정해주세요',
+                                                style: TextStyle(
+                                                  color: Color(0xff283137),
+                                                  fontSize: 16.sp,
+                                                  fontFamily: 'NotoSansCJKKR',
+                                                  fontWeight: FontWeight.w500,
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(
-                                              height: 16.h,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  '선택지의 중복 선택 가능유무',
-                                                  style: TextStyle(
-                                                    color: Color(0xfff93f5b),
-                                                    fontSize: 16.sp,
-                                                    height: 1,
-                                                    fontFamily: 'NotoSansCJKKR',
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                                Switch(
-                                                  value: shopController
-                                                      .mainOptionList[index]
-                                                      .mainOptionAllowMultipleChoices!,
-                                                  onChanged: (value) {
+                                              Obx(() {
+                                                if (shopController.mainOptionList
+                                                            .length >
+                                                        index ||
                                                     shopController
-                                                        .allowMultipleChoicesChanged(
-                                                            index);
-                                                  },
-                                                  activeColor:
-                                                      Color(0xfff93f5b),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              height: 8.h,
-                                            ),
-                                            Divider(
-                                              thickness: 15.h,
-                                              color: Colors.black12,
-                                            ),
-                                            SizedBox(
-                                              height: 8.h,
-                                            ),
-                                            Text(
-                                              '옵션의 선택지를 설정해주세요',
-                                              style: TextStyle(
-                                                color: Color(0xff283137),
-                                                fontSize: 16.sp,
-                                                height: 1,
-                                                fontFamily: 'NotoSansCJKKR',
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                            Obx(() {
-                                              if (shopController.mainOptionList
-                                                          .length >
-                                                      index ||
-                                                  shopController
+                                                            .mainOptionList[index]
+                                                            .shopDetailOptionList
+                                                            .length !=
+                                                        0)
+                                                  return ListView.builder(
+                                                      shrinkWrap: true,
+                                                      scrollDirection:
+                                                          Axis.vertical,
+                                                      physics:
+                                                          NeverScrollableScrollPhysics(),
+                                                      itemCount: shopController
                                                           .mainOptionList[index]
                                                           .shopDetailOptionList
-                                                          .length !=
-                                                      0)
-                                                return ListView.builder(
-                                                    shrinkWrap: true,
-                                                    scrollDirection:
-                                                        Axis.vertical,
-                                                    physics:
-                                                        NeverScrollableScrollPhysics(),
-                                                    itemCount: shopController
-                                                        .mainOptionList[index]
-                                                        .shopDetailOptionList
-                                                        .length,
-                                                    itemBuilder:
-                                                        (context, detailIndex) {
-                                                      return Visibility(
-                                                        visible: true,
-                                                        child: Column(
+                                                          .length,
+                                                      itemBuilder:
+                                                          (context, detailIndex) {
+                                                        return Column(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
                                                                   .start,
                                                           children: [
                                                             SizedBox(
-                                                              height: 16.h,
-                                                            ),
+                                                                height: 16.h),
                                                             Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
@@ -771,7 +674,6 @@ class ShopProductModify extends StatelessWidget {
                                                                         0xff283137),
                                                                     fontSize:
                                                                         16.sp,
-                                                                    height: 1,
                                                                     fontFamily:
                                                                         'NotoSansCJKKR',
                                                                     fontWeight:
@@ -780,8 +682,7 @@ class ShopProductModify extends StatelessWidget {
                                                                   ),
                                                                 ),
                                                                 SizedBox(
-                                                                  width: 8.w,
-                                                                ),
+                                                                    width: 8.w),
                                                                 InkWell(
                                                                   onTap:
                                                                       () async {
@@ -813,29 +714,25 @@ class ShopProductModify extends StatelessWidget {
                                                                             0xfff93f5b),
                                                                         fontSize:
                                                                             16.sp,
-                                                                        height:
-                                                                            1,
                                                                         fontFamily:
                                                                             'NotoSansCJKKR',
                                                                         fontWeight:
-                                                                            FontWeight.w500,
+                                                                            FontWeight
+                                                                                .w500,
                                                                       ),
                                                                     ),
                                                                   ),
                                                                 )
                                                               ],
                                                             ),
-                                                            SizedBox(
-                                                              height: 8.h,
-                                                            ),
+                                                            SizedBox(height: 8.h),
                                                             Container(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .fromLTRB(
-                                                                          8.w,
-                                                                          8.h,
-                                                                          8.w,
-                                                                          0),
+                                                              padding: EdgeInsets
+                                                                  .fromLTRB(
+                                                                      8.w,
+                                                                      8.h,
+                                                                      8.w,
+                                                                      0),
                                                               decoration:
                                                                   BoxDecoration(
                                                                 borderRadius:
@@ -851,55 +748,38 @@ class ShopProductModify extends StatelessWidget {
                                                               ),
                                                               child: Column(
                                                                 children: [
-                                                                  TextFormField(
-                                                                    maxLines: 2,
-                                                                    controller: shopController
-                                                                        .mainOptionList[
-                                                                            index]
-                                                                        .shopDetailOptionList[
-                                                                            detailIndex]
-                                                                        .detailOptionContentController,
-                                                                    decoration:
-                                                                        InputDecoration(
-                                                                      border: InputBorder
-                                                                          .none,
-                                                                      hintText: shopController.mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionContentController!.value.text ==
+                                                                  CustomTextField().simpleTextField(
+                                                                      shopController
+                                                                          .mainOptionList[
+                                                                              index]
+                                                                          .shopDetailOptionList[
+                                                                              detailIndex]
+                                                                          .detailOptionContentController!,
+                                                                      false,
+                                                                      null,
+                                                                      TextAlign
+                                                                          .start,
+                                                                      shopController.mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionContentController!.value.text ==
                                                                               ''
                                                                           ? '해당 선택지의 내용을 입력해 주세요(ex. 오레오 토핑)'
                                                                           : null,
-                                                                      hintStyle:
-                                                                          TextStyle(
-                                                                        color: Color(
-                                                                            0xffd1d1d6),
-                                                                        fontFamily:
-                                                                            'NotoSansCJKKR',
-                                                                        fontSize:
-                                                                            14.sp,
-                                                                        height:
-                                                                            1,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                  Divider(
-                                                                    height: 1.h,
-                                                                    color: Colors
-                                                                        .black,
-                                                                  ),
+                                                                      2,
+                                                                      2,
+                                                                      null,
+                                                                      []),
                                                                   SizedBox(
-                                                                    height: 8.h,
-                                                                  ),
+                                                                      height:
+                                                                          8.h),
                                                                   Row(
                                                                     children: [
                                                                       Text(
                                                                         '해당 선택지 금액',
                                                                         style:
                                                                             TextStyle(
-                                                                          color:
-                                                                              Color(0xfff93f5b),
+                                                                          color: Color(
+                                                                              0xfff93f5b),
                                                                           fontSize:
                                                                               16.sp,
-                                                                          height:
-                                                                              1,
                                                                           fontFamily:
                                                                               'NotoSansCJKKR',
                                                                           fontWeight:
@@ -907,9 +787,8 @@ class ShopProductModify extends StatelessWidget {
                                                                         ),
                                                                       ),
                                                                       SizedBox(
-                                                                        width:
-                                                                            70.w,
-                                                                      ),
+                                                                          width: 70
+                                                                              .w),
                                                                       Expanded(
                                                                         child:
                                                                             Container(
@@ -919,44 +798,35 @@ class ShopProductModify extends StatelessWidget {
                                                                                 Colors.white,
                                                                             border:
                                                                                 Border.all(
-                                                                              color: Color(0xffd1d1d6),
-                                                                              width: 1.h,
+                                                                              color:
+                                                                                  Color(0xffd1d1d6),
+                                                                              width:
+                                                                                  1.h,
                                                                             ),
                                                                             borderRadius:
                                                                                 BorderRadius.circular(8.r),
                                                                           ),
-                                                                          child:
-                                                                              TextFormField(
-                                                                            inputFormatters: [
-                                                                              MaskTextInputFormatter(
-                                                                                mask: '#######',
-                                                                              )
-                                                                            ],
-                                                                            keyboardType:
-                                                                                TextInputType.number,
-                                                                            maxLines:
-                                                                                1,
-                                                                            controller:
-                                                                                shopController.mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionPriceController,
-                                                                            decoration:
-                                                                                InputDecoration(
-                                                                              contentPadding: EdgeInsets.all(18.h),
-                                                                              border: InputBorder.none,
-                                                                              hintStyle: TextStyle(
-                                                                                color: Color(0xffd1d1d6),
-                                                                                fontFamily: 'NotoSansCJKKR',
-                                                                                fontSize: 14.sp,
-                                                                                height: 1,
-                                                                              ),
-                                                                            ),
-                                                                          ),
+                                                                          child: CustomTextField().simpleTextField(
+                                                                              shopController.mainOptionList[index].shopDetailOptionList[detailIndex].detailOptionPriceController!,
+                                                                              false,
+                                                                              TextInputType.number,
+                                                                              TextAlign.start,
+                                                                              '',
+                                                                              1,
+                                                                              1,
+                                                                              null,
+                                                                              [
+                                                                                MaskTextInputFormatter(
+                                                                                  mask: '#######',
+                                                                                )
+                                                                              ]),
                                                                         ),
                                                                       ),
                                                                     ],
                                                                   ),
                                                                   SizedBox(
-                                                                    height: 8.h,
-                                                                  ),
+                                                                      height:
+                                                                          8.h),
                                                                   /*Column(
                                                                             children: [
                                                                               Divider(
@@ -1064,95 +934,84 @@ class ShopProductModify extends StatelessWidget {
                                                               ),
                                                             ),
                                                           ],
-                                                        ),
-                                                      );
-                                                    });
-                                              else
-                                                return Container();
-                                            }),
-                                            SizedBox(
-                                              height: 16.h,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                shopController
-                                                    .onDetailOptionAdd(index);
-                                              },
-                                              child: Center(
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20.r),
-                                                    border: Border.all(
-                                                      color: Color(0xffd1d1d6),
-                                                    ),
-                                                  ),
+                                                        );
+                                                      });
+                                                else
+                                                  return Container();
+                                              }),
+                                              SizedBox(height: 16.h),
+                                              InkWell(
+                                                onTap: () {
+                                                  shopController
+                                                      .onDetailOptionAdd(index);
+                                                },
+                                                child: Center(
                                                   child: Container(
-                                                    padding:
-                                                        EdgeInsets.fromLTRB(
-                                                            10.w,
-                                                            10.h,
-                                                            10.w,
-                                                            10.h),
-                                                    child: Visibility(
-                                                      visible: true,
-                                                      child: Wrap(
-                                                        alignment: WrapAlignment
-                                                            .center,
-                                                        children: [
-                                                          Text(
-                                                            '선택지 추가',
-                                                            style: TextStyle(
-                                                              color: Color(
-                                                                  0xff283137),
-                                                              fontSize: 20.sp,
-                                                              height: 1,
-                                                              fontFamily:
-                                                                  'NotoSansCJKKR',
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20.r),
+                                                      border: Border.all(
+                                                        color: Color(0xffd1d1d6),
+                                                      ),
+                                                    ),
+                                                    child: Container(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              10.w,
+                                                              10.h,
+                                                              10.w,
+                                                              10.h),
+                                                      child: Visibility(
+                                                        visible: true,
+                                                        child: Wrap(
+                                                          alignment: WrapAlignment
+                                                              .center,
+                                                          children: [
+                                                            Text(
+                                                              '선택지 추가',
+                                                              style: TextStyle(
+                                                                color: Color(
+                                                                    0xff283137),
+                                                                fontSize: 20.sp,
+                                                                fontFamily:
+                                                                    'NotoSansCJKKR',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                              ),
                                                             ),
-                                                          ),
-                                                          SizedBox(
-                                                            width: 10.w,
-                                                          ),
-                                                          SvgPicture.asset(
-                                                            'assets/images_svg/ic_상품이미지추가.svg',
-                                                            height: 20.h,
-                                                            width: 20.w,
-                                                          ),
-                                                        ],
+                                                            SizedBox(width: 10.w),
+                                                            SvgPicture.asset(
+                                                              'assets/images_svg/ic_상품이미지추가.svg',
+                                                              height: 20.h,
+                                                              width: 20.w,
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            else
-                              return Container();
-                          },
+                                    ],
+                                  ),
+                                );
+                              else
+                                return Container();
+                            },
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 32.h,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          FocusScope.of(context).unfocus();
-                          GetDialog().alternativeDialog('옵션을 추가 하시겠습니까?',
-                              () => shopController.onMainOptionAdd());
-                        },
-                        child: Container(
-                          alignment: Alignment.centerRight,
+                        SizedBox(height: 32.h),
+                        InkWell(
+                          onTap: () {
+                            FocusScope.of(context).unfocus();
+                            shopController.onMainOptionAdd();
+                          },
                           child: Container(
                             padding: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
                             decoration: BoxDecoration(
@@ -1163,43 +1022,39 @@ class ShopProductModify extends StatelessWidget {
                               style: TextStyle(
                                 color: Color(0xff283137),
                                 fontSize: 30.sp,
-                                height: 1,
                                 fontFamily: 'NotoSansCJKKR',
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 32.h,
-                      ),
-                    ],
+                        SizedBox(height: 32.h),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            InkWell(
-              onTap: () async {
-                await shopController.shopManagementModifyClicked(context);
-              },
-              child: Container(
-                alignment: Alignment.center,
-                height: 60.h,
-                color: Color(0xfff93f5b),
-                child: Text(
-                  '수정 완료',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.sp,
-                    height: 1,
-                    fontFamily: 'NotoSansCJKKR',
-                    fontWeight: FontWeight.w700,
+              InkWell(
+                onTap: () async {
+                  await shopController.shopManagementModifyClicked(context);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 60.h,
+                  color: Color(0xfff93f5b),
+                  child: Text(
+                    '수정 완료',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.sp,
+                      fontFamily: 'NotoSansCJKKR',
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

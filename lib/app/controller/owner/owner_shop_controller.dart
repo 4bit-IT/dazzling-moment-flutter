@@ -1,14 +1,18 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:damo/app/controller/notification/notofication_controller.dart';
+import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/data/model/shop_model.dart';
 import 'package:damo/app/data/provider/owner/owner_shop_api.dart';
 import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class OwnerShopController extends GetxController {
+  TokenController tokenController = Get.find();
   Rx<ShopRegistrationModel> shopRegistrationModel = ShopRegistrationModel().obs;
   Rx<ShopImageRegistrationModel> shopImageRegistrationModel =
       ShopImageRegistrationModel().obs;
@@ -49,51 +53,53 @@ class OwnerShopController extends GetxController {
     isLoadingModifyData.value = true;
     jsonResponse = await OwnerShopNetwork().getShopMe();
     model = ShopGetMeModel.fromJson(jsonResponse);
-    shopGetMeModel.update((val) {
-      val!.code = model.code;
-      val.content = model.content;
-      val.dataDescription = model.dataDescription;
-      val.id = model.id;
-      val.images = model.images;
-      val.latitude = model.latitude;
-      val.longitude = model.longitude;
-      val.name = model.name;
-      val.basePrice = model.basePrice;
-      val.optionList = model.optionList;
-      val.rating = model.rating;
-      val.reviewCount = model.reviewCount;
-      val.shopProfileImage = model.shopProfileImage;
-      val.description = model.description;
-      val.result = model.result;
-    });
+    if (model.code == 1) {
+      shopGetMeModel.update((val) {
+        val!.code = model.code;
+        val.content = model.content;
+        val.dataDescription = model.dataDescription;
+        val.id = model.id;
+        val.images = model.images;
+        val.latitude = model.latitude;
+        val.longitude = model.longitude;
+        val.name = model.name;
+        val.basePrice = model.basePrice;
+        val.optionList = model.optionList;
+        val.rating = model.rating;
+        val.reviewCount = model.reviewCount;
+        val.shopProfileImage = model.shopProfileImage;
+        val.description = model.description;
+        val.result = model.result;
+      });
 
-    if (shopGetMeModel.value.name != '') {
-      shopNameController =
-          TextEditingController(text: shopGetMeModel.value.name).obs;
-    }
-    if (shopGetMeModel.value.content != '') {
-      shopContentController =
-          TextEditingController(text: shopGetMeModel.value.content).obs;
-    }
-    if (shopGetMeModel.value.dataDescription != '') {
-      shopDescriptionController =
-          TextEditingController(text: shopGetMeModel.value.dataDescription).obs;
-    }
-    if (shopGetMeModel.value.basePrice != '') {
-      shopBasePriceController =
-          TextEditingController(text: shopGetMeModel.value.basePrice).obs;
-    }
-    selectMainImage!.value = ShopImageModel();
-    shopContentController.value =
-        TextEditingController(text: shopGetMeModel.value.content);
-    shopDescriptionController.value =
-        TextEditingController(text: shopGetMeModel.value.dataDescription);
-    selectImages = <ShopImageModel>[].obs;
-    imagesSize.value = 0;
-    mainOptionList.clear();
+      if (shopGetMeModel.value.name != '') {
+        shopNameController =
+            TextEditingController(text: shopGetMeModel.value.name).obs;
+      }
+      if (shopGetMeModel.value.content != '') {
+        shopContentController =
+            TextEditingController(text: shopGetMeModel.value.content).obs;
+      }
+      if (shopGetMeModel.value.dataDescription != '') {
+        shopDescriptionController =
+            TextEditingController(text: shopGetMeModel.value.dataDescription)
+                .obs;
+      }
+      if (shopGetMeModel.value.basePrice != '') {
+        shopBasePriceController =
+            TextEditingController(text: shopGetMeModel.value.basePrice).obs;
+      }
+      selectMainImage!.value = ShopImageModel();
+      shopContentController.value =
+          TextEditingController(text: shopGetMeModel.value.content);
+      shopDescriptionController.value =
+          TextEditingController(text: shopGetMeModel.value.dataDescription);
+      selectImages = <ShopImageModel>[].obs;
+      imagesSize.value = 0;
+      mainOptionList.clear();
 
-    if (shopGetMeModel.value.images != null)
-      for (int i = 0; i < shopGetMeModel.value.images.length; i++) {
+      if (shopGetMeModel.value.images != null)
+        for (int i = 0; i < shopGetMeModel.value.images.length; i++) {
 /*        String random = Random().nextInt(2147483890).toString();
         Directory tempDir = await getTemporaryDirectory();
         String tempPath = tempDir.path;
@@ -110,42 +116,48 @@ class OwnerShopController extends GetxController {
             await http.get(Uri.parse(shopGetMeModel.value.images[i]));
         await file.writeAsBytes(response.bodyBytes);
         selectImages![i] = FileImage(file);*/
-        selectImages!
-            .add(ShopImageModel(imageUrl: shopGetMeModel.value.images[i]));
+          selectImages!
+              .add(ShopImageModel(imageUrl: shopGetMeModel.value.images[i]));
+        }
+      if (shopGetMeModel.value.shopProfileImage != null) {
+        selectMainImage!.value.imageUrl = shopGetMeModel.value.shopProfileImage;
       }
-    if (shopGetMeModel.value.shopProfileImage != null) {
-      selectMainImage!.value.imageUrl = shopGetMeModel.value.shopProfileImage;
-    }
-    imagesSize.value = shopGetMeModel.value.images.length;
+      imagesSize.value = shopGetMeModel.value.images.length;
 
-    for (int i = 0; i < shopGetMeModel.value.optionList.length; i++) {
-      RxList<ShopDetailOptionModel> temp = <ShopDetailOptionModel>[].obs;
+      for (int i = 0; i < shopGetMeModel.value.optionList.length; i++) {
+        RxList<ShopDetailOptionModel> temp = <ShopDetailOptionModel>[].obs;
 
-      for (int j = 0; j < shopGetMeModel.value.optionList.length; j++) {
-        temp.add(ShopDetailOptionModel(
-          detailOptionContentController: TextEditingController(
-              text: shopGetMeModel.value.optionList[i]['optionDetailList'][j]
-                  ['content']),
-          detailOptionPriceController: TextEditingController(
-              text: shopGetMeModel
-                  .value.optionList[i]['optionDetailList'][j]['price']
-                  .toString()),
-          detailOptionCount: shopGetMeModel.value.optionList[i]
-              ['optionDetailList'][j]['count'],
-          detailOptionAllowMultipleChoices: shopGetMeModel.value.optionList[i]
-              ['optionDetailList'][j]['allowMultipleChoices'],
+        for (int j = 0; j < shopGetMeModel.value.optionList.length; j++) {
+          temp.add(ShopDetailOptionModel(
+            detailOptionContentController: TextEditingController(
+                text: shopGetMeModel.value.optionList[i]['optionDetailList'][j]
+                    ['content']),
+            detailOptionPriceController: TextEditingController(
+                text: shopGetMeModel
+                    .value.optionList[i]['optionDetailList'][j]['price']
+                    .toString()),
+            detailOptionCount: shopGetMeModel.value.optionList[i]
+                ['optionDetailList'][j]['count'],
+            detailOptionAllowMultipleChoices: shopGetMeModel.value.optionList[i]
+                ['optionDetailList'][j]['allowMultipleChoices'],
+          ));
+        }
+        mainOptionList.add(ShopMainOptionModel(
+          mainOptionTitleController: TextEditingController(
+              text: shopGetMeModel.value.optionList[i]['title']),
+          mainOptionDescriptionController: TextEditingController(
+              text: shopGetMeModel.value.optionList[i]['description']),
+          mainOptionAllowMultipleChoices: shopGetMeModel.value.optionList[i]
+              ['allowMultipleChoices'],
+          shopDetailOptionList: temp,
         ));
       }
-      mainOptionList.add(ShopMainOptionModel(
-        mainOptionTitleController: TextEditingController(
-            text: shopGetMeModel.value.optionList[i]['title']),
-        mainOptionDescriptionController: TextEditingController(
-            text: shopGetMeModel.value.optionList[i]['description']),
-        mainOptionAllowMultipleChoices: shopGetMeModel.value.optionList[i]
-            ['allowMultipleChoices'],
-        shopDetailOptionList: temp,
-      ));
+    } else if (model.code == 2) {
+    } else {
+      await tokenController.refreshGetAccessToken();
+      await fetchModifyData();
     }
+
     isLoadingModifyData.value = false;
   }
 
@@ -154,25 +166,26 @@ class OwnerShopController extends GetxController {
     var image = (await _picker.pickImage(
       //이미지를 선택
       source: ImageSource.gallery, //위치는 갤러리
-      maxHeight: 75,
-      maxWidth: 75,
       imageQuality: 100, // 이미지 퀄리티
     ));
     if (image != null) {
       selectMainImage!.value.imageUrl = null;
       selectMainImage!.value.image = FileImage(File(image.path));
+      selectMainImage!.refresh();
     }
   }
 
   Future<void> selectShopImages(int index) async {
     final ImagePicker _picker = ImagePicker();
-    var image = (await _picker.pickImage(
+    XFile? image = await _picker.pickImage(
       //이미지를 선택
-      source: ImageSource.gallery, //위치는 갤러리
-      maxHeight: 75,
-      maxWidth: 75,
+      source: ImageSource.gallery,
+      maxHeight: 1000.w,
+      maxWidth: 1000.w,
       imageQuality: 100, // 이미지 퀄리티
-    ));
+    );
+    print(image?.path);
+    print(image);
     if (image != null) {
       if (index == imagesSize.value) {
         selectImages!.add(ShopImageModel());
@@ -210,7 +223,10 @@ class OwnerShopController extends GetxController {
         shopGetMeModel.refresh();
       }
       if (model.code == 2) {}
-      if (model.code == 3) {}
+      if (model.code == 3) {
+        await tokenController.refreshGetAccessToken();
+        await changeShopMainImage();
+      }
     }
   }
 
@@ -235,7 +251,10 @@ class OwnerShopController extends GetxController {
         shopGetMeModel.refresh();
       }
       if (model.code == 2) {}
-      if (model.code == 3) {}
+      if (model.code == 3) {
+        await tokenController.refreshGetAccessToken();
+        await changeShopImages();
+      }
       Get.back();
     }
   }
@@ -358,6 +377,11 @@ class OwnerShopController extends GetxController {
     toJsonInput['optionList'] = optionList;
     sendData = ShopOptionRegistration().toJson(toJsonInput);
     jsonResponse = await OwnerShopNetwork().postShopOption(sendData);
+    model = ShopOptionRegistration.fromJson(jsonResponse);
+    if (model.code == 3) {
+      await tokenController.refreshGetAccessToken();
+      await optionRegistrationModify();
+    }
   }
 
   Future<void> shopManagementModifyClicked(BuildContext context) async {
@@ -365,7 +389,8 @@ class OwnerShopController extends GetxController {
         shopDescriptionController.value.value.text == '') {
       FocusScope.of(context).unfocus();
       GetDialog().simpleDialog('스토어 설명과 상세 설명을 모두 작성해주세요.');
-    } else if (selectMainImage!.value.image==null && selectMainImage!.value.imageUrl == null) {
+    } else if (selectMainImage!.value.image == null &&
+        selectMainImage!.value.imageUrl == null) {
       FocusScope.of(context).unfocus();
       GetDialog().simpleDialog('업체 대표 이미지를 선택해주세요.');
     } else if (imagesSize.value == 0) {
@@ -418,7 +443,10 @@ class OwnerShopController extends GetxController {
     model = ShopIntroModel.fromJson(jsonResponse);
     if (model.code == 1) {
     } else if (model.code == 2) {
-    } else {}
+    } else {
+      await tokenController.refreshGetAccessToken();
+      await introModify();
+    }
   }
 
   void finishModify() async {

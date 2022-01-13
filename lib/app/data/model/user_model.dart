@@ -111,7 +111,7 @@ class ChangeAddressModel {
     Map sendData = {
       'addr1': input['addr1'].toString(),
       'addr2': input['addr2'].toString(),
-      'zipcode': int.parse(input['zipcode'])
+      'zipcode': input['zipcode']
     };
     body = json.encode(sendData);
     return body;

@@ -12,6 +12,7 @@ import 'package:damo/viewmodel/bar/back_button_clicked.dart';
 import 'package:damo/viewmodel/bar/bottom_navigaton.dart';
 import 'package:damo/viewmodel/bar/drawer.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
+import 'package:damo/viewmodel/image_model.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -61,33 +62,20 @@ class _MyPageState extends State<MyPage> {
             child: Column(
               children: [
                 Container(
-                  height: 1.h,
-                  decoration: BoxDecoration(
-                    color: Color(0xfff1f3f5),
-                  ),
-                ),
-                Column(
-                  children: [
-                    SizedBox(height: 25.h),
-                    Row(
-                      children: [
-                        SizedBox(width: 150.w),
-                        Obx(
-                          () => ExtendedImage.network(
-                            userController.getUserInfoModel.value.profileImage!,
-                            width: 75.w,
-                            height: 75.h,
-                            fit: BoxFit.cover,
-                            cache: false,
-                            // border: Border.all(color: Colors.red, width: 1.0),
-                            shape: BoxShape.circle,
-                            // borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                          ),
-                        ),
-                        SizedBox(width: 110.w),
-                        Column(
-                          children: [
-                            InkWell(
+                  padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 0),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 25.h),
+                      Stack(
+                        children: [
+                          Obx(() => Center(
+                            child: ImageModel().networkImage(userController
+                                .getUserInfoModel.value.profileImage!),
+                          )),
+                          Positioned(
+                            right: 0,
+                            top: 0,
+                            child: InkWell(
                               child: SvgPicture.asset(
                                 'assets/images_svg/ic_my_edit.svg',
                                 width: 30.w,
@@ -97,130 +85,121 @@ class _MyPageState extends State<MyPage> {
                                 Get.to(() => EditMyInfo());
                               },
                             ),
-                            SizedBox(height: 54.h),
-                          ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 11.h),
+                      Text(
+                        userController.getUserInfoModel.value.nickname!,
+                        style: TextStyle(
+                          color: Color(0xff283137),
+                          fontSize: 16.h,
+                          fontFamily: 'NotoSansCJKKR',
+                          fontWeight: FontWeight.w500,
+                          height: 1,
                         ),
-                      ],
-                    ),
-                    SizedBox(height: 11.h),
-                    Text(
-                      userController.getUserInfoModel.value.nickname!,
-                      style: TextStyle(
-                        color: Color(0xff283137),
-                        fontSize: 16.h,
-                        fontFamily: 'NotoSansCJKKR',
-                        fontWeight: FontWeight.w500,
-                        height: 1,
                       ),
-                    ),
-                    SizedBox(height: 5.h),
-                    Text(
-                      userController.getUserInfoModel.value.email!,
-                      style: TextStyle(
-                        color: Color(0xff283137),
-                        fontFamily: 'NotoSansCJKKR',
+                      SizedBox(height: 5.h),
+                      Text(
+                        userController.getUserInfoModel.value.email!,
+                        style: TextStyle(
+                          color: Color(0xff283137),
+                          fontFamily: 'NotoSansCJKKR',
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 24.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            // Get.to(() => WishListPage());
-                          },
-                          child: Container(
-                            height: 79.h,
-                            width: 164.w,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Color(0xfff1f3f5), width: 1.5.h),
-                              borderRadius: BorderRadius.circular(16.r),
-                            ),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                                Text(
-                                  '7',
-                                  style: TextStyle(
-                                      color: Color(0xfff93f5b),
-                                      fontSize: 20.h,
-                                      fontFamily: 'NotoSansCJKKR',
-                                      fontWeight: FontWeight.w700,
-                                      height: 1),
-                                ),
-                                SizedBox(height: 11.h),
-                                Text(
-                                  '찜목록',
-                                  style: TextStyle(
-                                      color: Color(0xff283137),
-                                      fontFamily: 'NotoSansCJKKR',
-                                      fontSize: 14.h,
-                                      height: 1),
-                                ),
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                              ],
+                      SizedBox(height: 24.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              // Get.to(() => WishListPage());
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: 164.w,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Color(0xfff1f3f5), width: 1.5.h),
+                                borderRadius: BorderRadius.circular(16.r),
+                              ),
+                              child: Wrap(
+                                direction: Axis.vertical,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 15.h,
+                                  ),
+                                  Text(
+                                    '7',
+                                    style: TextStyle(
+                                        color: Color(0xfff93f5b),
+                                        fontSize: 20.sp,
+                                        fontFamily: 'NotoSansCJKKR',
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  SizedBox(height: 11.h),
+                                  Text(
+                                    '찜 목록',
+                                    style: TextStyle(
+                                        color: Color(0xff283137),
+                                        fontFamily: 'NotoSansCJKKR',
+                                        fontSize: 14.sp),
+                                  ),
+                                  SizedBox(
+                                    height: 15.h,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Get.to(() => PurchaseHistory());
-                          },
-                          child: Container(
-                            height: 79.h,
-                            width: 163.w,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: Color(0xfff1f3f5), width: 1.5.h),
-                              borderRadius: BorderRadius.circular(16.r),
-                            ),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                                Text(
-                                  '6',
-                                  style: TextStyle(
-                                      color: Color(0xfff93f5b),
-                                      fontSize: 20.h,
-                                      fontFamily: 'NotoSansCJKKR',
-                                      fontWeight: FontWeight.w700,
-                                      height: 1),
-                                ),
-                                SizedBox(height: 11.h),
-                                Text(
-                                  '구매내역',
-                                  style: TextStyle(
-                                      color: Color(0xff283137),
-                                      fontFamily: 'NotoSansCJKKR',
-                                      fontSize: 14.h,
-                                      height: 1),
-                                ),
-                                SizedBox(
-                                  height: 15.h,
-                                ),
-                              ],
+                          InkWell(
+                            onTap: () {
+                              Get.to(() => PurchaseHistory());
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: 163.w,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Color(0xfff1f3f5), width: 1.5.h),
+                                borderRadius: BorderRadius.circular(16.r),
+                              ),
+                              child: Wrap(
+                                direction: Axis.vertical,
+                                crossAxisAlignment: WrapCrossAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 15.h,
+                                  ),
+                                  Text(
+                                    '6',
+                                    style: TextStyle(
+                                        color: Color(0xfff93f5b),
+                                        fontSize: 20.sp,
+                                        fontFamily: 'NotoSansCJKKR',
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                  SizedBox(height: 11.h),
+                                  Text(
+                                    '구매내역',
+                                    style: TextStyle(
+                                        color: Color(0xff283137),
+                                        fontFamily: 'NotoSansCJKKR',
+                                        fontSize: 14.sp),
+                                  ),
+                                  SizedBox(
+                                    height: 15.h,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 15.h),
-                    Container(
-                      height: 1,
-                      decoration: BoxDecoration(
-                        color: Color(0xfff1f3f5),
+                        ],
                       ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 0),
-                      child: Column(
+                      SizedBox(height: 15.h),
+                      Divider(height: 0),
+                      Column(
                         children: [
                           Container(
                             height: 60.h,
@@ -256,12 +235,7 @@ class _MyPageState extends State<MyPage> {
                               ),
                             ),
                           ),
-                          Container(
-                            height: 1.h,
-                            decoration: BoxDecoration(
-                              color: Color(0xfff1f3f5),
-                            ),
-                          ),
+                          Divider(height: 0),
                           Container(
                             height: 60.h,
                             child: CupertinoButton(
@@ -294,12 +268,7 @@ class _MyPageState extends State<MyPage> {
                               ),
                             ),
                           ),
-                          Container(
-                            height: 1.h,
-                            decoration: BoxDecoration(
-                              color: Color(0xfff1f3f5),
-                            ),
-                          ),
+                          Divider(height: 0),
                           Container(
                             height: 60.h,
                             child: CupertinoButton(
@@ -334,12 +303,7 @@ class _MyPageState extends State<MyPage> {
                               ),
                             ),
                           ),
-                          Container(
-                            height: 1.h,
-                            decoration: BoxDecoration(
-                              color: Color(0xfff1f3f5),
-                            ),
-                          ),
+                          Divider(height: 0),
                           Container(
                             height: 60.h,
                             child: CupertinoButton(
@@ -372,12 +336,7 @@ class _MyPageState extends State<MyPage> {
                               ),
                             ),
                           ),
-                          Container(
-                            height: 1.h,
-                            decoration: BoxDecoration(
-                              color: Color(0xfff1f3f5),
-                            ),
-                          ),
+                          Divider(height: 0),
                           Container(
                             height: 60.h,
                             child: CupertinoButton(
@@ -423,7 +382,7 @@ class _MyPageState extends State<MyPage> {
                                           'assets/images_svg/ic_my_Q&A.svg'),
                                       SizedBox(width: 16.w),
                                       Text(
-                                        '공유하기',
+                                        '공유하기(테스트)',
                                         style: TextStyle(
                                           color: Color(0xff283137),
                                           fontFamily: 'NotoSansCJKKR',
@@ -439,10 +398,12 @@ class _MyPageState extends State<MyPage> {
                               ),
                             ),
                           ),
+                          Divider(height: 0),
                           SizedBox(height: 24.h),
                           TextButton(
                             onPressed: () async {
-                              Get.to(() => ShopMain(), binding: OwnerShopBinding());
+                              Get.to(() => ShopMain(),
+                                  binding: OwnerShopBinding());
                             },
                             child: Text(
                               '판매자 신청하기',
@@ -454,9 +415,9 @@ class _MyPageState extends State<MyPage> {
                             ),
                           )
                         ],
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),

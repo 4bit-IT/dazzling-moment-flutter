@@ -1,3 +1,4 @@
+import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/data/model/owner/owner_review_model.dart';
 import 'package:damo/app/data/provider/owner/owner_review_api.dart';
 import 'package:get/get.dart';
@@ -5,6 +6,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:flutter/material.dart';
 
 class OwnerReviewController extends GetxController {
+  TokenController tokenController = Get.find();
   Rx<OwnerReviewModel> ownerReviewModel = OwnerReviewModel().obs;
   RxList<CommentModel> commentModel = <CommentModel>[].obs;
   var jsonResponse;
@@ -32,7 +34,10 @@ class OwnerReviewController extends GetxController {
       }
     }
     if (model.code == 2) {}
-    if (model.code == 3) {}
+    if (model.code == 3) {
+      await tokenController.refreshGetAccessToken();
+      await loadOwnerReview(pageNumber);
+    }
   }
 
   void fetchReviewComment(int index, var model) {
@@ -76,4 +81,12 @@ class CommentModel {
   int? reviewCommentId;
 
   CommentModel({this.commentController, this.commentFocusNode, this.isFetch, this.reviewCommentId});
+}
+
+class OwnerReviewBinding extends Bindings {
+  @override
+  Future<void> dependencies() async {
+    // TODO: implement dependencies
+    Get.put<OwnerReviewController>(OwnerReviewController());
+  }
 }

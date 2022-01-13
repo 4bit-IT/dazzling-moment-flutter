@@ -1,9 +1,11 @@
 import 'package:damo/app/controller/owner/owner_review_controller.dart';
+import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/data/model/owner/owner_review_comment_model.dart';
 import 'package:damo/app/data/provider/owner/owner_review_comment_api.dart';
 import 'package:get/get.dart';
 
 class OwnerReviewCommentController extends GetxController {
+  TokenController tokenController = Get.find();
   OwnerReviewController ownerReviewController = Get.find();
   Rx<GetReviewCommentModel> getReviewCommentModel = GetReviewCommentModel().obs;
 
@@ -26,7 +28,10 @@ class OwnerReviewCommentController extends GetxController {
         val.result = model.result;
       });
     } else if (model.code == 2) {
-    } else {}
+    } else {
+      await tokenController.refreshGetAccessToken();
+      await loadReviewComment(index);
+    }
   }
 
   Future<void> createReviewComment(int index) async {
@@ -46,7 +51,11 @@ class OwnerReviewCommentController extends GetxController {
       ownerReviewController.commentModel[index].commentFocusNode!.unfocus();
       ownerReviewController.commentModel.refresh();
     } else if (model.code == 2) {
-    } else {}
+    } else {
+      print('토근 만료, 재발급');
+      await tokenController.refreshGetAccessToken();
+      await createReviewComment(index);
+    }
   }
 
   Future<void> deleteReviewComment(int index) async {
@@ -64,7 +73,10 @@ class OwnerReviewCommentController extends GetxController {
       ownerReviewController.commentModel[index].commentFocusNode!.unfocus();
       ownerReviewController.commentModel[index].commentController!.clear();
     } else if (model.code == 2) {
-    } else {}
+    } else {
+      await tokenController.refreshGetAccessToken();
+      await deleteReviewComment(index);
+    }
   }
 
   Future<void> updateReviewComment(int index) async {
@@ -83,6 +95,17 @@ class OwnerReviewCommentController extends GetxController {
       ownerReviewController.fetchReviewComment(index, model);
       ownerReviewController.commentModel[index].commentFocusNode!.unfocus();
     } else if (model.code == 2) {
-    } else {}
+    } else {
+      await tokenController.refreshGetAccessToken();
+      await updateReviewComment(index);
+    }
+  }
+}
+
+class OwnerReviewCommentBinding extends Bindings {
+  @override
+  Future<void> dependencies() async {
+    // TODO: implement dependencies
+    Get.put<OwnerReviewCommentController>(OwnerReviewCommentController());
   }
 }
