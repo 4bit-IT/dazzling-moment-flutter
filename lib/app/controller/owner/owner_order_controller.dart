@@ -1,3 +1,4 @@
+import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/data/model/owner/owner_order_model.dart';
 import 'package:damo/app/data/provider/order_api.dart';
 import 'package:damo/viewmodel/get_dialog.dart';
@@ -6,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 class OwnerOrderController extends GetxController {
+  TokenController tokenController = Get.find();
   Rx<OwnerGetOrderModel> ownerGetOrderModel = OwnerGetOrderModel().obs;
 
   Map<String, dynamic> toJsonInput = {};
@@ -17,7 +19,6 @@ class OwnerOrderController extends GetxController {
   void onInit() async {
     // TODO: implement onInit
     super.onInit();
-
     await fetchShopOrderData();
   }
 
@@ -36,6 +37,8 @@ class OwnerOrderController extends GetxController {
     } else if (model.code == 2) {
     } else {
       //토큰 만료
+      await tokenController.refreshGetAccessToken();
+      await fetchShopOrderData();
     }
   }
 
@@ -311,6 +314,11 @@ class OwnerOrderController extends GetxController {
         val!.orderList[index]['status'] = status;
       });
       Get.back();
+    } else if(model.code == 2){
+
+    }else {
+      await tokenController.refreshGetAccessToken();
+      await changeOrderStatus(index, status);
     }
   }
 }

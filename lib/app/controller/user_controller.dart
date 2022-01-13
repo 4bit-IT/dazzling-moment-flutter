@@ -1,13 +1,19 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/data/model/user_model.dart';
 import 'package:damo/app/data/provider/user/user_api.dart';
 import 'package:damo/view/mypage/edit_my_address.dart';
+import 'package:damo/viewmodel/get_dialog.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:kpostal/kpostal.dart';
 
 class UserController extends GetxController {
   TokenController tokenController = Get.find();
@@ -28,9 +34,11 @@ class UserController extends GetxController {
   RxBool? addrEditCheck = false.obs;
   Rx<TextEditingController> addr2Controller =
       TextEditingController(text: '').obs;
+  Rx<UserImageModel> userImageModel = UserImageModel().obs;
   RxString addr1 = ''.obs;
-  RxString zipcode = ''.obs;
+  RxInt zipcode = 0.obs;
   RxString addr2 = ''.obs;
+  RxBool isFetchingData = false.obs;
   Map<String, dynamic> input = {};
   String sendData = '';
   var jsonResponse;
@@ -80,6 +88,10 @@ class UserController extends GetxController {
         val.description = model.description;
         val.result = model.result;
       });
+      addr1.value = getUserInfoModel.value.addr1!;
+      addr2.value = getUserInfoModel.value.addr2!;
+      userImageModel.value.imageUrl = getUserInfoModel.value.profileImage;
+      addr2Controller.value.text = getUserInfoModel.value.addr2!;
     }
   }
 
@@ -88,7 +100,7 @@ class UserController extends GetxController {
   Future<void> registerAddress() async {
     input.clear();
     input['addr1'] = addr1.value;
-    input['addr2'] = addr2.value;
+    input['addr2'] = addr2Controller.value.value.text;
     input['zipcode'] = zipcode.value;
     sendData = ChangeAddressModel().toJson(input);
     jsonResponse = await UserNetwork().postUsersAddress(sendData);
@@ -109,159 +121,67 @@ class UserController extends GetxController {
     }
     if (changeAddressModel.value.code == 1) {
       print('주소를 변경했습니다.');
-      change(addr1: addr1.value, addr2: addr2.value, zipcode: zipcode.value);
     }
   }
 
-  void change({String? addr1, String? addr2, String? zipcode}) {
-    getUserInfoModel.update((val) {
-      val!.addr1 = addr1;
-      val.addr2 = addr2;
-      val.zipcode = zipcode;
-    });
-  }
-
-  Future<void> onAddressChanged() async {
-    await Get.to(() => EditMyAddress());
-    if (addrEditCheck!.value == true) {
-      addr2Controller.value.clear();
-      await Get.defaultDialog(
-        title: '상세 주소입력',
-        titleStyle: TextStyle(
-          color: Color(0xff283137),
-          fontSize: 16,
-          fontFamily: 'NotoSansCJKKR',
-          fontWeight: FontWeight.w700,
-        ),
-        content: Padding(
-          padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-          child: TextFormField(
-            controller: addr2Controller.value,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: '없으시면 입력하지 않아도 됩니다.',
-              hintStyle: TextStyle(
-                  color: Color(0xff283137),
-                  fontFamily: 'NotoSansCJKKR',
-                  fontSize: 14.h,
-                  height: 1),
-            ),
-          ),
-        ),
-        actions: [
-          TextButton(
-              child: Text(
-                "확인",
-                style: TextStyle(
-                    color: Color(0xff283137),
-                    fontFamily: 'NotoSansCJKKR',
-                    fontSize: 14.h,
-                    height: 1),
-              ),
-              onPressed: () async {
-                addr2 = addr2Controller.value.value.text.obs;
-                await registerAddress();
-                print('주소변경 완료');
-                Get.back();
-              }),
-          TextButton(
-              child: Text(
-                "취소",
-                style: TextStyle(
-                    color: Color(0xff283137),
-                    fontFamily: 'NotoSansCJKKR',
-                    fontSize: 14.h,
-                    height: 1),
-              ),
-              onPressed: () {
-                Get.back();
-              }),
-        ],
-      );
-      addrEditCheck = false.obs;
+  Future<void> selectAddress() async {
+    Kpostal? result = await Get.to(
+        () => KpostalView(kakaoKey: 'f531a0ec792da7f77d6b58255ae76aa0'));
+    if (result != null) {
+      addr1.value = result.address;
+      addr1.refresh();
+      zipcode.value = int.parse(result.postCode);
     }
   }
 
-  Future<void> onChangedProfileImage() async {
-    bool _alertCheck = false;
+  Future<void> onAddressChanged() async {}
+
+  Future<void> selectProfileImage() async {
     final ImagePicker _picker = ImagePicker();
-    print('프로필 사진을 선택합니다.');
     XFile? selectImage = await _picker.pickImage(
       //이미지를 선택
       source: ImageSource.gallery, //위치는 갤러리
-      maxHeight: 75,
-      maxWidth: 75,
       imageQuality: 100, // 이미지 퀄리티
     );
     if (selectImage != null) {
-      await Get.defaultDialog(
-        title: ' ',
-        titleStyle: TextStyle(
-            color: Color(0xff283137),
-            fontFamily: 'NotoSansCJKKR',
-            fontSize: 15.h,
-            height: 1),
-        content: Padding(
-          padding: EdgeInsets.fromLTRB(0.w, 0.h, 0.w, 20.h),
-          child: Text(
-            '정말로 변경하시겠습니까?',
-            style: TextStyle(
-                color: Color(0xff283137),
-                fontFamily: 'NotoSansCJKKR',
-                fontSize: 17.h,
-                height: 1.h),
-          ),
-        ),
-        actions: [
-          TextButton(
-              child: Text(
-                "예",
-                style: TextStyle(
-                    color: Color(0xff283137),
-                    fontFamily: 'NotoSansCJKKR',
-                    fontSize: 15.h,
-                    height: 1),
-              ),
-              onPressed: () async {
-                _alertCheck = true;
-                Get.back();
-              }),
-          TextButton(
-              child: Text(
-                "아니오",
-                style: TextStyle(
-                    color: Color(0xff283137),
-                    fontFamily: 'NotoSansCJKKR',
-                    fontSize: 15.h,
-                    height: 1),
-              ),
-              onPressed: () {
-                Get.back();
-              }),
-        ],
-      );
-      if (_alertCheck == true) {
-        //확인창에서 예 클릭시
-        dynamic sendData =
-            await ChangeProfileImageModel().toJson(selectImage.path);
-        jsonResponse = await UserNetwork().patchUserProfileImage(sendData);
-        model = ChangeProfileImageModel.fromJson(jsonResponse);
-
-        if (model.code == 1) {
-          String random = Random().nextInt(2147483890).toString();
-          getUserInfoModel.value.profileImage = model.imageUrl + "?v=$random";
-
-          getUserInfoModel.refresh();
-          print('프로필 사진을 변경했습니다.');
-        }
-        if (model.code == 2) {}
-        if (model.code == 3) {}
-      }
-      if (_alertCheck == false) {
-        //확인창에서 아니오 클릭시
-        print('프로필 사진 변경을 취소했습니다.');
-      }
+      userImageModel.update((val) {
+        val!.imageUrl = null;
+        val.defaultImage = null;
+        val.image = FileImage(
+          File(selectImage.path),
+        );
+      });
     }
+  }
+
+  Future<void> changeProfileImage() async {
+    dynamic sendData =
+    await ChangeProfileImageModel().toJson(userImageModel.value.image.file.path);
+    jsonResponse = await UserNetwork().patchUserProfileImage(sendData);
+    model = ChangeProfileImageModel.fromJson(jsonResponse);
+
+    if (model.code == 1) {
+      String random = Random().nextInt(2147483890).toString();
+      getUserInfoModel.value.profileImage = model.imageUrl + "?v=$random";
+
+      getUserInfoModel.refresh();
+      print('프로필 사진을 변경했습니다.');
+    }
+    if (model.code == 2) {}
+    if (model.code == 3) {}
+  }
+
+  Future<void> selectDefaultProfileImage() async {
+    userImageModel.update((val) {
+      val!.imageUrl = null;
+      val.image = null;
+      val.defaultImage = getUserInfoModel.value.sex == 'MALE'
+          ? Image.asset('assets/images/img_남자기본프로필@3x.png')
+          : Image.asset('assets/images/img_여자기본프로필@3x.png');
+    });
+    print(userImageModel.value.image);
+    print(userImageModel.value.imageUrl);
+    print(userImageModel.value.defaultImage);
   }
 
   Future<void> onChangedDefaultProfileImage() async {
@@ -277,4 +197,43 @@ class UserController extends GetxController {
     if (model.code == 2) {}
     if (model.code == 3) {}
   }
+
+  Future<void> clickUserInfoModify() async {
+    GetDialog()
+        .alternativeDialog('해당사항을 수정하시겠습니까?', () async => modifyUserData());
+  }
+
+  Future<void> modifyUserData() async {
+    Get.back();
+    isFetchingData.value = true;
+    print(userImageModel.value.imageUrl);
+    print(userImageModel.value.image);
+    print(userImageModel.value.defaultImage);
+    if (userImageModel.value.imageUrl == null) {
+      if (userImageModel.value.image != null) {
+        print('image');
+        await changeProfileImage();
+      } else {
+        print('default');
+        await onChangedDefaultProfileImage();
+      }
+    }
+    await registerAddress();
+    isFetchingData.value = false;
+    Fluttertoast.showToast(
+        msg: '수정이 완료되었습니다',
+        toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: Colors.red[200],
+        fontSize: 15.0,
+      );
+    print(getUserInfoModel.value.profileImage);
+  }
+}
+
+class UserImageModel {
+  String? imageUrl;
+  dynamic image;
+  Image? defaultImage;
+
+  UserImageModel({this.imageUrl, this.image, this.defaultImage});
 }

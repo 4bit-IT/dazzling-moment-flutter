@@ -19,6 +19,8 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:get/route_manager.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../image_model.dart';
+
 UserController userController = Get.find();
 SignController signController = Get.find();
 
@@ -92,17 +94,8 @@ class _DrawerButtonState extends State<DrawerButton> {
               children: [
                 Container(
                   alignment: Alignment.topLeft,
-                  child: Obx(() => ExtendedImage.network(
-                        userController.getUserInfoModel.value.profileImage!,
-                        width: 55.w,
-                        height: 55.h,
-                        fit: BoxFit.fill,
-                        cache: false,
-                        // border: Border.all(color: Colors.red, width: 1.0),
-                        shape: BoxShape.circle,
-                        // borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                      )),
-                  height: 55.h,
+                  child: Obx(() => ImageModel().networkImage(userController
+                      .getUserInfoModel.value.profileImage!))
                 ),
                 SizedBox(
                   width: 113.w,
@@ -167,112 +160,83 @@ class _DrawerButtonState extends State<DrawerButton> {
               ),
             ),
             SizedBox(height: 31.h),
-            Container(
-              height: 1.h,
-              decoration: BoxDecoration(
-                color: Color(0xfff1f3f5),
-              ),
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
+            Divider(height: 0,),
             InkWell(
               onTap: () {
                 Get.to(() => NotificationAdmin());
               },
-              child: Row(
-                children: [
-                  SvgPicture.asset('assets/images_svg/ic_my_notice.svg',
-                      width: 30.w, height: 30.h),
-                  SizedBox(
-                    width: 16.w,
-                  ),
-                  Text(
-                    '공지사항',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: Color(0xff283137),
-                      fontFamily: 'NotoSansCJKKR',
+              child: Container(
+                padding: EdgeInsets.fromLTRB(0, 15.h, 0, 15.h),
+                child: Row(
+                  children: [
+                    SvgPicture.asset('assets/images_svg/ic_my_notice.svg',
+                        width: 30.w, height: 30.h),
+                    SizedBox(
+                      width: 16.w,
                     ),
-                  ),
-                ],
+                    Text(
+                      '공지사항',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: Color(0xff283137),
+                        fontFamily: 'NotoSansCJKKR',
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            SizedBox(
-              height: 14.h,
-            ),
-            Container(
-              height: 1.h,
-              decoration: BoxDecoration(
-                color: Color(0xfff1f3f5),
-              ),
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
+            Divider(height: 0,),
             InkWell(
               onTap: () {},
-              child: Row(
-                children: [
-                  SvgPicture.asset('assets/images_svg/ic_my_event.svg',
-                      width: 30.w, height: 30.h),
-                  SizedBox(
-                    width: 16.w,
-                  ),
-                  Text(
-                    '이벤트',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: Color(0xff283137),
-                      fontFamily: 'NotoSansCJKKR',
+              child: Container(
+                padding: EdgeInsets.fromLTRB(0, 15.h, 0, 15.h),
+                child: Row(
+                  children: [
+                    SvgPicture.asset('assets/images_svg/ic_my_event.svg',
+                        width: 30.w, height: 30.h),
+                    SizedBox(
+                      width: 16.w,
                     ),
-                  ),
-                ],
+                    Text(
+                      '이벤트',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: Color(0xff283137),
+                        fontFamily: 'NotoSansCJKKR',
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            SizedBox(
-              height: 14.h,
-            ),
-            Container(
-              height: 1.h,
-              decoration: BoxDecoration(
-                color: Color(0xfff1f3f5),
-              ),
-            ),
-            SizedBox(
-              height: 15.h,
-            ),
+            Divider(height: 0,),
             InkWell(
               onTap: () {
                 Get.to(() => SettingApp());
               },
-              child: Row(
-                children: [
-                  SvgPicture.asset('assets/images_svg/ic_my_setting.svg',
-                      width: 30.w, height: 30.h),
-                  SizedBox(
-                    width: 16.w,
-                  ),
-                  Text(
-                    '앱 알림 및 설정',
-                    style: TextStyle(
-                      fontSize: 14.sp,
-                      color: Color(0xff283137),
-                      fontFamily: 'NotoSansCJKKR',
+              child: Container(
+                padding: EdgeInsets.fromLTRB(0, 15.h, 0, 15.h),
+                child: Row(
+                  children: [
+                    SvgPicture.asset('assets/images_svg/ic_my_setting.svg',
+                        width: 30.w, height: 30.h),
+                    SizedBox(
+                      width: 16.w,
                     ),
-                  ),
-                ],
+                    Text(
+                      '앱 알림 및 설정',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: Color(0xff283137),
+                        fontFamily: 'NotoSansCJKKR',
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            SizedBox(
-              height: 14.h,
-            ),
-            Container(
-              height: 1.h,
-              decoration: BoxDecoration(
-                color: Color(0xfff1f3f5),
-              ),
-            ),
+            Divider(height: 0,),
             SizedBox(
               height: 23.h,
             ),

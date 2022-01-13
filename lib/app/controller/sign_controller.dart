@@ -93,7 +93,7 @@ class SignController extends GetxController {
         TokenModel().saveToken(authLoginModel.value.accessToken!, authLoginModel.value.refreshToken!);
         tokenController.token!['accessToken'] = authLoginModel.value.accessToken!;
         tokenController.token!['refreshToken'] = authLoginModel.value.refreshToken!;
-        Get.to(() => HomeMain());
+        Get.offAll(() => HomeMain());
       }
     }
     if (authLoginModel.value.code == 2) {

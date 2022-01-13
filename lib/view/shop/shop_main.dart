@@ -1,4 +1,6 @@
 import 'package:damo/app/controller/owner/owner_order_controller.dart';
+import 'package:damo/app/controller/owner/owner_review_comment_controller.dart';
+import 'package:damo/app/controller/owner/owner_review_controller.dart';
 import 'package:damo/app/controller/owner/owner_shop_controller.dart';
 import 'package:damo/app/controller/owner/owner_shop_faq_controller.dart';
 import 'package:damo/view/shop/shop_chat_management.dart';
@@ -236,7 +238,9 @@ class ShopMain extends StatelessWidget {
                       height: 1.h,
                     ),
                     InkWell(
-                      onTap: () {
+                      onTap: () async {
+                        await OwnerReviewBinding().dependencies();
+                        await OwnerReviewCommentBinding().dependencies();
                         Get.to(() => ShopReviewManagement());
                       },
                       child: Column(

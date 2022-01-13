@@ -1,15 +1,14 @@
-import 'dart:io';
-
+import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/data/model/owner/owner_shop_faq_model.dart';
 import 'package:damo/app/data/provider/owner/owner_shop_faq_api.dart';
 import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'owner_shop_controller.dart';
 
 class OwnerShopFAQController extends GetxController {
+  TokenController tokenController = Get.find();
   OwnerShopController ownerShopController = Get.find();
   Rx<OwnerShopGetFAQModel> ownerShopGetFAQModel = OwnerShopGetFAQModel().obs;
   Rx<TextEditingController> shopFAQQuestionController =
@@ -51,6 +50,8 @@ class OwnerShopFAQController extends GetxController {
       } else if (model.code == 2) {
       } else {
         //토큰만료
+        await tokenController.refreshGetAccessToken();
+        await fetchShopFAQData();
       }
     }
   }
@@ -89,6 +90,10 @@ class OwnerShopFAQController extends GetxController {
       ownerShopGetFAQModel.update((val) {
         val!.faqList![currentIndex.value]['question'] = model.question;
       });
+    } else if (model.code == 2) {
+    } else {
+      await tokenController.refreshGetAccessToken();
+      await faqQuestionModify();
     }
   }
 
@@ -107,6 +112,10 @@ class OwnerShopFAQController extends GetxController {
       });
       Get.back();
       Get.back();
+    } else if (model.code == 2) {
+    } else {
+      await tokenController.refreshGetAccessToken();
+      await faqAnswerModify();
     }
   }
 
@@ -115,7 +124,8 @@ class OwnerShopFAQController extends GetxController {
         shopFAQQuestionAddController.value.value.text == '') {
       GetDialog().simpleDialog('질문과 답변 모두 작성해주세요.');
     } else {
-      GetDialog().alternativeDialog('해당 FAQ를 등록하시겠습니까?', () async => await addFAQ());
+      GetDialog()
+          .alternativeDialog('해당 FAQ를 등록하시겠습니까?', () async => await addFAQ());
     }
   }
 
@@ -136,11 +146,16 @@ class OwnerShopFAQController extends GetxController {
         });
       });
       Get.back();
+    } else if (model.code == 2) {
+    } else {
+      await tokenController.refreshGetAccessToken();
+      await addFAQ();
     }
   }
 
   void onDeleteFAQClicked() async {
-    GetDialog().alternativeDialog('해당 FAQ를 삭제하시겠습니까?', () async => await deleteFAQ());
+    GetDialog()
+        .alternativeDialog('해당 FAQ를 삭제하시겠습니까?', () async => await deleteFAQ());
   }
 
   Future<void> deleteFAQ() async {
@@ -156,6 +171,10 @@ class OwnerShopFAQController extends GetxController {
       print(ownerShopGetFAQModel.value.faqList);
       currentIndex.value--;
       Get.back();
+    } else if (model.code == 2) {
+    } else {
+      await tokenController.refreshGetAccessToken();
+      await deleteFAQ();
     }
   }
 

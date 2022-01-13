@@ -23,98 +23,101 @@ class ShopFAQAdd extends StatelessWidget {
       child: Scaffold(
         appBar: DamoAppBar().textAppBar(context, 'FAQ 추가'),
         backgroundColor: Colors.white,
-        body: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              'Q: ',
+                              style: TextStyle(
+                                color: Color(0xff283137),
+                                fontFamily: 'NotoSansCJKKR',
+                                fontSize: 22.sp,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Expanded(
+                              child: CustomTextField().simpleTextField(
+                                  ownerShopFAQController
+                                      .shopFAQQuestionAddController.value,
+                                  false,
+                                  null,
+                                  TextAlign.start,
+                                  'FAQ의 제목을 입력해주세요',
+                                  2,
+                                  2,
+                                  null,
+                                  []),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'A: ',
+                              style: TextStyle(
+                                color: Color(0xff283137),
+                                fontFamily: 'NotoSansCJKKR',
+                                fontSize: 22.sp,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            Expanded(
+                              child: CustomTextField().simpleTextField(
+                                  ownerShopFAQController
+                                      .shopFAQAnswerAddController.value,
+                                  false,
+                                  null,
+                                  TextAlign.start,
+                                  'FAQ의 답변을 입력해주세요',
+                                  20,
+                                  20,
+                                  null,
+                                  []),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                  ownerShopFAQController.onAddFAQClicked();
+                },
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'Q: ',
-                            style: TextStyle(
-                              color: Color(0xff283137),
-                              fontFamily: 'NotoSansCJKKR',
-                              fontSize: 22.sp,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Expanded(
-                            child: CustomTextField().simpleTextField(
-                                ownerShopFAQController
-                                    .shopFAQQuestionAddController.value,
-                                false,
-                                TextInputType.text,
-                                TextAlign.start,
-                                'FAQ의 제목을 입력해주세요',
-                                2,
-                                2,
-                                100,
-                                null,
-                                []),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'A: ',
-                            style: TextStyle(
-                              color: Color(0xff283137),
-                              fontFamily: 'NotoSansCJKKR',
-                              fontSize: 22.sp,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          Expanded(
-                            child: CustomTextField().simpleTextField(
-                                ownerShopFAQController
-                                    .shopFAQAnswerAddController.value,
-                                false,
-                                TextInputType.text,
-                                TextAlign.center,
-                                'FAQ의 답변을 입력해주세요',
-                                20,
-                                20,
-                                1000,
-                                null,
-                                []),
-                          ),
-                        ],
-                      ),
-                    ],
+                  color: Color(0xfff93f5b),
+                  width: double.infinity,
+                  height: 70.h,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'FAQ 등록하기',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.sp,
+                      fontFamily: 'NotoSansCJKKR',
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ),
-            ),
-            InkWell(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-                ownerShopFAQController.onAddFAQClicked();
-              },
-              child: Container(
-                color: Color(0xfff93f5b),
-                width: double.infinity,
-                height: 70.h,
-                alignment: Alignment.center,
-                child: Text(
-                  'FAQ 등록하기',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.sp,
-                    fontFamily: 'NotoSansCJKKR',
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

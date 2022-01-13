@@ -1,5 +1,6 @@
 import 'package:damo/app/controller/agreement_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
+import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,44 +16,12 @@ class SettingApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 0.0,
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          title: Text(
-            '앱 알림 및 설정',
-            style: TextStyle(
-              color: Color(0xff283137),
-              fontSize: 16,
-              fontFamily: 'NotoSansCJKKR',
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          leading: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Container(
-              child: InkWell(
-                onTap: Get.back,
-                child: SvgPicture.asset(
-                  'assets/images_svg/ic_back.svg',
-                  width: 30.w,
-                  height: 30.h,
-                ),
-              ),
-            ),
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(32, 0, 32, 0),
+        appBar: DamoAppBar().textAppBar(context, '앱 알림 및 설정'),
+        body: Container(
+          padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                height: 1,
-                decoration: BoxDecoration(
-                  color: Color(0xfff1f3f5),
-                ),
-              ),
               SizedBox(height: 11.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,111 +83,115 @@ class SettingApp extends StatelessWidget {
                   color: Color(0xfff1f3f5),
                 ),
               ),
-              SizedBox(height: 23.h),
               InkWell(
                 onTap: () {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '서비스 이용 약관',
-                      style: TextStyle(
-                        color: Color(0xff283137),
-                        fontFamily: 'NotoSansCJKKR',
-                      ),
-                    ),
-                    SvgPicture.asset('assets/images_svg/ic_바로가기.svg',
-                        width: 20.w, height: 20.h),
-                  ],
-                ),
-              ),
-              SizedBox(height: 22.h),
-              Container(
-                height: 1,
-                decoration: BoxDecoration(
-                  color: Color(0xfff1f3f5),
-                ),
-              ),
-              SizedBox(height: 23.h),
-              InkWell(
-                onTap: () {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '개인정보 처리방침',
-                      style: TextStyle(
-                        color: Color(0xff283137),
-                        fontFamily: 'NotoSansCJKKR',
-                      ),
-                    ),
-                    SvgPicture.asset('assets/images_svg/ic_바로가기.svg',
-                        width: 20.w, height: 20.h),
-                  ],
-                ),
-              ),
-              SizedBox(height: 22.h),
-              Container(
-                height: 1,
-                decoration: BoxDecoration(
-                  color: Color(0xfff1f3f5),
-                ),
-              ),
-              SizedBox(height: 23.h),
-              InkWell(
-                onTap: () {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '버전 정보',
-                      style: TextStyle(
-                        color: Color(0xff283137),
-                        fontFamily: 'NotoSansCJKKR',
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          '최신버전 사용중',
-                          style: TextStyle(
-                            color: Color(0xfff93f5b),
-                            fontFamily: 'NotoSansCJKKR',
-                          ),
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(0, 20.h, 0, 20.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '서비스 이용 약관',
+                        style: TextStyle(
+                          color: Color(0xff283137),
+                          fontFamily: 'NotoSansCJKKR',
                         ),
-                        SvgPicture.asset('assets/images_svg/ic_바로가기.svg',
-                            width: 20.w, height: 20.h),
-                      ],
-                    ),
-                  ],
+                      ),
+                      SvgPicture.asset('assets/images_svg/ic_바로가기.svg',
+                          width: 20.w, height: 20.h),
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(height: 22.h),
               Container(
                 height: 1,
                 decoration: BoxDecoration(
                   color: Color(0xfff1f3f5),
                 ),
               ),
-              SizedBox(height: 23.h),
               InkWell(
                 onTap: () {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '회원탈퇴',
-                      style: TextStyle(
-                        color: Color(0xff283137),
-                        fontFamily: 'NotoSansCJKKR',
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(0, 20.h, 0, 20.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '개인정보 처리방침',
+                        style: TextStyle(
+                          color: Color(0xff283137),
+                          fontFamily: 'NotoSansCJKKR',
+                        ),
                       ),
-                    ),
-                    SvgPicture.asset('assets/images_svg/ic_바로가기.svg',
-                        width: 20.w, height: 20.h),
-                  ],
+                      SvgPicture.asset('assets/images_svg/ic_바로가기.svg',
+                          width: 20.w, height: 20.h),
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(height: 22.h),
+              Container(
+                height: 1,
+                decoration: BoxDecoration(
+                  color: Color(0xfff1f3f5),
+                ),
+              ),
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(0, 20.h, 0, 20.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '버전 정보',
+                        style: TextStyle(
+                          color: Color(0xff283137),
+                          fontFamily: 'NotoSansCJKKR',
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            '최신버전 사용중',
+                            style: TextStyle(
+                              color: Color(0xfff93f5b),
+                              fontFamily: 'NotoSansCJKKR',
+                            ),
+                          ),
+                          SvgPicture.asset('assets/images_svg/ic_바로가기.svg',
+                              width: 20.w, height: 20.h),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                height: 1,
+                decoration: BoxDecoration(
+                  color: Color(0xfff1f3f5),
+                ),
+              ),
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(0, 20.h, 0, 20.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '회원탈퇴',
+                        style: TextStyle(
+                          color: Color(0xff283137),
+                          fontFamily: 'NotoSansCJKKR',
+                        ),
+                      ),
+                      SvgPicture.asset('assets/images_svg/ic_바로가기.svg',
+                          width: 20.w, height: 20.h),
+                    ],
+                  ),
+                ),
+              ),
               Container(
                 height: 1,
                 decoration: BoxDecoration(
