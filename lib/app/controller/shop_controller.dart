@@ -21,12 +21,15 @@ class ShopController extends GetxController {
     height: 30.h,
   );
   List sortValueName = ['RATING', 'REVIEW', 'PRICE', 'NEWEST', 'OLDEST'];
+  RxBool isLoadingShopData = false.obs;
 
   Map<String, dynamic> toJsonInput = {};
 
   String sendData = '';
   var jsonResponse;
   var model;
+
+  List<ShopOptionModel> option = <ShopOptionModel>[].obs;
 
   @override
   void onInit() async {
@@ -36,6 +39,7 @@ class ShopController extends GetxController {
   }
 
   Future<void> loadShopDetail(int shopId) async {
+    isLoadingShopData.value = true;
     var input = ShopGetDetailModel().toJson(shopId);
     var jsonResponse = await ShopNetwork().getShopId(input);
     var model = ShopGetDetailModel.fromJson(jsonResponse);
@@ -58,9 +62,31 @@ class ShopController extends GetxController {
         val.reviewCount = model.reviewCount;
         val.shopProfileImage = model.shopProfileImage;
       });
+
+      List<DetailModel> temp = <DetailModel>[];
+      for (int i = 0; i < shopGetDetailModel.value.optionList.length; i++) {
+        temp = <DetailModel>[];
+        for (int j = 0;
+            j <
+                shopGetDetailModel
+                    .value.optionList[i]['optionDetailList'].length;
+            j++) {
+          if (shopGetDetailModel.value.optionList[i]['optionDetailList'][j]
+                  ['allowMultipleChoices'] ==
+              true) {
+            temp.add(DetailModel(check: null, count: 0));
+          } else {
+            temp.add(DetailModel(check: false, count: null));
+          }
+          print(temp);
+        }
+        option.add(ShopOptionModel(detail: temp));
+        print(option);
+      }
     }
     if (model.code == 2) {}
     if (model.code == 3) {}
+    isLoadingShopData = false.obs;
   }
 
   Future<void> loadShopMain(int pageNumber, String sortBy) async {
@@ -96,4 +122,17 @@ class ShopController extends GetxController {
     loadShopMainPageModel.value.hasNextPage = true;
     await loadShopMain(0, sortValue);
   }
+}
+
+class ShopOptionModel {
+  List<DetailModel>? detail;
+
+  ShopOptionModel({this.detail});
+}
+
+class DetailModel {
+  bool? check;
+  int? count;
+
+  DetailModel({this.check, this.count});
 }
