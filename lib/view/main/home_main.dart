@@ -239,7 +239,8 @@ class HomeMain extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      shopController.stroageMainPage[index]['name'],
+                                      shopController.stroageMainPage[index]
+                                          ['name'],
                                       style: TextStyle(
                                         color: Color(0xff283137),
                                         fontSize: 10.sp,
@@ -281,7 +282,8 @@ class HomeMain extends StatelessWidget {
                                               width: 4.w,
                                             ),
                                             Text(
-                                              shopController.stroageMainPage[index]
+                                              shopController
+                                                  .stroageMainPage[index]
                                                       ['rating']
                                                   .toString(),
                                               style: TextStyle(
