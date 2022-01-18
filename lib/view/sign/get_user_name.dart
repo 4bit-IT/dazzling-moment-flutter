@@ -14,7 +14,8 @@ class GetUserNickname extends StatelessWidget {
       onWillPop: () {
         return Future(() {
           signController.nicknameController.value.clear();
-          signController.nicknameCheckString.value = '* 닉네임은 한글, 숫자, 영문으로 된 2~8자로 구성해주세요.';
+          signController.nicknameCheckString.value =
+              '* 닉네임은 한글, 숫자, 영문으로 된 2~8자로 구성해주세요.';
           signController.acceptOff(0);
           return true;
         });
@@ -35,16 +36,7 @@ class GetUserNickname extends StatelessWidget {
                       SizedBox(
                         height: 10.h,
                       ),
-                      Text(
-                        '닉네임',
-                        style: TextStyle(
-                          color: Color(0xff283137),
-                          fontSize: 16.sp,
-                          height: 1,
-                          fontFamily: 'NotoSansCJKKR',
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      Text('닉네임'),
                       SizedBox(
                         height: 16.h,
                       ),
@@ -64,12 +56,15 @@ class GetUserNickname extends StatelessWidget {
                               child: Container(
                                 padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 0),
                                 child: Obx(
-                                      () => TextFormField(
-                                    focusNode: signController.nicknameFocusNode.value,
+                                  () => TextFormField(
+                                    focusNode:
+                                        signController.nicknameFocusNode.value,
                                     onChanged: (text) {
-                                      signController.isNicknameCheck.value = false;
+                                      signController.isNicknameCheck.value =
+                                          false;
                                     },
-                                    controller: signController.nicknameController.value,
+                                    controller:
+                                        signController.nicknameController.value,
                                     style: TextStyle(
                                       fontFamily: 'NotoSansCJKKR',
                                       fontSize: 18.sp,
@@ -78,12 +73,6 @@ class GetUserNickname extends StatelessWidget {
                                     decoration: InputDecoration(
                                       border: InputBorder.none,
                                       hintText: '닉네임을 입력해주세요',
-                                      hintStyle: TextStyle(
-                                        color: Color(0xffd1d1d6),
-                                        fontFamily: 'NotoSansCJKKR',
-                                        fontSize: 16.sp,
-                                        height: 1,
-                                      ),
                                     ),
                                   ),
                                 ),
@@ -108,7 +97,7 @@ class GetUserNickname extends StatelessWidget {
                       Container(
                         padding: EdgeInsets.fromLTRB(0, 16.h, 0, 12.h),
                         child: Obx(
-                              () => Text(
+                          () => Text(
                             '${signController.nicknameCheckString.value}',
                             style: TextStyle(
                               color: Color(0xfff93f5b),
@@ -131,38 +120,43 @@ class GetUserNickname extends StatelessWidget {
                             return Column(
                               children: [
                                 Obx(
-                                      () => Row(
+                                  () => Row(
                                     children: [
                                       InkWell(
                                           onTap: () {
-                                            signController.acceptList[index].value.check == true
-                                                ? signController.acceptOff(index)
-                                                : signController.acceptOn(index);
+                                            signController.acceptList[index]
+                                                        .value.check ==
+                                                    true
+                                                ? signController
+                                                    .acceptOff(index)
+                                                : signController
+                                                    .acceptOn(index);
                                           },
-                                          child: signController.acceptList[index].value.ic),
+                                          child: signController
+                                              .acceptList[index].value.ic),
                                       SizedBox(
                                         width: 8.w,
                                       ),
                                       index == 0
                                           ? Text(
-                                        '${signController.acceptList[index].value.description}',
-                                        style: TextStyle(
-                                          color: Color(0xff283137),
-                                          fontSize: 13.sp,
-                                          height: 1,
-                                          fontFamily: 'NotoSansCJKKR',
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      )
+                                              '${signController.acceptList[index].value.description}',
+                                              style: TextStyle(
+                                                color: Color(0xff283137),
+                                                fontSize: 13.sp,
+                                                height: 1,
+                                                fontFamily: 'NotoSansCJKKR',
+                                                fontWeight: FontWeight.w700,
+                                              ),
+                                            )
                                           : Text(
-                                        '${signController.acceptList[index].value.description}',
-                                        style: TextStyle(
-                                          color: Color(0xff283137),
-                                          fontSize: 13.sp,
-                                          height: 1,
-                                          fontFamily: 'NotoSansCJKKR',
-                                        ),
-                                      ),
+                                              '${signController.acceptList[index].value.description}',
+                                              style: TextStyle(
+                                                color: Color(0xff283137),
+                                                fontSize: 13.sp,
+                                                height: 1,
+                                                fontFamily: 'NotoSansCJKKR',
+                                              ),
+                                            ),
                                     ],
                                   ),
                                 ),
@@ -188,20 +182,13 @@ class GetUserNickname extends StatelessWidget {
                 }
               },
               child: Obx(
-                    () => Container(
+                () => Container(
                   width: 375.w,
                   height: 52.h,
                   alignment: Alignment.center,
                   color: signController.confirmButtonColor,
                   child: Text(
-                    '확인',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.sp,
-                      height: 1,
-                      fontFamily: 'NotoSansCJKKR',
-                      fontWeight: FontWeight.w700,
-                    ),
+                    '확인'
                   ),
                 ),
               ),

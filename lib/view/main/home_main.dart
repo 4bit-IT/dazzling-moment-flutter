@@ -165,7 +165,7 @@ class HomeMain extends StatelessWidget {
                     ),
                     onLoading: _onLoading,
                     child: GridView.builder(
-                      itemCount: shopController.stroageMainPage.length,
+                      itemCount: shopController.storageMainPage.length,
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
                       physics: ScrollPhysics(),
@@ -192,7 +192,7 @@ class HomeMain extends StatelessWidget {
                               ),
                               Stack(
                                 children: [
-                                  shopController.stroageMainPage[index]
+                                  shopController.storageMainPage[index]
                                               ['shopProfileImage'] ==
                                           null
                                       ? SvgPicture.asset(
@@ -202,7 +202,7 @@ class HomeMain extends StatelessWidget {
                                           fit: BoxFit.fill,
                                         )
                                       : ExtendedImage.network(
-                                          shopController.stroageMainPage[index]
+                                          shopController.storageMainPage[index]
                                               ['shopProfileImage'],
                                           width: 185.w,
                                           height: 185.h,
@@ -223,7 +223,7 @@ class HomeMain extends StatelessWidget {
                                       right: 5.w,
                                       bottom: 5.h,
                                       child: shopController
-                                          .stroageMainPage[index]
+                                          .storageMainPage[index]
                                               ['isFavoriteButton']
                                           .value,
                                     ),
@@ -239,7 +239,7 @@ class HomeMain extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      shopController.stroageMainPage[index]
+                                      shopController.storageMainPage[index]
                                           ['name'],
                                       style: TextStyle(
                                         color: Color(0xff283137),
@@ -254,7 +254,7 @@ class HomeMain extends StatelessWidget {
                                       height: 9.h,
                                     ),
                                     Text(
-                                      shopController.stroageMainPage[index]
+                                      shopController.storageMainPage[index]
                                           ['description'],
                                       style: TextStyle(
                                         color: Color(0xff283137),
@@ -283,7 +283,7 @@ class HomeMain extends StatelessWidget {
                                             ),
                                             Text(
                                               shopController
-                                                  .stroageMainPage[index]
+                                                  .storageMainPage[index]
                                                       ['rating']
                                                   .toString(),
                                               style: TextStyle(
@@ -299,7 +299,7 @@ class HomeMain extends StatelessWidget {
                                             Text(
                                               '(' +
                                                   shopController
-                                                      .stroageMainPage[index]
+                                                      .storageMainPage[index]
                                                           ['reviewCount']
                                                       .toString() +
                                                   ')',
@@ -315,7 +315,7 @@ class HomeMain extends StatelessWidget {
                                         Text(
                                           formatter
                                               .format(shopController
-                                                      .stroageMainPage[index]
+                                                      .storageMainPage[index]
                                                   ['basePrice'])
                                               .toString(),
                                           style: TextStyle(

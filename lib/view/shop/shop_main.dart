@@ -6,16 +6,17 @@ import 'package:damo/app/controller/owner/owner_shop_faq_controller.dart';
 import 'package:damo/view/shop/shop_chat_management.dart';
 import 'package:damo/view/shop/shop_faq/shop_faq_management.dart';
 import 'package:damo/view/shop/shop_order_management.dart';
-import 'package:damo/view/shop/shop_product_list.dart';
-import 'package:damo/view/shop/shop_product_main.dart';
+import 'package:damo/view/shop/shop_order_test.dart';
 import 'package:damo/view/shop/shop_product_modify.dart';
 import 'package:damo/view/shop/shop_review_management.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
+import 'package:damo/viewmodel/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class ShopMain extends StatelessWidget {
   final OwnerShopController ownerShopController = Get.find();
@@ -28,9 +29,7 @@ class ShopMain extends StatelessWidget {
       body: Obx(
         () => ownerShopController.isLoadingModifyData.value
             ? Center(
-                child: CircularProgressIndicator(
-                  color: Color(0xfff93f5b),
-                ),
+                child: Loading().simpleLoading()
               )
             : Container(
                 padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 0),
@@ -375,6 +374,49 @@ class ShopMain extends StatelessWidget {
                       color: Color(0xfff1f3f5),
                       height: 1.h,
                       thickness: 1.h,
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        await OwnerOrderBinding().dependencies();
+                        await initializeDateFormatting(Localizations.localeOf(context).languageCode);
+                        Get.to(() => ShopOrderTest());
+                      },
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 15.h,
+                          ),
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/images_svg/ic_mystore_faq.svg',
+                                width: 30.w,
+                                height: 30.h,
+                              ),
+                              SizedBox(
+                                width: 16.w,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  '주문관리 ( 테스트 )',
+                                  style: TextStyle(
+                                    color: Color(0xff283137),
+                                    fontFamily: 'NotoSansCJKKR',
+                                  ),
+                                ),
+                              ),
+                              SvgPicture.asset(
+                                'assets/images_svg/ic_바로가기.svg',
+                                height: 20.h,
+                                width: 20.w,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15.h,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

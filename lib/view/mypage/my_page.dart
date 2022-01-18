@@ -90,14 +90,7 @@ class _MyPageState extends State<MyPage> {
                       ),
                       SizedBox(height: 11.h),
                       Text(
-                        userController.getUserInfoModel.value.nickname!,
-                        style: TextStyle(
-                          color: Color(0xff283137),
-                          fontSize: 16.h,
-                          fontFamily: 'NotoSansCJKKR',
-                          fontWeight: FontWeight.w500,
-                          height: 1,
-                        ),
+                        userController.getUserInfoModel.value.nickname!
                       ),
                       SizedBox(height: 5.h),
                       Text(

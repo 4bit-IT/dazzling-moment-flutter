@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:damo/viewmodel/bar/app_bar.dart';
+import 'package:damo/viewmodel/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -21,7 +22,7 @@ class _ChatListState extends State<ChatList> {
             future: getChatList(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.hasData == false) {
-                return CircularProgressIndicator();
+                return Loading().simpleLoading();
               } else if (snapshot.hasError) {
                 return Padding(
                   padding: EdgeInsets.all(15),

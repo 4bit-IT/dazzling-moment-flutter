@@ -191,14 +191,7 @@ class ShopOrderManagement extends StatelessWidget {
                       height: 16.h,
                     ),
                     Text(
-                      '픽업 예약 시간: ${orderController.ownerGetOrderModel.value.orderList[index]['pickUpReservation'].toString().split('T')[0]}  ${orderController.ownerGetOrderModel.value.orderList[index]['pickUpReservation'].toString().split('T')[1]}',
-                      style: TextStyle(
-                        color: Color(0xff283137),
-                        fontSize: 16.sp,
-                        height: 1,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'NotoSansCJKKR',
-                      ),
+                      '픽업 예약 시간: ${orderController.ownerGetOrderModel.value.orderList[index]['pickUpReservation'].toString().split('T')[0]}  ${orderController.ownerGetOrderModel.value.orderList[index]['pickUpReservation'].toString().split('T')[1]}'
                     ),
                     SizedBox(
                       height: 8.h,

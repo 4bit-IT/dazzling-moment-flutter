@@ -18,6 +18,7 @@ class ProductController extends GetxController {
       (i) => RxList.generate(1000, (_) => false.obs, growable: false),
       growable: false);
   RxInt price = 0.obs;
+
   Future<void> onClickedOptionSelect() async {
     return Get.bottomSheet(
       Column(
@@ -200,25 +201,11 @@ class ProductController extends GetxController {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
-                  child: Text(
-                    '구매하기 ',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.sp,
-                      fontFamily: 'NotoSansCJKKR',
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                  child: Text('구매하기 '),
                 ),
                 Obx(
                   () => Text(
-                    '($price 원)',
-                    style: TextStyle(
-                      color: Color(0xfff93f5b),
-                      fontSize: 16.sp,
-                      fontFamily: 'NotoSansCJKKR',
-                      fontWeight: FontWeight.w500,
-                    ),
+                    '($price 원)'
                   ),
                 ),
               ],

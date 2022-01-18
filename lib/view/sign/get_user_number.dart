@@ -36,13 +36,7 @@ class GetUserInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '휴대폰 번호',
-                      style: TextStyle(
-                        color: Color(0xff283137),
-                        fontFamily: 'NotoSansCJKKR',
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      '휴대폰 번호'
                     ),
                     SizedBox(
                       height: 16.h,
@@ -84,11 +78,6 @@ class GetUserInfo extends StatelessWidget {
                                   decoration: InputDecoration(
                                     border: InputBorder.none,
                                     hintText: '휴대폰 번호를 입력해주세요',
-                                    hintStyle: TextStyle(
-                                      color: Color(0xffd1d1d6),
-                                      fontFamily: 'NotoSansCJKKR',
-                                      fontSize: 16.sp,
-                                    ),
                                   ),
                                 ),
                               ),
@@ -113,13 +102,7 @@ class GetUserInfo extends StatelessWidget {
                                   ),
                                 ),
                                 child: Text(
-                                  '인증문자 받기',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16.sp,
-                                    fontFamily: 'NotoSansCJKKR',
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                                  '인증문자 받기'
                                 ),
                               ),
                             ),
@@ -131,13 +114,7 @@ class GetUserInfo extends StatelessWidget {
                       height: 24.h,
                     ),
                     Text(
-                      '인증 번호',
-                      style: TextStyle(
-                        color: Color(0xff283137),
-                        fontFamily: 'NotoSansCJKKR',
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
+                      '인증 번호'
                     ),
                     SizedBox(
                       height: 16.h,
@@ -177,11 +154,7 @@ class GetUserInfo extends StatelessWidget {
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: '인증번호를 입력해주세요',
-                                hintStyle: TextStyle(
-                                  color: Color(0xffd1d1d6),
-                                  fontFamily: 'NotoSansCJKKR',
-                                  fontSize: 16.sp,
-                                ),
+
                               ),
                             ),
                           ),
@@ -195,13 +168,7 @@ class GetUserInfo extends StatelessWidget {
                                   seconds: 120,
                                   build: (BuildContext context, double time) {
                                     return Text(
-                                      '${(time ~/ 60).toString()} : ${(time.toInt() % 60).toString()}',
-                                      style: TextStyle(
-                                        color: Color(0xfff93f5b),
-                                        fontSize: 16.sp,
-                                        fontFamily: 'NotoSansCJKKR',
-                                        fontWeight: FontWeight.w700,
-                                      ),
+                                      '${(time ~/ 60).toString()} : ${(time.toInt() % 60).toString()}'
                                     );
                                   },
                                 ),
@@ -242,13 +209,7 @@ class GetUserInfo extends StatelessWidget {
                   width: 375.w,
                   color: signController.confirmAuthNumberButtonColor.value,
                   child: Text(
-                    '인증문자 확인',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.sp,
-                      fontFamily: 'NotoSansCJKKR',
-                      fontWeight: FontWeight.w700,
-                    ),
+                    '인증문자 확인'
                   ),
                 ),
               ),

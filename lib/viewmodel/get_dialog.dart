@@ -33,14 +33,7 @@ class GetDialog {
                     },
                     child: Container(
                       padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                      child: Text(
-                        '아니오',
-                        style: TextStyle(
-                            color: Color(0xff283137),
-                            fontFamily: 'NotoSansCJKKR',
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500),
-                      ),
+                      child: Text('아니오'),
                     ),
                   ),
                   InkWell(
@@ -50,14 +43,7 @@ class GetDialog {
                     },
                     child: Container(
                       padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                      child: Text(
-                        '예',
-                        style: TextStyle(
-                            color: Color(0xff283137),
-                            fontFamily: 'NotoSansCJKKR',
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500),
-                      ),
+                      child: Text('예'),
                     ),
                   )
                 ],
@@ -97,14 +83,7 @@ class GetDialog {
                   },
                   child: Container(
                     padding: EdgeInsets.fromLTRB(12.w, 12.h, 12.w, 12.h),
-                    child: Text(
-                      '확인',
-                      style: TextStyle(
-                          color: Color(0xff283137),
-                          fontFamily: 'NotoSansCJKKR',
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500),
-                    ),
+                    child: Text('확인'),
                   ),
                 ),
               )

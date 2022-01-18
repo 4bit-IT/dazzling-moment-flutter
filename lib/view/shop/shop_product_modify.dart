@@ -29,7 +29,7 @@ class ShopProductModify extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: DamoAppBar().textAppBar(context, '내 상품 관리'),
         body: GestureDetector(
-          onPanDown: (_){
+          onPanDown: (_) {
             FocusScopeNode currentFocus = FocusScope.of(context);
             if (!currentFocus.hasPrimaryFocus &&
                 currentFocus.focusedChild != null) {
@@ -46,12 +46,7 @@ class ShopProductModify extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 30.h),
-                        Text('스토어 대표 사진',
-                            style: TextStyle(
-                                color: Color(0xff283137),
-                                fontSize: 16.sp,
-                                fontFamily: 'NotoSansCJKKR',
-                                fontWeight: FontWeight.w500)),
+                        Text('스토어 대표 사진'),
                         SizedBox(height: 16.h),
                         InkWell(
                           onTap: () {
@@ -68,30 +63,20 @@ class ShopProductModify extends StatelessWidget {
                                         width: double.infinity,
                                         height: 70.h,
                                         alignment: Alignment.center,
-                                        child: Text(
-                                          '이미지 확대',
-                                          style: TextStyle(
-                                              fontSize: 16.sp,
-                                              fontFamily: 'NotoSansCJKKR',
-                                              fontWeight: FontWeight.w500),
-                                        ),
+                                        child: Text('이미지 확대'),
                                       )),
                                   Divider(),
                                   InkWell(
                                     onTap: () async {
-                                      await shopController.selectShopMainImage();
+                                      await shopController
+                                          .selectShopMainImage();
                                       Get.back();
                                     },
                                     child: Container(
                                       width: double.infinity,
                                       height: 70.h,
                                       alignment: Alignment.center,
-                                      child: Text('이미지 변경',
-                                          style: TextStyle(
-                                              color: Color(0xfff93f5b),
-                                              fontSize: 16.sp,
-                                              fontFamily: 'NotoSansCJKKR',
-                                              fontWeight: FontWeight.w500)),
+                                      child: Text('이미지 변경'),
                                     ),
                                   ),
                                 ],
@@ -127,7 +112,8 @@ class ShopProductModify extends StatelessWidget {
                                           : Image(
                                               image: shopController
                                                   .selectMainImage!.value.image,
-                                              fit: BoxFit.fitHeight,),
+                                              fit: BoxFit.fitHeight,
+                                            ),
                                 ),
                               ),
                               Positioned(
@@ -142,13 +128,7 @@ class ShopProductModify extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 24.h),
-                        Text('스토어명',
-                            style: TextStyle(
-                              color: Color(0xff283137),
-                              fontSize: 16.sp,
-                              fontFamily: 'NotoSansCJKKR',
-                              fontWeight: FontWeight.w500,
-                            )),
+                        Text('스토어명'),
                         SizedBox(height: 16.h),
                         CustomTextField().simpleTextField(
                             shopController.shopNameController.value,
@@ -160,23 +140,15 @@ class ShopProductModify extends StatelessWidget {
                             1,
                             null, []),
                         SizedBox(height: 24.h),
-                        Text(
-                          '스토어 설명',
-                          style: TextStyle(
-                            color: Color(0xff283137),
-                            fontSize: 16.sp,
-                            fontFamily: 'NotoSansCJKKR',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                        Text('스토어 설명'),
                         SizedBox(height: 16.h),
                         CustomTextField().simpleTextField(
                             shopController.shopContentController.value,
                             false,
                             null,
                             TextAlign.start,
-                            shopController
-                                        .shopContentController.value.value.text ==
+                            shopController.shopContentController.value.value
+                                        .text ==
                                     ''
                                 ? '메인페이지에 보일 간략한 스토어 설명을 입력해주세요'
                                 : null,
@@ -185,15 +157,7 @@ class ShopProductModify extends StatelessWidget {
                             null,
                             []),
                         SizedBox(height: 24.h),
-                        Text(
-                          '스토어 상세 설명',
-                          style: TextStyle(
-                            color: Color(0xff283137),
-                            fontSize: 16.sp,
-                            fontFamily: 'NotoSansCJKKR',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                        Text('스토어 상세 설명'),
                         SizedBox(height: 16.h),
                         CustomTextField().simpleTextField(
                             shopController.shopDescriptionController.value,
@@ -210,15 +174,7 @@ class ShopProductModify extends StatelessWidget {
                             null,
                             []),
                         SizedBox(height: 24.h),
-                        Text(
-                          '상품 이미지(최대 10개)',
-                          style: TextStyle(
-                            color: Color(0xff283137),
-                            fontSize: 16.sp,
-                            fontFamily: 'NotoSansCJKKR',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                        Text('상품 이미지(최대 10개)'),
                         SizedBox(height: 16.h),
                         Container(
                           height: 100.h,
@@ -237,8 +193,8 @@ class ShopProductModify extends StatelessWidget {
                                                       shopController
                                                           .imagesSize.value ||
                                                   index ==
-                                                      shopController
-                                                              .imagesSize.value -
+                                                      shopController.imagesSize
+                                                              .value -
                                                           1
                                               ? InkWell(
                                                   onTap: () async {
@@ -251,16 +207,7 @@ class ShopProductModify extends StatelessWidget {
                                                     width: double.infinity,
                                                     height: 60.h,
                                                     alignment: Alignment.center,
-                                                    child: Text(
-                                                      '이미지 확대',
-                                                      style: TextStyle(
-                                                        fontSize: 16.sp,
-                                                        fontFamily:
-                                                            'NotoSansCJKKR',
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                      ),
-                                                    ),
+                                                    child: Text('이미지 확대'),
                                                   ),
                                                 )
                                               : Container(),
@@ -274,25 +221,17 @@ class ShopProductModify extends StatelessWidget {
                                               width: double.infinity,
                                               height: 60.h,
                                               alignment: Alignment.center,
-                                              child: Text(
-                                                index <
-                                                            shopController
-                                                                .imagesSize
-                                                                .value ||
-                                                        index ==
-                                                            shopController
-                                                                    .imagesSize
-                                                                    .value -
-                                                                1
-                                                    ? '이미지 변경'
-                                                    : '이미지 추가',
-                                                style: TextStyle(
-                                                  color: Color(0xfff93f5b),
-                                                  fontSize: 16.sp,
-                                                  fontFamily: 'NotoSansCJKKR',
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
+                                              child: Text(index <
+                                                          shopController
+                                                              .imagesSize
+                                                              .value ||
+                                                      index ==
+                                                          shopController
+                                                                  .imagesSize
+                                                                  .value -
+                                                              1
+                                                  ? '이미지 변경'
+                                                  : '이미지 추가'),
                                             ),
                                           ),
                                           Visibility(
@@ -305,7 +244,8 @@ class ShopProductModify extends StatelessWidget {
                                                         1,
                                             child: InkWell(
                                               onTap: () async {
-                                                FocusScope.of(context).unfocus();
+                                                FocusScope.of(context)
+                                                    .unfocus();
                                                 GetDialog().alternativeDialog(
                                                     '해당 사진을 삭제하시겠습니까?',
                                                     () async =>
@@ -317,15 +257,7 @@ class ShopProductModify extends StatelessWidget {
                                                 width: double.infinity,
                                                 height: 60.h,
                                                 alignment: Alignment.center,
-                                                child: Text(
-                                                  '이미지 삭제',
-                                                  style: TextStyle(
-                                                    color: Color(0xff283137),
-                                                    fontSize: 16.sp,
-                                                    fontFamily: 'NotoSansCJKKR',
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
+                                                child: Text('이미지 삭제'),
                                               ),
                                             ),
                                           ),
@@ -334,7 +266,8 @@ class ShopProductModify extends StatelessWidget {
                                       backgroundColor: Colors.white,
                                     );
                                   },
-                                  child: index <= shopController.imagesSize.value
+                                  child: index <=
+                                          shopController.imagesSize.value
                                       ? Container(
                                           height: 100.h,
                                           child: Stack(
@@ -347,11 +280,12 @@ class ShopProductModify extends StatelessWidget {
                                                       height: 100.h,
                                                       decoration: BoxDecoration(
                                                           border: Border.all(
-                                                              color:
-                                                                  Colors.black12),
+                                                              color: Colors
+                                                                  .black12),
                                                           borderRadius:
                                                               BorderRadius
-                                                                  .circular(8.r)),
+                                                                  .circular(
+                                                                      8.r)),
                                                     )
                                                   : shopController
                                                               .selectImages![
@@ -363,11 +297,13 @@ class ShopProductModify extends StatelessWidget {
                                                           height: 100.h,
                                                           child: Image(
                                                             image: shopController
-                                                                .selectImages![index]
+                                                                .selectImages![
+                                                                    index]
                                                                 .image,
                                                             /*width: 100.w,
                                                                     height: 100.h,*/
-                                                            fit: BoxFit.fitHeight,
+                                                            fit: BoxFit
+                                                                .fitHeight,
                                                           ),
                                                         )
                                                       : ExtendedImage.network(
@@ -407,7 +343,8 @@ class ShopProductModify extends StatelessWidget {
                                 ),
                               );
                             },
-                            separatorBuilder: (BuildContext context, int index) {
+                            separatorBuilder:
+                                (BuildContext context, int index) {
                               return SizedBox(
                                 width: 8.w,
                                 height: 100.h,
@@ -416,15 +353,7 @@ class ShopProductModify extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 24.h),
-                        Text(
-                          '상품 옵션',
-                          style: TextStyle(
-                            color: Color(0xff283137),
-                            fontSize: 16.sp,
-                            fontFamily: 'NotoSansCJKKR',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                        Text('상품 옵션'),
                         SizedBox(height: 32.h),
                         Container(
                           padding: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
@@ -441,15 +370,7 @@ class ShopProductModify extends StatelessWidget {
                         SizedBox(height: 32.h),
                         Row(
                           children: [
-                            Text(
-                              '상품 기본금액',
-                              style: TextStyle(
-                                color: Color(0xfff93f5b),
-                                fontSize: 16.sp,
-                                fontFamily: 'NotoSansCJKKR',
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                            Text('상품 기본금액'),
                             SizedBox(width: 100.w),
                             Expanded(
                               child: CustomTextField().simpleTextField(
@@ -473,11 +394,12 @@ class ShopProductModify extends StatelessWidget {
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: shopController.mainOptionList.length,
                             itemBuilder: (context, index) {
-                              if (shopController.mainOptionList.length > index ||
+                              if (shopController.mainOptionList.length >
+                                      index ||
                                   shopController.mainOptionList.length != 0)
                                 return Theme(
-                                  data: ThemeData()
-                                      .copyWith(dividerColor: Colors.transparent),
+                                  data: ThemeData().copyWith(
+                                      dividerColor: Colors.transparent),
                                   child: ExpansionTile(
                                     title: Text(
                                       '옵션 ${index + 1}',
@@ -502,15 +424,7 @@ class ShopProductModify extends StatelessWidget {
                                           alignment: Alignment.centerRight,
                                           padding: EdgeInsets.fromLTRB(
                                               8.w, 8.h, 8.w, 8.h),
-                                          child: Text(
-                                            '옵션 삭제',
-                                            style: TextStyle(
-                                              color: Color(0xfff93f5b),
-                                              fontSize: 16.sp,
-                                              fontFamily: 'NotoSansCJKKR',
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
+                                          child: Text('옵션 삭제'),
                                         ),
                                       ),
                                       SizedBox(height: 8.h),
@@ -528,15 +442,7 @@ class ShopProductModify extends StatelessWidget {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                '옵션 제목',
-                                                style: TextStyle(
-                                                  color: Color(0xfff93f5b),
-                                                  fontSize: 16.sp,
-                                                  fontFamily: 'NotoSansCJKKR',
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
+                                              Text('옵션 제목'),
                                               SizedBox(height: 8.h),
                                               CustomTextField().simpleTextField(
                                                   shopController
@@ -562,11 +468,7 @@ class ShopProductModify extends StatelessWidget {
                                               Text(
                                                 '옵션 설명',
                                                 style: TextStyle(
-                                                  color: Color(0xfff93f5b),
-                                                  fontSize: 16.sp,
-                                                  fontFamily: 'NotoSansCJKKR',
-                                                  fontWeight: FontWeight.w500,
-                                                ),
+                                                    color: Color(0xfff93f5b)),
                                               ),
                                               SizedBox(height: 8.h),
                                               CustomTextField().simpleTextField(
@@ -598,11 +500,8 @@ class ShopProductModify extends StatelessWidget {
                                                   Text(
                                                     '선택지의 중복 선택 가능유무',
                                                     style: TextStyle(
-                                                      color: Color(0xfff93f5b),
-                                                      fontSize: 16.sp,
-                                                      fontFamily: 'NotoSansCJKKR',
-                                                      fontWeight: FontWeight.w500,
-                                                    ),
+                                                        color:
+                                                            Color(0xfff93f5b)),
                                                   ),
                                                   Switch(
                                                     value: shopController
@@ -624,21 +523,15 @@ class ShopProductModify extends StatelessWidget {
                                                 color: Colors.black12,
                                               ),
                                               SizedBox(height: 8.h),
-                                              Text(
-                                                '옵션의 선택지를 설정해주세요',
-                                                style: TextStyle(
-                                                  color: Color(0xff283137),
-                                                  fontSize: 16.sp,
-                                                  fontFamily: 'NotoSansCJKKR',
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
+                                              Text('옵션의 선택지를 설정해주세요'),
                                               Obx(() {
-                                                if (shopController.mainOptionList
+                                                if (shopController
+                                                            .mainOptionList
                                                             .length >
                                                         index ||
                                                     shopController
-                                                            .mainOptionList[index]
+                                                            .mainOptionList[
+                                                                index]
                                                             .shopDetailOptionList
                                                             .length !=
                                                         0)
@@ -652,8 +545,8 @@ class ShopProductModify extends StatelessWidget {
                                                           .mainOptionList[index]
                                                           .shopDetailOptionList
                                                           .length,
-                                                      itemBuilder:
-                                                          (context, detailIndex) {
+                                                      itemBuilder: (context,
+                                                          detailIndex) {
                                                         return Column(
                                                           crossAxisAlignment:
                                                               CrossAxisAlignment
@@ -717,22 +610,23 @@ class ShopProductModify extends StatelessWidget {
                                                                         fontFamily:
                                                                             'NotoSansCJKKR',
                                                                         fontWeight:
-                                                                            FontWeight
-                                                                                .w500,
+                                                                            FontWeight.w500,
                                                                       ),
                                                                     ),
                                                                   ),
                                                                 )
                                                               ],
                                                             ),
-                                                            SizedBox(height: 8.h),
+                                                            SizedBox(
+                                                                height: 8.h),
                                                             Container(
-                                                              padding: EdgeInsets
-                                                                  .fromLTRB(
-                                                                      8.w,
-                                                                      8.h,
-                                                                      8.w,
-                                                                      0),
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .fromLTRB(
+                                                                          8.w,
+                                                                          8.h,
+                                                                          8.w,
+                                                                          0),
                                                               decoration:
                                                                   BoxDecoration(
                                                                 borderRadius:
@@ -776,8 +670,8 @@ class ShopProductModify extends StatelessWidget {
                                                                         '해당 선택지 금액',
                                                                         style:
                                                                             TextStyle(
-                                                                          color: Color(
-                                                                              0xfff93f5b),
+                                                                          color:
+                                                                              Color(0xfff93f5b),
                                                                           fontSize:
                                                                               16.sp,
                                                                           fontFamily:
@@ -787,8 +681,8 @@ class ShopProductModify extends StatelessWidget {
                                                                         ),
                                                                       ),
                                                                       SizedBox(
-                                                                          width: 70
-                                                                              .w),
+                                                                          width:
+                                                                              70.w),
                                                                       Expanded(
                                                                         child:
                                                                             Container(
@@ -798,10 +692,8 @@ class ShopProductModify extends StatelessWidget {
                                                                                 Colors.white,
                                                                             border:
                                                                                 Border.all(
-                                                                              color:
-                                                                                  Color(0xffd1d1d6),
-                                                                              width:
-                                                                                  1.h,
+                                                                              color: Color(0xffd1d1d6),
+                                                                              width: 1.h,
                                                                             ),
                                                                             borderRadius:
                                                                                 BorderRadius.circular(8.r),
@@ -952,7 +844,8 @@ class ShopProductModify extends StatelessWidget {
                                                           BorderRadius.circular(
                                                               20.r),
                                                       border: Border.all(
-                                                        color: Color(0xffd1d1d6),
+                                                        color:
+                                                            Color(0xffd1d1d6),
                                                       ),
                                                     ),
                                                     child: Container(
@@ -965,8 +858,9 @@ class ShopProductModify extends StatelessWidget {
                                                       child: Visibility(
                                                         visible: true,
                                                         child: Wrap(
-                                                          alignment: WrapAlignment
-                                                              .center,
+                                                          alignment:
+                                                              WrapAlignment
+                                                                  .center,
                                                           children: [
                                                             Text(
                                                               '선택지 추가',
@@ -981,7 +875,8 @@ class ShopProductModify extends StatelessWidget {
                                                                         .w500,
                                                               ),
                                                             ),
-                                                            SizedBox(width: 10.w),
+                                                            SizedBox(
+                                                                width: 10.w),
                                                             SvgPicture.asset(
                                                               'assets/images_svg/ic_상품이미지추가.svg',
                                                               height: 20.h,

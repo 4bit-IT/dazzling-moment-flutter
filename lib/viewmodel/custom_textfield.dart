@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextField {
   ScrollController scrollController = ScrollController();
+
   TextFormField simpleTextField(
       TextEditingController controller,
       bool readOnly,
@@ -23,14 +24,8 @@ class CustomTextField {
       inputFormatters: inputFormatters,
       controller: controller,
       readOnly: readOnly,
-      style: TextStyle(
-        color: Color(0xff283137),
-        fontSize: 16.sp,
-        fontFamily: 'NotoSansCJKKR',
-        fontWeight: FontWeight.w500,
-      ),
       decoration: InputDecoration(
-        counterText: '',
+          counterText: '',
           hintText: hintText,
           hintStyle: TextStyle(
             color: Color(0xffd1d1d6),
