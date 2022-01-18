@@ -15,13 +15,7 @@ class PurchaseHistory extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(
-          '구매 내역',
-          style: TextStyle(
-            color: Color(0xff283137),
-            fontSize: 16,
-            fontFamily: 'NotoSansCJKKR',
-            fontWeight: FontWeight.w700,
-          ),
+          '구매 내역'
         ),
         leading: Padding(
           padding: const EdgeInsets.all(10.0),

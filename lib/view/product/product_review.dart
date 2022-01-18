@@ -229,13 +229,7 @@ class ProductReview extends StatelessWidget {
                                 children: [
                                   Text(
                                     reviewController.stroageReview[index]
-                                        ['nickname'],
-                                    style: TextStyle(
-                                      color: Color(0xff283137),
-                                      fontSize: 16.sp,
-                                      fontFamily: 'NotoSansCJKKR',
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                        ['nickname']
                                   ),
                                   Text(
                                     reviewController.stroageReview[index]

@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:damo/app/controller/sign_controller.dart';
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/get_user_name.dart';
@@ -27,12 +28,12 @@ class Sign extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 200.h,
+                    height: 278.h,
                   ),
                   SvgPicture.asset('assets/images_svg/logo_login.svg',
-                      width: 180.w, height: 180.h),
+                      width: 85.w, height: 98.3.h),
                   SizedBox(
-                    height: 150.h,
+                    height: 214.h,
                   ),
                   Row(
                     children: [
@@ -92,7 +93,10 @@ class Sign extends StatelessWidget {
                                   Get.to(() => GetUserInfo());
                                 },
                                 child: SvgPicture.asset(
-                                    'assets/images_svg/ic_login_apple.svg'),
+                                  'assets/images_svg/ic_login_apple.svg',
+                                  width: 44.w,
+                                  height: 44.h,
+                                ),
                               ),
                               SizedBox(
                                 height: 10.h,
@@ -118,7 +122,10 @@ class Sign extends StatelessWidget {
                                 signController.onKakaoLoginClicked();
                               },
                               child: SvgPicture.asset(
-                                  'assets/images_svg/ic_login_kakao.svg'),
+                                'assets/images_svg/ic_login_kakao.svg',
+                                width: 44.w,
+                                height: 44.h,
+                              ),
                             ),
                             SizedBox(
                               height: 10.h,
@@ -192,7 +199,16 @@ class Sign extends StatelessWidget {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
-                          Get.to(() => GetUserNickname());
+                          Get.to(
+                                () => AnimatedSplashScreen(
+                              duration: 1500,
+                              splash: Image.asset('assets/images/스플래시@3x.png',width: 375.w,fit: BoxFit.fill,),
+                              nextScreen: Sign(),
+                              splashTransition: SplashTransition.fadeTransition,
+                              backgroundColor: Colors.white,
+                              splashIconSize: 812.h,
+                            ),
+                          );
                         },
                         color: Colors.grey[400],
                         elevation: 0,

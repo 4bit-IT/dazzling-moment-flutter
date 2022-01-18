@@ -5,10 +5,12 @@ import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class OwnerOrderController extends GetxController {
   TokenController tokenController = Get.find();
   Rx<OwnerGetOrderModel> ownerGetOrderModel = OwnerGetOrderModel().obs;
+  Rx<DateTime> focusedDay = DateTime.now().obs;
 
   Map<String, dynamic> toJsonInput = {};
   String sendData = '';
@@ -239,15 +241,7 @@ class OwnerOrderController extends GetxController {
                                   child: Container(
                                     padding: EdgeInsets.fromLTRB(
                                         12.w, 12.h, 12.w, 12.h),
-                                    child: Text(
-                                      '아니오',
-                                      style: TextStyle(
-                                          color: Color(0xff283137),
-                                          fontFamily: 'NotoSansCJKKR',
-                                          fontSize: 16.sp,
-                                          height: 1,
-                                          fontWeight: FontWeight.w500),
-                                    ),
+                                    child: Text('아니오'),
                                   ),
                                 ),
                                 InkWell(
@@ -258,15 +252,7 @@ class OwnerOrderController extends GetxController {
                                   child: Container(
                                     padding: EdgeInsets.fromLTRB(
                                         12.w, 12.h, 12.w, 12.h),
-                                    child: Text(
-                                      '예',
-                                      style: TextStyle(
-                                          color: Color(0xff283137),
-                                          fontFamily: 'NotoSansCJKKR',
-                                          fontSize: 16.sp,
-                                          height: 1,
-                                          fontWeight: FontWeight.w500),
-                                    ),
+                                    child: Text('예'),
                                   ),
                                 ),
                               ],
@@ -314,9 +300,8 @@ class OwnerOrderController extends GetxController {
         val!.orderList[index]['status'] = status;
       });
       Get.back();
-    } else if(model.code == 2){
-
-    }else {
+    } else if (model.code == 2) {
+    } else {
       await tokenController.refreshGetAccessToken();
       await changeOrderStatus(index, status);
     }

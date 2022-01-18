@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:damo/app/controller/owner/owner_shop_controller.dart';
 import 'package:damo/view/shop/shop_product_modify.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
+import 'package:damo/viewmodel/loading.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +20,7 @@ class ShopProductMain extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: DamoAppBar().textAppBar(context, '내 상품 관리'),
       body: ownerShopController.isLoadingModifyData.value
-          ? CircularProgressIndicator(
-              color: Color(
-                0xfff93f5b,
-              ),
-            )
+          ? Loading().simpleLoading()
           : Column(
               children: [
                 Expanded(
@@ -38,14 +35,7 @@ class ShopProductMain extends StatelessWidget {
                               height: 30.h,
                             ),
                             Text(
-                              '스토어 대표 사진',
-                              style: TextStyle(
-                                color: Color(0xff283137),
-                                fontSize: 16.sp,
-                                fontFamily: 'NotoSansCJKKR',
-                                fontWeight: FontWeight.w500,
-                                height: 1,
-                              ),
+                              '스토어 대표 사진'
                             ),
                             SizedBox(
                               height: 16.h,
@@ -79,14 +69,7 @@ class ShopProductMain extends StatelessWidget {
                               height: 24.h,
                             ),
                             Text(
-                              '스토어명',
-                              style: TextStyle(
-                                color: Color(0xff283137),
-                                fontSize: 16.sp,
-                                height: 1,
-                                fontFamily: 'NotoSansCJKKR',
-                                fontWeight: FontWeight.w500,
-                              ),
+                              '스토어명'
                             ),
                             SizedBox(
                               height: 16.h,
@@ -124,14 +107,7 @@ class ShopProductMain extends StatelessWidget {
                               height: 24.h,
                             ),
                             Text(
-                              '스토어 설명',
-                              style: TextStyle(
-                                color: Color(0xff283137),
-                                fontSize: 16.sp,
-                                height: 1,
-                                fontFamily: 'NotoSansCJKKR',
-                                fontWeight: FontWeight.w500,
-                              ),
+                              '스토어 설명'
                             ),
                             SizedBox(
                               height: 16.h,
@@ -169,14 +145,7 @@ class ShopProductMain extends StatelessWidget {
                               height: 24.h,
                             ),
                             Text(
-                              '스토어 상세 설명',
-                              style: TextStyle(
-                                color: Color(0xff283137),
-                                fontSize: 16.sp,
-                                height: 1,
-                                fontFamily: 'NotoSansCJKKR',
-                                fontWeight: FontWeight.w500,
-                              ),
+                              '스토어 상세 설명'
                             ),
                             SizedBox(
                               height: 16.h,
@@ -216,14 +185,7 @@ class ShopProductMain extends StatelessWidget {
                               height: 24.h,
                             ),
                             Text(
-                              '상품 이미지(최대 10개)',
-                              style: TextStyle(
-                                color: Color(0xff283137),
-                                fontSize: 16.sp,
-                                height: 1,
-                                fontFamily: 'NotoSansCJKKR',
-                                fontWeight: FontWeight.w500,
-                              ),
+                              '상품 이미지(최대 10개)'
                             ),
                             SizedBox(
                               height: 16.h,
@@ -271,7 +233,7 @@ class ShopProductMain extends StatelessWidget {
                                               fadeOutDuration:
                                                   Duration(milliseconds: 100),
                                               placeholder: (context, url) =>
-                                                  CircularProgressIndicator(),
+                                                  Loading().simpleLoading(),
                                             );
                                 },
                                 separatorBuilder:
@@ -287,14 +249,7 @@ class ShopProductMain extends StatelessWidget {
                               height: 24.h,
                             ),
                             Text(
-                              '상품 옵션',
-                              style: TextStyle(
-                                color: Color(0xff283137),
-                                fontSize: 16.sp,
-                                height: 1,
-                                fontFamily: 'NotoSansCJKKR',
-                                fontWeight: FontWeight.w500,
-                              ),
+                              '상품 옵션'
                             ),
                             SizedBox(
                               height: 32.h,
@@ -302,14 +257,7 @@ class ShopProductMain extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  '상품 기본금액',
-                                  style: TextStyle(
-                                    color: Color(0xfff93f5b),
-                                    fontSize: 16.sp,
-                                    height: 1,
-                                    fontFamily: 'NotoSansCJKKR',
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                  '상품 기본금액'
                                 ),
                                 SizedBox(
                                   width: 100.w,
@@ -389,14 +337,7 @@ class ShopProductMain extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            '옵션 제목',
-                                            style: TextStyle(
-                                              color: Color(0xfff93f5b),
-                                              fontSize: 16.sp,
-                                              height: 1,
-                                              fontFamily: 'NotoSansCJKKR',
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                            '옵션 제목'
                                           ),
                                           SizedBox(
                                             height: 8.h,
@@ -435,14 +376,7 @@ class ShopProductMain extends StatelessWidget {
                                             height: 16.h,
                                           ),
                                           Text(
-                                            '옵션 설명',
-                                            style: TextStyle(
-                                              color: Color(0xfff93f5b),
-                                              fontSize: 16.sp,
-                                              height: 1,
-                                              fontFamily: 'NotoSansCJKKR',
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                            '옵션 설명'
                                           ),
                                           SizedBox(
                                             height: 8.h,
@@ -485,14 +419,7 @@ class ShopProductMain extends StatelessWidget {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                '선택지의 중복 선택 가능유무',
-                                                style: TextStyle(
-                                                  color: Color(0xfff93f5b),
-                                                  fontSize: 16.sp,
-                                                  height: 1,
-                                                  fontFamily: 'NotoSansCJKKR',
-                                                  fontWeight: FontWeight.w500,
-                                                ),
+                                                '선택지의 중복 선택 가능유무'
                                               ),
                                               Switch(
                                                 value: ownerShopController
@@ -516,14 +443,7 @@ class ShopProductMain extends StatelessWidget {
                                             height: 8.h,
                                           ),
                                           Text(
-                                            '옵션의 선택지를 설정해주세요',
-                                            style: TextStyle(
-                                              color: Color(0xff283137),
-                                              fontSize: 16.sp,
-                                              height: 1,
-                                              fontFamily: 'NotoSansCJKKR',
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                            '옵션의 선택지를 설정해주세요'
                                           ),
                                           Obx(
                                             () => ListView.builder(
@@ -547,17 +467,7 @@ class ShopProductMain extends StatelessWidget {
                                                       height: 16.h,
                                                     ),
                                                     Text(
-                                                      '선택지 ${detailIndex + 1}',
-                                                      style: TextStyle(
-                                                        color:
-                                                            Color(0xff283137),
-                                                        fontSize: 16.sp,
-                                                        height: 1,
-                                                        fontFamily:
-                                                            'NotoSansCJKKR',
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                      ),
+                                                      '선택지 ${detailIndex + 1}'
                                                     ),
                                                     SizedBox(
                                                       height: 8.h,

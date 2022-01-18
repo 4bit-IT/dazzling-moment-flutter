@@ -4,6 +4,7 @@ import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/viewmodel/custom_textfield.dart';
 import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:damo/viewmodel/image_model.dart';
+import 'package:damo/viewmodel/loading.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -121,13 +122,14 @@ class EditMyInfo extends StatelessWidget {
                               child: Stack(
                                 children: [
                                   Obx(
-                                    () => userController
-                                                .userImageModel.value.imageUrl !=
+                                    () => userController.userImageModel.value
+                                                .imageUrl !=
                                             null
-                                        ? ImageModel().networkImage(userController
-                                            .getUserInfoModel.value.profileImage!)
-                                        : userController
-                                                    .userImageModel.value.image !=
+                                        ? ImageModel().networkImage(
+                                            userController.getUserInfoModel
+                                                .value.profileImage!)
+                                        : userController.userImageModel.value
+                                                    .image !=
                                                 null
                                             ? ImageModel().circleImage(
                                                 userController
@@ -163,10 +165,6 @@ class EditMyInfo extends StatelessWidget {
                                           children: [
                                             Text(
                                               '이메일',
-                                              style: TextStyle(
-                                                  color: Color(0xff283137),
-                                                  fontFamily: 'NotoSansCJKKR',
-                                                  fontSize: 16.sp),
                                             ),
                                             SvgPicture.asset(
                                               'assets/images_svg/ic_kakao_20.svg',
@@ -176,15 +174,8 @@ class EditMyInfo extends StatelessWidget {
                                           ],
                                         ),
                                       ),
-                                      Text(
-                                        userController
-                                            .getUserInfoModel.value.email!,
-                                        style: TextStyle(
-                                          color: Color(0xff283137),
-                                          fontFamily: 'NotoSansCJKKR',
-                                          fontSize: 16.sp,
-                                        ),
-                                      ),
+                                      Text(userController
+                                          .getUserInfoModel.value.email!),
                                     ],
                                   ),
                                 ),
@@ -194,24 +185,10 @@ class EditMyInfo extends StatelessWidget {
                                     children: [
                                       Container(
                                         width: 100.w,
-                                        child: Text(
-                                          '닉네임',
-                                          style: TextStyle(
-                                            color: Color(0xff283137),
-                                            fontFamily: 'NotoSansCJKKR',
-                                            fontSize: 16.sp,
-                                          ),
-                                        ),
+                                        child: Text('닉네임'),
                                       ),
-                                      Text(
-                                        userController
-                                            .getUserInfoModel.value.nickname!,
-                                        style: TextStyle(
-                                          color: Color(0xff283137),
-                                          fontFamily: 'NotoSansCJKKR',
-                                          fontSize: 16.sp,
-                                        ),
-                                      ),
+                                      Text(userController
+                                          .getUserInfoModel.value.nickname!),
                                     ],
                                   ),
                                 ),
@@ -225,14 +202,7 @@ class EditMyInfo extends StatelessWidget {
                                       children: [
                                         Container(
                                           width: 100.w,
-                                          child: Text(
-                                            '주소',
-                                            style: TextStyle(
-                                              color: Color(0xff283137),
-                                              fontFamily: 'NotoSansCJKKR',
-                                              fontSize: 16.sp,
-                                            ),
-                                          ),
+                                          child: Text('주소'),
                                         ),
                                         Expanded(
                                           child: Row(
@@ -241,14 +211,8 @@ class EditMyInfo extends StatelessWidget {
                                             children: [
                                               Obx(
                                                 () => Expanded(
-                                                  child: Text(
-                                                    userController.addr1.value,
-                                                    style: TextStyle(
-                                                        color: Color(0xff283137),
-                                                        fontFamily: 'NotoSansCJKKR',
-                                                        fontSize: 16.sp,
-                                                    ),
-                                                  ),
+                                                  child: Text(userController
+                                                      .addr1.value),
                                                 ),
                                               ),
                                               SvgPicture.asset(
@@ -269,14 +233,7 @@ class EditMyInfo extends StatelessWidget {
                                     children: [
                                       Container(
                                         width: 100.w,
-                                        child: Text(
-                                          '상세 주소',
-                                          style: TextStyle(
-                                            color: Color(0xff283137),
-                                            fontFamily: 'NotoSansCJKKR',
-                                            fontSize: 16.sp,
-                                          ),
-                                        ),
+                                        child: Text('상세 주소'),
                                       ),
                                       Expanded(
                                         child: InkWell(
@@ -309,13 +266,7 @@ class EditMyInfo extends StatelessWidget {
                                     children: [
                                       Container(
                                         width: 100.w,
-                                        child: Text(
-                                          '전화 번호 인증',
-                                          style: TextStyle(
-                                            fontFamily: 'NotoSansCJKKR',
-                                            fontSize: 16.sp,
-                                          ),
-                                        ),
+                                        child: Text('전화 번호 인증'),
                                       ),
                                       Expanded(
                                         child: Row(
@@ -323,12 +274,7 @@ class EditMyInfo extends StatelessWidget {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              '${userController.getUserInfoModel.value.phoneNumber}',
-                                              style: TextStyle(
-                                                fontFamily: 'NotoSansCJKKR',
-                                                fontSize: 16.sp,
-                                              ),
-                                            ),
+                                                '${userController.getUserInfoModel.value.phoneNumber}'),
                                             Row(
                                               children: [
                                                 Text(
@@ -389,12 +335,9 @@ class EditMyInfo extends StatelessWidget {
                 () => Visibility(
                   visible: userController.isFetchingData.value,
                   child: Container(
-                    color: Colors.black45,
-                    alignment: Alignment.center,
-                    child: CircularProgressIndicator(
-                      color: Color(0xfff93f5b),
-                    ),
-                  ),
+                      color: Colors.black45,
+                      alignment: Alignment.center,
+                      child: Loading().simpleLoading()),
                 ),
               ),
             ],

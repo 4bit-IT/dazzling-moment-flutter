@@ -190,13 +190,7 @@ class ShopReviewManagement extends StatelessWidget {
                                 children: [
                                   Text(
                                     ownerReviewController.ownerReviewModel.value
-                                        .reviewList[index]['nickname'],
-                                    style: TextStyle(
-                                      color: Color(0xff283137),
-                                      fontSize: 16.sp,
-                                      fontFamily: 'NotoSansCJKKR',
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                        .reviewList[index]['nickname']
                                   ),
                                   Text(
                                     ownerReviewController.ownerReviewModel.value
@@ -294,13 +288,7 @@ class ShopReviewManagement extends StatelessWidget {
                                 ownerReviewController.ownerReviewModel.value
                                         .reviewList[index]['hasComment']
                                     ? '답글보기'
-                                    : '답글달기',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: 'NotoSansCJKKR',
-                                  fontSize: 16.sp,
-                                  height: 1,
-                                ),
+                                    : '답글달기'
                               ),
                               expandedAlignment: Alignment.centerLeft,
                               children: [
@@ -382,13 +370,7 @@ class ShopReviewManagement extends StatelessWidget {
                                                   .value
                                                   .reviewList[index]['hasComment']
                                               ? '수정'
-                                              : '작성',
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: 'NotoSansCJKKR',
-                                            fontSize: 16.sp,
-                                            height: 1,
-                                          ),
+                                              : '작성'
                                         ),
                                       ),
                                     ),
@@ -419,13 +401,7 @@ class ShopReviewManagement extends StatelessWidget {
                                               border: Border.all(
                                                   color: Colors.black45)),
                                           child: Text(
-                                            '삭제',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontFamily: 'NotoSansCJKKR',
-                                              fontSize: 16.sp,
-                                              height: 1,
-                                            ),
+                                            '삭제'
                                           ),
                                         ),
                                       ),

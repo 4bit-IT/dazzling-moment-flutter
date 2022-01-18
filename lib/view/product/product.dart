@@ -6,6 +6,7 @@ import 'package:damo/view/main/home_main.dart';
 import 'package:damo/view/product/product_info.dart';
 import 'package:damo/view/product/product_faq.dart';
 import 'package:damo/view/product/product_review.dart';
+import 'package:damo/viewmodel/loading.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class Product extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: shopController.isLoadingShopData.value
-          ? CircularProgressIndicator(color: Color(0xfff93f5b))
+          ? Loading().simpleLoading()
           : DefaultTabController(
               length: 3,
               child: NestedScrollView(
@@ -304,22 +305,11 @@ class Product extends StatelessWidget {
                         Center(
                           child: Text(
                             '구매하기 ',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.sp,
-                              fontFamily: 'NotoSansCJKKR',
-                              fontWeight: FontWeight.w700,
-                            ),
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
                         Text(
-                          '( 원)',
-                          style: TextStyle(
-                            color: Color(0xfff93f5b),
-                            fontSize: 16.sp,
-                            fontFamily: 'NotoSansCJKKR',
-                            fontWeight: FontWeight.w500,
-                          ),
+                          '( 원)'
                         ),
                       ],
                     ),
@@ -340,13 +330,7 @@ class Product extends StatelessWidget {
         child: Container(
           child: Center(
             child: Text(
-              '옵션선택',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.sp,
-                fontFamily: 'NotoSansCJKKR',
-                fontWeight: FontWeight.w700,
-              ),
+              '옵션선택',style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
             ),
           ),
           height: 90.h,

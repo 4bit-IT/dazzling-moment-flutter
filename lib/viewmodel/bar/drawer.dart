@@ -37,14 +37,7 @@ class _DrawerButtonState extends State<DrawerButton> {
         builder: (context) => AlertDialog(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0)), //테두리 둥글기
-              title: Text(
-                "로그아웃 하시겠습니까?",
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  color: Color(0xff283137),
-                  fontFamily: 'NotoSansCJKKR',
-                ),
-              ),
+              title: Text("로그아웃 하시겠습니까?"),
               actions: [
                 TextButton(
                   child: Text(
@@ -58,7 +51,7 @@ class _DrawerButtonState extends State<DrawerButton> {
                     Get.offAll(
                       () => AnimatedSplashScreen(
                         duration: 500,
-                        splash: 'assets/images/DAMO_logo-03.png',
+                        splash: SvgPicture.asset('assets/images_svg/스플래시.svg',fit: BoxFit.fill,),
                         nextScreen: Sign(),
                         splashTransition: SplashTransition.fadeTransition,
                         pageTransitionType: PageTransitionType.fade,
@@ -93,10 +86,9 @@ class _DrawerButtonState extends State<DrawerButton> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  alignment: Alignment.topLeft,
-                  child: Obx(() => ImageModel().networkImage(userController
-                      .getUserInfoModel.value.profileImage!))
-                ),
+                    alignment: Alignment.topLeft,
+                    child: Obx(() => ImageModel().networkImage(
+                        userController.getUserInfoModel.value.profileImage!))),
                 SizedBox(
                   width: 113.w,
                 ),
@@ -112,40 +104,11 @@ class _DrawerButtonState extends State<DrawerButton> {
             Text.rich(
               TextSpan(
                 children: [
+                  TextSpan(text: '어서오세요.\n'),
                   TextSpan(
-                    text: '어서오세요.\n',
-                    style: TextStyle(
-                      color: Color(0xff283137),
-                      fontSize: 16,
-                      fontFamily: 'NotoSansCJKKR',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  TextSpan(
-                    text: userController.getUserInfoModel.value.nickname,
-                    style: TextStyle(
-                      color: Color(0xff283137),
-                      fontSize: 16,
-                      fontFamily: 'NotoSansCJKKR',
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  TextSpan(
-                    text: '님',
-                    style: TextStyle(
-                      color: Color(0xff283137),
-                      fontSize: 16,
-                      fontFamily: 'NotoSansCJKKR',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
+                      text: userController.getUserInfoModel.value.nickname),
+                  TextSpan(text: '님'),
                 ],
-              ),
-              style: TextStyle(
-                color: Color(0xff283137),
-                fontSize: 16,
-                fontFamily: 'NotoSansCJKKR',
-                fontWeight: FontWeight.w700,
               ),
             ),
             SizedBox(
@@ -160,7 +123,9 @@ class _DrawerButtonState extends State<DrawerButton> {
               ),
             ),
             SizedBox(height: 31.h),
-            Divider(height: 0,),
+            Divider(
+              height: 0,
+            ),
             InkWell(
               onTap: () {
                 Get.to(() => NotificationAdmin());
@@ -186,7 +151,9 @@ class _DrawerButtonState extends State<DrawerButton> {
                 ),
               ),
             ),
-            Divider(height: 0,),
+            Divider(
+              height: 0,
+            ),
             InkWell(
               onTap: () {},
               child: Container(
@@ -210,7 +177,9 @@ class _DrawerButtonState extends State<DrawerButton> {
                 ),
               ),
             ),
-            Divider(height: 0,),
+            Divider(
+              height: 0,
+            ),
             InkWell(
               onTap: () {
                 Get.to(() => SettingApp());
@@ -236,7 +205,9 @@ class _DrawerButtonState extends State<DrawerButton> {
                 ),
               ),
             ),
-            Divider(height: 0,),
+            Divider(
+              height: 0,
+            ),
             SizedBox(
               height: 23.h,
             ),

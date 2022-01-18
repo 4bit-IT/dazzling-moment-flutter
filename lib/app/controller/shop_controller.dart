@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class ShopController extends GetxController {
   Rx<ShopGetDetailModel> shopGetDetailModel = ShopGetDetailModel().obs;
   Rx<LoadShopMainPageModel> loadShopMainPageModel = LoadShopMainPageModel().obs;
-  RxList<dynamic> stroageMainPage = [].obs;
+  RxList<dynamic> storageMainPage = [].obs;
   RxInt currentSortIndex = 0.obs;
   Widget wishIconOn = SvgPicture.asset(
     'assets/images_svg/ic_wish_on.svg',
@@ -78,10 +78,8 @@ class ShopController extends GetxController {
           } else {
             temp.add(DetailModel(check: false, count: null));
           }
-          print(temp);
         }
         option.add(ShopOptionModel(detail: temp));
-        print(option);
       }
     }
     if (model.code == 2) {}
@@ -102,14 +100,14 @@ class ShopController extends GetxController {
         val.description = model.description;
         val.result = model.result;
       });
-      stroageMainPage.clear();
+      storageMainPage.clear();
       for (dynamic snippetList in loadShopMainPageModel.value.snippetList) {
         if (snippetList['isFavorite'] == true) {
           snippetList['isFavoriteButton'] = wishIconOn.obs;
         } else if (snippetList['isFavorite'] == false) {
           snippetList['isFavoriteButton'] = wishIconOff.obs;
         }
-        stroageMainPage.add(snippetList);
+        storageMainPage.add(snippetList);
       }
     }
     if (model.code == 2) {}
