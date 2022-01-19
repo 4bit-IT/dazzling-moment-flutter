@@ -2,7 +2,6 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:damo/app/controller/favorite_controller.dart';
 import 'package:damo/app/controller/product_controller.dart';
 import 'package:damo/app/controller/shop_controller.dart';
-import 'package:damo/view/main/home_main.dart';
 import 'package:damo/view/product/product_info.dart';
 import 'package:damo/view/product/product_faq.dart';
 import 'package:damo/view/product/product_review.dart';
@@ -308,9 +307,7 @@ class Product extends StatelessWidget {
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
-                        Text(
-                          '( 원)'
-                        ),
+                        Text('( 원)'),
                       ],
                     ),
                     height: 90.h,
@@ -330,7 +327,9 @@ class Product extends StatelessWidget {
         child: Container(
           child: Center(
             child: Text(
-              '옵션선택',style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+              '옵션선택',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
             ),
           ),
           height: 90.h,
@@ -413,8 +412,8 @@ class Product extends StatelessWidget {
               children: [
                 shopController.option[index].detail![detailIndex].count == null
                     ? Container(
-                  width: 80.w,
-                      child: Checkbox(
+                        width: 80.w,
+                        child: Checkbox(
                           value: shopController
                               .option[index].detail![detailIndex].check,
                           onChanged: (value) {
@@ -449,17 +448,17 @@ class Product extends StatelessWidget {
                                     }
                                   }
                                 }
-                                shopController.option[index].detail![detailIndex]
-                                    .check = value!;
+                                shopController.option[index]
+                                    .detail![detailIndex].check = value!;
                               },
                             );
                           },
                           checkColor: Color(0xfff93f5b),
                           activeColor: Colors.white,
                         ),
-                    )
+                      )
                     : Container(
-                  width: 80.w,
+                        width: 80.w,
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: Colors.black12,
@@ -514,11 +513,11 @@ class Product extends StatelessWidget {
                                       if (shopController.option[index]
                                                   .detail![detailIndex].count! <
                                               shopController.shopGetDetailModel
-                                                          .value.optionList[index]
-                                                      ['optionDetailList']
+                                                          .value.optionList[
+                                                      index]['optionDetailList']
                                                   [detailIndex]['count'] &&
-                                          shopController.shopGetDetailModel.value
-                                                      .optionList[index]
+                                          shopController.shopGetDetailModel
+                                                      .value.optionList[index]
                                                   ['allowMultipleChoices'] ==
                                               false) {
                                         for (int i = 0;
