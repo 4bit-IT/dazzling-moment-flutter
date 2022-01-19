@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:extended_image/extended_image.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ImageModel {
   CircleAvatar circleImage(var image) {

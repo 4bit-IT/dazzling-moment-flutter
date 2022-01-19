@@ -1,10 +1,10 @@
-import 'package:damo/app/controller/owner/owner_order_controller.dart';
 import 'package:damo/app/controller/owner/owner_shop_controller.dart';
-import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
+import 'package:damo/app/controller/wishList_controller.dart';
 import 'package:damo/view/mypage/edit_my_info.dart';
 import 'package:damo/view/mypage/purchase_history.dart';
 import 'package:damo/view/mypage/setting.dart';
+import 'package:damo/view/mypage/wish_list_page.dart';
 import 'package:damo/view/notification/notice_admin.dart';
 import 'package:damo/view/shop/shop_main.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
@@ -13,7 +13,6 @@ import 'package:damo/viewmodel/bar/bottom_navigaton.dart';
 import 'package:damo/viewmodel/bar/drawer.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
 import 'package:damo/viewmodel/image_model.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,7 +25,6 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:share_plus/share_plus.dart';
 
 UserController userController = Get.find();
-ShopController shopController = Get.find();
 OwnerShopController? ownerShopController;
 FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
@@ -42,7 +40,6 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   DamoAppBar appBar = DamoAppBar();
   ScrollController scrollController = ScrollController();
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -69,9 +66,9 @@ class _MyPageState extends State<MyPage> {
                       Stack(
                         children: [
                           Obx(() => Center(
-                            child: ImageModel().networkImage(userController
-                                .getUserInfoModel.value.profileImage!),
-                          )),
+                                child: ImageModel().networkImage(userController
+                                    .getUserInfoModel.value.profileImage!),
+                              )),
                           Positioned(
                             right: 0,
                             top: 0,
@@ -89,9 +86,7 @@ class _MyPageState extends State<MyPage> {
                         ],
                       ),
                       SizedBox(height: 11.h),
-                      Text(
-                        userController.getUserInfoModel.value.nickname!
-                      ),
+                      Text(userController.getUserInfoModel.value.nickname!),
                       SizedBox(height: 5.h),
                       Text(
                         userController.getUserInfoModel.value.email!,
@@ -106,7 +101,7 @@ class _MyPageState extends State<MyPage> {
                         children: [
                           InkWell(
                             onTap: () {
-                              // Get.to(() => WishListPage());
+                              Get.to(() => WishListPage());
                             },
                             child: Container(
                               alignment: Alignment.center,

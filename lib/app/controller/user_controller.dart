@@ -3,11 +3,8 @@ import 'dart:math';
 import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/data/model/user_model.dart';
 import 'package:damo/app/data/provider/user/user_api.dart';
-import 'package:damo/view/mypage/edit_my_address.dart';
 import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:extended_image/extended_image.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get/get.dart';
@@ -155,8 +152,8 @@ class UserController extends GetxController {
   }
 
   Future<void> changeProfileImage() async {
-    dynamic sendData =
-    await ChangeProfileImageModel().toJson(userImageModel.value.image.file.path);
+    dynamic sendData = await ChangeProfileImageModel()
+        .toJson(userImageModel.value.image.file.path);
     jsonResponse = await UserNetwork().patchUserProfileImage(sendData);
     model = ChangeProfileImageModel.fromJson(jsonResponse);
 
@@ -221,11 +218,11 @@ class UserController extends GetxController {
     await registerAddress();
     isFetchingData.value = false;
     Fluttertoast.showToast(
-        msg: '수정이 완료되었습니다',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.red[200],
-        fontSize: 15.0,
-      );
+      msg: '수정이 완료되었습니다',
+      toastLength: Toast.LENGTH_SHORT,
+      backgroundColor: Colors.red[200],
+      fontSize: 15.0,
+    );
     print(getUserInfoModel.value.profileImage);
   }
 }

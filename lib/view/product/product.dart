@@ -61,9 +61,9 @@ class Product extends StatelessWidget {
                                   onTap: () async {
                                     await favoriteController
                                         .onClickedFavoriteButton(
-                                            shopController
-                                                .shopGetDetailModel.value.id!,
-                                            Get.arguments);
+                                      shopController
+                                          .shopGetDetailModel.value.id!,
+                                    );
                                   },
                                   child: favoriteController.wishIcon.value),
                             ),
