@@ -104,7 +104,7 @@ class OwnerReviewCommentController extends GetxController {
 
 class OwnerReviewCommentBinding extends Bindings {
   @override
-  Future<void> dependencies() async {
+  void dependencies() {
     // TODO: implement dependencies
     Get.put<OwnerReviewCommentController>(OwnerReviewCommentController());
   }

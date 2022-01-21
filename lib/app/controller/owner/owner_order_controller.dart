@@ -2,25 +2,32 @@ import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/data/model/owner/owner_order_model.dart';
 import 'package:damo/app/data/provider/order_api.dart';
 import 'package:damo/viewmodel/get_dialog.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
 
 class OwnerOrderController extends GetxController {
   TokenController tokenController = Get.find();
   Rx<OwnerGetOrderModel> ownerGetOrderModel = OwnerGetOrderModel().obs;
   Rx<DateTime> focusedDay = DateTime.now().obs;
-
+  RxMap<DateTime, List<Map<String, dynamic>>> event =
+      <DateTime, List<Map<String, dynamic>>>{}.obs;
   Map<String, dynamic> toJsonInput = {};
+  RxBool isLoadingOrderData = false.obs;
+  RxInt currentFilterIndex = 0.obs;
+  RxInt maxStatusSize = 5.obs;
+  RxList<Map<String, dynamic>> currentFilterList = <Map<String, dynamic>>[].obs;
+  Rx<ScrollController> scrollController = ScrollController().obs;
+
   String sendData = '';
   var jsonResponse;
   var model;
 
   @override
-  void onInit() async {
-    // TODO: implement onInit
+  Future<void> onInit() async {
     super.onInit();
+    // TODO: implement onInit
     await fetchShopOrderData();
   }
 
@@ -29,13 +36,34 @@ class OwnerOrderController extends GetxController {
     model = OwnerGetOrderModel.fromJson(jsonResponse);
 
     if (model.code == 1) {
+      isLoadingOrderData.value = true;
       ownerGetOrderModel.update((val) {
         val!.code = model.code;
         val.orderList = model.orderList;
         val.description = model.description;
         val.result = model.result;
       });
-      print(ownerGetOrderModel.value.orderList.length);
+      for (var val in ownerGetOrderModel.value.orderList) {
+        if (event[DateTime.utc(
+            int.parse(val['pickUpReservation'].split('-')[0]),
+            int.parse(val['pickUpReservation'].split('-')[1]),
+            int.parse(
+                val['pickUpReservation'].split('-')[2].split('T')[0]))] ==
+            null) {
+          event[DateTime.utc(
+              int.parse(val['pickUpReservation'].split('-')[0]),
+              int.parse(val['pickUpReservation'].split('-')[1]),
+              int.parse(
+                  val['pickUpReservation'].split('-')[2].split('T')[0]))] = [];
+        }
+        event[DateTime.utc(
+            int.parse(val['pickUpReservation'].split('-')[0]),
+            int.parse(val['pickUpReservation'].split('-')[1]),
+            int.parse(
+                val['pickUpReservation'].split('-')[2].split('T')[0]))]!
+            .add(val);
+      }
+      isLoadingOrderData.value = false;
     } else if (model.code == 2) {
     } else {
       //토큰 만료
@@ -44,12 +72,10 @@ class OwnerOrderController extends GetxController {
     }
   }
 
-  void changeOrderStatusClicked(int index) {
-    String status = ownerGetOrderModel.value.orderList[index]['status'];
+  void changeOrderStatusClicked(int index, String status) {
     if (status == 'PENDING') {
       Get.bottomSheet(
-        Container(
-          child: Wrap(
+          Wrap(
             alignment: WrapAlignment.center,
             children: [
               Container(
@@ -76,7 +102,7 @@ class OwnerOrderController extends GetxController {
                 onTap: () async {
                   GetDialog().alternativeDialog(
                       '해당 주문의 주문상태를 \n\'주문수락\'으로 변경하시겠습니까?',
-                      () async => await changeOrderStatus(index, 'ALLOW'));
+                          () async => await changeOrderStatus(index, 'ALLOW'));
                 },
                 child: Container(
                   width: double.infinity,
@@ -101,7 +127,7 @@ class OwnerOrderController extends GetxController {
                 onTap: () async {
                   GetDialog().alternativeDialog(
                       '해당 주문의 주문상태를 \n\'주문거절\'로 변경하시겠습니까?',
-                      () async => await changeOrderStatus(index, 'REFUSE'));
+                          () async => await changeOrderStatus(index, 'REFUSE'));
                 },
                 child: Container(
                   width: double.infinity,
@@ -120,13 +146,10 @@ class OwnerOrderController extends GetxController {
               ),
             ],
           ),
-        ),
-        backgroundColor: Colors.white,
-      );
+          backgroundColor: Colors.white);
     } else if (status == 'ALLOW') {
       Get.bottomSheet(
-        Container(
-          child: Wrap(
+          Wrap(
             alignment: WrapAlignment.center,
             children: [
               Container(
@@ -153,7 +176,7 @@ class OwnerOrderController extends GetxController {
                 onTap: () async {
                   GetDialog().alternativeDialog(
                       '해당 주문의 주문상태를 \n\'제작완료\'로 변경하시겠습니까?',
-                      () async => await changeOrderStatus(index, 'COMPLETE'));
+                          () async => await changeOrderStatus(index, 'COMPLETE'));
                 },
                 child: Container(
                   width: double.infinity,
@@ -172,13 +195,10 @@ class OwnerOrderController extends GetxController {
               ),
             ],
           ),
-        ),
-        backgroundColor: Colors.white,
-      );
+          backgroundColor: Colors.white);
     } else if (status == 'COMPLETE') {
       Get.bottomSheet(
-        Container(
-          child: Wrap(
+          Wrap(
             alignment: WrapAlignment.center,
             children: [
               Container(
@@ -203,65 +223,9 @@ class OwnerOrderController extends GetxController {
               ),
               InkWell(
                 onTap: () async {
-                  await Get.dialog(
-                    Dialog(
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                        alignment: Alignment.center,
-                        height: 210.h,
-                        width: 130.w,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              padding:
-                                  EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
-                              child: Text(
-                                '해당 주문의 주문상태를 \'거래완료\'로 변경하시겠습니까?',
-                                style: TextStyle(
-                                    color: Color(0xff283137),
-                                    fontFamily: 'NotoSansCJKKR',
-                                    fontSize: 22.sp,
-                                    height: 1,
-                                    fontWeight: FontWeight.w700),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 32.h,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(
-                                        12.w, 12.h, 12.w, 12.h),
-                                    child: Text('아니오'),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () async {
-                                    await changeOrderStatus(index, 'FINISHED');
-                                    Get.back();
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(
-                                        12.w, 12.h, 12.w, 12.h),
-                                    child: Text('예'),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                  GetDialog().alternativeDialog(
+                      '해당 주문의 주문상태를 \'거래완료\'로 변경하시겠습니까?',
+                          () async => await changeOrderStatus(index, 'FINISHED'));
                 },
                 child: Container(
                   width: double.infinity,
@@ -280,16 +244,13 @@ class OwnerOrderController extends GetxController {
               ),
             ],
           ),
-        ),
-        backgroundColor: Colors.white,
-      );
+          backgroundColor: Colors.white);
     }
   }
 
   Future<void> changeOrderStatus(int index, String status) async {
     toJsonInput.clear();
-    toJsonInput['orderNumber'] =
-        ownerGetOrderModel.value.orderList[index]['orderNumber'];
+    toJsonInput['orderNumber'] = currentFilterList[index]['orderNumber'];
     toJsonInput['orderStatus'] = status;
     sendData = OwnerChangeOrderStatusModel().toJson(toJsonInput);
     jsonResponse = await OrderNetwork().postOrdersStatus(sendData);
@@ -299,6 +260,13 @@ class OwnerOrderController extends GetxController {
       ownerGetOrderModel.update((val) {
         val!.orderList[index]['status'] = status;
       });
+      event[focusedDay.value]![index]['status'] = status;
+      currentFilterList.removeAt(index);
+      event[focusedDay.value]!.sort((a, b) {
+        return a['orderNumber'].compareTo(b['orderNumber']);
+      });
+      event.refresh();
+      currentFilterList.refresh();
       Get.back();
     } else if (model.code == 2) {
     } else {
@@ -306,11 +274,30 @@ class OwnerOrderController extends GetxController {
       await changeOrderStatus(index, status);
     }
   }
+
+  void filterStatus(int index, String status) {
+    currentFilterIndex.value = index;
+    if (index == 0) {
+      currentFilterList.value = event[focusedDay.value]!;
+    } else {
+      currentFilterList.value = event[focusedDay.value]!
+          .where((element) => element['status'] == status)
+          .toList();
+    }
+    currentFilterList.refresh();
+    currentFilterIndex.refresh();
+    SchedulerBinding.instance?.addPostFrameCallback((_) {
+      scrollController.value.animateTo(
+          scrollController.value.position.minScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.fastLinearToSlowEaseIn);
+    });
+  }
 }
 
 class OwnerOrderBinding extends Bindings {
   @override
-  Future<void> dependencies() async {
+  void dependencies() {
     // TODO: implement dependencies
     Get.put<OwnerOrderController>(OwnerOrderController());
   }

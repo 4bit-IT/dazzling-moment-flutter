@@ -28,9 +28,7 @@ class ShopMain extends StatelessWidget {
       appBar: DamoAppBar().textAppBar(context, '내 스토어'),
       body: Obx(
         () => ownerShopController.isLoadingModifyData.value
-            ? Center(
-                child: Loading().simpleLoading()
-              )
+            ? Center(child: Loading().simpleLoading())
             : Container(
                 padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 0),
                 child: Column(
@@ -40,9 +38,7 @@ class ShopMain extends StatelessWidget {
                       height: 1.h,
                       color: Color(0xfff1f3f5),
                     ),
-                    SizedBox(
-                      height: 24.h,
-                    ),
+                    SizedBox(height: 24.h),
                     Row(
                       children: [
                         InkWell(
@@ -61,9 +57,7 @@ class ShopMain extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(
-                                  height: 14.h,
-                                ),
+                                SizedBox(height: 14.h),
                                 Text(
                                   '1',
                                   style: TextStyle(
@@ -73,9 +67,7 @@ class ShopMain extends StatelessWidget {
                                       fontWeight: FontWeight.w700,
                                       height: 1),
                                 ),
-                                SizedBox(
-                                  height: 11.h,
-                                ),
+                                SizedBox(height: 11.h),
                                 Text(
                                   '내 상품',
                                   style: TextStyle(
@@ -84,16 +76,14 @@ class ShopMain extends StatelessWidget {
                                       fontFamily: 'NotoSansCJKKR',
                                       height: 1),
                                 ),
-                                SizedBox(
-                                  height: 13.h,
-                                ),
+                                SizedBox(height: 13.h),
                               ],
                             ),
                           ),
                         ),
                         SizedBox(width: 16.w),
                         InkWell(
-                          onTap: () async {
+                          onTap: () {
                             Get.to(() => ShopOrderManagement(),
                                 binding: OwnerOrderBinding());
                           },
@@ -109,9 +99,7 @@ class ShopMain extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(
-                                  height: 14.h,
-                                ),
+                                SizedBox(height: 14.h),
                                 Text(
                                   '21',
                                   style: TextStyle(
@@ -121,9 +109,7 @@ class ShopMain extends StatelessWidget {
                                       fontWeight: FontWeight.w700,
                                       height: 1),
                                 ),
-                                SizedBox(
-                                  height: 11.h,
-                                ),
+                                SizedBox(height: 11.h),
                                 Text(
                                   '주문 관리',
                                   style: TextStyle(
@@ -132,18 +118,14 @@ class ShopMain extends StatelessWidget {
                                       fontFamily: 'NotoSansCJKKR',
                                       height: 1),
                                 ),
-                                SizedBox(
-                                  height: 13.h,
-                                ),
+                                SizedBox(height: 13.h),
                               ],
                             ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
+                    SizedBox(height: 15.h),
                     Divider(
                       color: Color(0xfff1f3f5),
                       height: 1.h,
@@ -152,9 +134,7 @@ class ShopMain extends StatelessWidget {
                       onTap: () {},
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: 15.h,
-                          ),
+                          SizedBox(height: 15.h),
                           Row(
                             children: [
                               SvgPicture.asset(
@@ -162,9 +142,7 @@ class ShopMain extends StatelessWidget {
                                 width: 30.w,
                                 height: 30.h,
                               ),
-                              SizedBox(
-                                width: 16.w,
-                              ),
+                              SizedBox(width: 16.w),
                               Expanded(
                                 child: Text(
                                   '판매 내역 보기',
@@ -181,9 +159,7 @@ class ShopMain extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
+                          SizedBox(height: 15.h),
                         ],
                       ),
                     ),
@@ -197,9 +173,7 @@ class ShopMain extends StatelessWidget {
                       },
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: 15.h,
-                          ),
+                          SizedBox(height: 15.h),
                           Row(
                             children: [
                               SvgPicture.asset(
@@ -207,9 +181,7 @@ class ShopMain extends StatelessWidget {
                                 width: 30.w,
                                 height: 30.h,
                               ),
-                              SizedBox(
-                                width: 16.w,
-                              ),
+                              SizedBox(width: 16.w),
                               Expanded(
                                 child: Text(
                                   '쪽지 관리하기',
@@ -226,9 +198,7 @@ class ShopMain extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
+                          SizedBox(height: 15.h),
                         ],
                       ),
                     ),
@@ -237,16 +207,16 @@ class ShopMain extends StatelessWidget {
                       height: 1.h,
                     ),
                     InkWell(
-                      onTap: () async {
-                        await OwnerReviewBinding().dependencies();
-                        await OwnerReviewCommentBinding().dependencies();
-                        Get.to(() => ShopReviewManagement());
+                      onTap: () {
+                        Get.to(() => ShopReviewManagement(),
+                            binding: BindingsBuilder(() {
+                          OwnerReviewBinding();
+                          OwnerReviewCommentBinding();
+                        }));
                       },
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: 15.h,
-                          ),
+                          SizedBox(height: 15.h),
                           Row(
                             children: [
                               SvgPicture.asset(
@@ -254,9 +224,7 @@ class ShopMain extends StatelessWidget {
                                 width: 30.w,
                                 height: 30.h,
                               ),
-                              SizedBox(
-                                width: 16.w,
-                              ),
+                              SizedBox(width: 16.w),
                               Expanded(
                                 child: Text(
                                   '리뷰 관리하기',
@@ -273,9 +241,7 @@ class ShopMain extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
+                          SizedBox(height: 15.h),
                         ],
                       ),
                     ),
@@ -289,9 +255,7 @@ class ShopMain extends StatelessWidget {
                       },
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: 15.h,
-                          ),
+                          SizedBox(height: 15.h),
                           Row(
                             children: [
                               SvgPicture.asset(
@@ -299,9 +263,7 @@ class ShopMain extends StatelessWidget {
                                 width: 30.w,
                                 height: 30.h,
                               ),
-                              SizedBox(
-                                width: 16.w,
-                              ),
+                              SizedBox(width: 16.w),
                               Expanded(
                                 child: Text(
                                   '내 판매 페이지 미리보기',
@@ -318,9 +280,7 @@ class ShopMain extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
+                          SizedBox(height: 15.h),
                         ],
                       ),
                     ),
@@ -329,15 +289,13 @@ class ShopMain extends StatelessWidget {
                       height: 1.h,
                     ),
                     InkWell(
-                      onTap: () async {
-                        await OwnerShopFAQBinding().dependencies();
-                        Get.to(() => ShopFAQManagement());
+                      onTap: () {
+                        Get.to(() => ShopFAQManagement(),
+                            binding: OwnerShopFAQBinding());
                       },
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: 15.h,
-                          ),
+                          SizedBox(height: 15.h),
                           Row(
                             children: [
                               SvgPicture.asset(
@@ -345,9 +303,7 @@ class ShopMain extends StatelessWidget {
                                 width: 30.w,
                                 height: 30.h,
                               ),
-                              SizedBox(
-                                width: 16.w,
-                              ),
+                              SizedBox(width: 16.w),
                               Expanded(
                                 child: Text(
                                   'FAQ 관리하기',
@@ -364,9 +320,7 @@ class ShopMain extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
+                          SizedBox(height: 15.h),
                         ],
                       ),
                     ),
@@ -377,15 +331,14 @@ class ShopMain extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () async {
-                        await OwnerOrderBinding().dependencies();
-                        await initializeDateFormatting(Localizations.localeOf(context).languageCode);
-                        Get.to(() => ShopOrderTest());
+                        await initializeDateFormatting(
+                            Localizations.localeOf(context).languageCode);
+                        Get.to(() => ShopOrderTest(),
+                            binding: OwnerOrderBinding());
                       },
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: 15.h,
-                          ),
+                          SizedBox(height: 15.h),
                           Row(
                             children: [
                               SvgPicture.asset(
@@ -393,9 +346,7 @@ class ShopMain extends StatelessWidget {
                                 width: 30.w,
                                 height: 30.h,
                               ),
-                              SizedBox(
-                                width: 16.w,
-                              ),
+                              SizedBox(width: 16.w),
                               Expanded(
                                 child: Text(
                                   '주문관리 ( 테스트 )',
@@ -412,9 +363,7 @@ class ShopMain extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 15.h,
-                          ),
+                          SizedBox(height: 15.h),
                         ],
                       ),
                     ),

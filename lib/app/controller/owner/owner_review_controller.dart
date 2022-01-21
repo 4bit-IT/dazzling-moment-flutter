@@ -68,9 +68,9 @@ class OwnerReviewController extends GetxController {
 
   @override
   void onInit() async {
-    await loadOwnerReview(0);
     // TODO: implement onInit
     super.onInit();
+    await loadOwnerReview(0);
   }
 }
 
@@ -80,12 +80,13 @@ class CommentModel {
   bool? isFetch;
   int? reviewCommentId;
 
-  CommentModel({this.commentController, this.commentFocusNode, this.isFetch, this.reviewCommentId});
+  CommentModel(
+      {this.commentController, this.commentFocusNode, this.isFetch, this.reviewCommentId});
 }
 
 class OwnerReviewBinding extends Bindings {
   @override
-  Future<void> dependencies() async {
+  void dependencies() {
     // TODO: implement dependencies
     Get.put<OwnerReviewController>(OwnerReviewController());
   }

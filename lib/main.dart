@@ -74,7 +74,7 @@ class Damo extends StatelessWidget with WidgetsBindingObserver {
                   ),
                 ),
           home:AnimatedSplashScreen(
-            duration: 1500,
+            duration: 1000,
             splash: Image.asset('assets/images/스플래시@3x.png',width: 375.w,fit: BoxFit.fill,),
             nextScreen: tokenController.isAutoLogin.value == true ? HomeMain() : Sign(),
             splashTransition: SplashTransition.fadeTransition,

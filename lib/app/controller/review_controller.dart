@@ -61,9 +61,9 @@ class ReviewController extends GetxController {
 
   @override
   void onInit() async {
-    await loadReview(0);
-    await loadShopRatingList(shopController.shopGetDetailModel.value.id!);
     // TODO: implement onInit
     super.onInit();
+    await loadReview(0);
+    await loadShopRatingList(shopController.shopGetDetailModel.value.id!);
   }
 }
