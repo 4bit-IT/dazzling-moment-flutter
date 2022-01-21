@@ -30,6 +30,7 @@ class OwnerShopFAQNetwork {
         return jsonDecode(utf8.decode(response.bodyBytes));
       } else {
         print('getFAQ 통신 오류');
+        print(response.statusCode);
       }
     } catch (e) {
       print(e);

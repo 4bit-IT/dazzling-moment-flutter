@@ -187,7 +187,7 @@ class OwnerShopFAQController extends GetxController {
 
 class OwnerShopFAQBinding extends Bindings {
   @override
-  Future<void> dependencies() async {
+  void dependencies() {
     // TODO: implement dependencies
     Get.put<OwnerShopFAQController>(OwnerShopFAQController());
   }
