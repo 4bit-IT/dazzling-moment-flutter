@@ -234,3 +234,11 @@ class UserImageModel {
 
   UserImageModel({this.imageUrl, this.image, this.defaultImage});
 }
+
+class UserBinding extends Bindings {
+  @override
+  void dependencies() {
+    // TODO: implement dependencies
+    Get.put<UserController>(UserController());
+  }
+}

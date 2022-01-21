@@ -1,9 +1,9 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:damo/app/controller/sign_controller.dart';
+import 'package:damo/app/data/provider/agreement_api.dart';
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/get_user_name.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
-import 'package:damo/view/main/home_main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +15,7 @@ class Sign extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(3);
     signController.initialized
         ? signController = Get.find()
         : Get.lazyPut(() => SignController());
@@ -27,28 +28,20 @@ class Sign extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 278.h,
-                  ),
+                  SizedBox(height: 278.h),
                   SvgPicture.asset('assets/images_svg/logo_login.svg',
                       width: 85.w, height: 98.3.h),
-                  SizedBox(
-                    height: 214.h,
-                  ),
+                  SizedBox(height: 214.h),
                   Row(
                     children: [
-                      SizedBox(
-                        width: 16.w,
-                      ),
+                      SizedBox(width: 16.w),
                       Expanded(
                         child: Divider(
                           color: Color(0xfff1f3f5),
                           thickness: 1.h,
                         ),
                       ),
-                      SizedBox(
-                        width: 9.w,
-                      ),
+                      SizedBox(width: 9.w),
                       Text(
                         '간편 로그인',
                         style: TextStyle(
@@ -58,59 +51,44 @@ class Sign extends StatelessWidget {
                           height: 1,
                         ),
                       ),
-                      SizedBox(
-                        width: 9.w,
-                      ),
+                      SizedBox(width: 9.w),
                       Expanded(
                         child: Divider(
                           color: Color(0xfff1f3f5),
                           thickness: 1.h,
                         ),
                       ),
-                      SizedBox(
-                        width: 16.w,
-                      ),
+                      SizedBox(width: 16.w),
                     ],
                   ),
-                  SizedBox(
-                    height: 40.h,
-                  ),
+                  SizedBox(height: 40.h),
                   Row(
                     children: [
-                      SizedBox(
-                        width: 94.w,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Get.to(() => GetUserInfo());
-                        },
-                        child: Container(
-                          width: 93.w,
-                          child: Column(
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Get.to(() => GetUserInfo());
-                                },
-                                child: SvgPicture.asset(
-                                  'assets/images_svg/ic_login_apple.svg',
-                                  width: 44.w,
-                                  height: 44.h,
-                                ),
+                      SizedBox(width: 94.w),
+                      Container(
+                        width: 93.w,
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Get.to(() => GetUserNumber());
+                              },
+                              child: SvgPicture.asset(
+                                'assets/images_svg/ic_login_apple.svg',
+                                width: 44.w,
+                                height: 44.h,
                               ),
-                              SizedBox(
-                                height: 10.h,
+                            ),
+                            SizedBox(height: 10.h),
+                            Text(
+                              '애플',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 13,
+                                fontFamily: 'NotoSansCJKKR',
                               ),
-                              Text(
-                                '애플',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 13,
-                                  fontFamily: 'NotoSansCJKKR',
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                       Container(
@@ -127,9 +105,7 @@ class Sign extends StatelessWidget {
                                 height: 44.h,
                               ),
                             ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
+                            SizedBox(height: 10.h),
                             Text(
                               '카카오',
                               style: TextStyle(
@@ -141,16 +117,12 @@ class Sign extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        width: 95.w,
-                      ),
+                      SizedBox(width: 95.w),
                     ],
                   ),
                   Column(
                     children: [
-                      SizedBox(
-                        height: 200,
-                      ),
+                      SizedBox(height: 200),
                       MaterialButton(
                         minWidth: double.infinity,
                         height: 60,
@@ -170,14 +142,12 @@ class Sign extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 7,
-                      ),
+                      SizedBox(height: 7),
                       MaterialButton(
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
-                          Get.to(() => HomeMain());
+                          Get.to(() => GetUserNumber());
                         },
                         color: Colors.green,
                         elevation: 0,
@@ -192,17 +162,19 @@ class Sign extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 7,
-                      ),
+                      SizedBox(height: 7),
                       MaterialButton(
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
                           Get.to(
-                                () => AnimatedSplashScreen(
-                              duration: 1500,
-                              splash: Image.asset('assets/images/스플래시@3x.png',width: 375.w,fit: BoxFit.fill,),
+                            () => AnimatedSplashScreen(
+                              duration: 1000,
+                              splash: Image.asset(
+                                'assets/images/스플래시@3x.png',
+                                width: 375.w,
+                                fit: BoxFit.fill,
+                              ),
                               nextScreen: Sign(),
                               splashTransition: SplashTransition.fadeTransition,
                               backgroundColor: Colors.white,

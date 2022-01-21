@@ -1,6 +1,7 @@
 import 'package:damo/app/controller/notification/notofication_controller.dart';
 import 'package:damo/app/controller/shop_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
+import 'package:damo/app/data/provider/agreement_api.dart';
 import 'package:damo/view/product/product.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/viewmodel/bar/bottom_navigaton.dart';
@@ -17,17 +18,15 @@ import 'package:intl/intl.dart';
 var formatter = NumberFormat('#,##,000');
 
 class HomeMain extends StatelessWidget {
-  final NotificationController notificationController =
-      Get.put(NotificationController());
+  final notificationController = Get.put(NotificationController());
+  final userController = Get.put(UserController(),permanent: true);
+  final shopController = Get.put(ShopController());
   int pageNumber = 1;
   String sortValue = 'RATING';
   List sortValueName = ['별점순', '리뷰많은순', '가격순', '최신순', '오래된순'];
-  UserController userController = Get.put(UserController(), permanent: true);
   ScrollController scrollController = ScrollController();
-  ShopController shopController = Get.put(ShopController());
   RefreshController _refreshController =
       RefreshController(initialRefresh: true);
-  DamoAppBar appBar = DamoAppBar();
 
   void _onLoading() async {
     await Future.delayed(Duration(milliseconds: 500));
@@ -44,7 +43,7 @@ class HomeMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar.appBar(context),
+      appBar: DamoAppBar().appBar(context),
       drawer: DrawerButton(),
       bottomNavigationBar: BottomNavigation(
         selectedBottomNavigationBarIndex: 0,

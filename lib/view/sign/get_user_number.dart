@@ -8,7 +8,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
-class GetUserInfo extends StatelessWidget {
+class GetUserNumber extends StatelessWidget {
   final SignController signController = Get.find();
 
   @override
@@ -35,9 +35,7 @@ class GetUserInfo extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '휴대폰 번호'
-                    ),
+                    Text('휴대폰 번호'),
                     SizedBox(
                       height: 16.h,
                     ),
@@ -101,9 +99,7 @@ class GetUserInfo extends StatelessWidget {
                                     bottomRight: Radius.circular(10.r),
                                   ),
                                 ),
-                                child: Text(
-                                  '인증문자 받기'
-                                ),
+                                child: Text('인증문자 받기'),
                               ),
                             ),
                           ),
@@ -113,9 +109,7 @@ class GetUserInfo extends StatelessWidget {
                     SizedBox(
                       height: 24.h,
                     ),
-                    Text(
-                      '인증 번호'
-                    ),
+                    Text('인증 번호'),
                     SizedBox(
                       height: 16.h,
                     ),
@@ -154,7 +148,6 @@ class GetUserInfo extends StatelessWidget {
                               decoration: InputDecoration(
                                 border: InputBorder.none,
                                 hintText: '인증번호를 입력해주세요',
-
                               ),
                             ),
                           ),
@@ -168,8 +161,7 @@ class GetUserInfo extends StatelessWidget {
                                   seconds: 120,
                                   build: (BuildContext context, double time) {
                                     return Text(
-                                      '${(time ~/ 60).toString()} : ${(time.toInt() % 60).toString()}'
-                                    );
+                                        '${(time ~/ 60).toString()} : ${(time.toInt() % 60).toString()}');
                                   },
                                 ),
                               ),
@@ -205,11 +197,16 @@ class GetUserInfo extends StatelessWidget {
               child: Obx(
                 () => Container(
                   alignment: Alignment.center,
-                  height: 52.h,
-                  width: 375.w,
+                  height: 60.h,
                   color: signController.confirmAuthNumberButtonColor.value,
                   child: Text(
-                    '인증문자 확인'
+                    '인증문자 확인',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.sp,
+                      fontFamily: 'NotoSansCJKKR',
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ),

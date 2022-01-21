@@ -71,3 +71,12 @@ class NotificationController extends GetxController {
     });
   }
 }
+
+class NotificationBinding extends Bindings {
+  @override
+  void dependencies() {
+    // TODO: implement dependencies
+    Get.put<NotificationController>(NotificationController());
+  }
+
+}

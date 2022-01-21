@@ -1,3 +1,5 @@
+import 'package:damo/app/controller/shop_controller.dart';
+import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/app/data/model/oauth_model.dart';
 import 'package:damo/app/data/model/token_model.dart';
 import 'package:damo/app/data/model/user_model.dart';
@@ -14,6 +16,8 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:timer_count_down/timer_controller.dart';
+
+import 'notification/notofication_controller.dart';
 
 class SignController extends GetxController {
   Rx<AuthSignModel> authSignModel = AuthSignModel().obs;
@@ -86,14 +90,18 @@ class SignController extends GetxController {
     if (authLoginModel.value.code == 1) {
       if (authLoginModel.value.isFirst == true) {
         print('첫 로그인이므로 회원가입 페이지로 이동합니다.');
-        Get.to(() => GetUserInfo());
+        Get.to(() => GetUserNumber(), binding: SignBinding());
       }
       if (authLoginModel.value.isFirst == false) {
         print('이미 가입 된 유저이므로 토큰 저장 후, 메인페이지로 이동합니다.');
         TokenModel().saveToken(authLoginModel.value.accessToken!, authLoginModel.value.refreshToken!);
         tokenController.token!['accessToken'] = authLoginModel.value.accessToken!;
         tokenController.token!['refreshToken'] = authLoginModel.value.refreshToken!;
-        Get.offAll(() => HomeMain());
+        Get.offAll(() => HomeMain(), binding: BindingsBuilder(() {
+          NotificationBinding().dependencies();
+          UserBinding().dependencies();
+          ShopBinding().dependencies();
+        }));
       }
     }
     if (authLoginModel.value.code == 2) {
@@ -144,7 +152,6 @@ class SignController extends GetxController {
         isNicknameCheck.value = false;
         nicknameCheckString.value = '이미 존재하는 닉네임 입니다.';
       }
-      isNicknameCheck.value = true;
     } else {
       nicknameCheckString.value = '알맞지 않은 닉네임 입력입니다.\n* 한글, 숫자, 영문으로 된 2~8자로 구성해주세요.';
     }
@@ -305,4 +312,12 @@ class AcceptRadioModel {
   late String description;
 
   AcceptRadioModel(String description) : this.description = description;
+}
+
+class SignBinding extends Bindings {
+  @override
+  void dependencies() {
+    // TODO: implement dependencies
+    Get.put<SignController>(SignController());
+  }
 }

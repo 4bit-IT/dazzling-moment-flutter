@@ -210,8 +210,8 @@ class ShopMain extends StatelessWidget {
                       onTap: () {
                         Get.to(() => ShopReviewManagement(),
                             binding: BindingsBuilder(() {
-                          OwnerReviewBinding();
-                          OwnerReviewCommentBinding();
+                          OwnerReviewBinding().dependencies();
+                          OwnerReviewCommentBinding().dependencies();
                         }));
                       },
                       child: Column(

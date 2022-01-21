@@ -134,3 +134,11 @@ class DetailModel {
 
   DetailModel({this.check, this.count});
 }
+
+class ShopBinding extends Bindings {
+  @override
+  void dependencies() {
+    // TODO: implement dependencies
+    Get.put<ShopController>(ShopController());
+  }
+}
