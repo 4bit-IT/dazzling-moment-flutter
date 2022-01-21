@@ -37,6 +37,10 @@ class HomeMain extends StatelessWidget {
     _refreshController.loadComplete();
   }
 
+  void _onRefresh() async {
+    _refreshController.refreshCompleted();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,41 +50,47 @@ class HomeMain extends StatelessWidget {
         selectedBottomNavigationBarIndex: 0,
         scrollController: scrollController,
       ),
-      body: Obx(
-        () => Column(
-          children: [
-            SvgPicture.asset(
-              'assets/images_svg/img_main_banner.svg',
-              width: 375.w,
-              fit: BoxFit.fill,
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 10.h, 0, 0),
-              child: Container(
-                  height: 40.h,
-                  child: ListView.builder(
-                      itemCount: sortValueName.length,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Row(
-                          children: [
-                            InkWell(
-                              onTap: () async {
-                                pageNumber = 1;
-                                sortValue = shopController.sortValueName[index];
-                                await shopController.sortMainPage(index);
-                                shopController.currentSortIndex.value = index;
-                              },
-                              child: Container(
-                                height: 40.h,
+      body: Column(
+        children: [
+          SvgPicture.asset(
+            'assets/images_svg/img_main_banner.svg',
+            width: 375.w,
+            fit: BoxFit.fill,
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 9.h, 0, 0),
+            child: Container(
+                height: 40.h,
+                child: ListView.builder(
+                    itemCount: sortValueName.length,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Row(
+                        children: [
+                          InkWell(
+                            onTap: () async {
+                              pageNumber = 1;
+                              sortValue = shopController.sortValueName[index];
+                              await shopController.sortMainPage(index);
+                              shopController.currentSortIndex.value = index;
+                              _onRefresh();
+                            },
+                            child: Obx(
+                              () => Container(
+                                height: 30.h,
                                 width: 74.w,
                                 decoration: BoxDecoration(
                                   color: index ==
                                           shopController.currentSortIndex.value
-                                      ? Color(0x4fc9c7c7)
-                                      : null,
+                                      ? Colors.white
+                                      : Color(0x4fc9c7c7),
                                   borderRadius: BorderRadius.circular(13.r),
+                                  border: index ==
+                                          shopController.currentSortIndex.value
+                                      ? Border.all(
+                                          color: Color(0xfff93f5b), width: 0.7)
+                                      : null,
                                 ),
                                 child: Center(
                                   child: Text(
@@ -94,7 +104,7 @@ class HomeMain extends StatelessWidget {
                                       fontWeight: shopController
                                                   .currentSortIndex.value ==
                                               index
-                                          ? FontWeight.w700
+                                          ? FontWeight.w500
                                           : null,
                                       fontSize: 12,
                                       fontFamily: 'NotoSansCJKKR',
@@ -103,68 +113,57 @@ class HomeMain extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(width: 5.w),
-                          ],
-                        );
-                      })
-                  // InkWell(
-                  //   onTap: () {},
-                  //   child: SvgPicture.asset(
-                  //     'assets/images_svg/ic_filter.svg',
-                  //     width: 30.w,
-                  //     height: 30.h,
-                  //   ),
-                  // ),
-
-                  ),
-            ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 10.h, 0, 5.h),
-              child: Container(
-                height: 1.5,
-                margin: EdgeInsets.only(
-                  left: 16.w,
-                  right: 16.w,
-                ),
-                decoration: BoxDecoration(
-                  color: Color(0xfff1f3f5),
-                  borderRadius: BorderRadius.circular(25),
-                ),
+                          ),
+                          SizedBox(width: 5.w),
+                        ],
+                      );
+                    })),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 5.h, 0, 5.h),
+            child: Container(
+              height: 1.5,
+              margin: EdgeInsets.only(
+                left: 16.w,
+                right: 16.w,
+              ),
+              decoration: BoxDecoration(
+                color: Color(0xfff1f3f5),
+                borderRadius: BorderRadius.circular(25),
               ),
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                controller: scrollController,
-                child: Container(
-                  height: 460.h,
-                  child: SmartRefresher(
-                    enablePullDown: false,
-                    //refresh 비활성화
-                    enablePullUp: true,
-                    //loading 활성화
-                    controller: _refreshController,
-                    footer: CustomFooter(
-                      builder: (BuildContext context, LoadStatus? mode) {
-                        Widget body;
-                        if (mode == LoadStatus.idle) {
-                          body = Text(' ');
-                        } else if (mode == LoadStatus.loading) {
-                          body = CupertinoActivityIndicator();
-                        } else if (mode == LoadStatus.failed) {
-                          body = Text('  ');
-                        } else if (mode == LoadStatus.canLoading) {
-                          body = Text(' ');
-                        } else {
-                          body = Text(' ');
-                        }
-                        return Container(
-                          height: 55.0,
-                          child: Center(child: body),
-                        );
-                      },
-                    ),
-                    onLoading: _onLoading,
-                    child: GridView.builder(
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              controller: scrollController,
+              child: Container(
+                height: 460.h,
+                child: SmartRefresher(
+                  enablePullDown: false,
+                  //refresh 비활성화
+                  enablePullUp: true,
+                  //loading 활성화
+                  controller: _refreshController,
+                  footer: CustomFooter(
+                    builder: (BuildContext context, LoadStatus? mode) {
+                      Widget body;
+                      if (mode == LoadStatus.idle) {
+                        body = Text(' ');
+                      } else if (mode == LoadStatus.loading) {
+                        body = CupertinoActivityIndicator();
+                      } else {
+                        body = Text(' ');
+                      }
+                      return Container(
+                        height: 55.0,
+                        child: Center(child: body),
+                      );
+                    },
+                  ),
+                  onLoading: _onLoading,
+                  onRefresh: _onRefresh,
+                  child: Obx(
+                    () => GridView.builder(
                       itemCount: shopController.storageMainPage.length,
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
@@ -178,11 +177,13 @@ class HomeMain extends StatelessWidget {
                         return CupertinoButton(
                           padding: EdgeInsets.all(0),
                           onPressed: () async {
-                            await shopController.loadShopDetail(shopController
-                                .loadShopMainPageModel
-                                .value
-                                .snippetList[index]['id']);
-                            Get.to(() => Product(), arguments: index);
+                            print(
+                                "ShopId:${shopController.storageMainPage[index]['id']}");
+                            await shopController.loadShopDetail(
+                                shopController.storageMainPage[index]['id']);
+                            Get.to(() => Product(),
+                                arguments: shopController.storageMainPage[index]
+                                    ['id']);
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,15 +210,6 @@ class HomeMain extends StatelessWidget {
                                           fit: BoxFit.fill,
                                           cache: false,
                                         ),
-                                  // Positioned(
-                                  //   left: 10.w,
-                                  //   bottom: 10.h,
-                                  //   child: SvgPicture.asset(
-                                  //     'assets/images_svg/ic_new.svg',
-                                  //     width: 38.w,
-                                  //     height: 20.h,
-                                  //   ),
-                                  // ),
                                   Obx(
                                     () => Positioned(
                                       right: 5.w,
@@ -339,8 +331,8 @@ class HomeMain extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

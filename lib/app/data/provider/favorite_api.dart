@@ -40,4 +40,16 @@ class FavoriteNetwork {
       print(e);
     }
   }
+
+  Future<dynamic> getFavorites(int pageNumber) async {
+    try {
+      http.Response response = await http.get(
+        Uri.parse(baseUri + '/favorites' + "?page=$pageNumber"),
+        headers: headers,
+      );
+      return jsonDecode(utf8.decode(response.bodyBytes));
+    } catch (e) {
+      print(e);
+    }
+  }
 }

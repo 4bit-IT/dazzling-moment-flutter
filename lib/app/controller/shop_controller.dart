@@ -33,7 +33,6 @@ class ShopController extends GetxController {
 
   @override
   void onInit() async {
-    // TODO: implement onInit
     super.onInit();
     await loadShopMain(0, 'RATING');
   }
@@ -100,7 +99,7 @@ class ShopController extends GetxController {
         val.description = model.description;
         val.result = model.result;
       });
-      storageMainPage.clear();
+
       for (dynamic snippetList in loadShopMainPageModel.value.snippetList) {
         if (snippetList['isFavorite'] == true) {
           snippetList['isFavoriteButton'] = wishIconOn.obs;
@@ -118,6 +117,7 @@ class ShopController extends GetxController {
     await Future.delayed(Duration(milliseconds: 300));
     String sortValue = sortValueName[sortIndex];
     loadShopMainPageModel.value.hasNextPage = true;
+    storageMainPage.clear();
     await loadShopMain(0, sortValue);
   }
 }

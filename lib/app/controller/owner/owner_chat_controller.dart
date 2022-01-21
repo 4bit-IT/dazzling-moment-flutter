@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -8,7 +7,7 @@ class OwnerChatDataBase {
   var path;
 
   Future<Database> get fixed_database async {
-    if(fixedDatabase != null) return fixedDatabase;
+    if (fixedDatabase != null) return fixedDatabase;
 
     fixedDatabase = openDatabase(
       join(await getDatabasesPath(), 'fixed_database.db'),
@@ -18,8 +17,5 @@ class OwnerChatDataBase {
     return fixedDatabase;
   }
 
-  void createTable(Database db) {
-  }
-
-
+  void createTable(Database db) {}
 }

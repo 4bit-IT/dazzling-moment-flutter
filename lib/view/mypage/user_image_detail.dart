@@ -1,9 +1,6 @@
-import 'package:damo/app/controller/owner/owner_shop_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class UserImageDetail extends StatelessWidget {
