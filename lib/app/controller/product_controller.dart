@@ -18,6 +18,7 @@ class ProductController extends GetxController {
       (i) => RxList.generate(1000, (_) => false.obs, growable: false),
       growable: false);
   RxInt price = 0.obs;
+  
 
   Future<void> onClickedOptionSelect() async {
     return Get.bottomSheet(

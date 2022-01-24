@@ -50,13 +50,17 @@ class _DrawerButtonState extends State<DrawerButton> {
                     TokenModel().removeToken();
                     Get.offAll(
                       () => AnimatedSplashScreen(
-                        duration: 500,
-                        splash: SvgPicture.asset('assets/images_svg/스플래시.svg',fit: BoxFit.fill,),
+                        duration: 1000,
+                        splash: Image.asset(
+                          'assets/images/스플래시@3x.png',
+                          width: 375.w,
+                          fit: BoxFit.fill,
+                        ),
                         nextScreen: Sign(),
                         splashTransition: SplashTransition.fadeTransition,
                         pageTransitionType: PageTransitionType.fade,
                         backgroundColor: Colors.white,
-                        splashIconSize: 300.0,
+                        splashIconSize: 812.h,
                       ),
                     );
                   },

@@ -7,7 +7,8 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:get/get.dart';
 
 class ShopOrderTest extends StatelessWidget {
-  final OwnerOrderController ownerOrderController = Get.find<OwnerOrderController>();
+  final OwnerOrderController ownerOrderController =
+      Get.find<OwnerOrderController>();
   final Map orderStatus = <String, String>{
     'PENDING': '판매자 확인 중',
     'ALLOW': '주문 수락',
@@ -31,8 +32,8 @@ class ShopOrderTest extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          shape: Border(
-              bottom: BorderSide(color: Color(0xfff1f3f5), width: 1.h)),
+          shape:
+              Border(bottom: BorderSide(color: Color(0xfff1f3f5), width: 1.h)),
           centerTitle: true,
           iconTheme: IconThemeData(
             color: Colors.black,
@@ -63,72 +64,115 @@ class ShopOrderTest extends StatelessWidget {
         ),
         backgroundColor: Colors.white,
         body: Obx(
-              () => ownerOrderController.isLoadingOrderData.value
+          () => ownerOrderController.isLoadingOrderData.value
               ? Loading().simpleLoading()
               : TabBarView(
-            children: [
-              Column(
-                children: [
-                  Obx(
-                        () => TableCalendar(
-                      pageAnimationEnabled: false,
-                      daysOfWeekHeight: 30.h,
-                      rowHeight: 80.h,
-                      firstDay:
-                      DateTime.now().subtract(Duration(days: 365)),
-                      lastDay: DateTime.now().add(Duration(days: 365)),
-                      selectedDayPredicate: (day) {
-                        return isSameDay(
-                            ownerOrderController.focusedDay.value, day);
-                      },
-                      focusedDay: ownerOrderController.focusedDay.value,
-                      locale: 'ko_KR',
-                      calendarFormat: CalendarFormat.month,
-                      availableCalendarFormats: const {
-                        CalendarFormat.month: '한달',
-                      },
-                      onDaySelected: (selected, focused) {
-                        daySelected(selected, focused);
-                      },
-                      onPageChanged: (focusedDay) {
-                        ownerOrderController.focusedDay.value =
-                            focusedDay;
-                      },
-                      calendarStyle: CalendarStyle(
-                        cellMargin: EdgeInsets.zero,
-                        weekendTextStyle:
-                        TextStyle(color: Colors.redAccent),
-                        selectedDecoration: BoxDecoration(
-                          color: Color(0xFF9FA8DA),
-                        ),
-                        selectedTextStyle:
-                        TextStyle(color: Colors.white),
-                        todayDecoration: BoxDecoration(),
-                        todayTextStyle: TextStyle(),
-                      ),
-                      eventLoader: (day) =>
-                      ownerOrderController.event[day] ?? [],
-                      calendarBuilders: CalendarBuilders(
-                        markerBuilder: (BuildContext context,
-                            DateTime dateTime, List event) {
-                          return event.length != 0
-                              ? Text(
-                            '${event.length}',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xfff93f5b),
-                            ),
-                          )
-                              : null;
+                  physics: NeverScrollableScrollPhysics(),
+                  children: [
+                    Obx(
+                      () => TableCalendar(
+                        pageAnimationEnabled: false,
+                        daysOfWeekHeight: 30.h,
+                        rowHeight: 80.h,
+                        firstDay: DateTime.now().subtract(Duration(days: 365)),
+                        lastDay: DateTime.now().add(Duration(days: 365)),
+                        selectedDayPredicate: (day) {
+                          return isSameDay(
+                              ownerOrderController.focusedDay.value, day);
                         },
+                        focusedDay: ownerOrderController.focusedDay.value,
+                        locale: 'ko_KR',
+                        calendarFormat: CalendarFormat.month,
+                        availableCalendarFormats: const {
+                          CalendarFormat.month: '한달',
+                        },
+                        onDaySelected: (selected, focused) {
+                          daySelected(selected, focused);
+                        },
+                        onPageChanged: (focusedDay) {
+                          ownerOrderController.focusedDay.value = focusedDay;
+                        },
+                        calendarStyle: CalendarStyle(
+                          cellMargin: EdgeInsets.zero,
+                          weekendTextStyle: TextStyle(color: Colors.redAccent),
+                          selectedDecoration: BoxDecoration(
+                            color: Color(0xFF9FA8DA),
+                          ),
+                          selectedTextStyle: TextStyle(color: Colors.white),
+                          todayDecoration: BoxDecoration(),
+                          todayTextStyle: TextStyle(),
+                        ),
+                        eventLoader: (day) =>
+                            ownerOrderController.event[day] ?? [],
+                        calendarBuilders: CalendarBuilders(
+                          markerBuilder: (BuildContext context,
+                              DateTime dateTime, List event) {
+                            return event.length != 0
+                                ? Text(
+                                    '${event.length}',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xfff93f5b),
+                                    ),
+                                  )
+                                : null;
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Text('hi')
-            ],
-          ),
+                    Obx(
+                      () => TableCalendar(
+                        pageAnimationEnabled: false,
+                        daysOfWeekHeight: 30.h,
+                        rowHeight: 80.h,
+                        firstDay: DateTime.now().subtract(Duration(days: 365)),
+                        lastDay: DateTime.now().add(Duration(days: 365)),
+                        selectedDayPredicate: (day) {
+                          return isSameDay(
+                              ownerOrderController.focusedDay.value, day);
+                        },
+                        focusedDay: ownerOrderController.focusedDay.value,
+                        locale: 'ko_KR',
+                        calendarFormat: CalendarFormat.month,
+                        availableCalendarFormats: const {
+                          CalendarFormat.month: '한달',
+                        },
+                        onDaySelected: (selected, focused) {
+                          daySelected(selected, focused);
+                        },
+                        onPageChanged: (focusedDay) {
+                          ownerOrderController.focusedDay.value = focusedDay;
+                        },
+                        calendarStyle: CalendarStyle(
+                          cellMargin: EdgeInsets.zero,
+                          weekendTextStyle: TextStyle(color: Colors.redAccent),
+                          selectedDecoration: BoxDecoration(
+                            color: Color(0xFF9FA8DA),
+                          ),
+                          selectedTextStyle: TextStyle(color: Colors.white),
+                          todayDecoration: BoxDecoration(),
+                          todayTextStyle: TextStyle(),
+                        ),
+                        eventLoader: (day) =>
+                            ownerOrderController.event[day] ?? [],
+                        calendarBuilders: CalendarBuilders(
+                          markerBuilder: (BuildContext context,
+                              DateTime dateTime, List event) {
+                            return event.length != 0
+                                ? Text(
+                                    '${event.length}',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xfff93f5b),
+                                    ),
+                                  )
+                                : null;
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
         ),
       ),
     );
@@ -139,7 +183,7 @@ class ShopOrderTest extends StatelessWidget {
     if (ownerOrderController.event[ownerOrderController.focusedDay.value] !=
         null) {
       ownerOrderController.currentFilterList.value =
-      ownerOrderController.event[focused]!;
+          ownerOrderController.event[focused]!;
       Get.dialog(
         WillPopScope(
           onWillPop: () {
@@ -157,82 +201,82 @@ class ShopOrderTest extends StatelessWidget {
                     height: 70.h,
                     padding: EdgeInsets.fromLTRB(0, 0, 0, 16.h),
                     child: Obx(
-                          () => ListView.separated(
+                      () => ListView.separated(
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemCount: ownerOrderController.maxStatusSize.value + 1,
                         itemBuilder: (BuildContext context, int index) {
                           return index == 0
                               ? InkWell(
-                            onTap: () {
-                              ownerOrderController.filterStatus(
-                                  index, 'default');
-                            },
-                            child: Obx(
-                                  () => Container(
-                                padding: EdgeInsets.fromLTRB(
-                                    16.w, 16.h, 16.w, 16.h),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: ownerOrderController
-                                        .currentFilterIndex
-                                        .value ==
-                                        index
-                                        ? Colors.black54
-                                        : null,
-                                    borderRadius:
-                                    BorderRadius.circular(40.r),
-                                    border: Border.all(
-                                        color: Colors.black26)),
-                                child: Text(
-                                  '전체',
-                                  style: TextStyle(
-                                    color: ownerOrderController
-                                        .currentFilterIndex
-                                        .value ==
-                                        index
-                                        ? Colors.white
-                                        : null,
+                                  onTap: () {
+                                    ownerOrderController.filterStatus(
+                                        index, 'default');
+                                  },
+                                  child: Obx(
+                                    () => Container(
+                                      padding: EdgeInsets.fromLTRB(
+                                          16.w, 16.h, 16.w, 16.h),
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          color: ownerOrderController
+                                                      .currentFilterIndex
+                                                      .value ==
+                                                  index
+                                              ? Colors.black54
+                                              : null,
+                                          borderRadius:
+                                              BorderRadius.circular(40.r),
+                                          border: Border.all(
+                                              color: Colors.black26)),
+                                      child: Text(
+                                        '전체',
+                                        style: TextStyle(
+                                          color: ownerOrderController
+                                                      .currentFilterIndex
+                                                      .value ==
+                                                  index
+                                              ? Colors.white
+                                              : null,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
-                          )
+                                )
                               : InkWell(
-                            onTap: () {
-                              ownerOrderController.filterStatus(
-                                  index, statusList2[index - 1]);
-                            },
-                            child: Obx(
-                                  () => Container(
-                                alignment: Alignment.center,
-                                padding: EdgeInsets.fromLTRB(
-                                    16.w, 16.h, 16.w, 16.h),
-                                decoration: BoxDecoration(
-                                    color: ownerOrderController
-                                        .currentFilterIndex
-                                        .value ==
-                                        index
-                                        ? Colors.black54
-                                        : null,
-                                    borderRadius:
-                                    BorderRadius.circular(40.r),
-                                    border: Border.all(
-                                        color: Colors.black26)),
-                                child: Text(
-                                  statusList[index - 1],
-                                  style: TextStyle(
-                                    color: ownerOrderController
-                                        .currentFilterIndex
-                                        .value ==
-                                        index
-                                        ? Colors.white
-                                        : null,
+                                  onTap: () {
+                                    ownerOrderController.filterStatus(
+                                        index, statusList2[index - 1]);
+                                  },
+                                  child: Obx(
+                                    () => Container(
+                                      alignment: Alignment.center,
+                                      padding: EdgeInsets.fromLTRB(
+                                          16.w, 16.h, 16.w, 16.h),
+                                      decoration: BoxDecoration(
+                                          color: ownerOrderController
+                                                      .currentFilterIndex
+                                                      .value ==
+                                                  index
+                                              ? Colors.black54
+                                              : null,
+                                          borderRadius:
+                                              BorderRadius.circular(40.r),
+                                          border: Border.all(
+                                              color: Colors.black26)),
+                                      child: Text(
+                                        statusList[index - 1],
+                                        style: TextStyle(
+                                          color: ownerOrderController
+                                                      .currentFilterIndex
+                                                      .value ==
+                                                  index
+                                              ? Colors.white
+                                              : null,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
-                          );
+                                );
                         },
                         separatorBuilder: (BuildContext context, int index) {
                           return SizedBox(width: 8.w);
@@ -242,21 +286,21 @@ class ShopOrderTest extends StatelessWidget {
                   ),
                   Expanded(
                     child: Obx(
-                          () => SingleChildScrollView(
+                      () => SingleChildScrollView(
                         controller: ownerOrderController.scrollController.value,
                         child: ListView.separated(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           itemCount:
-                          ownerOrderController.currentFilterList.length,
+                              ownerOrderController.currentFilterList.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       '${orderStatus[ownerOrderController.currentFilterList[index]['status']]}',
@@ -271,68 +315,68 @@ class ShopOrderTest extends StatelessWidget {
                                       width: 8.w,
                                     ),
                                     orderStatus[ownerOrderController
-                                        .currentFilterList[
-                                    index]['status']] ==
-                                        '주문 거절' ||
-                                        orderStatus[ownerOrderController
-                                            .currentFilterList[
-                                        index]['status']] ==
-                                            '거래 완료'
+                                                        .currentFilterList[
+                                                    index]['status']] ==
+                                                '주문 거절' ||
+                                            orderStatus[ownerOrderController
+                                                        .currentFilterList[
+                                                    index]['status']] ==
+                                                '거래 완료'
                                         ? Container()
                                         : InkWell(
-                                      onTap: () {
-                                        print(ownerOrderController
-                                            .currentFilterList[index]
-                                        ['status']);
-                                        if (!(ownerOrderController
-                                            .currentFilterList[
-                                        index]['status'] ==
-                                            'REFUSE' ||
-                                            ownerOrderController
-                                                .currentFilterList[
-                                            index]['status'] ==
-                                                'FINISHED'))
-                                          ownerOrderController
-                                              .changeOrderStatusClicked(
-                                              index,
-                                              ownerOrderController
-                                                  .currentFilterList[
-                                              index]['status']);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.fromLTRB(
-                                            8.w, 8.h, 8.w, 8.h),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Color(0xfff1f3f5),
-                                            width: 1,
-                                          ),
-                                          borderRadius:
-                                          BorderRadius.circular(56.r),
-                                        ),
-                                        child: Text(
-                                          '주문 상태 변경',
-                                          style: TextStyle(
-                                            fontSize: 12.sp,
-                                            decoration: ownerOrderController
-                                                .currentFilterList[
-                                            index]
-                                            ['status'] ==
-                                                'REFUSE' ||
+                                            onTap: () {
+                                              print(ownerOrderController
+                                                      .currentFilterList[index]
+                                                  ['status']);
+                                              if (!(ownerOrderController
+                                                              .currentFilterList[
+                                                          index]['status'] ==
+                                                      'REFUSE' ||
+                                                  ownerOrderController
+                                                              .currentFilterList[
+                                                          index]['status'] ==
+                                                      'FINISHED'))
                                                 ownerOrderController
-                                                    .currentFilterList[
-                                                index]
-                                                ['status'] ==
-                                                    'FINISHED'
-                                                ? TextDecoration
-                                                .lineThrough
-                                                : null,
-                                            fontFamily: 'NotoSansCJKKR',
-                                            fontWeight: FontWeight.w500,
+                                                    .changeOrderStatusClicked(
+                                                        index,
+                                                        ownerOrderController
+                                                                .currentFilterList[
+                                                            index]['status']);
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  8.w, 8.h, 8.w, 8.h),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Color(0xfff1f3f5),
+                                                  width: 1,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(56.r),
+                                              ),
+                                              child: Text(
+                                                '주문 상태 변경',
+                                                style: TextStyle(
+                                                  fontSize: 12.sp,
+                                                  decoration: ownerOrderController
+                                                                          .currentFilterList[
+                                                                      index]
+                                                                  ['status'] ==
+                                                              'REFUSE' ||
+                                                          ownerOrderController
+                                                                          .currentFilterList[
+                                                                      index]
+                                                                  ['status'] ==
+                                                              'FINISHED'
+                                                      ? TextDecoration
+                                                          .lineThrough
+                                                      : null,
+                                                  fontFamily: 'NotoSansCJKKR',
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
                                   ],
                                 ),
                                 SizedBox(height: 8.h),
@@ -357,65 +401,65 @@ class ShopOrderTest extends StatelessWidget {
                                   height: 16.h,
                                 ),
                                 Obx(
-                                      () => ListView.builder(
+                                  () => ListView.builder(
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
                                     physics: NeverScrollableScrollPhysics(),
                                     itemCount: ownerOrderController
                                         .currentFilterList[index]['options']
-                                    ['optionList']
+                                            ['optionList']
                                         .length,
                                     itemBuilder: (context, optionIndex) =>
                                         Column(
-                                          crossAxisAlignment:
+                                      crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              '${ownerOrderController.currentFilterList[index]['options']['optionList'][optionIndex]['title']}',
-                                              style: TextStyle(
-                                                color: Color(0xff283137),
-                                                fontSize: 14.sp,
-                                                fontFamily: 'NotoSansCJKKR',
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 8.h,
-                                            ),
-                                            Obx(
-                                                  () => ListView.separated(
-                                                physics:
-                                                NeverScrollableScrollPhysics(),
-                                                shrinkWrap: true,
-                                                scrollDirection: Axis.vertical,
-                                                itemCount: ownerOrderController
-                                                    .currentFilterList[index]
-                                                ['options']['optionList']
-                                                [optionIndex]
-                                                ['optionDetailList']
-                                                    .length,
-                                                itemBuilder:
-                                                    (context, optionDetailIndex) =>
-                                                    Container(
-                                                      child: Text(
-                                                        '- ${ownerOrderController.currentFilterList[index]['options']['optionList'][optionIndex]['optionDetailList'][optionDetailIndex]['content']}',
-                                                        style: TextStyle(
-                                                          color: Color(0xff283137),
-                                                          fontSize: 13.sp,
-                                                          fontFamily: 'NotoSansCJKKR',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                separatorBuilder:
-                                                    (BuildContext context,
-                                                    int index) {
-                                                  return SizedBox(
-                                                    height: 4.h,
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ],
+                                      children: [
+                                        Text(
+                                          '${ownerOrderController.currentFilterList[index]['options']['optionList'][optionIndex]['title']}',
+                                          style: TextStyle(
+                                            color: Color(0xff283137),
+                                            fontSize: 14.sp,
+                                            fontFamily: 'NotoSansCJKKR',
+                                          ),
                                         ),
+                                        SizedBox(
+                                          height: 8.h,
+                                        ),
+                                        Obx(
+                                          () => ListView.separated(
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: ownerOrderController
+                                                .currentFilterList[index]
+                                                    ['options']['optionList']
+                                                    [optionIndex]
+                                                    ['optionDetailList']
+                                                .length,
+                                            itemBuilder:
+                                                (context, optionDetailIndex) =>
+                                                    Container(
+                                              child: Text(
+                                                '- ${ownerOrderController.currentFilterList[index]['options']['optionList'][optionIndex]['optionDetailList'][optionDetailIndex]['content']}',
+                                                style: TextStyle(
+                                                  color: Color(0xff283137),
+                                                  fontSize: 13.sp,
+                                                  fontFamily: 'NotoSansCJKKR',
+                                                ),
+                                              ),
+                                            ),
+                                            separatorBuilder:
+                                                (BuildContext context,
+                                                    int index) {
+                                              return SizedBox(
+                                                height: 4.h,
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                                 SizedBox(

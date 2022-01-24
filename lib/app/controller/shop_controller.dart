@@ -29,8 +29,6 @@ class ShopController extends GetxController {
   var jsonResponse;
   var model;
 
-  List<ShopOptionModel> option = <ShopOptionModel>[].obs;
-
   @override
   void onInit() async {
     super.onInit();
@@ -61,29 +59,11 @@ class ShopController extends GetxController {
         val.reviewCount = model.reviewCount;
         val.shopProfileImage = model.shopProfileImage;
       });
-
-      List<DetailModel> temp = <DetailModel>[];
-      for (int i = 0; i < shopGetDetailModel.value.optionList.length; i++) {
-        temp = <DetailModel>[];
-        for (int j = 0;
-            j <
-                shopGetDetailModel
-                    .value.optionList[i]['optionDetailList'].length;
-            j++) {
-          if (shopGetDetailModel.value.optionList[i]['optionDetailList'][j]
-                  ['allowMultipleChoices'] ==
-              true) {
-            temp.add(DetailModel(check: null, count: 0));
-          } else {
-            temp.add(DetailModel(check: false, count: null));
-          }
-        }
-        option.add(ShopOptionModel(detail: temp));
-      }
     }
     if (model.code == 2) {}
     if (model.code == 3) {}
-    isLoadingShopData = false.obs;
+    isLoadingShopData.value = false;
+    print(isLoadingShopData.value);
   }
 
   Future<void> loadShopMain(int pageNumber, String sortBy) async {
@@ -122,15 +102,11 @@ class ShopController extends GetxController {
   }
 }
 
-class ShopOptionModel {
-  List<DetailModel>? detail;
 
-  ShopOptionModel({this.detail});
-}
-
-class DetailModel {
-  bool? check;
-  int? count;
-
-  DetailModel({this.check, this.count});
+class ShopBinding extends Bindings {
+  @override
+  void dependencies() {
+    // TODO: implement dependencies
+    Get.put<ShopController>(ShopController());
+  }
 }
