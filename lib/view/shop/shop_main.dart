@@ -331,8 +331,6 @@ class ShopMain extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () async {
-                        await initializeDateFormatting(
-                            Localizations.localeOf(context).languageCode);
                         Get.to(() => ShopOrderTest(),
                             binding: OwnerOrderBinding());
                       },

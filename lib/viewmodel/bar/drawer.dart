@@ -51,7 +51,11 @@ class _DrawerButtonState extends State<DrawerButton> {
                     Get.offAll(
                       () => AnimatedSplashScreen(
                         duration: 1000,
-                        splash: Image.asset('assets/images/스플래시@3x.png',width: 375.w,fit: BoxFit.fill,),
+                        splash: Image.asset(
+                          'assets/images/스플래시@3x.png',
+                          width: 375.w,
+                          fit: BoxFit.fill,
+                        ),
                         nextScreen: Sign(),
                         splashTransition: SplashTransition.fadeTransition,
                         backgroundColor: Colors.white,

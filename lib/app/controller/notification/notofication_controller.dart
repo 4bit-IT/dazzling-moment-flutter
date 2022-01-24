@@ -29,17 +29,19 @@ class NotificationController extends GetxController {
     print(FirebaseMessaging.instance.getToken().then((value) => print(value)));
 
     // Android용 새 Notification Channel
-    AndroidNotificationChannel androidNotificationChannel = AndroidNotificationChannel(
+    AndroidNotificationChannel androidNotificationChannel =
+        AndroidNotificationChannel(
       'high_importance_channel', // 임의의 id
       'High Importance Notifications', // 설정에 보일 채널명
       importance: Importance.max,
     );
 
     // Notification Channel을 디바이스에 생성
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(androidNotificationChannel);
 
     // FlutterLocalNotificationsPlugin 초기화. 이 부분은 notification icon 부분에서 다시 다룬다.
@@ -78,5 +80,4 @@ class NotificationBinding extends Bindings {
     // TODO: implement dependencies
     Get.put<NotificationController>(NotificationController());
   }
-
 }

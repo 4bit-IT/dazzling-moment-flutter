@@ -14,6 +14,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:intl/intl.dart';
+import 'package:transition/transition.dart';
+import 'package:get/get_navigation/src/routes/transitions_type.dart' as ts;
 
 var formatter = NumberFormat('#,##,000');
 
@@ -178,7 +180,7 @@ class HomeMain extends StatelessWidget {
                           onPressed: () async {
                             print(
                                 "ShopId:${shopController.storageMainPage[index]['id']}");
-                            await shopController.loadShopDetail(
+                            shopController.loadShopDetail(
                                 shopController.storageMainPage[index]['id']);
                             Get.to(() => Product(),
                                 arguments: shopController.storageMainPage[index]

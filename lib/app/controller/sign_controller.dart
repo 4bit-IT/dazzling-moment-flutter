@@ -30,10 +30,12 @@ class SignController extends GetxController {
   Rx<FocusNode> phoneNumberFocusNode = FocusNode().obs;
   Rx<TextEditingController> nicknameController = TextEditingController().obs;
   Rx<TextEditingController> phoneNumberController = TextEditingController().obs;
-  Rx<TextEditingController> smsAuthNumberController = TextEditingController().obs;
+  Rx<TextEditingController> smsAuthNumberController =
+      TextEditingController().obs;
   Rx<Color> getAuthNumberButtonColor = Color(0xffd1d1d6).obs;
   Rx<Color> confirmAuthNumberButtonColor = Color(0xffd1d1d6).obs;
-  Rx<CountdownController> countdownController = CountdownController(autoStart: true).obs;
+  Rx<CountdownController> countdownController =
+      CountdownController(autoStart: true).obs;
   RxBool countdownVisibility = false.obs;
   RxString nicknameCheckString = '* 닉네임은 한글, 숫자, 영문으로 된 2~8자로 구성해주세요.'.obs;
   RxBool enableGetAuthNumberButton = false.obs;
@@ -55,7 +57,8 @@ class SignController extends GetxController {
     toJsonInput['nickname'] = nicknameController.value.value.text;
     toJsonInput['oauthAccessToken'] = oauthAccessToken.value;
     toJsonInput['phoneNumber'] = phoneNumberController.value.text;
-    jsonResponse = await OauthNetwork().postOauthKakao(AuthSignModel().toJson(toJsonInput));
+    jsonResponse = await OauthNetwork()
+        .postOauthKakao(AuthSignModel().toJson(toJsonInput));
     model = AuthSignModel.fromJson(jsonResponse);
     authSignModel.update((val) {
       val!.code = model.code;
@@ -65,7 +68,8 @@ class SignController extends GetxController {
       val.isFirst = model.isFirst;
       val.result = model.result;
     });
-    TokenModel().saveToken(authSignModel.value.accessToken!, authSignModel.value.refreshToken!);
+    TokenModel().saveToken(
+        authSignModel.value.accessToken!, authSignModel.value.refreshToken!);
     tokenController.token!['accessToken'] = authSignModel.value.accessToken!;
     tokenController.token!['refreshToken'] = authSignModel.value.refreshToken!;
     Get.offAll(() => HomeMain());
@@ -75,7 +79,8 @@ class SignController extends GetxController {
     oauthAccessToken = (await Kakao().getKakaoToken()).obs;
     toJsonInput.clear();
     toJsonInput['oauthAccessToken'] = oauthAccessToken.value;
-    jsonResponse = await OauthNetwork().postOauthKakaoLogin(AuthLoginModel().toJson(toJsonInput));
+    jsonResponse = await OauthNetwork()
+        .postOauthKakaoLogin(AuthLoginModel().toJson(toJsonInput));
     model = AuthLoginModel.fromJson(jsonResponse);
 
     authLoginModel.update((val) {
@@ -94,9 +99,12 @@ class SignController extends GetxController {
       }
       if (authLoginModel.value.isFirst == false) {
         print('이미 가입 된 유저이므로 토큰 저장 후, 메인페이지로 이동합니다.');
-        TokenModel().saveToken(authLoginModel.value.accessToken!, authLoginModel.value.refreshToken!);
-        tokenController.token!['accessToken'] = authLoginModel.value.accessToken!;
-        tokenController.token!['refreshToken'] = authLoginModel.value.refreshToken!;
+        TokenModel().saveToken(authLoginModel.value.accessToken!,
+            authLoginModel.value.refreshToken!);
+        tokenController.token!['accessToken'] =
+            authLoginModel.value.accessToken!;
+        tokenController.token!['refreshToken'] =
+            authLoginModel.value.refreshToken!;
         Get.offAll(() => HomeMain(), binding: BindingsBuilder(() {
           NotificationBinding().dependencies();
           UserBinding().dependencies();
@@ -114,7 +122,8 @@ class SignController extends GetxController {
   }
 
   void onPhoneNumberChanged() {
-    if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$').hasMatch(phoneNumberController.value.value.text) ==
+    if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
+            .hasMatch(phoneNumberController.value.value.text) ==
         true) {
       getAuthNumberButtonColor.value = Color(0xfff93f5b);
       enableGetAuthNumberButton.value = true;
@@ -125,7 +134,9 @@ class SignController extends GetxController {
   }
 
   void onAuthNumberChanged() {
-    if (RegExp(r'^([0-9]{6})$').hasMatch(smsAuthNumberController.value.value.text) == true) {
+    if (RegExp(r'^([0-9]{6})$')
+            .hasMatch(smsAuthNumberController.value.value.text) ==
+        true) {
       confirmAuthNumberButtonColor.value = Color(0xfff93f5b);
     } else {
       confirmAuthNumberButtonColor.value = Color(0xffd1d1d6);
@@ -142,9 +153,14 @@ class SignController extends GetxController {
 
   void doubleCheckClicked() async {
     nicknameFocusNode.value.unfocus();
-    if (RegExp(r'^([가-힣a-zA-Z0-9]){2,8}$').hasMatch(nicknameController.value.text) == true) {
-      Map<String, dynamic> input = {'nickname': nicknameController.value.value.text.toString()};
-      nicknameDoubleCheckModel = await UserNetwork().postUsersCheckNickname(input);
+    if (RegExp(r'^([가-힣a-zA-Z0-9]){2,8}$')
+            .hasMatch(nicknameController.value.text) ==
+        true) {
+      Map<String, dynamic> input = {
+        'nickname': nicknameController.value.value.text.toString()
+      };
+      nicknameDoubleCheckModel =
+          await UserNetwork().postUsersCheckNickname(input);
       if (nicknameDoubleCheckModel.data == true) {
         isNicknameCheck.value = true;
         nicknameCheckString.value = '사용가능한 닉네임 입니다!';
@@ -153,7 +169,8 @@ class SignController extends GetxController {
         nicknameCheckString.value = '이미 존재하는 닉네임 입니다.';
       }
     } else {
-      nicknameCheckString.value = '알맞지 않은 닉네임 입력입니다.\n* 한글, 숫자, 영문으로 된 2~8자로 구성해주세요.';
+      nicknameCheckString.value =
+          '알맞지 않은 닉네임 입력입니다.\n* 한글, 숫자, 영문으로 된 2~8자로 구성해주세요.';
     }
   }
 
@@ -249,7 +266,9 @@ class SignController extends GetxController {
     }
   }
 
-  get confirmButtonColor => (acceptList[1].value.check && acceptList[2].value.check && isNicknameCheck.value)
+  get confirmButtonColor => (acceptList[1].value.check &&
+          acceptList[2].value.check &&
+          isNicknameCheck.value)
       ? Color(0xfff93f5b)
       : Color(0xffd1d1d6);
 
@@ -257,7 +276,8 @@ class SignController extends GetxController {
     readOnlyPhoneNumber = false.obs;
   }
 
-  void signInWithPhoneAuthCredential(PhoneAuthCredential phoneAuthCredential) async {
+  void signInWithPhoneAuthCredential(
+      PhoneAuthCredential phoneAuthCredential) async {
     try {
       await auth.signInWithCredential(phoneAuthCredential);
       Get.to(() => GetUserNickname());
