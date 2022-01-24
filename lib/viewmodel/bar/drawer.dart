@@ -58,7 +58,6 @@ class _DrawerButtonState extends State<DrawerButton> {
                         ),
                         nextScreen: Sign(),
                         splashTransition: SplashTransition.fadeTransition,
-                        pageTransitionType: PageTransitionType.fade,
                         backgroundColor: Colors.white,
                         splashIconSize: 812.h,
                       ),

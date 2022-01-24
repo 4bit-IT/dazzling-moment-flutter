@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:damo/app/controller/sign_controller.dart';
+import 'package:damo/app/data/provider/agreement_api.dart';
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/get_user_name.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';

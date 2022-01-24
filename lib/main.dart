@@ -84,7 +84,6 @@ class Damo extends StatelessWidget with WidgetsBindingObserver {
           ),
           nextScreen:
               tokenController.isAutoLogin.value == true ? HomeMain() : Sign(),
-          splashTransition: SplashTransition.fadeTransition,
           backgroundColor: Colors.white,
           splashIconSize: 812.h,
         ),

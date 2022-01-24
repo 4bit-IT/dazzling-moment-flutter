@@ -168,7 +168,6 @@ class SignController extends GetxController {
         isNicknameCheck.value = false;
         nicknameCheckString.value = '이미 존재하는 닉네임 입니다.';
       }
-      isNicknameCheck.value = true;
     } else {
       nicknameCheckString.value =
           '알맞지 않은 닉네임 입력입니다.\n* 한글, 숫자, 영문으로 된 2~8자로 구성해주세요.';

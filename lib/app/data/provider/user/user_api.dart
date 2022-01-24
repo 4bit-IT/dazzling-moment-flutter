@@ -87,7 +87,7 @@ class UserNetwork {
   Future<NicknameDoubleCheckModel> postUsersCheckNickname(
       Map<String, dynamic> input) async {
     NicknameDoubleCheckModel nicknameDoubleCheckModel =
-        NicknameDoubleCheckModel();
+    NicknameDoubleCheckModel();
     try {
       var body = NicknameDoubleCheckModel().toJson(input);
       http.Response response = await http.post(
