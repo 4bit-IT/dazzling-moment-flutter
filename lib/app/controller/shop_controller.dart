@@ -110,11 +110,3 @@ class ShopBinding extends Bindings {
     Get.put<ShopController>(ShopController());
   }
 }
-
-class ShopBinding extends Bindings {
-  @override
-  void dependencies() {
-    // TODO: implement dependencies
-    Get.put<ShopController>(ShopController());
-  }
-}

@@ -1,10 +1,12 @@
 import 'package:damo/app/controller/owner/owner_order_controller.dart';
+import 'package:damo/app/controller/owner/owner_order_day_controller.dart';
 import 'package:damo/app/controller/owner/owner_review_comment_controller.dart';
 import 'package:damo/app/controller/owner/owner_review_controller.dart';
 import 'package:damo/app/controller/owner/owner_shop_controller.dart';
 import 'package:damo/app/controller/owner/owner_shop_faq_controller.dart';
 import 'package:damo/view/shop/shop_chat_management.dart';
 import 'package:damo/view/shop/shop_faq/shop_faq_management.dart';
+import 'package:damo/view/shop/shop_order_day_management.dart';
 import 'package:damo/view/shop/shop_order_management.dart';
 import 'package:damo/view/shop/shop_order_test.dart';
 import 'package:damo/view/shop/shop_product_modify.dart';
@@ -348,6 +350,42 @@ class ShopMain extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   '주문관리 ( 테스트 )',
+                                  style: TextStyle(
+                                    color: Color(0xff283137),
+                                    fontFamily: 'NotoSansCJKKR',
+                                  ),
+                                ),
+                              ),
+                              SvgPicture.asset(
+                                'assets/images_svg/ic_바로가기.svg',
+                                height: 20.h,
+                                width: 20.w,
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 15.h),
+                        ],
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        Get.to(() => ShopOrderDayManagement(),
+                            binding: OwnerOrderDayBinding());
+                      },
+                      child: Column(
+                        children: [
+                          SizedBox(height: 15.h),
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/images_svg/ic_mystore_faq.svg',
+                                width: 30.w,
+                                height: 30.h,
+                              ),
+                              SizedBox(width: 16.w),
+                              Expanded(
+                                child: Text(
+                                  '예약시간 관리(테스트)',
                                   style: TextStyle(
                                     color: Color(0xff283137),
                                     fontFamily: 'NotoSansCJKKR',
