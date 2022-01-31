@@ -21,8 +21,7 @@ class ShopProductModify extends StatelessWidget {
       onWillPop: () {
         return Future(() {
           FocusScope.of(context).unfocus();
-          GetDialog().alternativeDialog('상품 관리를 종료하시겠습니까?', () => Get.back());
-          return true;
+          return GetDialog().backButtonDialog(() => null);
         });
       },
       child: Scaffold(

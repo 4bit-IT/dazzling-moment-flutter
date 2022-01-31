@@ -69,10 +69,10 @@ class OwnerShopFAQController extends GetxController {
   }
 
   Future<void> faqModifyClicked() async {
-    GetDialog().alternativeDialog('해당 FAQ를 수정하시겠습니까?', () => modifyFAQ());
+    GetDialog().alternativeDialog('해당 FAQ를 수정하시겠습니까?', () async => await modifyFAQ());
   }
 
-  void modifyFAQ() async {
+  Future<void> modifyFAQ() async {
     await faqQuestionModify();
     await faqAnswerModify();
   }

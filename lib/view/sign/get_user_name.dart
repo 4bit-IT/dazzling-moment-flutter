@@ -1,5 +1,6 @@
 import 'package:damo/app/controller/sign_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
+import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -12,12 +13,14 @@ class GetUserNickname extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
+        FocusScope.of(context).unfocus();
         return Future(() {
-          signController.nicknameController.value.clear();
-          signController.nicknameCheckString.value =
-              '* 닉네임은 한글, 숫자, 영문으로 된 2~8자로 구성해주세요.';
-          signController.acceptOff(0);
-          return true;
+          return GetDialog().backButtonDialog(() {
+            signController.nicknameController.value.clear();
+            signController.nicknameCheckString.value =
+                '* 닉네임은 한글, 숫자, 영문으로 된 2~8자로 구성해주세요.';
+            signController.acceptOff(0);
+          });
         });
       },
       child: Scaffold(

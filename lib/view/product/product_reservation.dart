@@ -11,6 +11,7 @@ class ProductReservation extends StatelessWidget {
   var formatter = NumberFormat('#,##,000');
   final OrderController orderController = Get.find<OrderController>();
   ScrollController? scrollController;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,9 +71,9 @@ class ProductReservation extends StatelessWidget {
           InkWell(
             onTap: () async {
               FocusScope.of(context).unfocus();
-              GetDialog().alternativeDialog(
+              /*GetDialog().alternativeDialog(
                   '${orderController.focusedDay.value.year}년 ${orderController.focusedDay.value.month}월 ${orderController.focusedDay.value.day}일에 예약을 하시겠습니까?',
-                  () => null);
+                  () => Future(() => true));*/
             },
             child: Obx(
               () => Container(
