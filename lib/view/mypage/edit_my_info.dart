@@ -18,14 +18,16 @@ class EditMyInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
+        FocusScope.of(context).unfocus();
         return Future(() {
-          userController.addr1.value =
-              userController.getUserInfoModel.value.addr1!;
-          userController.addr2Controller.value.text =
-              userController.getUserInfoModel.value.addr2!;
-          userController.userImageModel.value.imageUrl =
-              userController.getUserInfoModel.value.profileImage!;
-          return true;
+          return GetDialog().backButtonDialog(() {
+            userController.addr1.value =
+                userController.getUserInfoModel.value.addr1!;
+            userController.addr2Controller.value.text =
+                userController.getUserInfoModel.value.addr2!;
+            userController.userImageModel.value.imageUrl =
+                userController.getUserInfoModel.value.profileImage!;
+          });
         });
       },
       child: Scaffold(

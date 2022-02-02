@@ -15,9 +15,7 @@ class ShopFAQAdd extends StatelessWidget {
       onWillPop: () {
         return Future(() {
           FocusScope.of(context).unfocus();
-          GetDialog().alternativeDialog('FAQ 등록을 취소하시겠습니까?',
-              () => ownerShopFAQController.cancelFAQRegistration());
-          return true;
+          return GetDialog().backButtonDialog(ownerShopFAQController.cancelFAQRegistration);
         });
       },
       child: Scaffold(

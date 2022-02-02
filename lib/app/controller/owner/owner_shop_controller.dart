@@ -430,7 +430,7 @@ class OwnerShopController extends GetxController {
         }
       }
       FocusScope.of(context).unfocus();
-      GetDialog().alternativeDialog('수정을 완료하시겠습니까?', () => finishModify());
+      GetDialog().alternativeDialog('수정을 완료하시겠습니까?', () async => await finishModify());
     }
   }
 
@@ -449,7 +449,7 @@ class OwnerShopController extends GetxController {
     }
   }
 
-  void finishModify() async {
+  Future<void> finishModify() async {
     await optionRegistrationModify();
     await introModify();
     await changeShopMainImage();

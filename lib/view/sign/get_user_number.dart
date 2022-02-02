@@ -1,5 +1,6 @@
 import 'package:damo/app/controller/sign_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
+import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -15,13 +16,15 @@ class GetUserNumber extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
+        FocusScope.of(context).unfocus();
         return Future(() {
-          signController.phoneNumberController.value.clear();
-          signController.smsAuthNumberController.value.clear();
-          signController.countdownVisibility.value = false;
-          signController.getAuthNumberButtonColor.value = Color(0xffd1d1d6);
-          signController.readOnlyPhoneNumber.value = false;
-          return true;
+          return GetDialog().backButtonDialog(() {
+            signController.phoneNumberController.value.clear();
+            signController.smsAuthNumberController.value.clear();
+            signController.countdownVisibility.value = false;
+            signController.getAuthNumberButtonColor.value = Color(0xffd1d1d6);
+            signController.readOnlyPhoneNumber.value = false;
+          });
         });
       },
       child: Scaffold(

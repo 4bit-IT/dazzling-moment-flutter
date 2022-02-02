@@ -373,7 +373,9 @@ class Product extends StatelessWidget {
               child: Center(
                 child: Text(
                   shopController.shopGetDetailModel.value.optionList[index]
-                      ['title'],
+                          ['allowMultipleChoices']
+                      ? '${shopController.shopGetDetailModel.value.optionList[index]['title']} (중복가능)'
+                      : '${shopController.shopGetDetailModel.value.optionList[index]['title']} (중복불가)',
                   style: TextStyle(
                     color: Color(0xff283137),
                     fontSize: 18.sp,
@@ -504,7 +506,10 @@ class Product extends StatelessWidget {
                 SizedBox(width: 11.w),
                 Text(
                   shopController.shopGetDetailModel.value.optionList[index]
-                      ['optionDetailList'][detailIndex]['content'],
+                              ['optionDetailList'][detailIndex]
+                          ['allowMultipleChoices']
+                      ? '${shopController.shopGetDetailModel.value.optionList[index]['optionDetailList'][detailIndex]['content']} (최대 개수: ${shopController.shopGetDetailModel.value.optionList[index]['optionDetailList'][detailIndex]['count']})'
+                      : '${shopController.shopGetDetailModel.value.optionList[index]['optionDetailList'][detailIndex]['content']}',
                   style: TextStyle(
                     color: Color(0xff283137),
                     fontSize: 15.sp,

@@ -197,7 +197,7 @@ class UserController extends GetxController {
 
   Future<void> clickUserInfoModify() async {
     GetDialog()
-        .alternativeDialog('해당사항을 수정하시겠습니까?', () async => modifyUserData());
+        .alternativeDialog('해당사항을 수정하시겠습니까?', () async => await modifyUserData());
   }
 
   Future<void> modifyUserData() async {
