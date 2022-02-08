@@ -5,12 +5,12 @@ import 'package:damo/app/data/provider/shop/shop_api.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
-class ReviewController extends GetxController {
+class ReviewCommentController extends GetxController {
   Rx<LoadReviewModel> loadReviewModel = LoadReviewModel().obs;
   Rx<LoadShopRatingListModel> loadShopRatingListModel = LoadShopRatingListModel().obs;
   ShopController shopController = Get.find();
   List<dynamic> storageReview = [].obs;
-  Map<int, dynamic> reviewComments = <int, dynamic>{}.obs;
+  List<Map<int, dynamic>> reviewComments = <Map<int, dynamic>>[].obs;
 
   var jsonResponse;
   var model;
@@ -33,11 +33,10 @@ class ReviewController extends GetxController {
       for (dynamic reviewList in loadReviewModel.value.reviewList) {
         storageReview.add(reviewList);
         jsonResponse = await ReviewNetwork().getReviewComment(reviewList['id']);
-        if (jsonResponse['data'] != null) {
-          model = ReviewCommentModel.fromJson(jsonResponse);
-          if (model.code == 1) {
-            reviewComments.addAll({reviewList['id']: model});
-          }
+        model = ReviewCommentModel.fromJson(jsonResponse);
+        if (model.code == 1) {
+          reviewComments.add({reviewList['id']: model});
+          print(reviewComments);
         }
       }
     }

@@ -28,4 +28,17 @@ class ReviewNetwork {
       print(e);
     }
   }
+
+  Future<dynamic> getReviewComment(int id) async {
+    try {
+      http.Response response = await http.get(
+        Uri.parse(baseUri +
+            '/review/comment?reviewId=$id'),
+        headers: headers,
+      );
+      return jsonDecode(utf8.decode(response.bodyBytes));
+    } catch (e) {
+      print(e);
+    }
+  }
 }
