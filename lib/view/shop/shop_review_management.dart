@@ -302,7 +302,7 @@ class ShopReviewManagement extends StatelessWidget {
                                     6,
                                     6,
                                     null,
-                                    []),
+                                    [],''),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(0, 16.h, 0, 16.h),
                                   child: Row(
