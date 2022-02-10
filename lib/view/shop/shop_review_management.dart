@@ -166,69 +166,72 @@ class ShopReviewManagement extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
-                    itemCount: ownerReviewController
-                        .ownerReviewModel.value.reviewList.length,
+                    itemCount: ownerReviewController.ownerReviewModel.value.reviewList.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(height: 20.h),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ExtendedImage.network(
-                                ownerReviewController.ownerReviewModel.value
-                                    .reviewList[index]['profileImage'],
-                                width: 50.w,
-                                height: 50.h,
-                                fit: BoxFit.cover,
-                                cache: true,
-                                shape: BoxShape.circle,
-                              ),
-                              SizedBox(width: 10.w),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    ownerReviewController.ownerReviewModel.value
-                                        .reviewList[index]['nickname']
-                                  ),
-                                  Text(
-                                    ownerReviewController.ownerReviewModel.value
-                                        .reviewList[index]['createdAt'],
-                                    style: TextStyle(
-                                      color: Color(0xff8e97a0),
-                                      fontSize: 12.sp,
-                                      fontFamily: 'NotoSansCJKKR',
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(width: 140.w),
                               Row(
                                 children: [
-                                  SimpleStarRating(
-                                    allowHalfRating: true,
-                                    starCount: 5,
-                                    rating: ownerReviewController.ownerReviewModel
-                                            .value.reviewList[index]['rating'] *
-                                        1.0,
-                                    size: 10.w,
-                                    isReadOnly: true,
-                                    spacing: 2.w,
+                                  ExtendedImage.network(
+                                    ownerReviewController.ownerReviewModel.value.reviewList[index]['profileImage'],
+                                    width: 50.w,
+                                    height: 50.h,
+                                    fit: BoxFit.cover,
+                                    cache: true,
+                                    shape: BoxShape.circle,
                                   ),
-                                  SizedBox(width: 5.0.w),
-                                  Text(
-                                    ownerReviewController.ownerReviewModel.value
-                                        .reviewList[index]['rating']
-                                        .toString(),
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: 'NotoSansCJKKR',
-                                      fontSize: 14.sp,
-                                      height: 1,
-                                    ),
+                                  SizedBox(width: 10.w),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(ownerReviewController.ownerReviewModel.value.reviewList[index]['nickname']),
+                                      Row(
+                                        children: [
+                                          SimpleStarRating(
+                                            allowHalfRating: true,
+                                            starCount: 5,
+                                            rating: ownerReviewController.ownerReviewModel.value.reviewList[index]
+                                                    ['rating'] *
+                                                1.0,
+                                            size: 10.w,
+                                            isReadOnly: true,
+                                            spacing: 2.w,
+                                          ),
+                                          SizedBox(width: 5.w),
+                                          Text(
+                                            ownerReviewController.ownerReviewModel.value.reviewList[index]['createdAt'],
+                                            style: TextStyle(
+                                              color: Color(0xff8e97a0),
+                                              fontSize: 12.sp,
+                                              fontFamily: 'NotoSansCJKKR',
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                 ],
+                              ),
+                              Container(
+                                padding: EdgeInsets.fromLTRB(8.w, 8.h, 8.w, 8.h),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20.r),
+                                  border: Border.all(color: Colors.black26),
+                                ),
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset('assets/images_svg/icon_신고_16.svg'),
+                                    Text(
+                                      '리뷰신고',
+                                      style: TextStyle(fontSize: 10.sp, color: Color(0xff8e97a0)),
+                                    )
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -237,8 +240,7 @@ class ShopReviewManagement extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                ownerReviewController.ownerReviewModel.value
-                                    .reviewList[index]['options'],
+                                ownerReviewController.ownerReviewModel.value.reviewList[index]['options'],
                                 style: TextStyle(
                                   color: Color(0xff283137),
                                   fontFamily: 'NotoSansCJKKR',
@@ -248,8 +250,7 @@ class ShopReviewManagement extends StatelessWidget {
                               ),
                               SizedBox(height: 10.h),
                               Text(
-                                ownerReviewController.ownerReviewModel.value
-                                    .reviewList[index]['content'],
+                                ownerReviewController.ownerReviewModel.value.reviewList[index]['content'],
                                 style: TextStyle(
                                   color: Color(0xff283137),
                                   fontFamily: 'NotoSansCJKKR',
@@ -285,151 +286,99 @@ class ShopReviewManagement extends StatelessWidget {
                           Obx(
                             () => ExpansionTile(
                               title: Text(
-                                ownerReviewController.ownerReviewModel.value
-                                        .reviewList[index]['hasComment']
-                                    ? '답글보기'
-                                    : '답글달기'
+                                '답글',
+                                style: TextStyle(color: Colors.black),
                               ),
                               expandedAlignment: Alignment.centerLeft,
                               children: [
                                 CustomTextField().simpleTextField(
-                                    ownerReviewController
-                                        .commentModel[index].commentController!,
+                                    ownerReviewController.commentModel[index].commentController!,
                                     false,
                                     null,
                                     TextAlign.start,
-                                    ownerReviewController.ownerReviewModel.value
-                                            .reviewList[index]['hasComment']
+                                    ownerReviewController.ownerReviewModel.value.reviewList[index]['hasComment']
                                         ? null
                                         : '리뷰의 답글을 작성해주세요(최대 100자)',
                                     6,
                                     6,
                                     null,
                                     []),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    InkWell(
-                                      onTap: () async {
-                                        if (ownerReviewController
-                                            .ownerReviewModel
-                                            .value
-                                            .reviewList[index]['hasComment']) {
-                                          //수정
-                                          if (ownerReviewController
-                                                  .commentModel[index]
-                                                  .commentController!
-                                                  .value
-                                                  .text ==
-                                              '') {
-                                            FocusScope.of(context).unfocus();
-                                            GetDialog().simpleDialog(
-                                                '리뷰의 수정할 답글을 작성해주세요.');
-                                          } else {
-                                            FocusScope.of(context).unfocus();
-                                            GetDialog().alternativeDialog(
-                                                '리뷰 답글을 수정하시겠습니까?',
-                                                () async =>
-                                                    await ownerReviewCommentController
-                                                        .updateReviewComment(
-                                                            index));
-                                          }
-                                        } else {
-                                          //작성
-                                          if (ownerReviewController
-                                                  .commentModel[index]
-                                                  .commentController!
-                                                  .value
-                                                  .text ==
-                                              '') {
-                                            FocusScope.of(context).unfocus();
-                                            GetDialog()
-                                                .simpleDialog('리뷰의 답글을 작성해주세요.');
-                                          } else {
-                                            FocusScope.of(context).unfocus();
-                                            GetDialog().alternativeDialog(
-                                                '리뷰 답글을 작성하시겠습니까?',
-                                                () async =>
-                                                    await ownerReviewCommentController
-                                                        .createReviewComment(
-                                                            index));
-                                          }
-                                        }
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.fromLTRB(
-                                            16.w, 16.h, 16.w, 16.h),
-                                        margin: EdgeInsets.fromLTRB(
-                                            16.w, 16.h, 16.w, 16.h),
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: Colors.black45)),
-                                        child: Text(
-                                          ownerReviewController
-                                                  .ownerReviewModel
-                                                  .value
-                                                  .reviewList[index]['hasComment']
-                                              ? '수정'
-                                              : '작성'
-                                        ),
+                                Container(
+                                  padding: EdgeInsets.fromLTRB(0, 16.h, 0, 16.h),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Visibility(
+                                        visible: ownerReviewController.ownerReviewModel.value.reviewList[index]
+                                            ['hasComment'],
+                                        child: InkWell(
+                                            onTap: () async {
+                                              GetDialog().alternativeDialog(
+                                                  '리뷰 답글을 삭제하시겠습니까?',
+                                                  () async =>
+                                                      await ownerReviewCommentController.deleteReviewComment(index));
+                                            },
+                                            child: SvgPicture.asset('assets/images_svg/btn_삭제.svg',
+                                                width: 88.w, height: 40.h)),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 16.w,
-                                    ),
-                                    Visibility(
-                                      visible: ownerReviewController
-                                          .ownerReviewModel
-                                          .value
-                                          .reviewList[index]['hasComment'],
-                                      child: InkWell(
+                                      SizedBox(
+                                        width: 16.w,
+                                      ),
+                                      InkWell(
                                         onTap: () async {
                                           FocusScope.of(context).unfocus();
-                                          GetDialog().alternativeDialog(
-                                              '리뷰 답글을 삭제하시겠습니까?',
-                                              () async =>
-                                                  await ownerReviewCommentController
-                                                      .deleteReviewComment(
-                                                          index));
+                                          if (ownerReviewController.ownerReviewModel.value.reviewList[index]
+                                              ['hasComment']) {
+                                            //수정
+                                            if (ownerReviewController
+                                                    .commentModel[index].commentController!.value.text ==
+                                                '') {
+                                              FocusScope.of(context).unfocus();
+                                              GetDialog().simpleDialog('리뷰의 수정할 답글을 작성해주세요.');
+                                            } else {
+                                              FocusScope.of(context).unfocus();
+                                              GetDialog().alternativeDialog(
+                                                  '리뷰 답글을 수정하시겠습니까?',
+                                                  () async =>
+                                                      await ownerReviewCommentController.updateReviewComment(index));
+                                            }
+                                          } else {
+                                            //작성
+                                            if (ownerReviewController
+                                                    .commentModel[index].commentController!.value.text ==
+                                                '') {
+                                              FocusScope.of(context).unfocus();
+                                              GetDialog().simpleDialog('리뷰의 답글을 작성해주세요.');
+                                            } else {
+                                              FocusScope.of(context).unfocus();
+                                              GetDialog().alternativeDialog(
+                                                  '리뷰 답글을 작성하시겠습니까?',
+                                                  () async =>
+                                                      await ownerReviewCommentController.createReviewComment(index));
+                                            }
+                                          }
                                         },
-                                        child: Container(
-                                          padding: EdgeInsets.fromLTRB(
-                                              16.w, 16.h, 16.w, 16.h),
-                                          margin: EdgeInsets.fromLTRB(
-                                              16.w, 16.h, 16.w, 16.h),
-                                          decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  color: Colors.black45)),
-                                          child: Text(
-                                            '삭제'
-                                          ),
-                                        ),
+                                        child: ownerReviewController.ownerReviewModel.value.reviewList[index]
+                                                ['hasComment']
+                                            ? SvgPicture.asset('assets/images_svg/btn_수정.svg',
+                                                width: 88.w, height: 40.h)
+                                            : SvgPicture.asset('assets/images_svg/btn_등록_활성.svg',
+                                                width: 88.w, height: 40.h),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 )
                               ],
                               onExpansionChanged: (bool expanded) async {
-                                if (ownerReviewController.ownerReviewModel.value
-                                        .reviewList[index]['hasComment'] &&
+                                if (ownerReviewController.ownerReviewModel.value.reviewList[index]['hasComment'] &&
                                     expanded &&
-                                    ownerReviewController
-                                            .commentModel[index].isFetch ==
-                                        false) {
-                                  await ownerReviewCommentController
-                                      .loadReviewComment(index);
-                                  ownerReviewController.commentModel[index]
-                                          .commentController!.text =
-                                      ownerReviewCommentController
-                                          .getReviewCommentModel.value.comment!;
-                                  ownerReviewController
-                                          .commentModel[index].reviewCommentId =
-                                      ownerReviewCommentController
-                                          .getReviewCommentModel
-                                          .value
-                                          .reviewCommentId;
-                                  ownerReviewController
-                                      .commentModel[index].isFetch = true;
+                                    ownerReviewController.commentModel[index].isFetch == false) {
+                                  await ownerReviewCommentController.loadReviewComment(index);
+                                  ownerReviewController.commentModel[index].commentController!.text =
+                                      ownerReviewCommentController.getReviewCommentModel.value.comment!;
+                                  ownerReviewController.commentModel[index].reviewCommentId =
+                                      ownerReviewCommentController.getReviewCommentModel.value.reviewCommentId;
+                                  ownerReviewController.commentModel[index].isFetch = true;
                                 }
                               },
                               tilePadding: EdgeInsets.zero,

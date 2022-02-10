@@ -12,17 +12,7 @@ class InsertReviewModel {
   bool? result; //true
 
   InsertReviewModel(
-      {code,
-      content,
-      createdAt,
-      id,
-      nickname,
-      options,
-      profileImage,
-      reviewImage,
-      score,
-      description,
-      result});
+      {code, content, createdAt, id, nickname, options, profileImage, reviewImage, score, description, result});
 
   InsertReviewModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
@@ -76,6 +66,30 @@ class LoadShopRatingListModel {
     threeOrSo = json['data']['ratingList'][2]['count'];
     fourOrSo = json['data']['ratingList'][3]['count'];
     fiveOrSo = json['data']['ratingList'][4]['count'];
+    description = json['description'];
+    result = json['result'];
+  }
+}
+
+class ReviewCommentModel {
+  int? code;
+  String? comment;
+  String? createdAt;
+  bool? isUpdated;
+  int? reviewCommentId;
+  String? description;
+  bool? result;
+
+  ReviewCommentModel(
+      {this.code, this.comment, this.createdAt, this.isUpdated, this.reviewCommentId, this.description, this.result});
+
+  ReviewCommentModel.fromJson(Map<String, dynamic> json) {
+    print('comment: $json');
+    code = json['code'];
+    comment = json['data']['comment'];
+    createdAt = json['data']['createdAt'];
+    isUpdated = json['data']['isUpdated'];
+    reviewCommentId = json['data']['reviewCommentId'];
     description = json['description'];
     result = json['result'];
   }

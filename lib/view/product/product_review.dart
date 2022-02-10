@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:simple_star_rating/simple_star_rating.dart';
@@ -16,12 +17,11 @@ class ProductReview extends StatelessWidget {
   ReviewController reviewController = Get.put(ReviewController());
   ShopController shopController = Get.find();
 
-  RefreshController _refreshController =
-      RefreshController(initialRefresh: true);
+  RefreshController _refreshController = RefreshController(initialRefresh: true);
+
   void _onLoading() async {
     await reviewController.loadReview(pageNumber);
-    if (reviewController.loadReviewModel.value.hasNextPage == true)
-      pageNumber++;
+    if (reviewController.loadReviewModel.value.hasNextPage == true) pageNumber++;
     _refreshController.loadComplete();
   }
 
@@ -33,48 +33,35 @@ class ProductReview extends StatelessWidget {
         label: "5.0",
         colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
         jumlah: reviewController.loadShopRatingListModel.value.fiveOrSo! * 1.0,
-        tooltip: '(' +
-            reviewController.loadShopRatingListModel.value.fiveOrSo!
-                .toString() +
-            ')',
+        tooltip: '(' + reviewController.loadShopRatingListModel.value.fiveOrSo!.toString() + ')',
       ),
       VBarChartModel(
         index: 1,
         label: "4.0",
         colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
         jumlah: reviewController.loadShopRatingListModel.value.fourOrSo! * 1.0,
-        tooltip: '(' +
-            reviewController.loadShopRatingListModel.value.fourOrSo!
-                .toString() +
-            ')',
+        tooltip: '(' + reviewController.loadShopRatingListModel.value.fourOrSo!.toString() + ')',
       ),
       VBarChartModel(
         index: 2,
         label: "3.0",
         colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
         jumlah: reviewController.loadShopRatingListModel.value.threeOrSo! * 1.0,
-        tooltip: '(' +
-            reviewController.loadShopRatingListModel.value.threeOrSo!
-                .toString() +
-            ')',
+        tooltip: '(' + reviewController.loadShopRatingListModel.value.threeOrSo!.toString() + ')',
       ),
       VBarChartModel(
         index: 3,
         label: "2.0",
         colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
         jumlah: reviewController.loadShopRatingListModel.value.twoOrSo! * 1.0,
-        tooltip: '(' +
-            reviewController.loadShopRatingListModel.value.twoOrSo!.toString() +
-            ')',
+        tooltip: '(' + reviewController.loadShopRatingListModel.value.twoOrSo!.toString() + ')',
       ),
       VBarChartModel(
         index: 4,
         label: "1.0",
         colors: [Color(0xfff93f5b), Color(0xfff93f5b)],
         jumlah: reviewController.loadShopRatingListModel.value.oneOrSo! * 1.0,
-        tooltip: '(' +
-            reviewController.loadShopRatingListModel.value.oneOrSo!.toString() +
-            ')',
+        tooltip: '(' + reviewController.loadShopRatingListModel.value.oneOrSo!.toString() + ')',
       ),
     ];
     return SmartRefresher(
@@ -119,10 +106,7 @@ class ProductReview extends StatelessWidget {
                 ),
                 SizedBox(width: 8.w),
                 Text(
-                  '총 ' +
-                      shopController.shopGetDetailModel.value.reviewCount
-                          .toString() +
-                      '개 리뷰',
+                  '총 ' + shopController.shopGetDetailModel.value.reviewCount.toString() + '개 리뷰',
                   style: TextStyle(
                     color: Color(0xff8e97a0),
                     fontFamily: 'NotoSansCJKKR',
@@ -204,7 +188,7 @@ class ProductReview extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  itemCount: reviewController.stroageReview.length,
+                  itemCount: reviewController.storageReview.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -215,8 +199,7 @@ class ProductReview extends StatelessWidget {
                           child: Row(
                             children: [
                               ExtendedImage.network(
-                                reviewController.stroageReview[index]
-                                    ['profileImage'],
+                                reviewController.storageReview[index]['profileImage'],
                                 width: 50.w,
                                 height: 50.h,
                                 fit: BoxFit.fill,
@@ -227,13 +210,9 @@ class ProductReview extends StatelessWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Text(reviewController.storageReview[index]['nickname']),
                                   Text(
-                                    reviewController.stroageReview[index]
-                                        ['nickname']
-                                  ),
-                                  Text(
-                                    reviewController.stroageReview[index]
-                                        ['createdAt'],
+                                    reviewController.storageReview[index]['createdAt'],
                                     style: TextStyle(
                                       color: Color(0xff8e97a0),
                                       fontSize: 12.sp,
@@ -248,18 +227,14 @@ class ProductReview extends StatelessWidget {
                                   SimpleStarRating(
                                     allowHalfRating: true,
                                     starCount: 5,
-                                    rating: reviewController
-                                            .stroageReview[index]['rating'] *
-                                        1.0,
+                                    rating: reviewController.storageReview[index]['rating'] * 1.0,
                                     size: 10.w,
                                     isReadOnly: true,
                                     spacing: 2.w,
                                   ),
                                   SizedBox(width: 5.0.w),
                                   Text(
-                                    reviewController.stroageReview[index]
-                                            ['rating']
-                                        .toString(),
+                                    reviewController.storageReview[index]['rating'].toString(),
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontFamily: 'NotoSansCJKKR',
@@ -275,7 +250,7 @@ class ProductReview extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              reviewController.stroageReview[index]['options'],
+                              reviewController.storageReview[index]['options'],
                               style: TextStyle(
                                 color: Color(0xff283137),
                                 fontFamily: 'NotoSansCJKKR',
@@ -284,7 +259,7 @@ class ProductReview extends StatelessWidget {
                             ),
                             SizedBox(height: 10.h),
                             Text(
-                              reviewController.stroageReview[index]['content'],
+                              reviewController.storageReview[index]['content'],
                               style: TextStyle(
                                 color: Color(0xff283137),
                                 fontFamily: 'NotoSansCJKKR',
@@ -292,19 +267,14 @@ class ProductReview extends StatelessWidget {
                             ),
                             SizedBox(height: 16.h),
                             Visibility(
-                              visible: reviewController.stroageReview[index]
-                                              ['reviewImage']
-                                          .toString() ==
-                                      'null'
+                              visible: reviewController.storageReview[index]['reviewImage'].toString() == 'null'
                                   ? false
                                   : true,
                               child: Container(
                                 width: 250.w,
                                 height: 250.h,
                                 child: ExtendedImage.network(
-                                  reviewController.stroageReview[index]
-                                          ['reviewImage']
-                                      .toString(),
+                                  reviewController.storageReview[index]['reviewImage'].toString(),
                                   width: 50.w,
                                   height: 50.h,
                                   fit: BoxFit.fill,
@@ -315,15 +285,40 @@ class ProductReview extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 15.5.h),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(0, 0, 16.6.w, 0),
-                          child: Container(
-                            height: 1.5.h,
-                            decoration: BoxDecoration(
-                              color: Color(0xfff1f3f5),
-                            ),
-                          ),
-                        ),
+                        reviewController.reviewComments[reviewController.storageReview[index]['id']] != null
+                            ? Container(
+                                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Color(0xfff1f3f5),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          shopController.shopGetDetailModel.value.name!,
+                                          style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w700),
+                                        ),
+                                        Text(reviewController
+                                            .reviewComments[reviewController.storageReview[index]['id']].createdAt),
+                                      ],
+                                    ),
+                                    Text(reviewController.reviewComments[reviewController.storageReview[index]['id']]!
+                                        .comment)
+                                  ],
+                                ),
+                              )
+                            : Padding(
+                                padding: EdgeInsets.fromLTRB(0, 0, 16.6.w, 0),
+                                child: Container(
+                                  height: 1.5.h,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xfff1f3f5),
+                                  ),
+                                ),
+                              ),
                         SizedBox(height: 20.h),
                       ],
                     );
