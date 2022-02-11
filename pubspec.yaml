@@ -71,6 +71,7 @@ dependencies:
   firebase_dynamic_links: ^4.0.3
   share_plus: ^3.0.4
   table_calendar: ^3.0.3               # 달력관리
+  sign_in_with_apple: ^3.3.0
 
 
 #dependency_overrides:
