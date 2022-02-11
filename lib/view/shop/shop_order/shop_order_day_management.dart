@@ -53,7 +53,7 @@ class ShopOrderDayManagement extends StatelessWidget {
                                 mask: '##',
                                 filter: {'#': RegExp(r'^[0-9]')},
                               ),
-                            ]),
+                            ],''),
                           ),
                           SizedBox(width: 8.w),
                           Text('일 이후')

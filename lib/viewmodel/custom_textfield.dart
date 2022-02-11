@@ -14,7 +14,8 @@ class CustomTextField {
       int maxLines,
       int minLines,
       dynamic onChanged,
-      List<TextInputFormatter> inputFormatters) {
+      List<TextInputFormatter> inputFormatters,
+      String suffixText) {
     return TextFormField(
       keyboardType: textInputType,
       textAlign: textAlign,
@@ -25,6 +26,8 @@ class CustomTextField {
       controller: controller,
       readOnly: readOnly,
       decoration: InputDecoration(
+          suffixText: suffixText,
+          suffixStyle: TextStyle(color: Color(0xff283137)),
           counterText: '',
           hintText: hintText,
           hintStyle: TextStyle(
