@@ -51,9 +51,9 @@ class ShopFAQAdd extends StatelessWidget {
                                           .value
                                           .text ==
                                       '')
-                              ownerShopFAQController.writeColor.value =
+                              ownerShopFAQController.addWriteColor.value =
                                   Color(0xffd1d1d6);
-                              else ownerShopFAQController.writeColor.value =
+                              else ownerShopFAQController.addWriteColor.value =
                                   Color(0xff283137);
                         }, [], ''),
                         SizedBox(
@@ -76,10 +76,10 @@ class ShopFAQAdd extends StatelessWidget {
                                           .value
                                           .text ==
                                       '')
-                              ownerShopFAQController.writeColor.value =
+                              ownerShopFAQController.addWriteColor.value =
                                   Color(0xffd1d1d6);
 
-                          else ownerShopFAQController.writeColor.value =
+                          else ownerShopFAQController.addWriteColor.value =
                                   Color(0xff283137);
                         }, [], ''),
                       ],
@@ -94,7 +94,7 @@ class ShopFAQAdd extends StatelessWidget {
                 },
                 child: Obx(
                   () => Container(
-                    color: ownerShopFAQController.writeColor.value,
+                    color: ownerShopFAQController.addWriteColor.value,
                     width: double.infinity,
                     height: 70.h,
                     alignment: Alignment.center,

@@ -21,7 +21,7 @@ var formatter = NumberFormat('#,##,000');
 
 class HomeMain extends StatelessWidget {
   final notificationController = Get.put(NotificationController());
-  final userController = Get.put(UserController(),permanent: true);
+  UserController userController = Get.put(UserController(),permanent: true);
   final shopController = Get.put(ShopController());
   int pageNumber = 1;
   String sortValue = 'RATING';

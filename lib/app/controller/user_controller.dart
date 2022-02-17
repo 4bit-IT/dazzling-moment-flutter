@@ -239,6 +239,6 @@ class UserBinding extends Bindings {
   @override
   void dependencies() {
     // TODO: implement dependencies
-    Get.put<UserController>(UserController());
+    Get.put<UserController>(UserController(), permanent: true);
   }
 }

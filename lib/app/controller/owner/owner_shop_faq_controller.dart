@@ -11,17 +11,14 @@ class OwnerShopFAQController extends GetxController {
   TokenController tokenController = Get.find();
   OwnerShopController ownerShopController = Get.find();
   Rx<OwnerShopGetFAQModel> ownerShopGetFAQModel = OwnerShopGetFAQModel().obs;
-  Rx<TextEditingController> shopFAQQuestionController =
-      TextEditingController().obs;
-  Rx<TextEditingController> shopFAQAnswerController =
-      TextEditingController().obs;
-  Rx<TextEditingController> shopFAQQuestionAddController =
-      TextEditingController().obs;
-  Rx<TextEditingController> shopFAQAnswerAddController =
-      TextEditingController().obs;
+  Rx<TextEditingController> shopFAQQuestionController = TextEditingController().obs;
+  Rx<TextEditingController> shopFAQAnswerController = TextEditingController().obs;
+  Rx<TextEditingController> shopFAQQuestionAddController = TextEditingController().obs;
+  Rx<TextEditingController> shopFAQAnswerAddController = TextEditingController().obs;
   RxInt shopFAQCount = 0.obs;
   RxInt currentIndex = 0.obs;
-  Rx<Color> writeColor = Color(0xffd1d1d6).obs;
+  Rx<Color> addWriteColor = Color(0xffd1d1d6).obs;
+  Rx<Color> modifyWriteColor = Color(0xffd1d1d6).obs;
 
   Map<String, dynamic> toJsonInput = {};
   String sendData = '';
@@ -59,19 +56,14 @@ class OwnerShopFAQController extends GetxController {
 
   void changeCurrentIndex(int index) {
     currentIndex = index.obs;
-    shopFAQQuestionController = TextEditingController(
-            text: ownerShopGetFAQModel.value.faqList![currentIndex.value]
-                ['question'])
-        .obs;
-    shopFAQAnswerController = TextEditingController(
-            text: ownerShopGetFAQModel.value.faqList![currentIndex.value]
-                ['answer'])
-        .obs;
+    shopFAQQuestionController =
+        TextEditingController(text: ownerShopGetFAQModel.value.faqList![currentIndex.value]['question']).obs;
+    shopFAQAnswerController =
+        TextEditingController(text: ownerShopGetFAQModel.value.faqList![currentIndex.value]['answer']).obs;
   }
 
   Future<void> faqModifyClicked() async {
-    GetDialog()
-        .alternativeDialog('해당 FAQ를 수정하시겠습니까?', () async => await modifyFAQ());
+      GetDialog().alternativeDialog('해당 FAQ를 수정하시겠습니까?', () async => await modifyFAQ());
   }
 
   Future<void> modifyFAQ() async {
@@ -82,8 +74,7 @@ class OwnerShopFAQController extends GetxController {
   Future<void> faqQuestionModify() async {
     toJsonInput.clear();
     toJsonInput['question'] = shopFAQQuestionController.value.value.text;
-    toJsonInput['faqId'] =
-        ownerShopGetFAQModel.value.faqList![currentIndex.value]['faqId'];
+    toJsonInput['faqId'] = ownerShopGetFAQModel.value.faqList![currentIndex.value]['faqId'];
     sendData = OwnerShopModifyFAQQuestionModel().toJson(toJsonInput);
     response = await OwnerShopFAQNetwork().patchFAQQuestion(sendData);
     model = OwnerShopModifyFAQQuestionModel.fromJson(response);
@@ -102,8 +93,7 @@ class OwnerShopFAQController extends GetxController {
   Future<void> faqAnswerModify() async {
     toJsonInput.clear();
     toJsonInput['answer'] = shopFAQAnswerController.value.value.text;
-    toJsonInput['faqId'] =
-        ownerShopGetFAQModel.value.faqList![currentIndex.value]['faqId'];
+    toJsonInput['faqId'] = ownerShopGetFAQModel.value.faqList![currentIndex.value]['faqId'];
     sendData = OwnerShopModifyFAQAnswerModel().toJson(toJsonInput);
     response = await OwnerShopFAQNetwork().patchFAQAnswer(sendData);
     model = OwnerShopModifyFAQAnswerModel.fromJson(response);
@@ -122,12 +112,10 @@ class OwnerShopFAQController extends GetxController {
   }
 
   void onAddFAQClicked() async {
-    if (shopFAQAnswerAddController.value.value.text == '' ||
-        shopFAQQuestionAddController.value.value.text == '') {
+    if (shopFAQAnswerAddController.value.value.text == '' || shopFAQQuestionAddController.value.value.text == '') {
       GetDialog().simpleDialog('질문과 답변 모두 작성해주세요.');
     } else {
-      GetDialog()
-          .alternativeDialog('해당 FAQ를 등록하시겠습니까?', () async => await addFAQ());
+      GetDialog().alternativeDialog('해당 FAQ를 등록하시겠습니까?', () async => await addFAQ());
     }
   }
 
@@ -156,13 +144,11 @@ class OwnerShopFAQController extends GetxController {
   }
 
   void onDeleteFAQClicked() async {
-    GetDialog()
-        .alternativeDialog('해당 FAQ를 삭제하시겠습니까?', () async => await deleteFAQ());
+    GetDialog().alternativeDialog('해당 FAQ를 삭제하시겠습니까?', () async => await deleteFAQ());
   }
 
   Future<void> deleteFAQ() async {
-    int currentFAQId = ownerShopGetFAQModel
-        .value.faqList![ownerShopFAQController.currentIndex.value]['faqId'];
+    int currentFAQId = ownerShopGetFAQModel.value.faqList![ownerShopFAQController.currentIndex.value]['faqId'];
     response = await OwnerShopFAQNetwork().deleteFAQ();
     model = OwnerShopDeleteFAQModel.fromJson(response);
     print('pre: ${ownerShopGetFAQModel.value.faqList}');

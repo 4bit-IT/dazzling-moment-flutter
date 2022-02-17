@@ -11,7 +11,7 @@ class ShopFAQModify extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DamoAppBar().textAppBar(context, 'FAQ 수정'),
+      appBar: DamoAppBar().suffixAppBar(context, 'FAQ 수정', '삭제', () => ownerShopFAQController.onDeleteFAQClicked()),
       backgroundColor: Colors.white,
       body: GestureDetector(
         onTap: () {
@@ -23,71 +23,28 @@ class ShopFAQModify extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              'Q: ',
-                              style: TextStyle(
-                                color: Color(0xff283137),
-                                fontFamily: 'NotoSansCJKKR',
-                                fontSize: 22.sp,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Expanded(
-                              child: CustomTextField().simpleTextField(
-                                  ownerShopFAQController
-                                      .shopFAQQuestionController.value,
-                                  false,
-                                  null,
-                                  TextAlign.start,
-                                  null,
-                                  2,
-                                  2,
-                                  () {},
-                                  [],
-                                  ''),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              'A: ',
-                              style: TextStyle(
-                                color: Color(0xff283137),
-                                fontFamily: 'NotoSansCJKKR',
-                                fontSize: 22.sp,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Expanded(
-                              child: CustomTextField().simpleTextField(
-                                  ownerShopFAQController
-                                      .shopFAQAnswerController.value,
-                                  false,
-                                  null,
-                                  TextAlign.start,
-                                  null,
-                                  20,
-                                  20,
-                                  () {},
-                                  [],
-                                  ''),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                      ],
-                    ),
+                  child: Column(
+                    children: [
+                      CustomTextField().simpleTextField(ownerShopFAQController.shopFAQQuestionController.value, false,
+                          null, TextAlign.start, null, 2, 2, () {
+                        if (ownerShopFAQController.shopFAQAnswerController.value.text == '' ||
+                            ownerShopFAQController.shopFAQQuestionController.value.text == '')
+                          ownerShopFAQController.modifyWriteColor.value = Color(0xffd1d1d6);
+                        else
+                          ownerShopFAQController.modifyWriteColor.value = Color(0xff283137);
+                      }, [], ''),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      CustomTextField().simpleTextField(ownerShopFAQController.shopFAQAnswerController.value, false,
+                          null, TextAlign.start, null, 20, 20, () {
+                        if (ownerShopFAQController.shopFAQAnswerController.value.text == '' ||
+                            ownerShopFAQController.shopFAQQuestionController.value.text == '')
+                          ownerShopFAQController.modifyWriteColor.value = Color(0xffd1d1d6);
+                        else
+                          ownerShopFAQController.modifyWriteColor.value = Color(0xff283137);
+                      }, [], ''),
+                    ],
                   ),
                 ),
               ),
@@ -97,17 +54,19 @@ class ShopFAQModify extends StatelessWidget {
                 FocusScope.of(context).unfocus();
                 await ownerShopFAQController.faqModifyClicked();
               },
-              child: Container(
-                height: 60.h,
-                alignment: Alignment.center,
-                color: Color(0xfff93f5b),
-                child: Text(
-                  '수정완료',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.sp,
-                    fontFamily: 'NotoSansCJKKR',
-                    fontWeight: FontWeight.w700,
+              child: Obx(
+                () => Container(
+                  height: 60.h,
+                  alignment: Alignment.center,
+                  color: ownerShopFAQController.modifyWriteColor.value,
+                  child: Text(
+                    '수정완료',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.sp,
+                      fontFamily: 'NotoSansCJKKR',
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ),
