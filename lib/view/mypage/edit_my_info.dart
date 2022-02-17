@@ -11,9 +11,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-UserController userController = Get.find();
 
 class EditMyInfo extends StatelessWidget {
+  UserController userController = Get.find<UserController>();
   @override
   Widget build(BuildContext context) {
     return WillPopScope(

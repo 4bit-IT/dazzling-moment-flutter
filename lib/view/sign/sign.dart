@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import 'dart:io' show Platform;
 
 class Sign extends StatelessWidget {
   SignController signController = Get.put(SignController(), permanent: true);
@@ -64,46 +65,49 @@ class Sign extends StatelessWidget {
                   ),
                   SizedBox(height: 40.h),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(width: 94.w),
-                      Container(
-                        width: 93.w,
-                        child: Column(
-                          children: [
-                            InkWell(
-                              onTap: () async {
-                                final credential =
-                                await SignInWithApple.getAppleIDCredential(
-                                  scopes: [
-                                    AppleIDAuthorizationScopes.email,
-                                    AppleIDAuthorizationScopes.fullName,
-                                  ],
-                                );
+                      Visibility(
+                        visible: Platform.isIOS,
+                        child: Container(
+                          width: 93.w,
+                          child: Column(
+                            children: [
+                              InkWell(
+                                onTap: () async {
+                                  final credential =
+                                  await SignInWithApple.getAppleIDCredential(
+                                    scopes: [
+                                      AppleIDAuthorizationScopes.email,
+                                      AppleIDAuthorizationScopes.fullName,
+                                    ],
+                                  );
 
-                                print(
-                                    "authorizationCode: ${credential.authorizationCode}");
-                                print(
-                                    "identityToken: ${credential.identityToken}");
+                                  print(
+                                      "authorizationCode: ${credential.authorizationCode}");
+                                  print(
+                                      "identityToken: ${credential.identityToken}");
 
-                                // Now send the credential (especially `credential.authorizationCode`) to your server to create a session
-                                // after they have been validated with Apple (see `Integration` section for more information on how to do this)
-                              },
-                              child: SvgPicture.asset(
-                                'assets/images_svg/ic_login_apple.svg',
-                                width: 44.w,
-                                height: 44.h,
+                                  // Now send the credential (especially `credential.authorizationCode`) to your server to create a session
+                                  // after they have been validated with Apple (see `Integration` section for more information on how to do this)
+                                },
+                                child: SvgPicture.asset(
+                                  'assets/images_svg/ic_login_apple.svg',
+                                  width: 44.w,
+                                  height: 44.h,
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 10.h),
-                            Text(
-                              '애플',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 13,
-                                fontFamily: 'NotoSansCJKKR',
+                              SizedBox(height: 10.h),
+                              Text(
+                                '애플',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 13,
+                                  fontFamily: 'NotoSansCJKKR',
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Container(
@@ -132,7 +136,6 @@ class Sign extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(width: 95.w),
                     ],
                   ),
                   Column(

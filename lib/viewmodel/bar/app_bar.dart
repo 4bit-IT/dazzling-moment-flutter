@@ -114,7 +114,7 @@ class DamoAppBar {
             func();
           },
           child: Container(
-            padding: EdgeInsets.fromLTRB(0, 0, 16.w, 0),
+            padding: EdgeInsets.fromLTRB(16.w, 0, 16.w, 0),
             child: Center(
               child: Text(
                 suffixText,

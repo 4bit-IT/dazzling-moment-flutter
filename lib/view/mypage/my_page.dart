@@ -24,10 +24,6 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:share_plus/share_plus.dart';
 
-UserController userController = Get.find();
-OwnerShopController? ownerShopController;
-FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
-
 class MyPage extends StatefulWidget {
   MyPage({this.bottomNavigationIndex});
 
@@ -38,6 +34,9 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
+  UserController userController = Get.find();
+  OwnerShopController? ownerShopController;
+  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
   DamoAppBar appBar = DamoAppBar();
   ScrollController scrollController = ScrollController();
   @override
