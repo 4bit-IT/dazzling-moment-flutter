@@ -118,7 +118,7 @@ class OrderController extends GetxController {
         ['optionDetailList'][detailIndex]['price'] as int;
   }
 
-  void selectDateClicked() {
+  bool? selectDateClicked() {
     for (int i = 0; i < option.length; i++) {
       bool brk = true;
       for (int j = 0; j < option[i].detail!.length; j++) {
@@ -129,12 +129,10 @@ class OrderController extends GetxController {
         }
       }
       if (brk) {
-        GetDialog().simpleDialog('옵션을 빠짐없이 선택해 주세요');
-        return;
+        return brk;
       }
     }
-    Get.back();
-    Get.to(() => ProductReservation(), binding: OrderBinding());
+    return false;
   }
 }
 

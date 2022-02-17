@@ -18,7 +18,9 @@ class AgreementNetwork {
         Uri.parse(baseUri + '/marketing'),
         headers: headers,
       );
+      if(response.statusCode == 200 || response.statusCode == 401)
       return jsonDecode(utf8.decode(response.bodyBytes));
+      else print('patchAgreementMarketing 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }
@@ -30,7 +32,9 @@ class AgreementNetwork {
         Uri.parse(baseUri + '/push'),
         headers: headers,
       );
+      if(response.statusCode == 200 || response.statusCode == 401)
       return jsonDecode(utf8.decode(response.bodyBytes));
+      else print('patchAgreementPush 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }

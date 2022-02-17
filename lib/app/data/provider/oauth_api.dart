@@ -15,7 +15,9 @@ class OauthNetwork {
           ),
           headers: headers,
           body: sendData);
+      if(response.statusCode == 200 || response.statusCode == 401)
       return jsonDecode(utf8.decode(response.bodyBytes));
+      else print('postOauthKakaoLogin 통신오류: ${response.statusCode}');
     } catch (e) {
       print('postOauthKakaoLogin 예외발생');
       print(e);
@@ -30,7 +32,9 @@ class OauthNetwork {
           ),
           headers: headers,
           body: sendData);
+      if(response.statusCode == 200 || response.statusCode == 401)
       return jsonDecode(utf8.decode(response.bodyBytes));
+      else print('postOauthKakao 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }

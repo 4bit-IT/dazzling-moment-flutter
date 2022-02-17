@@ -96,7 +96,7 @@ class OwnerShopNetwork {
         Uri.parse(baseUri + '/shop/me'),
         headers: headers,
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 401) {
         return jsonDecode(utf8.decode(response.bodyBytes));
       } else {
         print('GetShopMe 통신 오류');

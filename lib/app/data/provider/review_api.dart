@@ -22,8 +22,10 @@ class ReviewNetwork {
         Uri.parse(baseUri + '/review' + "?page=$pageNumber&shopId=$shopId"),
         headers: headers,
       );
-      print(jsonDecode(utf8.decode(response.bodyBytes)));
-      return jsonDecode(utf8.decode(response.bodyBytes));
+      if (response.statusCode == 200 || response.statusCode == 401)
+        return jsonDecode(utf8.decode(response.bodyBytes));
+      else
+        print('getReview 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }
@@ -32,11 +34,13 @@ class ReviewNetwork {
   Future<dynamic> getReviewComment(int id) async {
     try {
       http.Response response = await http.get(
-        Uri.parse(baseUri +
-            '/review/comment?reviewId=$id'),
+        Uri.parse(baseUri + '/review/comment?reviewId=$id'),
         headers: headers,
       );
-      return jsonDecode(utf8.decode(response.bodyBytes));
+      if (response.statusCode == 200 || response.statusCode == 401)
+        return jsonDecode(utf8.decode(response.bodyBytes));
+      else
+        print('getReviewComment 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }

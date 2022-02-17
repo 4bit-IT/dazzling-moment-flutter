@@ -19,10 +19,10 @@ class OrderNetwork {
         Uri.parse(baseUri + '/orders/owner'),
         headers: headers,
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 401) {
         return jsonDecode(utf8.decode(response.bodyBytes));
       } else {
-        print('getOrdersOwner 통신 오류');
+        print('getOrdersOwner 통신 오류: ${response.statusCode}');
       }
     } catch (e) {
       print(e);
@@ -36,7 +36,7 @@ class OrderNetwork {
         headers: headers,
         body: sendData,
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 401) {
         return jsonDecode(utf8.decode(response.bodyBytes));
       } else {
         print('postOrdersStatus 통신 오류');

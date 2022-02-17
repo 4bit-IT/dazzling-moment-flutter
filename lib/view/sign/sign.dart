@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class Sign extends StatelessWidget {
   SignController signController = Get.put(SignController(), permanent: true);
@@ -70,8 +71,22 @@ class Sign extends StatelessWidget {
                         child: Column(
                           children: [
                             InkWell(
-                              onTap: () {
-                                Get.to(() => GetUserNumber());
+                              onTap: () async {
+                                final credential =
+                                await SignInWithApple.getAppleIDCredential(
+                                  scopes: [
+                                    AppleIDAuthorizationScopes.email,
+                                    AppleIDAuthorizationScopes.fullName,
+                                  ],
+                                );
+
+                                print(
+                                    "authorizationCode: ${credential.authorizationCode}");
+                                print(
+                                    "identityToken: ${credential.identityToken}");
+
+                                // Now send the credential (especially `credential.authorizationCode`) to your server to create a session
+                                // after they have been validated with Apple (see `Integration` section for more information on how to do this)
                               },
                               child: SvgPicture.asset(
                                 'assets/images_svg/ic_login_apple.svg',
@@ -168,7 +183,7 @@ class Sign extends StatelessWidget {
                         height: 60,
                         onPressed: () {
                           Get.to(
-                            () => AnimatedSplashScreen(
+                                () => AnimatedSplashScreen(
                               duration: 1000,
                               splash: Image.asset(
                                 'assets/images/스플래시@3x.png',

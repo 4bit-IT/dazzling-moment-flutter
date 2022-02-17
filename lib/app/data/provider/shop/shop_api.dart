@@ -23,7 +23,9 @@ class ShopNetwork {
         headers: headers,
         body: body,
       );
+      if(response.statusCode == 200 || response.statusCode == 401)
       return jsonDecode(utf8.decode(response.bodyBytes));
+      else print('postShop 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }
@@ -35,7 +37,9 @@ class ShopNetwork {
         Uri.parse(baseUri + '/shop/$id'),
         headers: headers,
       );
+      if(response.statusCode == 200 || response.statusCode == 401)
       return jsonDecode(utf8.decode(response.bodyBytes));
+      else print('getShopId 통신 오류 : ${response.statusCode}');
     } catch (e) {}
   }
 
@@ -51,7 +55,9 @@ class ShopNetwork {
         data: input,
       );
       print('업체 이미지들 업로드 완료');
+      if(response.statusCode == 200 || response.statusCode == 401)
       return response.data;
+      else print('postShopImage 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }
@@ -71,7 +77,9 @@ class ShopNetwork {
         data: input,
       );
       print('업체 대표 이미지 업로드 완료');
+      if(response.statusCode == 200 || response.statusCode == 401)
       return response.data;
+      else print('postShopImageMain 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }
@@ -83,7 +91,7 @@ class ShopNetwork {
         Uri.parse(baseUri + '/shop/me'),
         headers: headers,
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 401) {
         return jsonDecode(utf8.decode(response.bodyBytes));
       } else {
         print('GetShopMe 통신 오류');
@@ -101,8 +109,9 @@ class ShopNetwork {
         headers: headers,
         body: sendData,
       );
-
+      if(response.statusCode == 200 || response.statusCode == 401)
       return jsonDecode(utf8.decode(response.bodyBytes));
+      else print('postShopOption 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }
@@ -115,8 +124,9 @@ class ShopNetwork {
         Uri.parse(baseUri + '/shop/rating' + "?shopId=$insertShopId"),
         headers: headers,
       );
-      print(jsonDecode(utf8.decode(response.bodyBytes)));
+      if(response.statusCode == 200 || response.statusCode == 401)
       return jsonDecode(utf8.decode(response.bodyBytes));
+      else print("getShopRating 통신 오류: ${response.statusCode}");
     } catch (e) {
       print(e);
     }
@@ -128,8 +138,9 @@ class ShopNetwork {
         Uri.parse(baseUri + '/shop' + "?page=$pageNumber&sortBy=$sortBy"),
         headers: headers,
       );
-      print(jsonDecode(utf8.decode(response.bodyBytes)));
+      if(response.statusCode == 200 || response.statusCode == 401)
       return jsonDecode(utf8.decode(response.bodyBytes));
+      else print('getShopMain 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }

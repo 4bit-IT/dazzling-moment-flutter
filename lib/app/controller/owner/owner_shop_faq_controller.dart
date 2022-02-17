@@ -21,6 +21,7 @@ class OwnerShopFAQController extends GetxController {
       TextEditingController().obs;
   RxInt shopFAQCount = 0.obs;
   RxInt currentIndex = 0.obs;
+  Rx<Color> writeColor = Color(0xffd1d1d6).obs;
 
   Map<String, dynamic> toJsonInput = {};
   String sendData = '';
@@ -69,7 +70,8 @@ class OwnerShopFAQController extends GetxController {
   }
 
   Future<void> faqModifyClicked() async {
-    GetDialog().alternativeDialog('해당 FAQ를 수정하시겠습니까?', () async => await modifyFAQ());
+    GetDialog()
+        .alternativeDialog('해당 FAQ를 수정하시겠습니까?', () async => await modifyFAQ());
   }
 
   Future<void> modifyFAQ() async {
