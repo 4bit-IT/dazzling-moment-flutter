@@ -26,7 +26,7 @@ class OwnerShopFAQNetwork {
             baseUri + '/faq?shopId=${ownerShopController.shopGetMeModel.value.id}'),
         headers: headers,
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 401) {
         return jsonDecode(utf8.decode(response.bodyBytes));
       } else {
         print('getFAQ 통신 오류');
@@ -44,7 +44,11 @@ class OwnerShopFAQNetwork {
         Uri.parse(baseUri + '/faq?shopId=$shopId'),
         headers: headers,
       );
+      if(response.statusCode == 200 || response.statusCode == 401)
       return jsonDecode(utf8.decode(response.bodyBytes));
+      else {
+        print('getFAQtoUser 통신 오류: ${response.statusCode}');
+      }
     } catch (e) {
       print(e);
     }
@@ -57,8 +61,11 @@ class OwnerShopFAQNetwork {
         headers: headers,
         body: body,
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 401) {
         return jsonDecode(utf8.decode(response.bodyBytes));
+      }
+      else {
+        print('patchFAQAnswer 통신오류: ${response.statusCode}');
       }
     } catch (e) {
       print(e);
@@ -72,8 +79,11 @@ class OwnerShopFAQNetwork {
         headers: headers,
         body: body,
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 401) {
         return jsonDecode(utf8.decode(response.bodyBytes));
+      }
+      else {
+        print('patchFAQQuestion 통신 오류: ${response.statusCode}');
       }
     } catch (e) {
       print(e);
@@ -87,8 +97,11 @@ class OwnerShopFAQNetwork {
         headers: headers,
         body: body,
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 401) {
         return jsonDecode(utf8.decode(response.bodyBytes));
+      }
+      else {
+        print('postFAQ 통신 오류: ${response.statusCode}');
       }
     } catch (e) {
       print(e);
@@ -104,8 +117,11 @@ class OwnerShopFAQNetwork {
             '/faq?faqId=${ownerShopFAQController.ownerShopGetFAQModel.value.faqList![ownerShopFAQController.currentIndex.value]['faqId']}'),
         headers: headers,
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 401) {
         return jsonDecode(utf8.decode(response.bodyBytes));
+      }
+      else {
+        print('deleteFAQ 통신 오류: ${response.statusCode}');
       }
     } catch (e) {
       print(e);

@@ -301,7 +301,7 @@ class ShopReviewManagement extends StatelessWidget {
                                         : '리뷰의 답글을 작성해주세요(최대 100자)',
                                     6,
                                     6,
-                                    null,
+                                        () {},
                                     [],''),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(0, 16.h, 0, 16.h),

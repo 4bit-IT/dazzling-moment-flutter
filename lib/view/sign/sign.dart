@@ -73,7 +73,7 @@ class Sign extends StatelessWidget {
                             InkWell(
                               onTap: () async {
                                 final credential =
-                                    await SignInWithApple.getAppleIDCredential(
+                                await SignInWithApple.getAppleIDCredential(
                                   scopes: [
                                     AppleIDAuthorizationScopes.email,
                                     AppleIDAuthorizationScopes.fullName,
@@ -183,7 +183,7 @@ class Sign extends StatelessWidget {
                         height: 60,
                         onPressed: () {
                           Get.to(
-                            () => AnimatedSplashScreen(
+                                () => AnimatedSplashScreen(
                               duration: 1000,
                               splash: Image.asset(
                                 'assets/images/스플래시@3x.png',

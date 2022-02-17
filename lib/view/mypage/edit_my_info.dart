@@ -253,7 +253,7 @@ class EditMyInfo extends StatelessWidget {
                                                   '',
                                                   1,
                                                   1,
-                                                  null,
+                                                  () {},
                                                   [],''),
                                         ),
                                       ),

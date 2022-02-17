@@ -23,7 +23,9 @@ class ShopFAQNetwork {
         Uri.parse(baseUri + '/faq?shopId=$shopId'),
         headers: headers,
       );
+      if(response.statusCode == 200 || response.statusCode == 401)
       return jsonDecode(utf8.decode(response.bodyBytes));
+      else print('getFAQtoUser 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }

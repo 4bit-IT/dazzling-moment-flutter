@@ -13,7 +13,7 @@ class CustomTextField {
       dynamic hintText,
       int maxLines,
       int minLines,
-      dynamic onChanged,
+      dynamic onChanged(),
       List<TextInputFormatter> inputFormatters,
       String suffixText) {
     return TextFormField(
@@ -21,7 +21,7 @@ class CustomTextField {
       textAlign: textAlign,
       maxLines: maxLines,
       minLines: minLines,
-      onChanged: (text) => onChanged,
+      onChanged: (text) => onChanged(),
       inputFormatters: inputFormatters,
       controller: controller,
       readOnly: readOnly,

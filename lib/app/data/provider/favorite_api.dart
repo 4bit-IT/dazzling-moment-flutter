@@ -21,7 +21,9 @@ class FavoriteNetwork {
           ),
           headers: headers,
           body: sendData.toString());
+      if(response.statusCode == 200 || response.statusCode == 401)
       return jsonDecode(utf8.decode(response.bodyBytes));
+      else print('postFavoritesOnce 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }
@@ -35,7 +37,9 @@ class FavoriteNetwork {
           ),
           headers: headers,
           body: sendData.toString());
+      if(response.statusCode == 200 || response.statusCode == 401)
       return jsonDecode(utf8.decode(response.bodyBytes));
+      else print('deleteFavoritesOnce 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }
@@ -47,7 +51,9 @@ class FavoriteNetwork {
         Uri.parse(baseUri + '/favorites' + "?page=$pageNumber"),
         headers: headers,
       );
+      if(response.statusCode == 200 || response.statusCode == 401)
       return jsonDecode(utf8.decode(response.bodyBytes));
+      else print('getFavorites 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }

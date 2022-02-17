@@ -90,6 +90,46 @@ class DamoAppBar {
     );
   }
 
+  dynamic suffixAppBar(BuildContext context, String text, String suffixText, void func()) {
+    return AppBar(
+      shape: Border(bottom: BorderSide(color: Color(0xfff1f3f5), width: 1.h)),
+      centerTitle: true,
+      iconTheme: IconThemeData(
+        color: Colors.black,
+      ),
+      elevation: 0.0,
+      backgroundColor: Colors.white,
+      title: Text(
+        text,
+        style: TextStyle(
+          color: Color(0xff283137),
+          fontSize: 21.3.sp,
+          fontFamily: 'NotoSansCJKKR',
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      actions: [
+        InkWell(
+          onTap: () {
+            func();
+          },
+          child: Container(
+            padding: EdgeInsets.fromLTRB(0, 0, 16.w, 0),
+            child: Center(
+              child: Text(
+                suffixText,
+                style: TextStyle(
+                  color: Color(0xff8e97a0),
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   dynamic shopAppBar(BuildContext context) {
     return AppBar(
       shape: Border(bottom: BorderSide(color: Color(0xfff1f3f5), width: 1.h)),

@@ -29,7 +29,10 @@ class UserNetwork {
           'token': tokenController.token!['refreshToken']!,
         },
       );
-      return jsonDecode(utf8.decode(response.bodyBytes));
+      if (response.statusCode == 200 || response.statusCode == 401)
+        return jsonDecode(utf8.decode(response.bodyBytes));
+      else
+        print('postUsersAccess 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }
@@ -45,7 +48,10 @@ class UserNetwork {
           'token': tokenController.token!['refreshToken']!,
         },
       );
-      return jsonDecode(utf8.decode(response.bodyBytes));
+      if (response.statusCode == 200 || response.statusCode == 401)
+        return jsonDecode(utf8.decode(response.bodyBytes));
+      else
+        print('getUsersRefresh 통신 오류: ${response.statusCode}');
     } catch (e) {
       print('getUsersRefreshError!');
     }
@@ -61,7 +67,10 @@ class UserNetwork {
           'token': tokenController.token!['refreshToken']!,
         },
       );
-      return jsonDecode(utf8.decode(response.bodyBytes));
+      if (response.statusCode == 200 || response.statusCode == 401)
+        return jsonDecode(utf8.decode(response.bodyBytes));
+      else
+        print('getUsers 통신 오류: ${response.statusCode}');
     } catch (e) {
       print('회원정보조회 오류!');
     }
@@ -78,7 +87,10 @@ class UserNetwork {
             'token': tokenController.token!['accessToken']!,
           },
           body: sendData);
-      return jsonDecode(utf8.decode(response.bodyBytes));
+      if (response.statusCode == 200 || response.statusCode == 401)
+        return jsonDecode(utf8.decode(response.bodyBytes));
+      else
+        print('postUsersAddress 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }
@@ -87,7 +99,7 @@ class UserNetwork {
   Future<NicknameDoubleCheckModel> postUsersCheckNickname(
       Map<String, dynamic> input) async {
     NicknameDoubleCheckModel nicknameDoubleCheckModel =
-    NicknameDoubleCheckModel();
+        NicknameDoubleCheckModel();
     try {
       var body = NicknameDoubleCheckModel().toJson(input);
       http.Response response = await http.post(
@@ -101,6 +113,7 @@ class UserNetwork {
 
       nicknameDoubleCheckModel = NicknameDoubleCheckModel.fromJson(
           jsonDecode(utf8.decode(response.bodyBytes)));
+
       if (nicknameDoubleCheckModel.result == true) {
         return nicknameDoubleCheckModel;
       }
@@ -124,7 +137,10 @@ class UserNetwork {
         data: input,
       );
       print('성공적으로 업로드했습니다');
-      return response.data;
+      if (response.statusCode == 200 || response.statusCode == 401)
+        return response.data;
+      else
+        print('patchUserProfileImage 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }
@@ -141,7 +157,10 @@ class UserNetwork {
           'token': tokenController.token!['accessToken']!,
         },
       );
-      return jsonDecode(utf8.decode(response.bodyBytes));
+      if (response.statusCode == 200 || response.statusCode == 401)
+        return jsonDecode(utf8.decode(response.bodyBytes));
+      else
+        print('patchUsersProfileImageDefault 통신 오류: ${response.statusCode}');
     } catch (e) {
       print(e);
     }

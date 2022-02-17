@@ -7,6 +7,7 @@ import 'package:damo/view/product/product_info.dart';
 import 'package:damo/view/product/product_faq.dart';
 import 'package:damo/view/product/product_reservation.dart';
 import 'package:damo/view/product/product_review.dart';
+import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:damo/viewmodel/loading.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -302,11 +303,19 @@ class Product extends StatelessWidget {
             Column(
               children: [
                 Expanded(
-                  child: SingleChildScrollView(child: optionListView()),
+                  child: SingleChildScrollView(
+                    child: optionListView(),
+                  ),
                 ),
                 InkWell(
                   onTap: () {
-                    orderController.selectDateClicked();
+                    if (orderController.selectDateClicked() == true) {
+                      GetDialog().simpleDialog('옵션을 빠짐없이 선택해 주세요');
+                    } else {
+                      Get.back();
+                      Get.to(() => ProductReservation(),
+                          binding: OrderBinding());
+                    }
                   },
                   child: Container(
                     child: Row(
@@ -366,11 +375,12 @@ class Product extends StatelessWidget {
       shrinkWrap: true,
       itemCount: shopController.shopGetDetailModel.value.optionList.length,
       itemBuilder: (BuildContext context, int index) {
-        return Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 15.h, 0, 10.h),
-              child: Center(
+        return ExpansionTile(
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(0, 15.h, 0, 10.h),
                 child: Text(
                   shopController.shopGetDetailModel.value.optionList[index]
                           ['allowMultipleChoices']
@@ -385,27 +395,24 @@ class Product extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            Text(
-              shopController.shopGetDetailModel.value.optionList[index]
-                  ['description'],
-              style: TextStyle(
-                color: Color(0xfff93f5b),
-                fontSize: 12.sp,
-                height: 1,
-                fontFamily: 'NotoSansCJKKR',
-                fontWeight: FontWeight.w500,
+              Text(
+                shopController.shopGetDetailModel.value.optionList[index]
+                    ['description'],
+                style: TextStyle(
+                  color: Color(0xffbdbdbd),
+                  fontSize: 12.sp,
+                  height: 1,
+                  fontFamily: 'NotoSansCJKKR',
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-            SizedBox(height: 7.h),
-            Container(
-              height: 4.h,
-              decoration: BoxDecoration(
-                color: Color(0xfff1f3f5),
-              ),
-            ),
+            ],
+          ),
+          children: [
+            SizedBox(height: 12.h),
+            Divider(height: 0),
             Padding(
-                padding: EdgeInsets.fromLTRB(5.w, 10.h, 0, 10.h),
+                padding: EdgeInsets.fromLTRB(20.w, 12.h, 20, 12.h),
                 child: StatefulBuilder(
                     builder: (BuildContext context, StateSetter setState) {
                   return detailOptionListView(index, setState);
@@ -417,7 +424,7 @@ class Product extends StatelessWidget {
   }
 
   Widget detailOptionListView(int index, StateSetter setState) {
-    return ListView.builder(
+    return ListView.separated(
       physics: const NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
@@ -427,108 +434,132 @@ class Product extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                shopController.shopGetDetailModel.value.optionList[index]
-                            ['optionDetailList'][detailIndex]
-                        ['allowMultipleChoices']
-                    ? Container(
-                        width: 80.w,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black12,
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.fromLTRB(4.w, 4.h, 4.w, 4.h),
-                              child: InkWell(
-                                onTap: () {
-                                  setState(
-                                    () {
-                                      orderController.optionSubtractClicked(
-                                          index, detailIndex);
-                                    },
-                                  );
-                                },
-                                child: Icon(Icons.remove),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(4.w, 4.h, 4.w, 4.h),
-                              child: Text(
-                                orderController
-                                    .option[index].detail![detailIndex].count
-                                    .toString(),
-                                style: TextStyle(
-                                  color: Color(0xff283137),
-                                  fontSize: 15.sp,
-                                  fontFamily: 'NotoSansCJKKR',
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.fromLTRB(4.w, 4.h, 4.w, 4.h),
-                              child: InkWell(
-                                onTap: () {
-                                  setState(
-                                    () {
-                                      orderController.optionAddClicked(
-                                          index, detailIndex);
-                                    },
-                                  );
-                                },
-                                child: Icon(Icons.add),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : Container(
-                        width: 80.w,
-                        child: Checkbox(
-                          value: orderController
-                              .option[index].detail![detailIndex].check,
-                          onChanged: (value) {
-                            setState(
-                              () {
-                                orderController.optionCheck(
-                                    index, detailIndex, value!);
-                              },
-                            );
-                          },
-                          checkColor: Color(0xfff93f5b),
-                          activeColor: Colors.white,
-                        ),
-                      ),
-                SizedBox(width: 11.w),
-                Text(
-                  shopController.shopGetDetailModel.value.optionList[index]
-                              ['optionDetailList'][detailIndex]
-                          ['allowMultipleChoices']
-                      ? '${shopController.shopGetDetailModel.value.optionList[index]['optionDetailList'][detailIndex]['content']} (최대 개수: ${shopController.shopGetDetailModel.value.optionList[index]['optionDetailList'][detailIndex]['count']})'
-                      : '${shopController.shopGetDetailModel.value.optionList[index]['optionDetailList'][detailIndex]['content']}',
-                  style: TextStyle(
-                    color: Color(0xff283137),
-                    fontSize: 15.sp,
-                    fontFamily: 'NotoSansCJKKR',
-                  ),
-                ),
-              ],
-            ),
             Text(
-              '+ ${formatter.format(shopController.shopGetDetailModel.value.optionList[index]['optionDetailList'][detailIndex]['price'])} 원',
+              shopController.shopGetDetailModel.value.optionList[index]
+                      ['optionDetailList'][detailIndex]['allowMultipleChoices']
+                  ? '${shopController.shopGetDetailModel.value.optionList[index]['optionDetailList'][detailIndex]['content']} (+ ${formatter.format(shopController.shopGetDetailModel.value.optionList[index]['optionDetailList'][detailIndex]['price'])} 원)'
+                  : '${shopController.shopGetDetailModel.value.optionList[index]['optionDetailList'][detailIndex]['content']} (+ ${formatter.format(shopController.shopGetDetailModel.value.optionList[index]['optionDetailList'][detailIndex]['price'])} 원)',
               style: TextStyle(
                 color: Color(0xff283137),
                 fontSize: 15.sp,
                 fontFamily: 'NotoSansCJKKR',
-                fontWeight: FontWeight.w600,
               ),
             ),
+            shopController.shopGetDetailModel.value.optionList[index]
+                    ['optionDetailList'][detailIndex]['allowMultipleChoices']
+                ? Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(
+                            () {
+                              orderController.optionSubtractClicked(
+                                  index, detailIndex);
+                            },
+                          );
+                        },
+                        child: Container(
+                          height: 32.h,
+                          width: 32.w,
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                left: BorderSide(color: Color(0xffd1d1d6)),
+                                top: BorderSide(color: Color(0xffd1d1d6)),
+                                bottom: BorderSide(color: Color(0xffd1d1d6)),
+                              ),
+                              color: Colors.white),
+                          child: Text(
+                            '-',
+                            style: TextStyle(
+                              color: Color(0xff283137),
+                              fontSize: 14.sp,
+                              height: 1,
+                              fontFamily: 'NotoSansCJKKR',
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 32.h,
+                        width: 32.w,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          border: Border.all(color: Color(0xffd1d1d6)),
+                        ),
+                        child: Text(
+                          orderController
+                              .option[index].detail![detailIndex].count
+                              .toString(),
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            fontFamily: 'NotoSansCJKKR',
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(
+                            () {
+                              orderController.optionAddClicked(
+                                  index, detailIndex);
+                            },
+                          );
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 32.h,
+                          width: 32.w,
+                          padding: EdgeInsets.fromLTRB(10.w, 10.h, 10.w, 10.h),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border(
+                              right: BorderSide(color: Color(0xffd1d1d6)),
+                              top: BorderSide(color: Color(0xffd1d1d6)),
+                              bottom: BorderSide(color: Color(0xffd1d1d6)),
+                            ),
+                          ),
+                          child: Text(
+                            '+',
+                            style: TextStyle(
+                              color: Color(0xff283137),
+                              fontSize: 14.sp,
+                              height: 1,
+                              fontFamily: 'NotoSansCJKKR',
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(
+                    width: 32.w,
+                    height: 32.h,
+                    child: Checkbox(
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      value: orderController
+                          .option[index].detail![detailIndex].check,
+                      onChanged: (value) {
+                        setState(
+                          () {
+                            orderController.optionCheck(
+                                index, detailIndex, value!);
+                          },
+                        );
+                      },
+                      checkColor: Color(0xfff93f5b),
+                      activeColor: Colors.white,
+                    ),
+                  ),
           ],
         );
+      },
+      separatorBuilder: (BuildContext context, int index) {
+        return Divider();
       },
     );
   }

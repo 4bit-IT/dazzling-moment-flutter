@@ -16,7 +16,7 @@ class OwnerShopGetFAQModel {
 
   OwnerShopGetFAQModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
-    faqList = json['data']['faqList'];
+    faqList = json['data']['faqList'] ?? [];
     description = json['description'];
     result = json['result'];
   }

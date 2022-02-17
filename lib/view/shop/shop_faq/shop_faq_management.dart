@@ -17,26 +17,58 @@ class ShopFAQManagement extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: DamoAppBar().textAppBar(context, 'FAQ'),
+      appBar: DamoAppBar().suffixAppBar(context, 'FAQ', '수정', () {}),
       body: Column(
         children: [
           Expanded(
             child: SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 0),
-                child: Obx(
-                  () => ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount:
-                        ownerShopFAQController.ownerShopGetFAQModel.value.faqList ==
-                                null
-                            ? 0
-                            : ownerShopFAQController
-                                .ownerShopGetFAQModel.value.faqList!.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
+              child: Obx(
+                () => ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: ownerShopFAQController
+                              .ownerShopGetFAQModel.value.faqList ==
+                          null
+                      ? 0
+                      : ownerShopFAQController
+                          .ownerShopGetFAQModel.value.faqList!.length,
+                  itemBuilder: (context, index) {
+                    return ExpansionTile(
+                        iconColor: Colors.black45,
+                        title: Container(
+                          width: 375.w,
+                          padding: EdgeInsets.fromLTRB(0, 16.h, 0, 16.h),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Q${index + 1}',
+                                style: TextStyle(
+                                  color: Color(0xfff93f5b),
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              SizedBox(width: 16.w),
+                              Text(
+                                '${ownerShopFAQController.ownerShopGetFAQModel.value.faqList![index]['question']}',
+                                style: TextStyle(
+                                  color: Color(0xff283137),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        children: [
+                          Container(
+                            padding:
+                                EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 16.h),
+                            width: double.infinity,
+                            color: Color(0xfff1f3f5),
+                            child: Text(
+                                '${ownerShopFAQController.ownerShopGetFAQModel.value.faqList![index]['answer']}'),
+                          )
+                        ] /*InkWell(
                         onTap: () {
                           ownerShopFAQController.changeCurrentIndex(index);
                           Get.to(() => ShopFAQInfo());
@@ -64,15 +96,9 @@ class ShopFAQManagement extends StatelessWidget {
                             ],
                           ),
                         ),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) =>
-                        Divider(
-                      color: Color(0xfff1f3f5),
-                      thickness: 1.h,
-                      height: 0,
-                    ),
-                  ),
+                      ),*/
+                        );
+                  },
                 ),
               ),
             ),
@@ -84,7 +110,7 @@ class ShopFAQManagement extends StatelessWidget {
               Get.to(() => ShopFAQAdd());
             },
             child: Container(
-              color: Color(0xfff93f5b),
+              color: Color(0xff283137),
               width: double.infinity,
               height: 70.h,
               alignment: Alignment.center,
