@@ -73,11 +73,7 @@ class Sign extends StatelessWidget {
                             InkWell(
                               onTap: () async {
                                 final credential =
-<<<<<<< HEAD
                                 await SignInWithApple.getAppleIDCredential(
-=======
-                                    await SignInWithApple.getAppleIDCredential(
->>>>>>> 006f216b937bf50db7282bc58b1c52c15e46dbd2
                                   scopes: [
                                     AppleIDAuthorizationScopes.email,
                                     AppleIDAuthorizationScopes.fullName,

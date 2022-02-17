@@ -5,14 +5,8 @@
 	<key>aps-environment</key>
 	<string>development</string>
 	<key>com.apple.developer.applesignin</key>
-<<<<<<< HEAD
-    <array>
-    	<string>Default</string>
-    </array>
-=======
 	<array>
 		<string>Default</string>
 	</array>
->>>>>>> 006f216b937bf50db7282bc58b1c52c15e46dbd2
 </dict>
 </plist>
