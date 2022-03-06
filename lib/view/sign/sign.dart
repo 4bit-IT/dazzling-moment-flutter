@@ -17,7 +17,6 @@ class Sign extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(3);
     signController.initialized
         ? signController = Get.find()
         : Get.lazyPut(() => SignController());
@@ -75,8 +74,8 @@ class Sign extends StatelessWidget {
                             children: [
                               InkWell(
                                 onTap: () async {
-                                  final credential =
-                                  await SignInWithApple.getAppleIDCredential(
+                                  final credential = await SignInWithApple
+                                      .getAppleIDCredential(
                                     scopes: [
                                       AppleIDAuthorizationScopes.email,
                                       AppleIDAuthorizationScopes.fullName,
@@ -186,7 +185,7 @@ class Sign extends StatelessWidget {
                         height: 60,
                         onPressed: () {
                           Get.to(
-                                () => AnimatedSplashScreen(
+                            () => AnimatedSplashScreen(
                               duration: 1000,
                               splash: Image.asset(
                                 'assets/images/스플래시@3x.png',

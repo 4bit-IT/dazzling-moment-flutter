@@ -3,6 +3,7 @@ import 'package:damo/app/controller/user_controller.dart';
 import 'package:damo/app/data/model/oauth_model.dart';
 import 'package:damo/app/data/model/token_model.dart';
 import 'package:damo/app/data/model/user_model.dart';
+import 'package:damo/app/data/provider/apple.dart';
 import 'package:damo/app/data/provider/kakao.dart';
 import 'package:damo/app/data/provider/oauth_api.dart';
 import 'package:damo/app/data/provider/user/user_api.dart';
@@ -119,6 +120,31 @@ class SignController extends GetxController {
       // 이 구문을 실행될 일이 없음
       print('토큰이 만료되었습니다.');
     }
+  }
+
+  void onAppleLoginClicked() async {
+    oauthAccessToken = await Apple().getAppleToken();
+    toJsonInput.clear();
+    toJsonInput['oauthAccessToken'] = oauthAccessToken.value;
+
+    jsonResponse = await OauthNetwork()
+        .postOauthAppleLogin(AuthLoginModel().toJson(toJsonInput));
+    model = AuthLoginModel.fromJson(jsonResponse);
+
+    authLoginModel.update((val) {
+      val!.code = model.code;
+      val.accessToken = model.accessToken;
+      val.refreshToken = model.refreshToken;
+      val.description = model.description;
+      val.isFirst = model.isFirst;
+      val.result = model.result;
+    });
+
+    TokenModel().saveToken(
+        authLoginModel.value.accessToken!, authLoginModel.value.refreshToken!);
+    tokenController.token!['accessToken'] = authLoginModel.value.accessToken!;
+    tokenController.token!['refreshToken'] = authLoginModel.value.refreshToken!;
+    Get.offAll(() => HomeMain());
   }
 
   void onPhoneNumberChanged() {
