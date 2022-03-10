@@ -59,7 +59,6 @@ class ShopMain extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(height: 14.h),
                                 Text(
                                   '1',
                                   style: TextStyle(
@@ -78,7 +77,6 @@ class ShopMain extends StatelessWidget {
                                       fontFamily: 'NotoSansCJKKR',
                                       height: 1),
                                 ),
-                                SizedBox(height: 13.h),
                               ],
                             ),
                           ),
@@ -101,7 +99,6 @@ class ShopMain extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(height: 14.h),
                                 Text(
                                   '21',
                                   style: TextStyle(
@@ -120,7 +117,6 @@ class ShopMain extends StatelessWidget {
                                       fontFamily: 'NotoSansCJKKR',
                                       height: 1),
                                 ),
-                                SizedBox(height: 13.h),
                               ],
                             ),
                           ),
