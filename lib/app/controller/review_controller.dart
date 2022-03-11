@@ -1,4 +1,5 @@
 import 'package:damo/app/controller/shop_controller.dart';
+import 'package:damo/app/controller/token_controller.dart';
 import 'package:damo/app/data/model/review_model.dart';
 import 'package:damo/app/data/provider/review_api.dart';
 import 'package:damo/app/data/provider/shop/shop_api.dart';
@@ -11,6 +12,7 @@ class ReviewController extends GetxController {
   ShopController shopController = Get.find();
   List<dynamic> storageReview = [].obs;
   Map<int, dynamic> reviewComments = <int, dynamic>{}.obs;
+  TokenController tokenController = Get.find();
 
   var jsonResponse;
   var model;
