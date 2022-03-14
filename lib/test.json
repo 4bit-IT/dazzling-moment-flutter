@@ -1,55 +1,40 @@
 {
-  "basePrice": 10000,
-  "optionList": [
+  "businessHourList": [
     {
-      "allowMultipleChoices": false,
-      "description": "반드시 1개 이상 선택해주세요.",
-      "optionDetailList": [
-        {
-          "allowMultipleChoices": true,
-          "content": "1토핑",
-          "count": 3,
-          "price": 1000
-        },
-        {
-          "allowMultipleChoices": false,
-          "content": "2토핑",
-          "count": 1,
-          "price": 2000
-        },
-        {
-          "allowMultipleChoices": true,
-          "content": "3토핑",
-          "count": 3,
-          "price": 3000
-        }
-      ],
-      "title": "1. 사이즈를 선택해주세요."
+      "endTime": 12,
+      "isHoliday": true,
+      "startTime": 2
     },
     {
-      "allowMultipleChoices": true,
-      "description": "반드시 1개 이상 선택해주세요.",
-      "optionDetailList": [
-        {
-          "allowMultipleChoices": false,
-          "content": "4토핑",
-          "count": 1,
-          "price": 4000
-        },
-        {
-          "allowMultipleChoices": true,
-          "content": "5토핑",
-          "count": 3,
-          "price": 5000
-        },
-        {
-          "allowMultipleChoices": false,
-          "content": "6토핑",
-          "count": 6,
-          "price": 1000
-        }
-      ],
-      "title": "2. 사ddd를 선택해주세요."
+      "endTime": 12,
+      "isHoliday": true,
+      "startTime": 2
+    },
+    {
+      "endTime": 12,
+      "isHoliday": true,
+      "startTime": 2
+    },
+    {
+      "endTime": 12,
+      "isHoliday": true,
+      "startTime": 6
+    },
+    {
+      "endTime": 12,
+      "isHoliday": true,
+      "startTime": 5
+    },
+    {
+      "endTime": 12,
+      "isHoliday": true,
+      "startTime": 4
+    },
+    {
+      "endTime": 12,
+      "isHoliday": true,
+      "startTime": 3
     }
-  ]
+  ],
+  "minNeedDate": 1
 }
