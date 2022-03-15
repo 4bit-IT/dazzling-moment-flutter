@@ -79,3 +79,27 @@ class OwnerPostDetailBusinessHourModel {
     result = json['result'];
   }
 }
+
+class OwnerPutDetailBusinessHourModel {
+  int? code;
+  String? description;
+  bool? result;
+
+  OwnerPutDetailBusinessHourModel({this.code, this.description, this.result});
+
+  String toJson(Map<String, dynamic> input) {
+    String body;
+    Map sendData = {
+      'businessHour': input['businessHour'],
+      'date': input['date']
+    };
+    body = json.encode(sendData);
+    return body;
+  }
+
+  OwnerPutDetailBusinessHourModel.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    description = json['description'];
+    result = json['result'];
+  }
+}
