@@ -8,7 +8,8 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 
 class ReviewController extends GetxController {
   Rx<LoadReviewModel> loadReviewModel = LoadReviewModel().obs;
-  Rx<LoadShopRatingListModel> loadShopRatingListModel = LoadShopRatingListModel().obs;
+  Rx<LoadShopRatingListModel> loadShopRatingListModel =
+      LoadShopRatingListModel().obs;
   ShopController shopController = Get.find();
   List<dynamic> storageReview = [].obs;
   Map<int, dynamic> reviewComments = <int, dynamic>{}.obs;
@@ -34,11 +35,14 @@ class ReviewController extends GetxController {
       });
       for (dynamic reviewList in loadReviewModel.value.reviewList) {
         storageReview.add(reviewList);
-        jsonResponse = await ReviewNetwork().getReviewComment(reviewList['id']);
-        if (jsonResponse['data'] != null) {
-          model = ReviewCommentModel.fromJson(jsonResponse);
-          if (model.code == 1) {
-            reviewComments.addAll({reviewList['id']: model});
+        if (reviewList['hasComment']) {
+          jsonResponse =
+              await ReviewNetwork().getReviewComment(reviewList['id']);
+          if (jsonResponse['data'] != null) {
+            model = ReviewCommentModel.fromJson(jsonResponse);
+            if (model.code == 1) {
+              reviewComments.addAll({reviewList['id']: model});
+            }
           }
         }
       }
