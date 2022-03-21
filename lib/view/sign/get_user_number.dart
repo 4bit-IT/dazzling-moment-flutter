@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
 class GetUserNumber extends StatelessWidget {
@@ -189,13 +188,13 @@ class GetUserNumber extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                signController.phoneAuthCredential =
+                /*signController.phoneAuthCredential =
                     PhoneAuthProvider.credential(
                         verificationId: signController.verificationUserId!,
                         smsCode:
                             signController.smsAuthNumberController.value.text);
                 signController.signInWithPhoneAuthCredential(
-                    signController.phoneAuthCredential!);
+                    signController.phoneAuthCredential!);*/
               },
               child: Obx(
                 () => Container(

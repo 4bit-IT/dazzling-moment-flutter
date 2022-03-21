@@ -10,7 +10,6 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 late Widget nextScreen;
@@ -20,8 +19,6 @@ Future<void> main() async {
   KakaoContext.clientId = '051ba7adea57eb74c808616d4969e482';
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseAppCheck.instance
-      .activate(webRecaptchaSiteKey: 'recaptcha-v3-site-key');
   await initializeDateFormatting();
   await tokenController.fetchData();
   runApp(Damo());

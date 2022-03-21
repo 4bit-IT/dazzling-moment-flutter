@@ -10,7 +10,6 @@ import 'package:damo/app/data/provider/user/user_api.dart';
 import 'package:damo/view/main/home_main.dart';
 import 'package:damo/view/sign/get_user_name.dart';
 import 'package:damo/view/sign/get_user_number.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -42,8 +41,8 @@ class SignController extends GetxController {
   RxBool enableGetAuthNumberButton = false.obs;
 
   String? verificationUserId;
-  FirebaseAuth auth = FirebaseAuth.instance;
-  PhoneAuthCredential? phoneAuthCredential;
+  /*FirebaseAuth auth = FirebaseAuth.instance;
+  PhoneAuthCredential? phoneAuthCredential;*/
 
   Map<String, dynamic> toJsonInput = {};
   String sendData = '';
@@ -302,7 +301,7 @@ class SignController extends GetxController {
     readOnlyPhoneNumber = false.obs;
   }
 
-  void signInWithPhoneAuthCredential(
+  /*void signInWithPhoneAuthCredential(
       PhoneAuthCredential phoneAuthCredential) async {
     try {
       await auth.signInWithCredential(phoneAuthCredential);
@@ -310,7 +309,7 @@ class SignController extends GetxController {
     } on FirebaseAuthException catch (e) {
       print(e);
     }
-  }
+  }*/
 
   void verifyPhoneNumber() async {
     print('verifyPhoneNumber');
@@ -321,7 +320,7 @@ class SignController extends GetxController {
         phoneNumberController.value.value.text.split('-')[1] +
         phoneNumberController.value.value.text.split('-')[2];
 
-    await auth.verifyPhoneNumber(
+    /*await auth.verifyPhoneNumber(
       timeout: const Duration(seconds: 120),
       codeAutoRetrievalTimeout: (String verificationId) {
         // Auto-resolution timed out...
@@ -344,7 +343,7 @@ class SignController extends GetxController {
         enableGetAuthNumberButton.value = false;
         verificationUserId = verificationId;
       },
-    );
+    );*/
   }
 }
 
