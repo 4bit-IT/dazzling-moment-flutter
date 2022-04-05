@@ -1,9 +1,10 @@
 import 'package:damo/app/controller/owner/owner_shop_controller.dart';
 import 'package:damo/app/controller/user_controller.dart';
-import 'package:damo/app/controller/wishList_controller.dart';
 import 'package:damo/view/mypage/edit_my_info.dart';
 import 'package:damo/view/mypage/purchase_history.dart';
 import 'package:damo/view/mypage/setting.dart';
+import 'package:damo/view/mypage/updateAppleInfo/updateAppleInfoNickname.dart';
+import 'package:damo/view/mypage/updateAppleInfo/updateAppleInfoPhoneNumber.dart';
 import 'package:damo/view/mypage/wish_list_page.dart';
 import 'package:damo/view/notification/notice_admin.dart';
 import 'package:damo/view/shop/shop_main.dart';
@@ -18,11 +19,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/src/extension_instance.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
+
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:share_plus/share_plus.dart';
+
+import '../../viewmodel/get_dialog.dart';
 
 class MyPage extends StatefulWidget {
   MyPage({this.bottomNavigationIndex});
@@ -77,8 +78,13 @@ class _MyPageState extends State<MyPage> {
                                 width: 30.w,
                                 height: 30.h,
                               ),
-                              onTap: () {
-                                Get.to(() => EditMyInfo());
+                              onTap: () async {
+                                if (userController
+                                        .isAdditionalInformatinApple() ==
+                                    false) {
+                                  GetDialog().onAdditionalInformationApple();
+                                } else
+                                  Get.to(() => EditMyInfo());
                               },
                             ),
                           ),
@@ -308,6 +314,42 @@ class _MyPageState extends State<MyPage> {
                                       SizedBox(width: 16.w),
                                       Text(
                                         '자주 묻는 질문',
+                                        style: TextStyle(
+                                          color: Color(0xff283137),
+                                          fontFamily: 'NotoSansCJKKR',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SvgPicture.asset(
+                                      'assets/images_svg/ic_바로가기.svg',
+                                      width: 20.w,
+                                      height: 20.h),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 60.h,
+                            child: CupertinoButton(
+                              minSize: 0,
+                              padding: EdgeInsets.zero,
+                              onPressed: () {
+                                Get.to(
+                                  () => UpdateAppleInfoNickname(),
+                                );
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                          'assets/images_svg/ic_my_Q&A.svg'),
+                                      SizedBox(width: 16.w),
+                                      Text(
+                                        '테스트 입니다.',
                                         style: TextStyle(
                                           color: Color(0xff283137),
                                           fontFamily: 'NotoSansCJKKR',

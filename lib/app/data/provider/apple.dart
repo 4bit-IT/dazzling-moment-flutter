@@ -1,7 +1,7 @@
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class Apple {
-  Future<dynamic> getAppleToken() async {
+  Future<String> getAppleToken() async {
     final credential = await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
@@ -10,6 +10,6 @@ class Apple {
     );
     print("authorizationCode: ${credential.authorizationCode}");
     print("identityToken: ${credential.identityToken}");
-    return credential.authorizationCode;
+    return credential.identityToken!;
   }
 }

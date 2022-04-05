@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:kakao_flutter_sdk/all.dart';
 
 class GetUserInfoModel {
   int? code; //example: 성공은 1 or 실패는 2 or 토큰 만료는 3
@@ -16,6 +17,7 @@ class GetUserInfoModel {
   String? birth; //example: MMDD
   String? createdAt; //example: 2021-10-28
   String? email; //example: example@damo.com
+  bool? hasAdditionalInformation;
   int? id; //example: 1
   bool? isOwner; //example: false
   String? name; //example: 황진성
@@ -24,6 +26,7 @@ class GetUserInfoModel {
   String?
       profileImage; //example: https://damo-s3.s3.ap-northeast-2.amazonaws.com/~~~
   String? sex; //example: MALE
+  String? provider; // example: "APPLE"
   String? description; //example: 성공 or 에러 메세지 or 토큰이 만료되었습니다.
   bool? result; //example: true
 
@@ -42,6 +45,7 @@ class GetUserInfoModel {
       birth,
       createdAt,
       email,
+      hasAdditionalInformation,
       id,
       isOwner,
       name,
@@ -49,6 +53,7 @@ class GetUserInfoModel {
       phoneNumber,
       profileImage,
       sex,
+      provider,
       description,
       result});
 
@@ -71,6 +76,7 @@ class GetUserInfoModel {
     birth = json['data']['birth'];
     createdAt = json['data']['createdAt'];
     email = json['data']['email'];
+    hasAdditionalInformation = json['data']['hasAdditionalInformation'];
     id = json['data']['id'];
     isOwner = json['data']['isOwner'];
     name = json['data']['name'];
@@ -78,6 +84,7 @@ class GetUserInfoModel {
     phoneNumber = json['data']['phoneNumber'];
     profileImage = json['data']['profileImage'];
     sex = json['data']['sex'];
+    provider = json['data']['provider'];
     description = json['description'];
     result = json['result'];
   }
@@ -234,6 +241,40 @@ class RefreshAccessTokenModel {
   RefreshAccessTokenModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     data = json['data'];
+    description = json['description'];
+    result = json['result'];
+  }
+}
+
+class UpdateAppleUserInfo {
+  String? ageRange;
+  String? birth;
+  String? name;
+  String? nickname;
+  String? phoneNumber;
+  String? sex;
+  int? code;
+  String? description;
+  bool? result;
+
+  UpdateAppleUserInfo({ageRange, birth, name, nickname, phoneNumber, sex});
+
+  String toJson(Map<String, dynamic> input) {
+    String body;
+    Map sendData = {
+      'ageRange': input['ageRange'],
+      'birth': input['birth'].toString(),
+      'name': input['name'].toString(),
+      'nickname': input['nickname'].toString(),
+      'phoneNumber': input['phoneNumber'].toString(),
+      'sex': input['sex'],
+    };
+    body = json.encode(sendData);
+    return body;
+  }
+
+  UpdateAppleUserInfo.fromJson(dynamic json) {
+    code = json['code'];
     description = json['description'];
     result = json['result'];
   }

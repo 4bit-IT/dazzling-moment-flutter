@@ -1,3 +1,4 @@
+import 'package:damo/view/mypage/updateAppleInfo/updateAppleInfoNickname.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -153,5 +154,35 @@ class GetDialog {
     );
     print(returnValue);
     return returnValue;
+  }
+
+  Future<dynamic> onAdditionalInformationApple() async {
+    Get.dialog(AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0)), //테두리 둥글기
+      title: Text("[애플 회원가입]\n추가 정보를 입력하셔야 합니다.\n\n이동하시겠습니까?"),
+      actions: [
+        TextButton(
+          child: Text(
+            "예",
+            style: TextStyle(fontFamily: 'NotoSans', color: Colors.red[400]),
+          ),
+          onPressed: () async {
+            Get.back();
+            Get.to(
+              () => UpdateAppleInfoNickname(),
+            );
+          },
+        ),
+        TextButton(
+            child: Text(
+              "아니오",
+              style: TextStyle(fontFamily: 'NotoSans', color: Colors.red[400]),
+            ),
+            onPressed: () {
+              Get.back();
+            }),
+      ],
+    ));
   }
 }

@@ -10,6 +10,9 @@ import 'package:damo/app/data/provider/user/user_api.dart';
 import 'package:damo/view/main/home_main.dart';
 import 'package:damo/view/sign/get_user_name.dart';
 import 'package:damo/view/sign/get_user_number.dart';
+import 'package:damo/view/sign/sign.dart';
+import 'package:intl/intl.dart';
+import 'package:damo/viewmodel/bar/drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
@@ -25,11 +28,19 @@ class SignController extends GetxController {
   late NicknameDoubleCheckModel nicknameDoubleCheckModel;
   late RxString oauthAccessToken;
   RxBool isNicknameCheck = false.obs;
+  RxBool isUsernameCheck = false.obs;
+  RxBool isBirthCheck = false.obs;
+  RxBool isSexCheck = false.obs;
   RxBool readOnlyPhoneNumber = false.obs;
   Rx<FocusNode> nicknameFocusNode = FocusNode().obs;
+  Rx<FocusNode> usernameFocusNode = FocusNode().obs;
+  Rx<FocusNode> birthFocusNode = FocusNode().obs;
   Rx<FocusNode> phoneNumberFocusNode = FocusNode().obs;
+  RxInt sexValue = 0.obs; //남자1, 여자2
   Rx<TextEditingController> nicknameController = TextEditingController().obs;
   Rx<TextEditingController> phoneNumberController = TextEditingController().obs;
+  Rx<TextEditingController> usernameController = TextEditingController().obs;
+  Rx<TextEditingController> birthController = TextEditingController().obs;
   Rx<TextEditingController> smsAuthNumberController =
       TextEditingController().obs;
   Rx<Color> getAuthNumberButtonColor = Color(0xffd1d1d6).obs;
@@ -48,6 +59,11 @@ class SignController extends GetxController {
   String sendData = '';
   var jsonResponse;
   var model;
+
+  bool isvalidBirth(String inp) {
+    if (inp.length != 8) return false;
+    return true;
+  }
 
   Future<void> signUpClicked() async {
     toJsonInput.clear();
@@ -121,15 +137,13 @@ class SignController extends GetxController {
     }
   }
 
-  void onAppleLoginClicked() async {
-    oauthAccessToken = await Apple().getAppleToken();
+  Future<void> onAppleLoginClicked() async {
+    oauthAccessToken = (await Apple().getAppleToken()).obs;
     toJsonInput.clear();
     toJsonInput['oauthAccessToken'] = oauthAccessToken.value;
-
     jsonResponse = await OauthNetwork()
         .postOauthAppleLogin(AuthLoginModel().toJson(toJsonInput));
     model = AuthLoginModel.fromJson(jsonResponse);
-
     authLoginModel.update((val) {
       val!.code = model.code;
       val.accessToken = model.accessToken;
@@ -144,6 +158,55 @@ class SignController extends GetxController {
     tokenController.token!['accessToken'] = authLoginModel.value.accessToken!;
     tokenController.token!['refreshToken'] = authLoginModel.value.refreshToken!;
     Get.offAll(() => HomeMain());
+  }
+
+  Future<void> onAppleInfoUpdate() async {
+    UserController userController = Get.find();
+    toJsonInput.clear();
+    toJsonInput['name'] =
+        signController.usernameController.value.text.toString();
+    toJsonInput['nickname'] =
+        signController.nicknameController.value.text.toString();
+    toJsonInput['birth'] =
+        signController.birthController.value.text.substring(4, 8).toString();
+    DateTime now = DateTime.now();
+    String currentYear = DateFormat('yyyy').format(now).toString();
+    toJsonInput['ageRange'] = (int.parse(currentYear) -
+            int.parse(signController.birthController.value.text
+                .substring(0, 4)
+                .toString()) +
+            1)
+        .toString();
+
+    // toJsonInput['phoneNumber'] =
+    //     signController.phoneNumberController.value.toString();
+    toJsonInput['phoneNumber'] = '010-1111-1111';
+    toJsonInput['sex'] =
+        (signController.sexValue.value == 1) ? 'MALE' : 'FEMALE';
+
+    jsonResponse = await UserNetwork()
+        .postUsersApple(UpdateAppleUserInfo().toJson(toJsonInput));
+    if (jsonResponse['code'] == 3) {
+      print('토큰이 만료되었습니다.');
+    }
+    if (jsonResponse['code'] == 2) {
+      print('애플회원의 추가 정보 입력에 실패했습니다.');
+    }
+    if (jsonResponse['code'] == 1) {
+      userController.getUserInfoModel.update((val) {
+        val!.ageRange = toJsonInput['ageRange'];
+        val.serviceAndPersonalData = toJsonInput['serviceAndPersonalData'];
+        val.birth = toJsonInput['birth'];
+        val.hasAdditionalInformation = toJsonInput['hasAdditionalInformation'];
+        val.provider = toJsonInput['provider'];
+        val.name = toJsonInput['name'];
+        val.nickname = toJsonInput['nickname'];
+        val.phoneNumber = toJsonInput['phoneNumber'];
+
+        val.sex = toJsonInput['sex'];
+        Get.offAll(HomeMain());
+      });
+    }
   }
 
   void onPhoneNumberChanged() {

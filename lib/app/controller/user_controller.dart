@@ -18,6 +18,7 @@ class UserController extends GetxController {
   Rx<AccessTokenAvailableCheckModel> accessTokenAvailableCheckModel =
       AccessTokenAvailableCheckModel().obs;
   Rx<ChangeAddressModel> changeAddressModel = ChangeAddressModel().obs;
+  Rx<UpdateAppleUserInfo> updateAppleUserInfo = UpdateAppleUserInfo().obs;
   Rx<NicknameDoubleCheckModel> nicknameDoubleCheckModel =
       NicknameDoubleCheckModel().obs;
   Rx<CheckOwnerModel> checkOwnerModel = CheckOwnerModel().obs;
@@ -45,6 +46,17 @@ class UserController extends GetxController {
   void onInit() async {
     super.onInit();
     await getUserInfo();
+  }
+
+  bool isAdditionalInformatinApple() {
+    //false라면 추가 정보 받아야함
+    if (userController.getUserInfoModel.value.provider == "APPLE") {
+      return userController.getUserInfoModel.value.hasAdditionalInformation ==
+              false
+          ? false
+          : true;
+    }
+    return true;
   }
 
   Future<void> getUserInfo() async {
@@ -75,6 +87,8 @@ class UserController extends GetxController {
         val.birth = model.birth;
         val.createdAt = model.createdAt;
         val.email = model.email;
+        val.hasAdditionalInformation = val.hasAdditionalInformation;
+        val.provider = val.provider;
         val.id = model.id;
         val.isOwner = model.isOwner;
         val.name = model.name;
@@ -196,8 +210,8 @@ class UserController extends GetxController {
   }
 
   Future<void> clickUserInfoModify() async {
-    GetDialog()
-        .alternativeDialog('해당사항을 수정하시겠습니까?', () async => await modifyUserData());
+    GetDialog().alternativeDialog(
+        '해당사항을 수정하시겠습니까?', () async => await modifyUserData());
   }
 
   Future<void> modifyUserData() async {

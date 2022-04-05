@@ -25,7 +25,8 @@ class TokenController extends GetxController {
     print('accessToken: ${token!['accessToken']}');
     print('refreshToken: ${token!['refreshToken']}');
 
-    if ((token!['accessToken'] == '' && token!['refreshToken'] == '')) {
+    if ((token!['accessToken'] == null && token!['refreshToken'] == null) ||
+        (token!['accessToken'] == '' && token!['refreshToken'] == '')) {
       // 아무 토큰이 없으니 로그인 화면으로 이동
       print('기기에 저장된 토큰이 없으므로 로그인 화면으로 이동합니다.');
       isAutoLogin.value = false;

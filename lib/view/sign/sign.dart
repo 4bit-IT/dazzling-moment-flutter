@@ -12,6 +12,8 @@ import 'package:get/get.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'dart:io' show Platform;
 
+import '../mypage/updateAppleInfo/updateAppleInfoPhoneNumber.dart';
+
 class Sign extends StatelessWidget {
   SignController signController = Get.put(SignController(), permanent: true);
 
@@ -74,21 +76,7 @@ class Sign extends StatelessWidget {
                             children: [
                               InkWell(
                                 onTap: () async {
-                                  final credential = await SignInWithApple
-                                      .getAppleIDCredential(
-                                    scopes: [
-                                      AppleIDAuthorizationScopes.email,
-                                      AppleIDAuthorizationScopes.fullName,
-                                    ],
-                                  );
-
-                                  print(
-                                      "authorizationCode: ${credential.authorizationCode}");
-                                  print(
-                                      "identityToken: ${credential.identityToken}");
-
-                                  // Now send the credential (especially `credential.authorizationCode`) to your server to create a session
-                                  // after they have been validated with Apple (see `Integration` section for more information on how to do this)
+                                  await signController.onAppleLoginClicked();
                                 },
                                 child: SvgPicture.asset(
                                   'assets/images_svg/ic_login_apple.svg',
@@ -184,20 +172,9 @@ class Sign extends StatelessWidget {
                         minWidth: double.infinity,
                         height: 60,
                         onPressed: () {
-                          Get.to(
-                            () => AnimatedSplashScreen(
-                              duration: 1000,
-                              splash: Image.asset(
-                                'assets/images/스플래시@3x.png',
-                                width: 375.w,
-                                fit: BoxFit.fill,
-                              ),
-                              nextScreen: Sign(),
-                              splashTransition: SplashTransition.fadeTransition,
-                              backgroundColor: Colors.white,
-                              splashIconSize: 812.h,
-                            ),
-                          );
+                          // Get.to(
+                          //   () => Get.to(UpdateAppleInfoPhoneNumber()),
+                          // );
                         },
                         color: Colors.grey[400],
                         elevation: 0,
