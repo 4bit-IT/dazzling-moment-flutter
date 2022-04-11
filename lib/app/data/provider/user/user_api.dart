@@ -165,4 +165,24 @@ class UserNetwork {
       print(e);
     }
   }
+
+  Future<dynamic> postUsersApple(dynamic input) async {
+    try {
+      http.Response response = await http.post(
+          Uri.parse(
+            baseUri + '/users/apple',
+          ),
+          headers: {
+            'Content-Type': 'application/json',
+            'token': tokenController.token!['accessToken']!,
+          },
+          body: input);
+      if (response.statusCode == 200 || response.statusCode == 401)
+        return jsonDecode(utf8.decode(response.bodyBytes));
+      else
+        print('patchUsersProfileImageDefault 통신 오류: ${response.statusCode}');
+    } catch (e) {
+      print(e);
+    }
+  }
 }

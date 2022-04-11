@@ -43,6 +43,7 @@ class OauthNetwork {
   }
 
   Future<dynamic> postOauthApple(String sendData) async {
+    print("postOauthApple11111");
     try {
       http.Response response = await http.post(
           Uri.parse(

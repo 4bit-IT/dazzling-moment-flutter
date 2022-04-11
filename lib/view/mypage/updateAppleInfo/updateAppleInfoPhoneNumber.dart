@@ -2,13 +2,12 @@ import 'package:damo/app/controller/sign_controller.dart';
 import 'package:damo/viewmodel/bar/app_bar.dart';
 import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 
-class GetUserNumber extends StatelessWidget {
+class UpdateAppleInfoPhoneNumber extends StatelessWidget {
   final SignController signController = Get.find();
 
   @override
@@ -17,17 +16,17 @@ class GetUserNumber extends StatelessWidget {
       onWillPop: () {
         FocusScope.of(context).unfocus();
         return Future(() {
-          return GetDialog().backButtonDialog(() {
-            signController.phoneNumberController.value.clear();
-            signController.smsAuthNumberController.value.clear();
-            signController.countdownVisibility.value = false;
-            signController.getAuthNumberButtonColor.value = Color(0xffd1d1d6);
-            signController.readOnlyPhoneNumber.value = false;
-          });
+          signController.phoneNumberController.value.clear();
+          signController.smsAuthNumberController.value.clear();
+          signController.countdownVisibility.value = false;
+          signController.getAuthNumberButtonColor.value = Color(0xffd1d1d6);
+          signController.readOnlyPhoneNumber.value = false;
+          Get.back();
+          return true;
         });
       },
       child: Scaffold(
-        appBar: DamoAppBar().textAppBar(context, '회원가입'),
+        appBar: DamoAppBar().textAppBar(context, "번호를 입력해주세요"),
         backgroundColor: Colors.white,
         body: Column(
           children: [

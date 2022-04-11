@@ -51,6 +51,7 @@ class AuthLoginModel {
   String toJson(Map<String, dynamic> toJsonInput) {
     String body;
     Map sendData = {
+      'agreements': {'marketing': true, 'pushNotification': true},
       'fcmToken': '',
       'oauthAccessToken': toJsonInput['oauthAccessToken'],
     };

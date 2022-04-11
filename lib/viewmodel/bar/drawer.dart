@@ -7,6 +7,7 @@ import 'package:damo/view/mypage/setting.dart';
 import 'package:damo/view/notification/notice_admin.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
 import 'package:damo/view/sign/sign.dart';
+import 'package:damo/viewmodel/get_dialog.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -45,9 +46,9 @@ class _DrawerButtonState extends State<DrawerButton> {
                     style: TextStyle(
                         fontFamily: 'NotoSans', color: Colors.red[400]),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     print('로그아웃 합니다.');
-                    TokenModel().removeToken();
+                    await TokenModel().removeToken();
                     Get.offAll(
                       () => AnimatedSplashScreen(
                         duration: 1000,
@@ -96,8 +97,12 @@ class _DrawerButtonState extends State<DrawerButton> {
                   width: 113.w,
                 ),
                 InkWell(
-                    onTap: () {
-                      Get.to(() => EditMyInfo());
+                    onTap: () async {
+                      if (userController.isAdditionalInformatinApple() ==
+                          false) {
+                        GetDialog().onAdditionalInformationApple();
+                      } else
+                        Get.to(() => EditMyInfo());
                     },
                     child:
                         SvgPicture.asset('assets/images_svg/ic_my_edit.svg')),
