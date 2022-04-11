@@ -50,8 +50,11 @@ class SignController extends GetxController {
   RxBool countdownVisibility = false.obs;
   RxString nicknameCheckString = '* 닉네임은 한글, 숫자, 영문으로 된 2~8자로 구성해주세요.'.obs;
   RxBool enableGetAuthNumberButton = false.obs;
-
+  List<FocusNode> authNumberFocusNode = <FocusNode>[for(int i=0;i<4;i++)FocusNode()].obs;
+  List<TextEditingController> authNumberController =
+      <TextEditingController>[for(int i=0;i<4;i++)TextEditingController()].obs;
   String? verificationUserId;
+
   /*FirebaseAuth auth = FirebaseAuth.instance;
   PhoneAuthCredential? phoneAuthCredential;*/
 
@@ -213,21 +216,35 @@ class SignController extends GetxController {
     if (RegExp(r'^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$')
             .hasMatch(phoneNumberController.value.value.text) ==
         true) {
+      print("true");
       getAuthNumberButtonColor.value = Color(0xfff93f5b);
       enableGetAuthNumberButton.value = true;
     } else {
+      print("false");
       getAuthNumberButtonColor.value = Color(0xffd1d1d6);
       enableGetAuthNumberButton.value = false;
     }
   }
 
-  void onAuthNumberChanged() {
+  void onAppleAuthNumberChanged() {
     if (RegExp(r'^([0-9]{6})$')
             .hasMatch(smsAuthNumberController.value.value.text) ==
         true) {
       confirmAuthNumberButtonColor.value = Color(0xfff93f5b);
     } else {
       confirmAuthNumberButtonColor.value = Color(0xffd1d1d6);
+    }
+  }
+
+  void onAuthNumberChanged(BuildContext context, int index) {
+    if (index == 3) {
+      /**
+       * checkAuthNumber
+       * 인증 번호 체크
+       */
+    } else {
+      FocusScope.of(context).unfocus();
+      authNumberFocusNode[index + 1].requestFocus();
     }
   }
 
@@ -354,11 +371,8 @@ class SignController extends GetxController {
     }
   }
 
-  get confirmButtonColor => (acceptList[1].value.check &&
-          acceptList[2].value.check &&
-          isNicknameCheck.value)
-      ? Color(0xfff93f5b)
-      : Color(0xffd1d1d6);
+  get confirmButtonColor =>
+      (isNicknameCheck.value) ? Color(0xfff93f5b) : Color(0xffd1d1d6);
 
   void changeReadOnly() {
     readOnlyPhoneNumber = false.obs;

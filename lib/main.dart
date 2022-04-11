@@ -6,7 +6,6 @@ import 'package:damo/view/sign/sign.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:kakao_flutter_sdk/all.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,7 +33,7 @@ class Damo extends StatelessWidget with WidgetsBindingObserver {
           print('mainInit');
           WidgetsBinding.instance!.addObserver(this);
           final PendingDynamicLinkData? data =
-              await FirebaseDynamicLinks.instance.getInitialLink();
+          await FirebaseDynamicLinks.instance.getInitialLink();
 
           // 딥링크가 있는 경우 체크 (딥링크는 단순히 앱만 실행하는 것이 아닌 특정 게시물로의 이동이 필요한 경우 사용)
           final Uri? deepLink = data?.link;
@@ -80,7 +79,7 @@ class Damo extends StatelessWidget with WidgetsBindingObserver {
             fit: BoxFit.fill,
           ),
           nextScreen:
-              tokenController.isAutoLogin.value == true ? HomeMain() : Sign(),
+          tokenController.isAutoLogin.value == true ? HomeMain() : Sign(),
           backgroundColor: Colors.white,
           splashIconSize: 812.h,
         ),
