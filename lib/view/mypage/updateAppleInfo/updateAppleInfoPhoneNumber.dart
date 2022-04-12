@@ -131,7 +131,7 @@ class UpdateAppleInfoPhoneNumber extends StatelessWidget {
                             flex: 5,
                             child: TextFormField(
                               onChanged: (text) {
-                                signController.onAuthNumberChanged();
+                                signController.onAppleAuthNumberChanged();
                               },
                               controller:
                                   signController.smsAuthNumberController.value,

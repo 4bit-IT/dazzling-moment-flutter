@@ -3,6 +3,7 @@ import 'package:damo/app/controller/sign_controller.dart';
 import 'package:damo/app/data/provider/agreement_api.dart';
 import 'package:damo/view/sign/get_user_number.dart';
 import 'package:damo/view/sign/get_user_name.dart';
+import 'package:damo/view/sign/sms_auth.dart';
 import 'package:damo/viewmodel/bar/scroll_behavior.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -175,6 +176,7 @@ class Sign extends StatelessWidget {
                           // Get.to(
                           //   () => Get.to(UpdateAppleInfoPhoneNumber()),
                           // );
+                          Get.to(() => SMSAuth());
                         },
                         color: Colors.grey[400],
                         elevation: 0,
